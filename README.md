@@ -1,6 +1,11 @@
 # Project Name
 
 Developer Names:
+- [ ] Mohammed (Zayn) Abed
+- [ ] Maged Armanios
+- [ ] Jinal Kasturiarachchi
+- [ ] Jane Klavir
+- [ ] Harshil Patel
 
 Date of project start:
 
