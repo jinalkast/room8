@@ -1,7 +1,7 @@
 ---
 name: TA Meeting
 about: Track team details for TA meetings.
-title: 'TA Meeting - Date'
+title: 'TA Meeting - <INSERT DATE HERE>'
 labels: 'meeting'
 assignees: ''
 
@@ -13,11 +13,11 @@ assignees: ''
 
 **Attendance**
 
-- [ ] team member1
-- [ ] team member2
-- [ ] team member3
-- [ ] team member4
-- [ ] team member5
+- [ ] Mohammed (Zayn) Abed
+- [ ] Maged Armanios
+- [ ] Jinal Kasturiarachchi
+- [ ] Jane Klavir
+- [ ] Harshil Patel
 
 **Questions to Ask**
 
