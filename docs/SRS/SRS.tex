@@ -504,6 +504,8 @@ This chapter should not be empty!}
   
   \item \textbf{Common household items dataset:} The classifier can assume that any object it comes across is a common household item that belongs to a class represented in its training data.\newline 
 
+  \item \textbf{FoV of the camera:} The camera is stationary and the FoV is identical in any pair of “before” and “after” images.\newline
+
 \end{flushleft}
 \nsection{E.5 Effects}
 \comment{Elements and properties of the environment that the system will affect.}
@@ -516,6 +518,12 @@ This chapter should not be empty!}
 \end{flushleft}
 
 \nsection{E.6 Invariants}
+\begin{flushleft}
+  \item \textbf{Limited camera presence:} The motion-activated camera is initially triggered by motion, and takes a “before” picture. When motion has not been detected for a prolonged and predefined amount of time, it takes an “after” picture. These 2 images aside, the camera does not take any pictures or footage and thus does not have any insight on the activities occurring in the living space.  
+  \newline
+  \item \textbf{Students' freedom to not comply:} While the application sends reminders to students for them to pay their debts or clean up their messes, it cannot enforce these events. Room8 serves as a logistical coordinator but it cannot have a direct impact on the physical environment.
+  \newline
+\end{flushleft}
 \comment{Properties of the environment that the systemâ€™s operation must preserve.}
 
 %===============================================================
