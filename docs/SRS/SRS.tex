@@ -395,7 +395,6 @@ An improvement in academic performance for students experience stress caused by 
         \item User selects the option to add a chatbot to their house group chat.
         \item User inputs notification and reminder settings.
         \item System generates an SMS numbers and instructions to add the chatbot to the group chat.
-        \item User adds the chatbot to the group chat.
         \item The chatbot sends a welcome message to the group.
     \end{enumerate}
     
@@ -655,7 +654,26 @@ This chapter should not be empty!}
 %---------------------------------
 
 \nsection{P.5 Required technology elements}
-\comment{External systems, hardware and software, expected to be necessary for building the system.}
+\comment{External systems, hardware and software, expected to be necessary for building the system.}\\
+\textbf{Camera} \\
+A camera is used for the systems cleanliness detection aspect. A camera takes pictures for comparing the state of the shared space.\\
+\\
+\textbf{Motion Sensor}\\
+A sensor is also used for the systems cleanliness detection aspect. The sensor detects movement which will work in unison with the camera to take pictures of the shared space.\\
+\\
+\textbf{Google Calendar API}\\
+Room8's scheduler requires a calendar component where user's can book and view events and chores in a calendar Google's Calendar API.\\
+\\
+\textbf{Secure Database}\\
+Users create accounts for Room8 where user and home information is stored on a secure database where sensitive information such as credentials are stored and individuals are able to change and delete accounts.\\
+\\
+\textbf{Gmail OAuth}\\
+Users will sign in securely without risk of data leaks and malicious connections.\\
+\\
+\textbf{SMS Message Service}\\
+Room8's Chatbot SMS will send messages to users using a third party messaging system that has connection to the Room8 application to send warnings and information of shared space.\\
+\\
+
 
 \nsection{P.6 Risks and mitigation analysis}
 \comment{Potential obstacles to meeting the schedule of P.4, and measures for adapting the plan if they do arise.}
