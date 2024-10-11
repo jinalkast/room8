@@ -12,6 +12,8 @@
 \usepackage{minitoc}	% For table of content in chapters
 \usepackage{listings}
 \usepackage{underscore}
+\usepackage{xcolor}
+\usepackage{booktabs}
 \usepackage[bookmarks=true]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -38,6 +40,10 @@
     \section*{#1}
     \addcontentsline{toc}{section}{#1}
 }
+\newcommand*{\nsubsection}[1]{
+    \subsection*{#1}
+    \addcontentsline{toc}{section}{#1}
+}
 %--------------------- Numbering ---------------
 \usepackage{amsthm}
 \usepackage{xassoccnt}
@@ -46,6 +52,8 @@
 \theoremstyle{definition}        
 \newtheorem{constraint}{Constraint}
 \newtheorem{goal}{Goal}
+\newtheorem{limitation}{Limitation}
+\newtheorem{exclusion}{Exclusion}
 \DeclareCoupledCountersGroup{theorems}
 \DeclareCoupledCounters[name=theorems]{req,constraint,goal}
 \setcounter{goal}{0}
@@ -157,14 +165,48 @@ It refines \ref{goal:first}
 \nsection{G.5 High-level usage scenarios}
 \comment{Fundamental usage paths through the system.}
 
+
 \nsection{G.6 Limitations and exclusions}
 \comment{Aspects that the system need not address.}
+Below is a list of limitations and exclusions the system will not address:
+\begin{limitation}\label{limitation:first}
+System will not track activity completed by the user in the shared environment.
+\end{limitation}
+\begin{exclusion}\label{exclusion:first}
+System will not request or send money directly to users in the bill splitting functionality.
+\end{exclusion}
+\begin{exclusion}\label{exclusion:second}
+System will not use images taken to train machine learning model.
+\end{exclusion}
 
 \nsection{G.7 Stakeholders and requirements sources}
 \comment{Groups of people who can affect the project or be affected by it, and other places to consider for information about the project and system.}
 %---------------------------------
 \notEmpty{}
 %---------------------------------
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Stakeholder} & \textbf{Category} \\ \hline
+Students              & Direct  \\ \hline
+Home Managers         & Indirect \\ \hline
+University Housing and Social Committee & Indirect \\ \hline
+\end{tabular}
+\caption{Stakeholders and Categories}
+\end{table}
+
+\nsubsection{G.7.1 Direct Stakeholders}
+\textbf{Students} \\ Students are the primary direct stakeholders for Room8. They are the main users of the mobile application who create houses within the app and set up the camera systems. These students seek to maintain cleanliness in their shared living spaces and establish accountability when a mess is left behind by a roommate. The application addresses common challenges faced by students in shared living arrangements, such as maintaining cleanliness, splitting expenses, and scheduling activities. 
+
+\nsubsection{G.7.1 Indirect Stakeholders}
+\textbf{Home Managers} \\ Home managers are indirect stakeholders to the project. Home managers includes landlords renting out their homes to students or residence assistants managing a room of students. The home managers look to maintain the clean condition of the shared space which is done by holding students accountable for messes that are made. 
+\\
+\\
+\textbf{University Housing and Social Committee} \\ The University Housing and Social Committee is another key indirect stakeholder in the project. These committees often seek to help students transition into living in shared spaces and provide guidance and support. Room8 offers a wide range of services that address common points of frustration faced by students, which are often brought up to these university committees. By facilitating better communication and organization, Room8 helps enhance the overall living experience for students.
+
+
 
 %===============================================================
 \chapter*{Environment}
