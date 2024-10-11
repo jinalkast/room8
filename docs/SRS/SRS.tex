@@ -131,28 +131,30 @@ This document follows the requirements documentation structure presented in the 
 \comment{Goals are "needs of the target organization, which the system will address". While the development team is the principal user of the other books, the Goals book addresses a wider audience: essentially, all stakeholders.}
 
 \nsection{G.1 Context and overall objective}
-\comment{High-level view of the project: organizational context and reason for building a system.} 
 %---------------------------------
-\notEmpty{}
-%---------------------------------
+\begin{flushleft}
+Shared living environments often create tension between roommates. It is usually cumbersome to reach out to a roommate about messes they left behind in a shared space, concerns over bill payments, household upkeep, and more. Our project, Room8, aims to prevent these cumbersome interactions by providing an application and the necessary hardware components to help monitor the cleanliness of shared spaces, schedule tasks, track shared billing cycles, and alert roommates of any issues within the shared house.
+\end{flushleft}
 
 \begin{goal}\label{goal:first}
-This is a goal example. If you need explicit (and automatic) numbering, you can use the definitions in the \texttt{.tex} template.
-Is is refined by \ref{req:memo}
+Create a system that monitors the cleanliness of a shared living space, such as a kitchen or a living room.
+\end{goal}
+\begin{goal}\label{goal:second}
+Provide roommates with a centralized platform to manage, schedule, and task household tasks.
+\end{goal}
+\begin{goal}\label{goal:third}
+Provide roommates with a centralized platform to manage, schedule, and track bill payments.
+\end{goal}
+\begin{goal}\label{goal:fourth}
+Alert and remind roommates of issues regarding issues related to the shared living spaces, reducing tension between each other.
 \end{goal}
 
-\begin{req}\label{req:cross}
-This is a requirement example. It illustrates how numbering is continuous and cross-types (if this is what you need).
-\end{req}
-    
 \nsection{G.2 Current situation}
-\comment{Current state of processes to be addressed by the project and the resulting system.}
 
-\begin{req}\label{req:memo}
-This is a requirement example. 
-It refines \ref{goal:first}
-\end{req}
-    
+\begin{flushleft}
+Room8 is designed to reduce points of tension and reduce the need for frustrating dialogue commonplace with people in shared housing, especially students. Currently, in order to manage the many shared responsibilities, roommates have to utilize multiple techniques or tools such as physical calendars, notification reminders, and existing applications such as Splitwise. Additionally, it is estimated that approximately 25\% students experience conflicts with a roommate, harming academic performance and inducing stress [1]. Recognizing these factors, Room8 aims to create a centralized platform that not only simplifies communication but reduces stress and conflict to improve the lives of students. 
+\end{flushleft}
+
 \nsection{G.3 Expected benefits}
 \comment{New processes, or improvement to existing processes, made possible by the projectâ€™s results.}
 %---------------------------------
@@ -162,10 +164,207 @@ It refines \ref{goal:first}
 \nsection{G.4 Functionality overview}
 \comment{Overview of the functions (behavior) of the system. Principal properties only (details are in the System book).}
 
+\begin{flushleft}
+    \item \textbf{User \& House Management:} The system allows students to register, create, and manage their accounts. Students are also able to create homes and invite other students. 
+    
+    \item \textbf{Cleanliness Management:} Students are able to set up cameras in their shared living spaces. Machine learning algorithms are used to detect messes and assign them to the students to increase accountability and to reduce communication friction. 
+    
+    \item \textbf{Scheduler:} The system allows users to create and manage chore and cleaning schedules. It will also send reminders to users about their assigned chores and cleaning tasks. Additionally, users are able to "book" common areas that are available within the shared space (i.e. party room, study room, etc.) to avoid conflicts 
+     
+    \item \textbf{Bill Splitter:} Students are able to add shared expenses to the house and keep track of who owes what. The system will automatically split the bills between the chosen students. 
+
+    \item \textbf{Chat:} The system provides an exportable chatbot to SMS group chats to aid in home management and communication. The chatbot will be able to send remainders and notifications to the group chat about upcoming events, chores, and bills.
+    
+    \item \textbf{Compliance and Data Privacy:} The system follows data privacy and compliance with Personal Information Protection and Electronic Documents Act (PIPEDA), Ontario’s Freedom of Information and Protection of Privacy Act (FIPPA), and Anti-Spam Legislation (CASL) to ensure that student's data is secure and not shared with third parties.
+    
+    \item \textbf{Progressive Web App:} The system is hosted as a progressive web app (PWA), so users can use it on their phones and computers.
+\end{flushleft}
+
 \nsection{G.5 High-level usage scenarios}
 \comment{Fundamental usage paths through the system.}
 
-
+\begin{itemize}
+    \item UC1: Create an account
+    \begin{enumerate}
+        \item User accesses the Room8 app.
+        \item User selects the "Create Account" option.
+        \item User fills in personal information (name, email, password).
+        \item User submits the form.
+        \item System validates the information and creates the account.
+        \item System authenticates the user.
+        \item System redirects the user to their dashboard.
+    \end{enumerate}
+    
+    \item UC2: Log in to the system
+    \begin{enumerate}
+        \item User accesses the Room8 app.
+        \item User selects the "Log In" option.
+        \item User enters email and password.
+        \item User submits the form.
+        \item System authenticates the credentials and logs in the user.
+        \item System redirects the user to their dashboard.
+    \end{enumerate}
+    
+    \item UC3: Log out of the system
+    \begin{enumerate}
+        \item User accesses the main menu of the Room8 app.
+        \item User selects the "Log Out" option.
+        \item System prompts for confirmation.
+        \item User confirms the action.
+        \item System logs the user out and redirects to the login screen.
+    \end{enumerate}
+    
+    \item UC4: Create a home
+    \begin{enumerate}
+        \item User navigates to their dashboard.
+        \item User selects the "Create Home" option.
+        \item User enters home details (home name, address, etc.).
+        \item User sends invitations to housemates by entering their email addresses.
+        \item System sends email notifications to invited users.
+        \item Invited users accept or decline the invitation.
+    \end{enumerate}
+    
+    \item UC5: Join a home
+    \begin{enumerate}
+        \item User receives an email invitation to join a home.
+        \item User clicks on the provided link in the invitation.
+        \item System redirects user to the Room8 app.
+        \item User logs in or creates an account if not logged in.
+        \item User confirms their decision to join the home.
+        \item System adds the user to the home group.
+    \end{enumerate}
+    
+    \item UC6: Leave a home
+    \begin{enumerate}
+        \item User navigates to their Home settings.
+        \item User chooses the "Leave Home" option.
+        \item System prompts for confirmation.
+        \item User confirms the action.
+        \item System removes the user from the home group.
+    \end{enumerate}
+    
+    \item UC7: Update user profile
+    \begin{enumerate}
+        \item User navigates to the “Profile” section.
+        \item User selects the "Edit Profile" option.
+        \item User modifies personal information (name, profile picture, etc.).
+        \item User saves changes.
+        \item System updates the user’s profile information.
+    \end{enumerate}
+    
+    \item UC8: Schedule a chore
+    \begin{enumerate}
+        \item User navigates to the "Schedule” section.
+        \item User selects "Add New Chore".
+        \item User inputs chore details (name, description, time, frequency, assigned users, etc.).
+        \item System saves the chore and sends reminders to the assigned users.
+    \end{enumerate}
+    
+    \item UC9: Edit a chore
+    \begin{enumerate}
+        \item User navigates to the "Schedule” section.
+        \item User selects a scheduled chore.
+        \item User chooses the "Edit" option.
+        \item User modifies the chore details (name, description, time, frequency, assigned users, etc.).
+        \item System updates the chore and notifies relevant housemates.
+    \end{enumerate}
+    
+    \item UC10: Complete a chore
+    \begin{enumerate}
+        \item User navigates to the "Schedule” section.
+        \item User selects a chore assigned to them.
+        \item User chooses the "Complete" option.
+        \item System marks the chore as complete and updates the chore history.
+    \end{enumerate}
+    
+    \item UC11: Add event to schedule
+    \begin{enumerate}
+        \item User navigates to the "Schedule" section.
+        \item User selects the "Add Event" option.
+        \item User inputs event details (date, time, description).
+        \item User sets reminders or notifications if needed.
+        \item System adds the event to the users' schedule.
+    \end{enumerate}
+    
+    \item UC12: View chore history
+    \begin{enumerate}
+        \item User navigates to the "Schedule” section.
+        \item User selects the "Chore History" option.
+        \item System displays a list of completed and pending chores.
+        \item User can filter or search through the history.
+    \end{enumerate}
+    
+    \item UC13: Add an expense
+    \begin{enumerate}
+        \item User navigates to the “Bill Splitter” section.
+        \item User selects the "Add Expense" option.
+        \item User enters the total expense amount and description.
+        \item User selects which housemates are responsible for the expense.
+        \item System splits the expense and notifies the involved users.
+    \end{enumerate}
+    
+    \item UC14: Edit an expense
+    \begin{enumerate}
+        \item User navigates to the “Bill Splitter” section.
+        \item User selects an expense to edit.
+        \item User modifies the expense details (amount, description, responsible users).
+        \item System updates the expense and notifies the involved users.
+    \end{enumerate}
+    
+    \item UC15: Pay an expense
+    \begin{enumerate}
+        \item User navigates to the "Bill Splitter" section.
+        \item User selects their profile's bills.
+        \item User selects an unpaid bill.
+        \item User marks the bill as paid.
+        \item System updates the payment status.
+        \item System notifies other housemates about the payment status.
+    \end{enumerate}
+    
+    \item UC16: View expense history
+    \begin{enumerate}
+        \item User navigates to the "Bill Splitter" section.
+        \item User selects the "Expense History" option.
+        \item System displays a list of past payments and outstanding bills.
+        \item User can filter the history by type or amount.
+    \end{enumerate}
+    
+    \item UC17: View current cleanliness status
+    \begin{enumerate}
+        \item User navigates to the “Cleanliness Management” section.
+        \item System displays the current cleanliness score and detected messes.
+        \item User selects another user to view their cleanliness score.
+        \item System displays the selected user’s cleanliness score and pending tasks.
+    \end{enumerate}
+    
+    \item UC18: View cleanliness history
+    \begin{enumerate}
+        \item User navigates to the “Cleanliness Management" section.
+        \item User selects the "Cleanliness History" option.
+        \item System displays a list of detected messes and cleanliness scores over time.
+        \item User can filter the history by location or date.
+    \end{enumerate}
+    
+    \item UC19: Add chatbot to group chat
+    \begin{enumerate}
+        \item User navigates to the “Chat Management” section.
+        \item User selects the option to add a chatbot to their house group chat.
+        \item User inputs notification and reminder settings.
+        \item System generates an SMS numbers and instructions to add the chatbot to the group chat.
+        \item The chatbot sends a welcome message to the group.
+    \end{enumerate}
+    
+    \item UC20: Edit chatbot settings
+    \begin{enumerate}
+        \item User navigates to the “Chat Management” section.
+        \item User selects the "Chatbot Settings" option.
+        \item User configures the chatbot’s behavior (e.g., reminders, notifications).
+        \item User saves the settings.
+        \item System updates the chatbot based on the new settings.
+    \end{enumerate}
+    
+\end{itemize}
+    
 \nsection{G.6 Limitations and exclusions}
 \comment{Aspects that the system need not address.}
 Below is a list of limitations and exclusions the system will not address:
@@ -312,7 +511,7 @@ This chapter should not be empty!}
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.  
 
-\input{../Reflection.tex}
+% \input{../Reflection.tex}
 
 \begin{enumerate}
   \item What went well while writing this deliverable? 
