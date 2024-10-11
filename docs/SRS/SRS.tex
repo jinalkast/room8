@@ -14,6 +14,8 @@
 \usepackage{underscore}
 \usepackage{xcolor}
 \usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
 \usepackage[bookmarks=true]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -218,6 +220,12 @@ An improvement in academic performance for students experience stress caused by 
 
 \nsection{G.5 High-level usage scenarios}
 \comment{Fundamental usage paths through the system.}
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{./img/use-case-diagram.png}
+    \caption{High level use case diagram}
+    \label{fig: High level use case diagram}
+\end{figure}
 
 \begin{itemize}
     \item UC1: Create an account
@@ -458,30 +466,53 @@ This chapter should not be empty!}
 \nsection{E.2 Components}
 \comment{List of elements of the environment that may affect or be affected by the system and project. Includes other systems to which the system must be interfaced.}
 \begin{flushleft}
-  \item \textbf{Motion-activated camera:} The app will be connected to a camera that is activated by motion in the shared space. This component is used for taking a “before” and “after” picture that serves as the input for the cleanliness detection model. 
+  \item \textbf{Motion-activated camera:} The app will be connected to a camera that is activated by motion in the shared space. This component is used for taking a “before” and “after” picture that serves as the input for the cleanliness detection model. \newline
   
-  \item \textbf{Object detector API:} The app will utilize an object detector that performs on a pair of images (i.e. the “before” and “after” picture) taken by the motion-activated camera. Object detection enables the algorithm to quantify the difference in room states as a function of objects and their transformations. 
+  \item \textbf{Object detector API:} The app will utilize an object detector that performs on a pair of images (i.e. the “before” and “after” picture) taken by the motion-activated camera. Object detection enables the algorithm to quantify the difference in room states as a function of objects and their transformations.\newline 
   
-  \item \textbf{Household items dataset:} The ML model will be pre-trained with a dataset containing common household and kitchen items. This will allow the object detector to classify the items it detects and is important for providing valuable output to students.
+  \item \textbf{Household items dataset:} The ML model will be pre-trained with a dataset containing common household and kitchen items. This will allow the object detector to classify the items it detects and is important for providing valuable output to students.\newline
    
-  \item \textbf{Google calendar API:} The application will interface with Google calendar to facilitate scheduling chores and events. This is critical for Room8's chore scheduling.
+  \item \textbf{Google calendar API:} The application will interface with Google calendar to facilitate scheduling chores and events. This is critical for Room8's chore scheduling.\newline
 
-  \item \textbf{Chatbot API:} 
+  \item \textbf{SMS Chatbot:} The application employs a chatbot to send notifications to students via SMS about their responsibilities in the home (i.e. cleaning their mess from shared spaces, upcoming chore deadlines, and money owed for shared bills). This helps with bookkeeping, enforcing fairness, and keeping shared spaces clean.\newline
+
+  \item \textbf{OAuth 2.0:}The app utilizes the OAuth 2.0 protocol to manage user authentication and authorization securely. OAuth 2.0 allows Room8 to provide a seamless login experience using third-party identity providers without requiring users to create and manage separate credentials. OAuth 2.0 handles the app’s legal and privacy compliance standards.\newline
 
 \end{flushleft}
 
 \nsection{E.3 Constraints}
 \comment{Obligations and limits imposed on the project and system by the environment.}
 %---------------------------------
-\notEmpty{}
+\begin{flushleft}
+  \item \textbf{Camera resolution:} The resolution of the motion-activated camera affects the quality of the input that is used by the object detector. Depending on the PPM of the image, there is a minimum viable object size for a given object to be classified.\newline
+  
+  \item \textbf{Platform compatibility:} The application must be compatible on Android and iOS to accommodate all users in the home.\newline 
+  
+  \item \textbf{Data privacy compliance:} The application adheres to all applicable data privacy regulations for the region in which it operates. User data must be handled with the utmost care and cannot be shared or used without explicit consent. Prior to collecting, storing, or processing any personal data, the appropriate permissions must always be obtained to ensure compliance with privacy laws and to respect user rights. \newline
+
+\end{flushleft}
 %---------------------------------
 
 
 \nsection{E.4 Assumptions}
 \comment{Properties of the environment that may be assumed, with the goal of facilitating the project and simplifying the system.}
+\begin{flushleft}
+  \item \textbf{Network connectivity:} The application assumes that there is reliable internet connection. Operating under this assumption, the camera is able to transfer images to the detector and users have access to updated synchronized information when using the app.\newline
 
+  \item \textbf{Operating system support:} The application is compatible with the versions of Android and iOS that are currently supported by mobile providers.\newline
+  
+  \item \textbf{Common household items dataset:} The classifier can assume that any object it comes across is a common household item that belongs to a class represented in its training data.\newline 
+
+\end{flushleft}
 \nsection{E.5 Effects}
 \comment{Elements and properties of the environment that the system will affect.}
+\begin{flushleft}
+  \item \textbf{Digital minimalism:} Members of the home conduct all interactions on one platform. All common virtual services are provided by the Room8 application, hence eliminating the need for other applications that clutter the digital space.\newline
+
+  \item \textbf{Accountability:} The application promotes social responsibility and user accountability by assessing the cleanliness state of the room before/after use and quantifying the difference in the 2 states. Students are given objective feedback on how their usage of the room contributed to cleanliness and all students in the group are held accountable for their usage.\newline
+  
+  \item \textbf{Ease social tension:} Students living in a home can feel tense about confronting their roommates when asking them to clean up, pay them back, or do the chores they agreed to. The chatbot sends reminders about these duties, taking the pressure off students to confront each other and risk compromising their relationships.\newline 
+\end{flushleft}
 
 \nsection{E.6 Invariants}
 \comment{Properties of the environment that the systemâ€™s operation must preserve.}
@@ -499,6 +530,11 @@ This chapter should not be empty!}
 %---------------------------------
 \notEmpty{}
 %---------------------------------
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{./img/component-diagram.png}
+    \caption{Component Diagram}
+    \label{fig: High level component diagram}
+\end{figure}
 
 \nsection{S.2 Functionality}
 \comment{One section, S.2.n, for each of the components identified in S.2, describing the corresponding behaviors (functional and non-functional properties).}
@@ -533,10 +569,75 @@ This chapter should not be empty!}
 \comment{Any a priori choices binding the project to specific tools, hardware, languages or other technical parameters.}
 
 \nsection{P.3 Schedule and milestones}
-\comment{List of tasks to be carried out and their scheduling.}
-%---------------------------------
-\notEmpty{}
-%---------------------------------
+\begin{itemize}
+    \item \textbf{Milestone 1 (September 23rd) - Initial concept and development plan}
+    \begin{itemize}
+        \item Deliverable: Problem Statement and Goals
+        \item Deliverable: Development Plan
+    \end{itemize}
+
+    \item \textbf{Milestone 2 (October 11) - Requirements}
+    \begin{itemize}
+        \item Deliverable: SRS
+    \end{itemize}
+
+    \item \textbf{Milestone 3 (October 23) - Hazard Analysis}
+    \begin{itemize}
+        \item Deliverable: Hazard Analysis Report
+    \end{itemize}
+
+    \item \textbf{Milestone 4 (November 1st) - V\&V Plan}
+    \begin{itemize}
+        \item Deliverable: V\&V Plan
+    \end{itemize}
+
+    \item \textbf{Milestone 5 (Within November 11-22) - POC demonstration}
+    \begin{itemize}
+        \item Event: Informal Project Demonstration
+        \item Goal: Core features functional
+    \end{itemize}
+
+    \item \textbf{Milestone 6 (January 15) - Design Documents}
+    \begin{itemize}
+        \item Deliverable: Software Architecture Document
+        \item Deliverable: Detailed Design Document
+    \end{itemize}
+
+    \item \textbf{Milestone 7 (within February 3-14) - Revision 0 \& Project completion}
+    \begin{itemize}
+        \item Goal: Project is Complete and Functional
+    \end{itemize}
+
+    \item \textbf{Milestone 8 (March 7th) - Verify \& Validate}
+    \begin{itemize}
+        \item Deliverable: V\&V Report
+        \item Goal: Project meets all requirements outlined in the SRS and V\&V Plan
+    \end{itemize}
+
+    \item \textbf{Milestone 9 (within March 24-30) - Final demonstration}
+    \begin{itemize}
+    	\item Event: Final Project Demonstration
+    	\item Goal: Unmet requirements from Milestone 8 are resolved
+    \end{itemize}
+
+    \item \textbf{Milestone 10 (April) - Project EXPO demonstration}
+    \begin{itemize}
+        \item Deliverable: Project Poster
+        \item Event: Project Expo
+    \end{itemize}
+
+    \item \textbf{Milestone 11 (April 2nd) - Final documentation}
+    \begin{itemize}
+        \item Deliverable: Final Problem Statement
+        \item Deliverable: Development Plan
+        \item Deliverable: POC Plan
+        \item Deliverable: Updated Requirements document
+        \item Deliverable: V\&V Plan
+        \item Deliverable: V\&V Report
+        \item Deliverable: User Guide
+        \item Deliverable: Project Source Code
+    \end{itemize}
+\end{itemize}
 
 \nsection{P.4 Tasks and deliverables}
 \comment{Details of individual tasks listed under P.3 and their expected outcomes.}
