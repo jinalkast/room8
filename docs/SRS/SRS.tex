@@ -457,6 +457,18 @@ This chapter should not be empty!}
 
 \nsection{E.2 Components}
 \comment{List of elements of the environment that may affect or be affected by the system and project. Includes other systems to which the system must be interfaced.}
+\begin{flushleft}
+  \item \textbf{Motion-activated camera:} The app will be connected to a camera that is activated by motion in the shared space. This component is used for taking a “before” and “after” picture that serves as the input for the cleanliness detection model. 
+  
+  \item \textbf{Object detector API:} The app will utilize an object detector that performs on a pair of images (i.e. the “before” and “after” picture) taken by the motion-activated camera. Object detection enables the algorithm to quantify the difference in room states as a function of objects and their transformations. 
+  
+  \item \textbf{Household items dataset:} The ML model will be pre-trained with a dataset containing common household and kitchen items. This will allow the object detector to classify the items it detects and is important for providing valuable output to students.
+   
+  \item \textbf{Google calendar API:} The application will interface with Google calendar to facilitate scheduling chores and events. This is critical for Room8's chore scheduling.
+
+  \item \textbf{Chatbot API:} 
+
+\end{flushleft}
 
 \nsection{E.3 Constraints}
 \comment{Obligations and limits imposed on the project and system by the environment.}
