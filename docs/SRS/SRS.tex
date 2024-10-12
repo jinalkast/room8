@@ -356,7 +356,7 @@ The glossary provides definitions for the key terms used throughout the project.
 
     \item \textbf{CASL (Cleanliness Score):} A score assigned to a student after they have finished using the shared living space. It is derived from an algorithm in which the inputs are a "before" and "after" picture pair.\newline
 
-    \item \textbf{OUath 2.0:} An open standard protocol for authorization, allowing secure access to user data across different services without revealing login credentials. OAuth is commonly used to enable single sign-on or to grant third-party applications limited access to a user's resources.\newline
+    \item \textbf{OAuth 2.0:} An open standard protocol for authorization, allowing secure access to user data across different services without revealing login credentials. OAuth is commonly used to enable single sign-on or to grant third-party applications limited access to a user's resources.\newline
 
     \item \textbf{PPM (Pixels Per Metre):} A measurement used to define the resolution of digital images, specifically indicating the number of pixels within a meter of space. It is often used in imaging, mapping, and display technologies to describe the level of detail or clarity in an image.\newline
 
@@ -372,7 +372,7 @@ The glossary provides definitions for the key terms used throughout the project.
 
     \item \textbf{CI/CD (Continuous Integration and Continuous Deployment/Development):} A set of practices in software development aimed at automating and streamlining the process of integrating code changes (CI) and deploying applications (CD). CI/CD improves code quality, speeds up development cycles, and ensures faster delivery of new features or updates.\newline
 
-    \item \textbf{POC (Proof of Concept):} A prototype or small-scale experiment conducted to verify that an idea or technology is feasible. In software development, a POC helps validate whether a particular solution or approach will work as intended before full-scale implementation.\newline
+    \item \textbf{PoC (Proof of Concept):} A prototype or small-scale experiment conducted to verify that an idea or technology is feasible. In software development, a PoC helps validate whether a particular solution or approach will work as intended before full-scale implementation.\newline
 
 \end{flushleft}
 
@@ -515,8 +515,8 @@ Invariants are properties of the environment that the system must maintain throu
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{NFR2.2.1}: The chatbot shall not disclose any sensitive information in its messages such as addresses or full names.
-  			\item \textbf{NFR2.2.2}: The chatbot shall not send users too frequently to prevent annoying users.
+  			\item \textbf{NFR221}: The chatbot shall not disclose any sensitive information in its messages such as addresses or full names.
+  			\item \textbf{NFR222}: The chatbot shall not send users too frequently to prevent annoying users.
   		\end{itemize}
   	\end{itemize}
   	\item \textbf{S.2.3 - Cleanliness Manager}
@@ -531,13 +531,13 @@ Invariants are properties of the environment that the system must maintain throu
         \end{itemize}
         \item \textbf{Non-Functional Requirements:}
         \begin{itemize}
-            \item \textbf{NFR2.3.1:} The system shall not record users.
-            \item \textbf{NFR2.3.2:} The system shall not capture images of users.
-            \item \textbf{NFR2.3.3:} The system shall encrypt and securely store all images of homes.
-            \item \textbf{NFR2.3.4:} Photos captured with the system will be in a quality high enough to differentiate objects within frame.
-            \item \textbf{NFR2.3.5:} The system shall process image data in under 30 minutes.
-            \item \textbf{NFR2.3.6:} The system shall not report false events which accuse someone of reducing the cleanliness score of an environment.
-            \item \textbf{NFR2.3.7:} The system shall declare an instances of someone altering a room finished one there has been no activity in the room for a designated period of time.
+            \item \textbf{NFR231:} The system shall not record users.
+            \item \textbf{NFR232:} The system shall not capture images of users.
+            \item \textbf{NFR233:} The system shall encrypt and securely store all images of homes.
+            \item \textbf{NFR234:} Photos captured with the system will be in a quality high enough to differentiate objects within frame.
+            \item \textbf{NFR235:} The system shall process image data in under 30 minutes.
+            \item \textbf{NFR236:} The system shall not report false events which accuse someone of reducing the cleanliness score of an environment.
+            \item \textbf{NFR237:} The system shall declare an instances of someone altering a room finished one there has been no activity in the room for a designated period of time.
   		\end{itemize}
   	\end{itemize}
   	\item \textbf{S.2.4 - Schedule Configuration}
@@ -1059,21 +1059,21 @@ In order to validate functional requirements, a systematic approach will be impl
 \begin{itemize}
     \item Account Creation Flow
     	\begin{itemize}
-    		\item  A new user trying to create an account, when sign-up process is started 				they then should be able to enter details and create account with details being stored in secured manner. [NFR2.1.1].
+    		\item  A new user trying to create an account, when sign-up process is started 				they then should be able to enter details and create account with details being stored in secured manner. [NFR211].
 		\end{itemize}    	
     \item Error Handling For Incorrect Information
     	\begin{itemize}
-    		\item  A user trying to login to an account, when login process is started 				and they make mistake, (eg. enter wrong password), no information pertaining to sensitive detail should be displayed. [NFR2.1.2].
+    		\item  A user trying to login to an account, when login process is started 				and they make mistake, (eg. enter wrong password), no information pertaining to sensitive detail should be displayed. [NFR212].
 		\end{itemize}
 	\item Account Authentication
     	\begin{itemize}
-    		\item  A user trying to login and authenticating their account should be able to have account authenticated must be done in less than 1 second. [NFR2.1.4]. \\
+    		\item  A user trying to login and authenticating their account should be able to have account authenticated must be done in less than 1 second. [NFR214]. \\
 		\end{itemize}		
 \textbf{Tests for Calendar Interactions}\\
 
 		\item Calendar Event Creation
     	\begin{itemize}
-    		\item  A user who has logged on to the application will create an event then change the time 1 increment above the original time on the calendar and the system will store the event in UTC while the event will show up on the user's device in the user's respective timezone. [NFR2.4.1, NFR2.4.2, NFR2.4.3].
+    		\item  A user who has logged on to the application will create an event then change the time 1 increment above the original time on the calendar and the system will store the event in UTC while the event will show up on the user's device in the user's respective timezone. [NFR241, NFR242, NFR243].
 		\end{itemize}
 \end{itemize}
 
@@ -1348,7 +1348,7 @@ Room8's ChatBot SMS will send messages to users using a third party messaging sy
 
 
 \nsection{P.6 Risks and mitigation analysis}
-\comment{Potential obstacles to meeting the schedule of P.4, and measures for adapting the plan if they do arise.}\\
+
 \textbf{Machine Learning Model Training}\\
 Finding enough data to train the machine learning algorithm to detect when a mess has been made and what detect what is altered or added in the space. Sensitivity to slight changes such as lighting is another risk with the machine learning algorithm approach. An alternative to adapt this scenario would be to use image differencing to detect changes in environment.\\
 \\
@@ -1360,9 +1360,22 @@ Unclear requirements and adding too many elements to the scope of the project wi
 
 
 \nsection{P.7 Requirements process and report}
-\comment{Initially, description of what the requirements process will be; later, report on its steps.}
+\textbf{Requirements Elicitation}\\
+For the elicitation of our requirements, we were able to discuss with our peers, who live in shared living situations, and took inspiration from our own experience as students who also have the need for an application like Room8.\\
+\\
+\textbf{Requirements Analysis}\\
+The analysis of the requirements was completed as part of the problem statement and goals. As a group, we took the goals that we created in that part of the project and extracted them as functional requirements. Additionally, there were non-functional requirements that were mistakenly added as goals in revision 0 of that document, which gave us a basis for the specification.\\
+\\\\\\
+\textbf{Requirements Specification}\\
+Evidently, the requirements specification are described in our Software Requirements Specification (this document itself). They will remain as the project continues and will be updated accordingly. \\
+\\
+\textbf{Requirements Validation}\\
+The requirements validation will take place at two different stages of the project. First, they will be validated at the point of the PoC demo, where we will determine if the scope of the project is appropriate and we can pivot (add/reduce requirements) at that point. Furthermore, the final requirements will be assessed when the project is complete and demonstrated at the end of the Winter semester.\\
+\\
+\textbf{Requirements Management}\\
+As previously mentioned, additional requirements will be made as necessary in this document and appended iteratively.
 
-\newpage{}
+    \newpage{}
 \section*{Appendix --- Reflection}
 
 The information in this section will be used to evaluate the team members on the
