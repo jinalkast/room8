@@ -17,6 +17,7 @@
 \usepackage{makecell}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{tabularx}
 \usepackage[bookmarks=true]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -151,7 +152,7 @@ Room8 is designed to reduce points of tension and reduce the need for frustratin
 \nsection{G.3 Expected benefits}
 %---------------------------------
 \begin{flushleft}
-As stated in section G.2, conflicts between roommates create more than issues in the home and involve more than just misunderstandings in scheduling tasks or living standards. By creating a centralized suite that will help roommates monitor, schedule, and coordinate, Room8 will reduce conflicts between roommates over misunderstandings and miscommunications, and allow for greater flexibility in assigning responsibilities. Additionally, reduced conflicts will lead to mental health benefits for those living in the home by lowering conflict-related stress.  Finally, Room8 is expected to improve academic performance in some students who are hindered academically by conflicts with roommates (approximately 17% of students [1]). 
+As stated in section G.2, conflicts between roommates create more than issues in the home and involve more than just misunderstandings in scheduling tasks or living standards. By creating a centralized suite that will help roommates monitor, schedule, and coordinate, Room8 will reduce conflicts between roommates over misunderstandings and miscommunications, and allow for greater flexibility in assigning responsibilities. Additionally, reduced conflicts will lead to mental health benefits for those living in the home by lowering conflict-related stress.  Finally, Room8 is expected to improve academic performance in some students who are hindered academically by conflicts with roommates (approximately 17\% of students [1]). 
 
 \begin{benefit}\label{benefit:first}
 An improvement in response times amongst roommates over household concerns.
@@ -201,9 +202,9 @@ An improvement in academic performance for students experience stress caused by 
      
     \item \textbf{Bill Splitter:} Students are able to add shared expenses to the house and keep track of who owes what. The system will automatically split the bills between the chosen students. 
 
-    \item \textbf{Chat:} The system provides an exportable chatbot to SMS group chats to aid in home management and communication. The chatbot will be able to send remainders and notifications to the group chat about upcoming events, chores, and bills.
+    \item \textbf{Chat:} The system provides an exportable ChatBot to SMS group chats to aid in home management and communication. The ChatBot will be able to send reminders and notifications to the group chat about upcoming events, chores, and bills.
     
-    \item \textbf{Compliance and Data Privacy:} The system follows data privacy and compliance with Personal Information Protection and Electronic Documents Act (PIPEDA), Ontario’s Freedom of Information and Protection of Privacy Act (FIPPA), and Anti-Spam Legislation (CASL) to ensure that student's data is secure and not shared with third parties.
+    \item \textbf{Compliance and Data Privacy:} The system follows data privacy and compliance with Personal Information Protection and Electronic Documents Act (PIPEDA), Ontario’s Freedom of Information and Protection of Privacy Act (FIPPA), and Anti-Spam Legislation (CASL) to ensure that students' data is secure and not shared with third parties.
     
     \item \textbf{Progressive Web App:} The system is hosted as a progressive web app (PWA), so users can use it on their phones and computers.
 \end{flushleft}
@@ -268,11 +269,11 @@ An improvement in academic performance for students experience stress caused by 
     \item UC6: SMS ChatBot
     \begin{enumerate}
         \item User navigates to the “Chat Management” section.
-        \item User selects the option to add a chatbot to their house group chat.
+        \item User selects the option to add a ChatBot to their house group chat.
         \item User inputs notification and reminder settings.
-        \item System generates an SMS numbers and instructions to add the chatbot to the group chat.
-        \item The chatbot sends a welcome message to the group.
-        \item The chatbot sends notifications and reminders to the group chat.
+        \item System generates an SMS numbers and instructions to add the ChatBot to the group chat.
+        \item The ChatBot sends a welcome message to the group.
+        \item The ChatBot sends notifications and reminders to the group chat.
     \end{enumerate}
     
 \end{itemize}
@@ -305,9 +306,9 @@ University Housing Committee & Indirect \\ \hline
 \end{table}
 
 \nsubsection{G.7.1 Direct Stakeholders}
-\textbf{Students Off Campus} \\ Students are the primary direct stakeholders for Room8. They are the main users of the mobile application who create houses within the app and set up the camera systems. These students seek to maintain cleanliness in their shared living spaces and establish accountability when a mess is left behind by a roommate. The application addresses common challenges faced by students in shared living arrangements, such as maintaining cleanliness, splitting expenses, and scheduling activities. \\
+\textbf{Students Off Campus} \\ Students off campus are the primary direct stakeholders for Room8. They are the main users of the mobile application who create houses within the app and set up the camera systems. These students seek to maintain cleanliness in their shared living spaces and establish accountability when a mess is left behind by a roommate. The application addresses common challenges faced by students in shared living arrangements, such as maintaining cleanliness, splitting expenses, and scheduling activities. \\
 \\
-\textbf{Students On Campus} \\ Students of are the other direct stakeholders for Room8. They are the main mainly concerned with the chore and activity scheduling aspect of the app. In most cases students living on campus do not have a kitchen and individuals are responsible for keeping their own rooms clean so these types of students would benefit from scheduling the cleaning of public areas and events that are happening.
+\textbf{Students On Campus} \\ Students on campus are the other direct stakeholders for Room8. They are the main mainly concerned with the chore and activity scheduling aspect of the app. In most cases students living on campus do not have a kitchen and individuals are responsible for keeping their own rooms clean so these types of students would benefit from scheduling the cleaning of public spaces (eg. pool table, game space) and seeing events that are happening.
 
 \nsubsection{G.7.2 Indirect Stakeholders}
 \textbf{Landlords} \\ Landlords are the main indirect stakeholders to the project. Landlords are renting out their homes to students and are concerned with the condition their house is kept in. They are looking to maintain the clean condition of their home which is done by holding students accountable for messes that are made.\\
@@ -387,7 +388,7 @@ This section outlines the relevant external components that the system will inte
    
   \item \textbf{Google calendar API:} Room8 will interface with Google calendar to facilitate scheduling chores and events. This is critical for Room8's chore scheduling.\newline
 
-  \item \textbf{SMS Chatbot:} Room8 employs a chatbot to send notifications to students via SMS about their responsibilities in the home (i.e. cleaning their mess from shared spaces, upcoming chore deadlines, and money owed for shared bills). This helps with bookkeeping, enforcing fairness, and keeping shared spaces clean.\newline
+  \item \textbf{SMS ChatBot:} The application employs a ChatBot to send notifications to students via SMS about their responsibilities in the home (i.e. cleaning their mess from shared spaces, upcoming chore deadlines, and money owed for shared bills). This helps with bookkeeping, enforcing fairness, and keeping shared spaces clean.\newline
 
   \item \textbf{OAuth 2.0:} The app utilizes the OAuth 2.0 protocol to manage user authentication and authorization securely. OAuth 2.0 allows Room8 to provide a seamless login experience using third-party identity providers without requiring users to create and manage separate credentials. OAuth 2.0 handles the app’s legal and privacy compliance standards.\newline
   
@@ -427,7 +428,7 @@ This section describes how the system’s operations will influence its environm
 
   \item \textbf{Accountability:} Room8 promotes social responsibility and user accountability by assessing the cleanliness state of the room before/after use and quantifying the difference in the 2 states, providing a cleanliness score. Students are given objective feedback and all students in the home are held accountable for their actions.\newline
   
-  \item \textbf{Ease social tension:} Students living in a home can feel tense about confronting their roommates when asking them to clean up, pay them back, or do the chores they agreed to. The chatbot sends reminders about these duties, taking the pressure off students to confront each other and risk compromising their relationships.\newline 
+  \item \textbf{Ease social tension:} Students living in a home can feel tense about confronting their roommates when asking them to clean up, pay them back, or do the chores they agreed to. The ChatBot sends reminders about these duties, taking the pressure off students to confront each other and risk compromising their relationships.\newline 
 \end{flushleft}
 
 \nsection{E.6 Invariants}
@@ -462,7 +463,7 @@ Invariants are properties of the environment that the system must maintain throu
   \item \textbf{2. Back-End Cluster}
    \begin{itemize}
    \item \textbf{2.1 - Auth and House Management Logic:} The logic for authentication and user/house details are housed here. Any updating of information (as per user request) will be carried out in this component. Authentication (through OAuth) will also be the responsibility of this software.
-  	\item \textbf{2.2 - SMS Chatbot:} Responsible for sending out chatbot messages to home group chats including reminders to complete tasks, notification of cleanliness assessment, expenses due from bill splitter, or update to configuration of user/home. Has the most dependencies with other back-end components since updates in those components will drive the output of new messages from the bot.
+  	\item \textbf{2.2 - SMS ChatBot:} Responsible for sending out ChatBot messages to home group chats including reminders to complete tasks, notification of cleanliness assessment, expenses due from bill splitter, or update to configuration of user/home. Has the most dependencies with other back-end components since updates in those components will drive the output of new messages from the bot.
   	\item \textbf{2.3 - Cleanliness Calculator:} Runs the algorithm to determine which changes have been made in the shared space by the identified user. Receives input from the hardware (dependenciy) and returns changes to the GUI after each event.
   	\item \textbf{2.4 - Schedule Generator:} Houses logic that deals with the scheduling aspect of the application. Generates events to be displayed to each users calendar based on whether or not they're included in a chore or event.
   	\item \textbf{2.5 - Bill Split Calculator:} Calculation of charges due for shared expenses is done within this component. It will also keep track of which expenses are due by each user and who they owe, along with a history of charges paid.
@@ -486,30 +487,31 @@ Invariants are properties of the environment that the system must maintain throu
   	\begin{itemize}
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{FR1:} The system shall allow users to create an account using their name, email, and password.
-            \item \textbf{FR2:} The system shall allows users to log out of their account.
-            \item \textbf{FR3:} The system shall allow users to create a home group using the home name, address, and number of roommates.
-            \item \textbf{FR4:} The system shall allow users to invite other users to join their home group.
-            \item \textbf{FR5:} The system shall allow users to view the list of users in their home group.
-            \item \textbf{FR6:} The system shall allow users to remove users from their home group.
-            \item \textbf{FR7:} The system shall allow users to leave their home group.
+  			\item \textbf{FR211:} The system shall allow users to create an account using their name, email, and password.
+            \item \textbf{FR212:} The system shall allows users to log in to their account.
+            \item \textbf{FR213:} The system shall allows users to log out of their account.
+            \item \textbf{FR214:} The system shall allow users to create a home group using the home name, address, and number of roommates.
+            \item \textbf{FR215:} The system shall allow users to invite other users to join their home group.
+            \item \textbf{FR216:} The system shall allow users to view the list of users in their home group.
+            \item \textbf{FR217:} The system shall allow users to remove users from their home group.
+            \item \textbf{FR218:} The system shall allow users to leave their home group.
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{NFR2.1.1:} All data related to authentication must be encrypted in both transit and in storage.
-  			\item \textbf{NFR2.1.2:} Error messages related to authentication should not disclose sensitive details such as "Incorrect Password".
-  			\item \textbf{NFR2.1.3:} All data related to authentication must be encrypted in both transit and in storage.
-  			\item \textbf{NFR2.1.4:} The system should be able to authenticate a user with a median response time of under 1 second.
+  			\item \textbf{NFR211:} All data related to authentication must be encrypted in both transit and in storage.
+  			\item \textbf{NFR212:} Error messages related to authentication should not disclose sensitive details such as "Incorrect Password".
+  			\item \textbf{NFR213:} All data related to houses such as addresses and residents should be encrypted in transit and in rest.
+  			\item \textbf{NFR214:} The system should be able to authenticate a user with a median response time of under 1 second.
   		\end{itemize}
   	\end{itemize}
   	\item \textbf{S.2.2 - ChatBot Configuration}
   	\begin{itemize}
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{FR8:} The system shall allow users to configure the chatbot settings to include or exclude messages corresponding to chore schedule, cleanliness manager, and bill splitter.
-            \item \textbf{FR9:} The ChatBot shall send reminders to the group chat about upcoming chores and events in the schedule 2 days in advance.
-            \item \textbf{FR10:} The ChatBot shall send notifications to the group chat about new shared living space cleanliness scores immediately after an event is added to the cleanliness manager page.
-            \item \textbf{FR11:} The ChatBot shall send notifications to the group chat about new shared expenses added to the bill splitter page immediately after its addition.
+  			\item \textbf{FR221:} The system shall allow users to configure the ChatBot settings to include or exclude messages corresponding to chore schedule, cleanliness manager, and bill splitter.
+            \item \textbf{FR222:} The ChatBot shall send reminders to the group chat about upcoming chores and events in the schedule 2 days in advance.
+            \item \textbf{FR223:} The ChatBot shall send notifications to the group chat about new shared living space cleanliness scores immediately after an event is added to the cleanliness manager page.
+            \item \textbf{FR224:} The ChatBot shall send notifications to the group chat about new shared expenses added to the bill splitter page immediately after its addition.
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
@@ -521,51 +523,56 @@ Invariants are properties of the environment that the system must maintain throu
   	\begin{itemize}
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{FR12:} The system shall display the current cleanliness score of the shared living space.
-            \item \textbf{FR13:} The system shall display the detected messes in the shared living space.
-            \item \textbf{FR14:} The system shall allow users to view the cleanliness score of other users.
-            \item \textbf{FR15:} The system shall allow users to view the pending tasks of other users.
-  		\end{itemize}
-  		\item \textbf{Non-Functional Requirements:}
-  		\begin{itemize}
-  			\item \textbf{NFR2.3.1:} The system shall not record users.
-  			\item \textbf{NFR2.3.2:} The system shall not capture images of users.
-  			\item \textbf{NFR2.3.3:} The system shall encrypt and securely store all images of homes.
-  			\item \textbf{NFR2.3.4:} Photos captured with the system will be in a quality high enough to differentiate objects within frame.
-  			\item \textbf{NFR2.3.5:} The system shall process image data in under 30 minutes.
-  			\item \textbf{NFR2.3.6:} The system shall not report false events which accuse someone of reducing the cleanliness score of an environment.
-  			\item \textbf{NFR2.3.7:} The system shall declare an instances of someone altering a room finished one there has been no activity in the room for a designated period of time.
+            \item \textbf{FR231:} The system shall evaluate the cleanliness of the shared living space before and after a user enters and exits the space.
+  			\item \textbf{FR232:} The system shall display the current cleanliness score of the shared living space.
+            \item \textbf{FR233:} The system shall display the detected messes in the shared living space.
+            \item \textbf{FR234:} The system shall allow users to view the cleanliness score of other users.
+            \item \textbf{FR235:} The system shall allow users to view the history of cleanliness scores and detected messes.
+        \end{itemize}
+        \item \textbf{Non-Functional Requirements:}
+        \begin{itemize}
+            \item \textbf{NFR2.3.1:} The system shall not record users.
+            \item \textbf{NFR2.3.2:} The system shall not capture images of users.
+            \item \textbf{NFR2.3.3:} The system shall encrypt and securely store all images of homes.
+            \item \textbf{NFR2.3.4:} Photos captured with the system will be in a quality high enough to differentiate objects within frame.
+            \item \textbf{NFR2.3.5:} The system shall process image data in under 30 minutes.
+            \item \textbf{NFR2.3.6:} The system shall not report false events which accuse someone of reducing the cleanliness score of an environment.
+            \item \textbf{NFR2.3.7:} The system shall declare an instances of someone altering a room finished one there has been no activity in the room for a designated period of time.
   		\end{itemize}
   	\end{itemize}
   	\item \textbf{S.2.4 - Schedule Configuration}
   	\begin{itemize}
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{FR16:} The system shall allow users to add a new chore to the schedule.
-            \item \textbf{FR17:} The system shall allow users to add a new event to the schedule.
-            \item \textbf{FR18:} The system shall allow users to input chore details (name, description, time, frequency, assigned users, etc.).
-            \item \textbf{FR19:} The system shall save the chore and send reminders to the assigned users.
-            \item \textbf{FR20:} The system shall allow users to view the schedule and mark chores as complete.
+  			\item \textbf{FR241:} The system shall allow users to add a new chore to the schedule.
+            \item \textbf{FR242:} The system shall allow users to add a new event to the schedule.
+            \item \textbf{FR243:} The system shall allow users to input chore and event details (name, description, time, frequency, assigned users, etc.).
+            \item \textbf{FR244:} The system shall allow users to edit and delete chores and events.
+            \item \textbf{FR245:} The system shall allow users to view the schedule and mark chores as complete.
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{NFR2.4.1:} The calendar system shall store all events in UTC
-  			\item \textbf{NFR2.4.2:} The calendar system shall display all calendar events to users in their time zone. 
-  			\item \textbf{NFR2.4.3:} The calendar system shall have a granularity of 5 minutes.
+  			\item \textbf{NFR241:} The calendar system shall store all calendar events in UTC
+  			\item \textbf{NFR242:} The calendar system shall display all calendar events to users in their time zone. 
+  			\item \textbf{NFR243:} The calendar system shall have a granularity of 5 minutes.
+  			\item \textbf{NFR244:} The calendar system shall encrypt all events stored.
   		\end{itemize}
   	\end{itemize}
   	\item \textbf{S.2.5 - Bill Splitter Configuration}
   	\begin{itemize}
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{FR21:} The system shall allow users to add a new expense to the bill splitter and notify the involved users.
-            \item \textbf{FR22:} The system shall allow users to view what he owes other housemates.
-            \item \textbf{FR23:} The system shall allow users to view what they owe others.
-            \item \textbf{FR24:} The system shall allow users to mark expenses as paid.
+  			\item \textbf{FR251:} The system shall allow users to add a new expense to the bill splitter and notify the involved users.
+            \item \textbf{FR252:} The system shall allow users to view what they owe other housemates.
+            \item \textbf{FR253:} The system shall allow users to view what they owe others.
+            \item \textbf{FR254:} The system shall allow users to mark expenses as paid.
+            \item \textbf{FR255:} The system shall calculate debts in order to minimize the amount of transactions required between housemates.
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{NFR1 - Sample:}
+  			\item \textbf{NFR251:} The Bill Splitter system shall encrypt all events stored.
+  			\item \textbf{NFR252:} The Bill Splitter shall allow users to record numerical values of prices with a granularity of two decimal places.
+
   		\end{itemize}
   	\end{itemize}
 \end{flushleft}
@@ -849,7 +856,7 @@ Thus, S.3 Interfaces will be available in a future revision of this document.
     \item \textbf{Success Postcondition:} New event is added to the schedule and housemates are notified. Housemates are able to view event in the schedule. Housemates are reminded of the event when it is approaching.
 \end{itemize}
 
-\nsubsection{S.4.11 User Schedules an Event}
+\nsubsection{S.4.11 User Views Chores Or Events}
 \begin{itemize}
     \item \textbf{Use Case:} UC3
     \item \textbf{Primary Actor:} User
@@ -984,14 +991,14 @@ Thus, S.3 Interfaces will be available in a future revision of this document.
         \item User navigates to the “Chat Management” section.
         \item User selects the option to add a ChatBot to their house group chat.
         \item User inputs notification and reminder settings.
-        \item System generates an SMS numbers and instructions to add the chatbot to the group chat.
-        \item User adds the chatbot to the group chat.
-        \item The chatbot sends a welcome message to the group.
+        \item System generates an SMS numbers and instructions to add the ChatBot to the group chat.
+        \item User adds the ChatBot to the group chat.
+        \item The ChatBot sends a welcome message to the group.
     \end{enumerate}
 
     \item \textbf{Secondary Scenarios:}
     \begin{enumerate}
-        \item[5.1] Users fail to add the chatbot to the group chat.
+        \item[5.1] Users fail to add the ChatBot to the group chat.
         \begin{enumerate}
             \item[5.1.1] System informs the user that the ChatBot has not been added.
         \end{enumerate}
@@ -1001,10 +1008,76 @@ Thus, S.3 Interfaces will be available in a future revision of this document.
 \end{itemize}
 
 \nsection{S.5 Prioritization}
-\comment{Classification of the behaviors, interfaces and scenarios (S.2, S.3 and S.4) by their degree of criticality.}
+
+\begin{table}[H]
+    \flushleft
+    \begin{tabularx}{\textwidth}{|>{\raggedright}X|>{\raggedright}X|>{\raggedright}X|X|}
+    \hline
+    \textbf{Requirement ID} & \textbf{Description} & \textbf{MoSCoW Classification} & \textbf{Reasoning} \\ \hline
+    F211, FR212, FR213 & Account Authentication & Must have & App features require users to be authenticated to use. \\ \hline
+
+    F214, FR215, FR216, FR217, FR218 & House Management & Must have & App features all require users to be part of a home. \\ \hline
+
+    FR221 & ChatBot Configuration & Could have & Allows users to customize notifications to their needs. \\ \hline
+
+    FR222, FR223, FR224 & ChatBot Notification Messages & Should have & Allows users to conveniently recieve notifications in a shared setting. \\ \hline
+
+    FR231 & Cleanliness Evaluation After Usage & Should have & Removes frequent point of friction in living spaces for users. \\ \hline
+
+    FR232 & Cleanliness Score & Could have & Summarizes detected messes into a score. \\ \hline
+
+    FR233 & Cleanliness Detected Messes & Should have & Very important to assigning responsibilities to users. \\ \hline
+
+    FR234, FR235 & User Cleanliness and History & Could have & Provides history for user's performance. \\ \hline
+\end{tabularx}
+\caption{Requirement Specifications Part 1}
+\end{table}
+\begin{table}[H]
+    \flushleft
+    \begin{tabularx}{\textwidth}{|>{\raggedright}X|>{\raggedright}X|>{\raggedright}X|X|}
+    \hline
+    \textbf{Requirement ID} & \textbf{Description} & \textbf{MoSCoW Classification} & \textbf{Reasoning} \\ \hline
+    FR241, FR242, FR243 & Chore \& Event Management & Must have & Scheduling chores is an essential feature in student housing. \\ \hline
+
+    FR244 & Edit Chore \& Event & Could have & Allows users update their schedule with ease. \\ \hline
+
+    FR245 & Marking Chores Complete & Should have & Provides users with a way to track completed chores. \\ \hline
+
+    FR251, FR252, FR253, FR254 & Add \& View Split Bills & Must have & Essential feature in managing shared resources in student housing. \\ \hline
+
+    FR255 & Calculate Least Transactions & Could have & Convenient feature which makes users lives easier. \\ \hline
+    \end{tabularx}
+    \caption{Requirement Specifications Part 2}
+\end{table}
 
 \nsection{S.6 Verification and acceptance criteria}
-\comment{Specification of the conditions under which an implementation will be deemed satisfactory.}
+\textbf{Functional Requirements}\\
+In order to validate functional requirements, a systematic approach will be implemented. Features will be validated against criteria made by developers, testers and stakeholders. Using the criteria unit and intergration tests will be developed for consistency. \\
+\\
+\textbf{Non-Functional Requirements}\\
+\textbf{Tests for User Account Mangement}
+\begin{itemize}
+    \item Account Creation Flow
+    	\begin{itemize}
+    		\item  A new user trying to create an account, when sign-up process is started 				they then should be able to enter details and create account with details being stored in secured manner. [NFR2.1.1].
+		\end{itemize}    	
+    \item Error Handling For Incorrect Information
+    	\begin{itemize}
+    		\item  A user trying to login to an account, when login process is started 				and they make mistake, (eg. enter wrong password), no information pertaining to sensitive detail should be displayed. [NFR2.1.2].
+		\end{itemize}
+	\item Account Authentication
+    	\begin{itemize}
+    		\item  A user trying to login and authenticating their account should be able to have account authenticated must be done in less than 1 second. [NFR2.1.4]. \\
+		\end{itemize}		
+\textbf{Tests for Calendar Interactions}\\
+
+		\item Calendar Event Creation
+    	\begin{itemize}
+    		\item  A user who has logged on to the application will create an event then change the time 1 increment above the original time on the calendar and the system will store the event in UTC while the event will show up on the user's device in the user's respective timezone. [NFR2.4.1, NFR2.4.2, NFR2.4.3].
+		\end{itemize}
+\end{itemize}
+
+
 
 %===============================================================
 \chapter*{Project}
@@ -1064,7 +1137,7 @@ Due to time constraints, project requirements, and the skill sets of the team's 
         \item Deliverable: V\&V Plan
     \end{itemize}
 
-    \item \textbf{Milestone 5 (Within November 11-22) - POC demonstration}
+    \item \textbf{Milestone 5 (Within November 11-22) - PoC demonstration}
     \begin{itemize}
         \item Event: Informal Project Demonstration
         \item Goal: Core features functional
@@ -1103,7 +1176,7 @@ Due to time constraints, project requirements, and the skill sets of the team's 
     \begin{itemize}
         \item Deliverable: Final Problem Statement
         \item Deliverable: Development Plan
-        \item Deliverable: POC Plan
+        \item Deliverable: PoC Plan
         \item Deliverable: Updated Requirements document
         \item Deliverable: V\&V Plan
         \item Deliverable: V\&V Report
@@ -1113,6 +1186,7 @@ Due to time constraints, project requirements, and the skill sets of the team's 
 \end{itemize}
 
 \nsection{P.4 Tasks and deliverables}
+
 \noindent
 \textbf{Milestone 1}\\
 Details:
@@ -1122,7 +1196,7 @@ Details:
 \item Establish measurable goals and selling points of the product.
 \item Discuss team availabilities, roles, and communication strategies.
 \item Discuss potential workflows, technologies, and coding styles.
-\item Establish plan and timeline for a POC.
+\item Establish plan and timeline for a PoC.
 \end{itemize}
 Expected Outcomes:
 \begin{itemize}
@@ -1178,10 +1252,10 @@ Expected Outcomes:
 \textbf{Milestone 5}\\
 Details:
 \begin{itemize}
-\item Establish scope of the POC demonstration.
+\item Establish scope of the PoC demonstration.
 \item Prepare presentation materials such as documents or slides. TBD based on demonstration format.
-\item Establish core use cases for the POC demonstration.
-\item Rehearse POC demonstration.
+\item Establish core use cases for the PoC demonstration.
+\item Rehearse PoC demonstration.
 \end{itemize}
 Expected Outcomes:
 \begin{itemize}
@@ -1270,10 +1344,11 @@ Users create accounts for Room8 where user and home information is stored on a s
 Users will sign in securely without risk of data leaks and malicious connections.\\
 \\
 \textbf{SMS Message Service}\\
-Room8's Chatbot SMS will send messages to users using a third party messaging system that has connection to the Room8 application to send warnings and information of shared space.\\
+Room8's ChatBot SMS will send messages to users using a third party messaging system that has connection to the Room8 application to send warnings and information of shared space.\\
 
 
 \nsection{P.6 Risks and mitigation analysis}
+\comment{Potential obstacles to meeting the schedule of P.4, and measures for adapting the plan if they do arise.}\\
 \textbf{Machine Learning Model Training}\\
 Finding enough data to train the machine learning algorithm to detect when a mess has been made and what detect what is altered or added in the space. Sensitivity to slight changes such as lighting is another risk with the machine learning algorithm approach. An alternative to adapt this scenario would be to use image differencing to detect changes in environment.\\
 \\
@@ -1285,20 +1360,8 @@ Unclear requirements and adding too many elements to the scope of the project wi
 
 
 \nsection{P.7 Requirements process and report}
-\textbf{Requirements Elicitation}\\
-For the elicitation of our requirements, we were able to discuss with our peers, who live in shared living situations, and took inspiration from our own experience as students who also have the need for an application like Room8.\\
-\\
-\textbf{Requirements Analysis}\\
-The analysis of the requirements was completed as part of the problem statement and goals. As a group, we took the goals that we created in that part of the project and extracted them as functional requirements. Additionally, there were non-functional requirements that were mistakenly added as goals in revision 0 of that document, which gave us a basis for the specification.\\
-\\\\\\
-\textbf{Requirements Specification}\\
-Evidently, the requirements specification are described in our Software Requirements Specification (this document itself). They will remain as the project continues and will be updated accordingly. \\
-\\
-\textbf{Requirements Validation}\\
-The requirements validation will take place at two different stages of the project. First, they will be validated at the point of the proof of concept demo, where we will determine if the scope of the project is appropriate and we can pivot (add/reduce requirements) at that point. Furthermore, the final requirements will be assessed when the project is complete and demonstrated at the end of the Winter semester.\\
-\\
-\textbf{Requirements Management}\\
-As previously mentioned, additional requirements will be made as necessary in this document and appended iteratively.
+\comment{Initially, description of what the requirements process will be; later, report on its steps.}
+
 \newpage{}
 \section*{Appendix --- Reflection}
 
