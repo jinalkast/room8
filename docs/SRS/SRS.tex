@@ -535,25 +535,25 @@ Invariants are properties of the environment that the system must maintain throu
 \notEmpty{}
 %---------------------------------
 \begin{flushleft}
-  \item \textbf{Front-End Cluster}
+  \item \textbf{1. Front-End Cluster}
   \begin{itemize}
-  	\item \textbf{User Authentication and House Management:} The user interface which allows the user to log in and manage their account and/or house. It depends on a corresponding back-end component and allows the user to access all other functionality within the application once authenticated.
-  	\item \textbf{ChatBot Configuration:} The view which allows users to configure their ChatBot settings. This includes features such as opting in or out of certain personal and group notifications.
-  	\item \textbf{Cleanliness Manager:} Allows users to view their relevant details within the cleanliness detection section of the application. Includes details such as history of events within the shared space (i.e. time of entry, time of exit, changes made, etc.).
-  	\item \textbf{Schedule Configuration:} Users are able to configure details related to the scheduler within this view. Options to add/remove chores (including assigned users) and events (booked spaces) are found here.
-  	\item \textbf{Bill Splitter Configuration:} The area of the application where users can input and view details regarding shared expenses. Includes configuration to add/remove/edit bills and which users to split with, as well as outstanding balances and history of balances paid. Additionally, users can manually "settle" their outstanding payments by confirming that they've been paid within this interface.
+  	\item \textbf{1.1 - User Authentication and House Management:} The user interface which allows the user to log in and manage their account and/or house. It depends on a corresponding back-end component and allows the user to access all other functionality within the application once authenticated.
+  	\item \textbf{1.2 - ChatBot Configuration:} The view which allows users to configure their ChatBot settings. This includes features such as opting in or out of certain personal and group notifications.
+  	\item \textbf{1.3 - Cleanliness Manager:} Allows users to view their relevant details within the cleanliness detection section of the application. Includes details such as history of events within the shared space (i.e. time of entry, time of exit, changes made, etc.).
+  	\item \textbf{1.4 - Schedule Configuration:} Users are able to configure details related to the scheduler within this view. Options to add/remove chores (including assigned users) and events (booked spaces) are found here.
+  	\item \textbf{1.5 - Bill Splitter Configuration:} The area of the application where users can input and view details regarding shared expenses. Includes configuration to add/remove/edit bills and which users to split with, as well as outstanding balances and history of balances paid. Additionally, users can manually "settle" their outstanding payments by confirming that they've been paid within this interface.
   	\end{itemize}
-  \item \textbf{Back-End Cluster}
+  \item \textbf{2. Back-End Cluster}
    \begin{itemize}
-   \item \textbf{Auth and House Management Logic:} The logic for authentication and user/house details are housed here. Any updating of information (as per user request) will be carried out in this component. Authentication (through OAuth) will also be the responsibility of this software.
-  	\item \textbf{SMS Chatbot:} Responsible for sending out chatbot messages to home group chats including reminders to complete tasks, notification of cleanliness assessment, expenses due from bill splitter, or update to configuration of user/home. Has the most dependencies with other back-end components since updates in those components will drive the output of new messages from the bot.
-  	\item \textbf{Cleanliness Calculator:} Runs the algorithm to determine which changes have been made in the shared space by the identified user. Receives input from the hardware (dependenciy) and returns changes to the GUI after each event.
-  	\item \textbf{Schedule Generator:} Houses logic that deals with the scheduling aspect of the application. Generates events to be displayed to each users calendar based on whether or not they're included in a chore or event.
-  	\item \textbf{Bill Split Calculator:} Calculation of charges due for shared expenses is done within this component. It will also keep track of which expenses are due by each user and who they owe, along with a history of charges paid.
+   \item \textbf{2.1 - Auth and House Management Logic:} The logic for authentication and user/house details are housed here. Any updating of information (as per user request) will be carried out in this component. Authentication (through OAuth) will also be the responsibility of this software.
+  	\item \textbf{2.2 - SMS Chatbot:} Responsible for sending out chatbot messages to home group chats including reminders to complete tasks, notification of cleanliness assessment, expenses due from bill splitter, or update to configuration of user/home. Has the most dependencies with other back-end components since updates in those components will drive the output of new messages from the bot.
+  	\item \textbf{2.3 - Cleanliness Calculator:} Runs the algorithm to determine which changes have been made in the shared space by the identified user. Receives input from the hardware (dependenciy) and returns changes to the GUI after each event.
+  	\item \textbf{2.4 - Schedule Generator:} Houses logic that deals with the scheduling aspect of the application. Generates events to be displayed to each users calendar based on whether or not they're included in a chore or event.
+  	\item \textbf{2.5 - Bill Split Calculator:} Calculation of charges due for shared expenses is done within this component. It will also keep track of which expenses are due by each user and who they owe, along with a history of charges paid.
   \end{itemize}
-  \item \textbf{Hardware Cluster}
+  \item \textbf{3. Hardware Cluster}
   \begin{itemize}
-  	\item \textbf{Camera + Sensors:} All hardware used for the cleanliness calculation. Includes sensors to detect when a user enters or exits the shared space. Takes images which are sufficient quality for detecting the changes that a user makes within the space.
+  	\item \textbf{3.1 - Camera + Sensors:} All hardware used for the cleanliness calculation. Includes sensors to detect when a user enters or exits the shared space. Takes images which are sufficient quality for detecting the changes that a user makes within the space.
   \end{itemize}
 \end{flushleft}
 
@@ -565,9 +565,142 @@ Invariants are properties of the environment that the system must maintain throu
 
 \nsection{S.2 Functionality}
 \comment{One section, S.2.n, for each of the components identified in S.2, describing the corresponding behaviors (functional and non-functional properties).}
+
 %---------------------------------
 \notEmpty{}
 %---------------------------------
+\begin{flushleft}
+  \item \textbf{S.2.1 Front-End Cluster}
+  \begin{itemize}
+  	\item \textbf{S.2.1.1 - User Authentication and House Management}
+  	\begin{itemize}
+  		\item \textbf{Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{FR1 - Sample:}
+  		\end{itemize}
+  		\item \textbf{Non-Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{NFR1 - Sample:}
+  		\end{itemize}
+  	\end{itemize}
+  	\item \textbf{S.2.1.2 - ChatBot Configuration}
+  	\begin{itemize}
+  		\item \textbf{Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{FR1 - Sample:}
+  		\end{itemize}
+  		\item \textbf{Non-Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{NFR1 - Sample:}
+  		\end{itemize}
+  	\end{itemize}
+  	\item \textbf{S.2.1.3 - Cleanliness Manager}
+  	\begin{itemize}
+  		\item \textbf{Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{FR1 - Sample:}
+  		\end{itemize}
+  		\item \textbf{Non-Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{NFR1 - Sample:}
+  		\end{itemize}
+  	\end{itemize}
+  	\item \textbf{S.2.1.4 - Schedule Configuration}
+  	\begin{itemize}
+  		\item \textbf{Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{FR1 - Sample:}
+  		\end{itemize}
+  		\item \textbf{Non-Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{NFR1 - Sample:}
+  		\end{itemize}
+  	\end{itemize}
+  	\item \textbf{S.2.1.5 - Bill Splitter Configuration}
+  	\begin{itemize}
+  		\item \textbf{Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{FR1 - Sample:}
+  		\end{itemize}
+  		\item \textbf{Non-Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{NFR1 - Sample:}
+  		\end{itemize}
+  	\end{itemize}
+  	\end{itemize}
+  	\item \textbf{S.2.2 Back-End Cluster}
+  \begin{itemize}
+  	\item \textbf{S.2.2.1 - Auth and House Management Logic}
+  	\begin{itemize}
+  		\item \textbf{Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{FR1 - Sample:}
+  		\end{itemize}
+  		\item \textbf{Non-Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{NFR1 - Sample:}
+  		\end{itemize}
+  	\end{itemize}
+  	\item \textbf{S.2.2.2 - SMS Chatbot}
+  	\begin{itemize}
+  		\item \textbf{Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{FR1 - Sample:}
+  		\end{itemize}
+  		\item \textbf{Non-Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{NFR1 - Sample:}
+  		\end{itemize}
+  	\end{itemize}
+  	\item \textbf{S.2.2.3 - Cleanliness Calculator}
+  	\begin{itemize}
+  		\item \textbf{Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{FR1 - Sample:}
+  		\end{itemize}
+  		\item \textbf{Non-Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{NFR1 - Sample:}
+  		\end{itemize}
+  	\end{itemize}
+  	\item \textbf{S.2.2.4 - Schedule Generator}
+  	\begin{itemize}
+  		\item \textbf{Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{FR1 - Sample:}
+  		\end{itemize}
+  		\item \textbf{Non-Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{NFR1 - Sample:}
+  		\end{itemize}
+  	\end{itemize}
+  	\item \textbf{S.2.2.5 - Bill Split Calculator}
+  	\begin{itemize}
+  		\item \textbf{Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{FR1 - Sample:}
+  		\end{itemize}
+  		\item \textbf{Non-Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{NFR1 - Sample:}
+  		\end{itemize}
+  	\end{itemize}
+  \end{itemize}
+  \item \textbf{S.2.3 Hardware Cluster}
+  \begin{itemize}
+  	\item \textbf{S.2.3.1 - Camera + Sensors}
+  	\begin{itemize}
+  		\item \textbf{Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{FR1 - Sample:}
+  		\end{itemize}
+  		\item \textbf{Non-Functional Requirements:}
+  		\begin{itemize}
+  			\item \textbf{NFR1 - Sample:}
+  		\end{itemize}
+  	\end{itemize}
+  	\end{itemize}
+\end{flushleft}
 
 \nsection{S.3 Interfaces}
 \comment{How the system makes the functionality of S.2 available to the rest of the world, particularly user interfaces and program interfaces (APIs).}
