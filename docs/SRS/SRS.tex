@@ -43,6 +43,7 @@
     \section*{#1}
     \addcontentsline{toc}{section}{#1}
 }
+
 \newcommand*{\nsubsection}[1]{
     \subsection*{#1}
     \addcontentsline{toc}{subsection}{#1}
@@ -219,152 +220,47 @@ An improvement in academic performance for students experience stress caused by 
 \end{figure}
 
 \begin{itemize}
-    \item UC1: Create an account
+    \item UC1: Account Management
     \begin{enumerate}
         \item User accesses the Room8 app.
-        \item User selects the "Create Account" option.
+        \item User selects "Create Account" or "Log In".
         \item User fills in personal information (name, email, password).
         \item User submits the form.
-        \item System validates the information and creates the account.
-        \item System authenticates the user.
+        \item System validates the information and authenticates the account.
         \item System redirects the user to their dashboard.
-    \end{enumerate}
+    \end{enumerate}  
     
-    \item UC2: Log in to the system
-    \begin{enumerate}
-        \item User accesses the Room8 app.
-        \item User selects the "Log In" option.
-        \item User enters email and password.
-        \item User submits the form.
-        \item System authenticates the credentials and logs in the user.
-        \item System redirects the user to their dashboard.
-    \end{enumerate}
-    
-    \item UC3: Log out of the system
-    \begin{enumerate}
-        \item User accesses the main menu of the Room8 app.
-        \item User selects the "Log Out" option.
-        \item System prompts for confirmation.
-        \item User confirms the action.
-        \item System logs the user out and redirects to the login screen.
-    \end{enumerate}
-    
-    \item UC4: Create a home
+    \item UC2: Home Management
     \begin{enumerate}
         \item User navigates to their dashboard.
-        \item User selects the "Create Home" option.
+        \item User selects the "Create Home" or "Join an Existing Home" option.
         \item User enters home details (home name, address, etc.).
         \item User sends invitations to housemates by entering their email addresses.
         \item System sends email notifications to invited users.
         \item Invited users accept or decline the invitation.
     \end{enumerate}
     
-    \item UC5: Join a home
-    \begin{enumerate}
-        \item User receives an email invitation to join a home.
-        \item User clicks on the provided link in the invitation.
-        \item System redirects user to the Room8 app.
-        \item User logs in or creates an account if not logged in.
-        \item User confirms their decision to join the home.
-        \item System adds the user to the home group.
-    \end{enumerate}
-    
-    \item UC6: Leave a home
-    \begin{enumerate}
-        \item User navigates to their Home settings.
-        \item User chooses the "Leave Home" option.
-        \item System prompts for confirmation.
-        \item User confirms the action.
-        \item System removes the user from the home group.
-    \end{enumerate}
-    
-    \item UC7: Update user profile
-    \begin{enumerate}
-        \item User navigates to the “Profile” section.
-        \item User selects the "Edit Profile" option.
-        \item User modifies personal information (name, profile picture, etc.).
-        \item User saves changes.
-        \item System updates the user’s profile information.
-    \end{enumerate}
-    
-    \item UC8: Schedule a chore
+    \item UC3: Schedule Manager
     \begin{enumerate}
         \item User navigates to the "Schedule” section.
-        \item User selects "Add New Chore".
+        \item User selects "Add New Chore" or "Add New Event".
         \item User inputs chore details (name, description, time, frequency, assigned users, etc.).
         \item System saves the chore and sends reminders to the assigned users.
+        \item Users are able to view the schedule and mark chores as complete.
     \end{enumerate}
     
-    \item UC9: Edit a chore
-    \begin{enumerate}
-        \item User navigates to the "Schedule” section.
-        \item User selects a scheduled chore.
-        \item User chooses the "Edit" option.
-        \item User modifies the chore details (name, description, time, frequency, assigned users, etc.).
-        \item System updates the chore and notifies relevant housemates.
-    \end{enumerate}
-    
-    \item UC10: Complete a chore
-    \begin{enumerate}
-        \item User navigates to the "Schedule” section.
-        \item User selects a chore assigned to them.
-        \item User chooses the "Complete" option.
-        \item System marks the chore as complete and updates the chore history.
-    \end{enumerate}
-    
-    \item UC11: Add event to schedule
-    \begin{enumerate}
-        \item User navigates to the "Schedule" section.
-        \item User selects the "Add Event" option.
-        \item User inputs event details (date, time, description).
-        \item User sets reminders or notifications if needed.
-        \item System adds the event to the users' schedule.
-    \end{enumerate}
-    
-    \item UC12: View chore history
-    \begin{enumerate}
-        \item User navigates to the "Schedule” section.
-        \item User selects the "Chore History" option.
-        \item System displays a list of completed and pending chores.
-        \item User can filter or search through the history.
-    \end{enumerate}
-    
-    \item UC13: Add an expense
+    \item UC4: Bill Splitter
     \begin{enumerate}
         \item User navigates to the “Bill Splitter” section.
         \item User selects the "Add Expense" option.
         \item User enters the total expense amount and description.
         \item User selects which housemates are responsible for the expense.
         \item System splits the expense and notifies the involved users.
+        \item Users are able to view the total expenses and who owes what.
+        \item Users are able to mark expenses as paid.
     \end{enumerate}
     
-    \item UC14: Edit an expense
-    \begin{enumerate}
-        \item User navigates to the “Bill Splitter” section.
-        \item User selects an expense to edit.
-        \item User modifies the expense details (amount, description, responsible users).
-        \item System updates the expense and notifies the involved users.
-    \end{enumerate}
-    
-    \item UC15: Pay an expense
-    \begin{enumerate}
-        \item User navigates to the "Bill Splitter" section.
-        \item User selects their profile's bills.
-        \item User selects an unpaid bill.
-        \item User marks the bill as paid.
-        \item System updates the payment status.
-        \item System notifies other housemates about the payment status.
-    \end{enumerate}
-    
-    \item UC16: View expense history
-    \begin{enumerate}
-        \item User navigates to the "Bill Splitter" section.
-        \item User selects the "Expense History" option.
-        \item System displays a list of past payments and outstanding bills.
-        \item User can filter the history by type or amount.
-    \end{enumerate}
-    
-    \item UC17: View current cleanliness status
+    \item UC5: Cleanliness Management
     \begin{enumerate}
         \item User navigates to the “Cleanliness Management” section.
         \item System displays the current cleanliness score and detected messes.
@@ -372,30 +268,14 @@ An improvement in academic performance for students experience stress caused by 
         \item System displays the selected user’s cleanliness score and pending tasks.
     \end{enumerate}
     
-    \item UC18: View cleanliness history
-    \begin{enumerate}
-        \item User navigates to the “Cleanliness Management" section.
-        \item User selects the "Cleanliness History" option.
-        \item System displays a list of detected messes and cleanliness scores over time.
-        \item User can filter the history by location or date.
-    \end{enumerate}
-    
-    \item UC19: Add chatbot to group chat
+    \item UC6: SMS ChatBot
     \begin{enumerate}
         \item User navigates to the “Chat Management” section.
         \item User selects the option to add a chatbot to their house group chat.
         \item User inputs notification and reminder settings.
         \item System generates an SMS numbers and instructions to add the chatbot to the group chat.
         \item The chatbot sends a welcome message to the group.
-    \end{enumerate}
-    
-    \item UC20: Edit chatbot settings
-    \begin{enumerate}
-        \item User navigates to the “Chat Management” section.
-        \item User selects the "Chatbot Settings" option.
-        \item User configures the chatbot’s behavior (e.g., reminders, notifications).
-        \item User saves the settings.
-        \item System updates the chatbot based on the new settings.
+        \item The chatbot sends notifications and reminders to the group chat.
     \end{enumerate}
     
 \end{itemize}
@@ -565,6 +445,430 @@ Invariants are properties of the environment that the system must maintain throu
 
 \nsection{S.4 Detailed usage scenarios}
 \comment{Examples of interaction between the environment (or human users) and the system: use cases, user stories.}
+
+\nsubsection{S.4.1 User Creating an Account}
+\begin{itemize}
+    \item \textbf{Use Case:} UC1
+    \item \textbf{Primary Actor:} New User
+    \item \textbf{Precondition:} New User has a compatible device with internet access and opened the Room8 app.
+    \item \textbf{Trigger:} New user wants to start using the app to manage their student home.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User accesses the Room8 app.
+        \item User selects the "Create Account" option.
+        \item User fills in personal information (name, email, password).
+        \item User submits the form.
+        \item System validates the information and creates the account.
+        \item System authenticates the user.
+        \item System redirects the user to their dashboard.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[5.1] System is unable to create new user's account and informs the user of this error.
+        \begin{enumerate}
+            \item[5.1.1] System informs the user of the server error.
+        \end{enumerate}
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} New user is successfully registered and authenticated in the system. User is redirected to their dashboard with the option to create a home or join an existing one.
+\end{itemize}
+
+\nsubsection{S.4.2 User Logging Into an Account}
+\begin{itemize}
+    \item \textbf{Use Case:} UC1
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Precondition:} User has an existing account and is not already logged in.
+    \item \textbf{Trigger:} User wants to log into their account to use application features.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User accesses the Room8 app.
+        \item User selects the "Log In" option.
+        \item User enters email and password.
+        \item User submits the form.
+        \item System authenticates the credentials and logs in the user.
+        \item System redirects the user to their dashboard.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[5.1] User enters an invalid email and password combination.
+            \begin{enumerate}
+                \item[5.1.1] System informs the user of the invalid credentials.
+            \end{enumerate}
+        \item[5.2] System is unable to log into user's account and informs the user of this error.
+        \begin{enumerate}
+            \item[5.2.1] System informs the user of the server error.
+        \end{enumerate}
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} User is successfully logged into the system.
+\end{itemize}
+
+\nsubsection{S.4.3 User Logging Out of the System}
+\begin{itemize}
+    \item \textbf{Use Case:} UC1
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Precondition:} User is already logged into their account.
+    \item \textbf{Trigger:} User wants to log out of the system.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User accesses the main menu of the Room8 app.
+        \item User selects the "Log Out" option.
+        \item System prompts for confirmation.
+        \item User confirms the action.
+        \item System logs the user out and redirects to the login screen.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[4.1] User cancels the log out action.
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} User is successfully logged out of the system.
+\end{itemize}
+
+\nsubsection{S.4.4 User Creates a Home}
+\begin{itemize}
+    \item \textbf{Use Case:} UC2
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Secondary Actor:} User's roommates
+    \item \textbf{Precondition:} User is logged in and has no existing home.
+    \item \textbf{Trigger:} User wants to create a home to manage their living situation with their roommates.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User navigates to their dashboard.
+        \item User selects the "Create Home" option.
+        \item User enters home details (home name, address, etc.).
+        \item User sends invitations to housemates by entering their email addresses.
+        \item System sends email notifications to invited users.
+        \item Invited users accept or decline the invitation.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[4.1] User does not invite any housemates and chooses to invite them later. 
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} User has successfully created a home and invited housemates to join.
+\end{itemize}
+
+\nsubsection{S.4.5 User Joins a Home}
+\begin{itemize}
+    \item \textbf{Use Case:} UC2
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Secondary Actor:} User's roommates
+    \item \textbf{Precondition:} User is logged in and has no existing home.
+    \item \textbf{Trigger:} User wants to join their home's existing group.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User receives an email invitation to join a home.
+        \item User clicks on the provided link in the invitation.
+        \item System redirects user to the Room8 app.
+        \item User logs in.
+        \item User confirms their decision to join the home.
+        \item System adds the user to the home group.
+        \item System notifies the housemates of the new addition.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[4.1] User does not have an account and is prompted to create one.
+        \item[5.1] User is unable to join the home and is informed of this error.
+        \item[5.2] User declines the prompt and is not added to the home.
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} User has join home alongside their housemates.
+\end{itemize}
+
+\nsubsection{S.4.6 User Leaves a Home}
+\begin{itemize}
+    \item \textbf{Use Case:} UC2
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Secondary Actor:} User's roommates
+    \item \textbf{Precondition:} User is logged in and has an existing home.
+    \item \textbf{Trigger:} User wants to leave the home attached to their account.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User navigates to their Home settings.
+        \item User chooses the "Leave Home" option.
+        \item System prompts for confirmation.
+        \item User confirms the action.
+        \item System removes the user from the home group.
+        \item System redirects the user to their dashboard.
+        \item System notifies the housemates of the user's departure.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[4.1] User aborts leaving the home and remains in the group.
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} User has left the home and is no longer associated with the group. User is in the dashboard page with the option to create a home or join an existing one.
+\end{itemize}
+
+\nsubsection{S.4.7 User Schedules a Chore}
+\begin{itemize}
+    \item \textbf{Use Case:} UC3
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Secondary Actor:} User's roommates
+    \item \textbf{Precondition:} User is logged in and has an existing home.
+    \item \textbf{Trigger:} User wants to schedule a chore amongst housemates to assign responsibilities. 
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User navigates to the "Schedule” section.
+        \item User selects "Add New Chore".
+        \item User inputs chore details (name, description, time, frequency, etc.).
+        \item User assigns housemates to the chore.
+        \item User confirms chore creation.
+        \item System saves the chore and adds it to the schedule.
+        \item System notifies housemates of the new chore.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[3.1] User does input all required chore details correctly.
+        \begin{enumerate}
+            \item[3.1.1] System prompts the user to fill in all required fields.
+        \end{enumerate}
+        \item[5.1] User cancels the chore creation.
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} New chore is added to the schedule and housemates are notified. Housemates are reminded of the chore when it is approaching.
+\end{itemize}
+
+\nsubsection{S.4.8 User Edits a Chore}
+\begin{itemize}
+    \item \textbf{Use Case:} UC3
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Secondary Actor:} User's roommates
+    \item \textbf{Precondition:} User is logged in and has an existing home. User has an existing chore.
+    \item \textbf{Trigger:} User wants to update chore details.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User navigates to the "Schedule” section.
+        \item User selects a scheduled chore.
+        \item User chooses the "Edit" option.
+        \item User modifies the chore details (name, description, time, frequency, assigned users, etc.).
+        \item User confirms the changes.
+        \item System updates the chore and notifies relevant housemates.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[5.1] User cancels the chore creation.
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} Chore is updated and housemates are notified of the updated chore.
+\end{itemize}
+
+\nsubsection{S.4.9 User Completes a Chore}
+\begin{itemize}
+    \item \textbf{Use Case:} UC3
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Precondition:} User is logged in and has an existing home. User has an existing chore.
+    \item \textbf{Trigger:} User has completed their chore duties and wants to update the schedule to reflect their completed duties.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User navigates to the "Schedule” section.
+        \item User selects a chore assigned to them.
+        \item User is able to see chore details, description, and due date.
+        \item User chooses the "Complete" option.
+        \item System marks the chore as complete and updates the chore history.
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} Chore is completed and system displays the next upcoming undone chore. Chore history reflects list of completed chores in the home.
+\end{itemize}
+
+\nsubsection{S.4.10 User Schedules an Event}
+\begin{itemize}
+    \item \textbf{Use Case:} UC3
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Secondary Actor:} User's roommates
+    \item \textbf{Precondition:} User is logged in and has an existing home.
+    \item \textbf{Trigger:} User wants to schedule the use of a shared living space and notify housemates.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User navigates to the "Schedule" section.
+        \item User selects the "Add Event" option.
+        \item User inputs event details (date, time, description).
+        \item User sets reminders or notifications.
+        \item User confirms the event creation.
+        \item System adds the event to the users' schedule.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[3.1] User does not input all required event details correctly.
+        \begin{enumerate}
+            \item[3.1.1] System prompts the user to fill in all required fields.
+        \end{enumerate}
+        \item[5.1] User cancels the event creation.
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} New event is added to the schedule and housemates are notified. Housemates are able to view event in the schedule. Housemates are reminded of the event when it is approaching.
+\end{itemize}
+
+\nsubsection{S.4.11 User Schedules an Event}
+\begin{itemize}
+    \item \textbf{Use Case:} UC3
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Precondition:} User is logged in and has an existing home.
+    \item \textbf{Trigger:} User wants to view the history of completed and pending chores.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User navigates to the "Schedule” section.
+        \item User selects the "Chore History" option.
+        \item System displays a list of completed and pending chores.
+        \item User can filter or search through the history.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[3.1] User does not have any completed or pending chores.
+        \begin{enumerate}
+            \item[3.1.1] System informs the user that there are no chores to display.
+        \end{enumerate}
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} User is able to view the history of completed and pending chores. User is able to filter and search through the history.
+\end{itemize}
+
+\nsubsection{S.4.12 User Adds an Expense}
+\begin{itemize}
+    \item \textbf{Use Case:} UC4
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Secondary Actor:} User's roommates
+    \item \textbf{Precondition:} User is logged in and has an existing home.
+    \item \textbf{Trigger:} User wants to add a shared expense to the house and split the bill between housemates to keep track of who owes what.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User navigates to the “Bill Splitter” section.
+        \item User selects the "Add Expense" option.
+        \item User enters the total expense amount and description.
+        \item User selects which housemates are responsible for the expense.
+        \item User confirms the expense.
+        \item System splits the expense and notifies the involved users.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[3.1] User does not input all required expense details correctly.
+        \begin{enumerate}
+            \item[3.1.1] System prompts the user to fill in all required fields.
+        \end{enumerate}
+        \item[5.1] User cancels the expense creation.
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} New expense is added. Expense is split between housemates and housemates are notified. Housemates are able to view the expense in the bill splitter section.
+\end{itemize}
+
+\nsubsection{S.4.13 User Views Expenses}
+\begin{itemize}
+    \item \textbf{Use Case:} UC4
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Secondary Actor:} User's roommates
+    \item \textbf{Precondition:} User is logged in and has an existing home. Home has existing expenses.
+    \item \textbf{Trigger:} User wants to view the history of expenses and bills in the house. User wants to see who owes them money. User wants to see who they owe money to.  
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User navigates to the "Bill Splitter" section.
+        \item User selects the "Expense History" option.
+        \item System displays a list of past payments and outstanding bills.
+        \item User can filter the history by type or amount.
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} User is able to see current list of housemates and their outstanding bills between themselves and the other housemates. User is able to filter and search through the history of shared expenses.
+\end{itemize}
+
+\nsubsection{S.4.14 User Pays an Expense}
+\begin{itemize}
+    \item \textbf{Use Case:} UC4
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Secondary Actor:} User's roommates
+    \item \textbf{Precondition:} User is logged in and has an existing home. User has an existing unpaid bill with one of the housemates.
+    \item \textbf{Trigger:} User wants to mark an expense between themselves and another housemate as paid and update the payment status.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User navigates to the "Bill Splitter" section.
+        \item User selects their profile's bills.
+        \item User selects an unpaid bill.
+        \item User marks the bill as paid.
+        \item System updates the payment status and recalculates debts.
+        \item System notifies other housemates about the payment status.
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} Expenses are updated and expense log reflects expense transactions. Debts are recalculated to facilitate the least amount of transactions between housemates.
+\end{itemize}
+
+\nsubsection{S.4.15 User Views Cleanliness Score}
+\begin{itemize}
+    \item \textbf{Use Case:} UC5
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Precondition:} User is logged in and has an existing home. Home has cleanliness detector setup.
+    \item \textbf{Trigger:} User wants to view current cleanliness score of the shared living space and latest usage.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User navigates to the “Cleanliness Management” section.
+        \item System displays the current cleanliness score and detected messes.
+        \item User selects another user to view their cleanliness score.
+        \item System displays the selected user’s cleanliness score and pending tasks associated with their shared living space usage.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[3.1] User does not have any detected messes.
+        \begin{enumerate}
+            \item[3.1.1] System informs the user that there are no detected messes.
+        \end{enumerate}
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} User is able to view the current cleanliness score of the shared living space. User is able to view detected messes and cleanliness score of other housemates.
+\end{itemize}
+
+\nsubsection{S.4.16 Add ChatBot to Group Chat}
+\begin{itemize}
+    \item \textbf{Use Case:} UC6
+    \item \textbf{Primary Actor:} User
+    \item \textbf{Secondary Actor:} User's roommates, ChatBot
+    \item \textbf{Precondition:} User is logged in and has an existing home.
+    \item \textbf{Trigger:} User wants to recieve SMS messages regarding cleanliness, chores, expenses, and events in the shared living space in a group chat outside of the Room8 app.
+
+    \item \textbf{Main Success Scenario:}
+    \begin{enumerate}
+        \item User navigates to the “Chat Management” section.
+        \item User selects the option to add a ChatBot to their house group chat.
+        \item User inputs notification and reminder settings.
+        \item System generates an SMS numbers and instructions to add the chatbot to the group chat.
+        \item User adds the chatbot to the group chat.
+        \item The chatbot sends a welcome message to the group.
+    \end{enumerate}
+
+    \item \textbf{Secondary Scenarios:}
+    \begin{enumerate}
+        \item[5.1] Users fail to add the chatbot to the group chat.
+        \begin{enumerate}
+            \item[5.1.1] System informs the user that the ChatBot has not been added.
+        \end{enumerate}
+    \end{enumerate}
+
+    \item \textbf{Success Postcondition:} User is able to recieve SMS messages regarding cleanliness, chores, expenses, and events in the shared living space in a group chat outside of the Room8 app.
+\end{itemize}
 
 \nsection{S.5 Prioritization}
 \comment{Classification of the behaviors, interfaces and scenarios (S.2, S.3 and S.4) by their degree of criticality.}
