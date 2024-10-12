@@ -445,7 +445,10 @@ Invariants are properties of the environment that the system must maintain throu
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{NFR1 - Sample:}
+  			\item \textbf{NFR2.1.1:} All data related to authentication must be encrypted in both transit and in storage.
+  			\item \textbf{NFR2.1.2:} Error messages related to authentication should not disclose sensitive details such as "Incorrect Password".
+  			\item \textbf{NFR2.1.3:} All data related to authentication must be encrypted in both transit and in storage.
+  			\item \textbf{NFR2.1.4:} The system should be able to authenticate a user with a median response time of under 1 second.
   		\end{itemize}
   	\end{itemize}
   	\item \textbf{S.2.2 - ChatBot Configuration}
@@ -459,7 +462,8 @@ Invariants are properties of the environment that the system must maintain throu
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{NFR1 - Sample:}
+  			\item \textbf{NFR2.2.1}: The chatbot shall not disclose any sensitive information in its messages such as addresses or full names.
+  			\item \textbf{NFR2.2.2}: The chatbot shall not send users too frequently to prevent annoying users.
   		\end{itemize}
   	\end{itemize}
   	\item \textbf{S.2.3 - Cleanliness Manager}
@@ -473,7 +477,13 @@ Invariants are properties of the environment that the system must maintain throu
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{NFR1 - Sample:}
+  			\item \textbf{NFR2.3.1:} The system shall not record users.
+  			\item \textbf{NFR2.3.2:} The system shall not capture images of users.
+  			\item \textbf{NFR2.3.3:} The system shall encrypt and securely store all images of homes.
+  			\item \textbf{NFR2.3.4:} Photos captured with the system will be in a quality high enough to differentiate objects within frame.
+  			\item \textbf{NFR2.3.5:} The system shall process image data in under 30 minutes.
+  			\item \textbf{NFR2.3.6:} The system shall not report false events which accuse someone of reducing the cleanliness score of an environment.
+  			\item \textbf{NFR2.3.7:} The system shall declare an instances of someone altering a room finished one there has been no activity in the room for a designated period of time.
   		\end{itemize}
   	\end{itemize}
   	\item \textbf{S.2.4 - Schedule Configuration}
@@ -488,7 +498,9 @@ Invariants are properties of the environment that the system must maintain throu
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{NFR1 - Sample:}
+  			\item \textbf{NFR2.4.1:} The calendar system shall store all events in UTC
+  			\item \textbf{NFR2.4.2:} The calendar system shall display all calendar events to users in their time zone. 
+  			\item \textbf{NFR2.4.3:} The calendar system shall have a granularity of 5 minutes.
   		\end{itemize}
   	\end{itemize}
   	\item \textbf{S.2.5 - Bill Splitter Configuration}
