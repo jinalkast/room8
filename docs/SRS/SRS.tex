@@ -123,8 +123,6 @@ This document follows the requirements documentation structure presented in the 
 \minitoc% Creating an actual minitoc
 %===============================================================
 
-\comment{Goals are "needs of the target organization, which the system will address". While the development team is the principal user of the other books, the Goals book addresses a wider audience: essentially, all stakeholders.}
-
 \nsection{G.1 Context and overall objective}
 %---------------------------------
 \begin{flushleft}
@@ -192,8 +190,6 @@ An improvement in academic performance for students experience stress caused by 
 \end{flushleft}
 
 \nsection{G.4 Functionality overview}
-\comment{Overview of the functions (behavior) of the system. Principal properties only (details are in the System book).}
-
 \begin{flushleft}
     \item \textbf{User \& House Management:} The system allows students to register, create, and manage their accounts. Students are also able to create homes and invite other students. 
     
@@ -211,7 +207,6 @@ An improvement in academic performance for students experience stress caused by 
 \end{flushleft}
 
 \nsection{G.5 High-level usage scenarios}
-\comment{Fundamental usage paths through the system.}
 
 \begin{figure}[H]
     \includegraphics[width=\linewidth]{./img/use-case-diagram.png}
@@ -281,7 +276,6 @@ An improvement in academic performance for students experience stress caused by 
 \end{itemize}
     
 \nsection{G.6 Limitations and exclusions}
-\comment{Aspects that the system need not address.}\\
 Below is a list of limitations and exclusions the system will not address:
 \begin{limitation}\label{limitation:first}
 System will not track activity completed by the user in the shared environment.
@@ -294,10 +288,6 @@ System will not use images taken to train machine learning model.
 \end{exclusion}
 
 \nsection{G.7 Stakeholders and requirements sources}
-\comment{Groups of people who can affect the project or be affected by it, and other places to consider for information about the project and system.}
-%---------------------------------
-\notEmpty{}
-%---------------------------------
 
 \begin{table}[ht]
 \centering
@@ -330,8 +320,6 @@ University Housing Committee & Indirect \\ \hline
 \addcontentsline{toc}{chapter}{Environment book}
 \minitoc% Creating an actual minitoc
 %===============================================================
-
-\comment{The Environment book describes the application domain and external context, physical or virtual (or a mix), in which the system will operate.}
 
 \nsection{E.1 Glossary}
 The glossary provides definitions for the key terms used throughout the project. It includes terminology related to the system’s environment and functionality, ensuring that all parties involved have a clear understanding of the concepts and language specific to the project. This helps prevent miscommunication and fosters consistency in documentation and development.
@@ -404,13 +392,8 @@ Invariants are properties of the environment that the system must maintain throu
 \minitoc% Creating an actual minitoc
 %===============================================================
 
-\comment{The System book refines the Goal one by focusing on more detailed requirements about the system under development, mainly its constituents, behaviors and properties.}
-
 \nsection{S.1 Components}
-\comment{Overall structure expressed by the list of major software and, if applicable, hardware parts.}
-%---------------------------------
-\notEmpty{}
-%---------------------------------
+
 \begin{flushleft}
   \item \textbf{1. Front-End Cluster}
   \begin{itemize}
@@ -441,11 +424,7 @@ Invariants are properties of the environment that the system must maintain throu
 \end{figure}
 
 \nsection{S.2 Functionality}
-\comment{One section, S.2.n, for each of the components identified in S.2, describing the corresponding behaviors (functional and non-functional properties).}
 
-%---------------------------------
-\notEmpty{}
-%---------------------------------
 \begin{flushleft}
   \item \textbf{S.2.1 Front-End Cluster}
   \begin{itemize}
@@ -583,7 +562,6 @@ Invariants are properties of the environment that the system must maintain throu
 \comment{How the system makes the functionality of S.2 available to the rest of the world, particularly user interfaces and program interfaces (APIs).}
 
 \nsection{S.4 Detailed usage scenarios}
-\comment{Examples of interaction between the environment (or human users) and the system: use cases, user stories.}
 
 \nsubsection{S.4.1 User Creating an Account}
 \begin{itemize}
@@ -1021,7 +999,6 @@ Invariants are properties of the environment that the system must maintain throu
 \minitoc% Creating an actual minitoc
 %===============================================================
 
-\comment{The Project book describes all the constraints and expectations not about the system itself, but about how to develop and produce it.}
 
 \nsection{P.1 Roles and personnel}
 Note: Roles that cannot be assigned to multiple people are denoted with a \textbf{*}\\
@@ -1263,7 +1240,7 @@ Expected Outcomes:
 \item User Guide.
 \end{itemize}
 \nsection{P.5 Required technology elements}
-\comment{External systems, hardware and software, expected to be necessary for building the system.}\\
+
 \textbf{Camera} \\
 A camera is used for the systems cleanliness detection aspect. A camera takes pictures for comparing the state of the shared space.\\
 \\
