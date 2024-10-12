@@ -306,9 +306,9 @@ University Housing Committee & Indirect \\ \hline
 \end{table}
 
 \nsubsection{G.7.1 Direct Stakeholders}
-\textbf{Students Off Campus} \\ Students are the primary direct stakeholders for Room8. They are the main users of the mobile application who create houses within the app and set up the camera systems. These students seek to maintain cleanliness in their shared living spaces and establish accountability when a mess is left behind by a roommate. The application addresses common challenges faced by students in shared living arrangements, such as maintaining cleanliness, splitting expenses, and scheduling activities. \\
+\textbf{Students Off Campus} \\ Students off campus are the primary direct stakeholders for Room8. They are the main users of the mobile application who create houses within the app and set up the camera systems. These students seek to maintain cleanliness in their shared living spaces and establish accountability when a mess is left behind by a roommate. The application addresses common challenges faced by students in shared living arrangements, such as maintaining cleanliness, splitting expenses, and scheduling activities. \\
 \\
-\textbf{Students On Campus} \\ Students of are the other direct stakeholders for Room8. They are the main mainly concerned with the chore and activity scheduling aspect of the app. In most cases students living on campus do not have a kitchen and individuals are responsible for keeping their own rooms clean so these types of students would benefit from scheduling the cleaning of public areas and events that are happening.
+\textbf{Students On Campus} \\ Students on campus are the other direct stakeholders for Room8. They are the main mainly concerned with the chore and activity scheduling aspect of the app. In most cases students living on campus do not have a kitchen and individuals are responsible for keeping their own rooms clean so these types of students would benefit from scheduling the cleaning of public spaces (eg. pool table, game space) and seeing events that are happening.
 
 \nsubsection{G.7.2 Indirect Stakeholders}
 \textbf{Landlords} \\ Landlords are the main indirect stakeholders to the project. Landlords are renting out their homes to students and are concerned with the condition their house is kept in. They are looking to maintain the clean condition of their home which is done by holding students accountable for messes that are made.\\
@@ -1043,7 +1043,33 @@ Thus, S.3 Interfaces will be available in a future revision of this document.
 \end{table}
 
 \nsection{S.6 Verification and acceptance criteria}
-\comment{Specification of the conditions under which an implementation will be deemed satisfactory.}
+\textbf{Functional Requirements}\\
+In order to validate functional requirements, a systematic approach will be implemented. Features will be validated against criteria made by developers, testers and stakeholders. Using the criteria unit and intergration tests will be developed for consistency. \\
+\\
+\textbf{Non-Functional Requirements}\\
+\textbf{Tests for User Account Mangement}
+\begin{itemize}
+    \item Account Creation Flow
+    	\begin{itemize}
+    		\item  A new user trying to create an account, when sign-up process is started 				they then should be able to enter details and create account with details being stored in secured manner. [NFR2.1.1].
+		\end{itemize}    	
+    \item Error Handling For Incorrect Information
+    	\begin{itemize}
+    		\item  A user trying to login to an account, when login process is started 				and they make mistake, (eg. enter wrong password), no information pertaining to sensitive detail should be displayed. [NFR2.1.2].
+		\end{itemize}
+	\item Account Authentication
+    	\begin{itemize}
+    		\item  A user trying to login and authenticating their account should be able to have account authenticated must be done in less than 1 second. [NFR2.1.4]. \\
+		\end{itemize}		
+\textbf{Tests for Calendar Interactions}\\
+
+		\item Calendar Event Creation
+    	\begin{itemize}
+    		\item  A user who has logged on to the application will create an event then change the time 1 increment above the original time on the calendar and the system will store the event in UTC while the event will show up on the user's device in the user's respective timezone. [NFR2.4.1, NFR2.4.2, NFR2.4.3].
+		\end{itemize}
+\end{itemize}
+
+
 
 %===============================================================
 \chapter*{Project}
