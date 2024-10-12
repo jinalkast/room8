@@ -664,11 +664,19 @@ Users will sign in securely without risk of data leaks and malicious connections
 \\
 \textbf{SMS Message Service}\\
 Room8's Chatbot SMS will send messages to users using a third party messaging system that has connection to the Room8 application to send warnings and information of shared space.\\
-\\
 
 
 \nsection{P.6 Risks and mitigation analysis}
-\comment{Potential obstacles to meeting the schedule of P.4, and measures for adapting the plan if they do arise.}
+\comment{Potential obstacles to meeting the schedule of P.4, and measures for adapting the plan if they do arise.}\\
+\textbf{Machine Learning Model Training}\\
+Finding enough data to train the machine learning algorithm to detect when a mess has been made and what detect what is altered or added in the space. Sensitivity to slight changes such as lighting is another risk with the machine learning algorithm approach. An alternative to adapt this scenario would be to use image differencing to detect changes in environment.\\
+\\
+\textbf{User Identification}\\
+Being able to detect which user is using the shared space through the camera is a major risk. The program may not be supplied with enough information to identity which user is currently using the space. In order to work around this the program could get individuals to submit to the application that they are now using the space.\\
+\\
+\textbf{Scope Creep}\\
+Unclear requirements and adding too many elements to the scope of the project will result in not delivering on features that are listed to be part of the application and lower quality of core functionality due to time being strain. A revisal of requirements by making requirements and functionality of system clear and concise and developing a prioritization list would mitigate the risk of scope creep.
+
 
 \nsection{P.7 Requirements process and report}
 \comment{Initially, description of what the requirements process will be; later, report on its steps.}
