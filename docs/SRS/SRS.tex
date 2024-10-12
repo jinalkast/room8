@@ -460,11 +460,10 @@ University Housing and Social Committee & Indirect \\ \hline
 \comment{The Environment book describes the application domain and external context, physical or virtual (or a mix), in which the system will operate.}
 
 \nsection{E.1 Glossary}
-\comment{Clear and precise definitions of all the vocabulary specific to the application domain, including technical terms, words from ordinary language used in a special meaning, and acronyms.
-This chapter should not be empty!}
+The glossary provides definitions for the key terms used throughout the project. It includes terminology related to the system’s environment and functionality, ensuring that all parties involved have a clear understanding of the concepts and language specific to the project. This helps prevent miscommunication and fosters consistency in documentation and development.
 
 \nsection{E.2 Components}
-\comment{List of elements of the environment that may affect or be affected by the system and project. Includes other systems to which the system must be interfaced.}
+This section outlines the relevant external components that the system will interact with. These include existing systems or services, particularly software, that will provide or consume APIs. These interactions play a significant role in how the system operates within its broader ecosystem, impacting design and integration.
 \begin{flushleft}
   \item \textbf{Motion-activated camera:} The app will be connected to a camera that is activated by motion in the shared space. This component is used for taking a “before” and “after” picture that serves as the input for the cleanliness detection model. \newline
   
@@ -481,7 +480,7 @@ This chapter should not be empty!}
 \end{flushleft}
 
 \nsection{E.3 Constraints}
-\comment{Obligations and limits imposed on the project and system by the environment.}
+Constraints are non-negotiable limitations imposed on the system, stemming from external factors such as business rules or technical requirements. These restrictions must be strictly adhered to during development. Constraints can influence system design and implementation, and their fulfillment is critical to ensuring the system meets its operational requirements.
 %---------------------------------
 \begin{flushleft}
   \item \textbf{Camera resolution:} The resolution of the motion-activated camera affects the quality of the input that is used by the object detector. Depending on the PPM of the image, there is a minimum viable object size for a given object to be classified.\newline
@@ -495,7 +494,7 @@ This chapter should not be empty!}
 
 
 \nsection{E.4 Assumptions}
-\comment{Properties of the environment that may be assumed, with the goal of facilitating the project and simplifying the system.}
+Assumptions are conditions that are presumed to be true during development to simplify system design. These are not externally enforced but are accepted for the sake of convenience or efficiency. While helpful, assumptions must be carefully evaluated, as changes in the assumed conditions could affect the system’s success or performance.
 \begin{flushleft}
   \item \textbf{Network connectivity:} The application assumes that there is reliable internet connection. Operating under this assumption, the camera is able to transfer images to the detector and users have access to updated synchronized information when using the app.\newline
 
@@ -503,9 +502,11 @@ This chapter should not be empty!}
   
   \item \textbf{Common household items dataset:} The classifier can assume that any object it comes across is a common household item that belongs to a class represented in its training data.\newline 
 
+  \item \textbf{FoV of the camera:} The camera is stationary and the FoV is identical in any pair of “before” and “after” images.\newline
+
 \end{flushleft}
 \nsection{E.5 Effects}
-\comment{Elements and properties of the environment that the system will affect.}
+This section describes how the system’s operations will influence its environment. These effects could be on processes, workflows, or other systems that interact with the system. Understanding these impacts is crucial to ensure that the system's operation aligns well with its intended environment and does not cause unintended disruptions.
 \begin{flushleft}
   \item \textbf{Digital minimalism:} Members of the home conduct all interactions on one platform. All common virtual services are provided by the Room8 application, hence eliminating the need for other applications that clutter the digital space.\newline
 
@@ -515,8 +516,13 @@ This chapter should not be empty!}
 \end{flushleft}
 
 \nsection{E.6 Invariants}
-\comment{Properties of the environment that the systemâ€™s operation must preserve.}
-
+Invariants are properties of the environment that the system must maintain throughout its operation. These are foundational conditions that must hold true at all times during system activities. Ensuring that these invariants remain intact is essential for the correct and safe functioning of the system within its environment.
+\begin{flushleft}
+  \item \textbf{Limited camera presence:} The motion-activated camera is initially triggered by motion, and takes a “before” picture. When motion has not been detected for a prolonged and predefined amount of time, it takes an “after” picture. These 2 images aside, the camera does not take any pictures or footage and thus does not have any insight on the activities occurring in the living space.  
+  \newline
+  \item \textbf{Students' freedom to not comply:} While the application sends reminders to students for them to pay their debts or clean up their messes, it cannot enforce these events. Room8 serves as a logistical coordinator but it cannot have a direct impact on the physical environment.
+  \newline
+\end{flushleft}
 %===============================================================
 \chapter*{System}
 \addcontentsline{toc}{chapter}{System book}
