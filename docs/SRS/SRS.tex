@@ -143,12 +143,13 @@ Alert and remind roommates of issues regarding issues related to the shared livi
 \end{goal}
 
 \nsection{G.2 Current situation}
-
+%---------------------------------
 \begin{flushleft}
 Room8 is designed to reduce points of tension and reduce the need for frustrating dialogue commonplace with people in shared housing, especially students. Currently, in order to manage the many shared responsibilities, roommates have to utilize multiple techniques or tools such as physical calendars, notification reminders, and existing applications such as Splitwise which do not have any integrations between each other. Additionally, it is estimated that approximately 25\% students experience conflicts with a roommate, harming academic performance and inducing stress [1]. Recognizing these factors, Room8 aims to create a centralized platform that not only simplifies communication but reduces stress and conflict to improve the lives of students. 
 \end{flushleft}
 
 \nsection{G.3 Expected benefits}
+%---------------------------------
 \begin{flushleft}
 As stated in section G.2, conflicts between roommates create more than issues in the home and involve more than just misunderstandings in scheduling tasks or living standards. By creating a centralized suite that will help roommates monitor, schedule, and coordinate, Room8 will reduce conflicts between roommates over misunderstandings and miscommunications, and allow for greater flexibility in assigning responsibilities. Additionally, reduced conflicts will lead to mental health benefits for those living in the home by lowering conflict-related stress.  Finally, Room8 is expected to improve academic performance in some students who are hindered academically by conflicts with roommates (approximately 17% of students [1]). 
 
@@ -190,6 +191,7 @@ An improvement in academic performance for students experience stress caused by 
 \end{flushleft}
 
 \nsection{G.4 Functionality overview}
+%---------------------------------
 \begin{flushleft}
     \item \textbf{User \& House Management:} The system allows students to register, create, and manage their accounts. Students are also able to create homes and invite other students. 
     
@@ -207,7 +209,7 @@ An improvement in academic performance for students experience stress caused by 
 \end{flushleft}
 
 \nsection{G.5 High-level usage scenarios}
-
+%---------------------------------
 \begin{figure}[H]
     \includegraphics[width=\linewidth]{./img/use-case-diagram.png}
     \caption{High level use case diagram}
@@ -276,6 +278,7 @@ An improvement in academic performance for students experience stress caused by 
 \end{itemize}
     
 \nsection{G.6 Limitations and exclusions}
+%---------------------------------
 Below is a list of limitations and exclusions the system will not address:
 \begin{limitation}\label{limitation:first}
 System will not track activity completed by the user in the shared environment.
@@ -333,7 +336,7 @@ This section outlines the relevant external components that the system will inte
   
   \item \textbf{Household items dataset:} The ML model will be pre-trained with a dataset containing common household and kitchen items. This will allow the object detector to classify the items it detects and is important for providing valuable output to students.\newline
    
-  \item \textbf{Google calendar API:} The application will interface with Google calendar to facilitate scheduling chores and events. This is critical for Room8's chore scheduling.\newline
+  \item \textbf{Third-party Calendar API:} The application will interface with a third-party calendar API to facilitate scheduling chores and events. This is critical for Room8's chore scheduling.\newline
 
   \item \textbf{SMS Chatbot:} The application employs a chatbot to send notifications to students via SMS about their responsibilities in the home (i.e. cleaning their mess from shared spaces, upcoming chore deadlines, and money owed for shared bills). This helps with bookkeeping, enforcing fairness, and keeping shared spaces clean.\newline
 
@@ -1304,6 +1307,9 @@ graduate attribute of Lifelong Learning.
   member pursue, and why did they make this choice?
 \end{enumerate}
 
+\newpage{}
+\section*{Appendix --- Citations}
+[1] “How to get along with your roommate,” Centre for Innovation in Campus Mental Health, \href{https://campusmentalhealth.ca/infosheets/how-to-get-along-with-your-roommate/}{https://campusmentalhealth.ca/infosheets/how-to-get-along-with-your-roommate/} (accessed Oct. 11, 2024).
 
 %===============================================================
 \end{document}
