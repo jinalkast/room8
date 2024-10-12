@@ -1042,7 +1042,13 @@ Note: Roles that cannot be assigned to multiple people are denoted with a \textb
 \\
 
 \nsection{P.2 Imposed technical choices}
-\comment{Any a priori choices binding the project to specific tools, hardware, languages or other technical parameters.}
+Due to time constraints, project requirements, and the skill sets of the team's current developers, some imposed technical choices are:
+\begin{itemize}
+\item \textbf{JS/TS Application Framework}. This is due to JS/TS being known by a majority of the developers and it having a plethora of existing, well-documented frameworks.
+\item \textbf{AWS Cloud Services}. AWS is the leading cloud platform and one which our developers have experience developing in.
+\item \textbf{Google Calendar and Google OAuth}. Google provides very generous free tiers for their OAuth and cloud solutions.
+
+\end{itemize}
 
 \nsection{P.3 Schedule and milestones}
 \begin{itemize}
@@ -1264,13 +1270,13 @@ A camera is used for the systems cleanliness detection aspect. A camera takes pi
 \textbf{Motion Sensor}\\
 A sensor is also used for the systems cleanliness detection aspect. The sensor detects movement which will work in unison with the camera to take pictures of the shared space.\\
 \\
-\textbf{Google Calendar API}\\
-Room8's scheduler requires a calendar component where user's can book and view events and chores in a calendar Google's Calendar API.\\
+\textbf{Third Party Calendar API}\\
+Room8's scheduler requires a calendar component where user's can book and view events and chores in a calendar. Implementing a calendar API from scratch can prove difficult and there are already many existing solutions.\\
 \\
 \textbf{Secure Database}\\
 Users create accounts for Room8 where user and home information is stored on a secure database where sensitive information such as credentials are stored and individuals are able to change and delete accounts.\\
 \\
-\textbf{Gmail OAuth}\\
+\textbf{Third Party OAuth Service}\\
 Users will sign in securely without risk of data leaks and malicious connections.\\
 \\
 \textbf{SMS Message Service}\\
