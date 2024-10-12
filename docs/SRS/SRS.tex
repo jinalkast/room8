@@ -325,21 +325,69 @@ University Housing Committee & Indirect \\ \hline
 \minitoc% Creating an actual minitoc
 %===============================================================
 
+
 \nsection{E.1 Glossary}
 The glossary provides definitions for the key terms used throughout the project. It includes terminology related to the system’s environment and functionality, ensuring that all parties involved have a clear understanding of the concepts and language specific to the project. This helps prevent miscommunication and fosters consistency in documentation and development.
+\begin{flushleft}
+    \item \textbf{SRS (Software Requirements Specification):} A formal document (this document) that outlines the functional and non-functional requirements of a system or software application. It serves as a blueprint for both developers and stakeholders, detailing what the system is expected to do, how it should perform, as well as assumptions/ constraints for its development.\newline
+
+    \item \textbf{Room8:} The name of the application being described by this SRS. Room8 is an app designed to help students manage shared living spaces. It includes functionalities like cleanliness monitoring, chore scheduling, bill splitting, and communication tools to streamline household tasks.\newline
+
+    \item \textbf{Home:} In the context of Room8, a "home" refers to the digital representation of a shared living space comprised of students. Essentially, it is the user group for one living space where all members can manage, organize, and recieve alerts for household responsibilities.\newline
+
+    \item \textbf{Students:} In the context of Room8, a "student" is a user of the app. \newline
+
+    \item \textbf{V&V (Verification and Validation):} A process in software development aimed at ensuring that a system meets its specifications (verification) and that it fulfills its intended purpose (validation).\newline
+
+    \item \textbf{Splitwise:} A real-world app used for tracking and splitting shared expenses between individuals.\newline
+
+    \item \textbf{Chatbot:} Software designed to simulate conversation with users, often through text-based interaction. In Room8, the ChatBot automates tasks such as sending reminders, notifications, and facilitating communication about chores and bills in group chats.\newline
+
+    \item \textbf{PIPEDA (Personal Information Protection and Electronic Documents Act):} A Canadian law governing how private sector organizations collect, use, and disclose personal information in the course of their business activities. Compliance ensures that user data is protected and handled with consent.\newline
+
+    \item \textbf{FIPPA (Freedom of Information and Protection of Privacy Act):} A piece of Canadian legislation that outlines the rights of individuals to access government information and the responsibilities of public organizations to protect personal privacy. It helps ensure the secure handling of personal information.\newline
+
+    \item \textbf{CASL (Canadian Anti-Spam Legislation):} A Canadian law aimed at regulating commercial electronic messages, including emails and texts, to prevent spam. It requires consent before sending such communications, ensuring transparency and privacy.\newline
+
+    \item \textbf{"Before" Picture:} The image of the shared living space before a student enters and uses it.\newline
+
+    \item \textbf{"After" Picture:} he image of the shared living space after a student uses it.\newline
+
+    \item \textbf{CASL (Cleanliness Score):} A score assigned to a student after they have finished using the shared living space. It is derived from an algorithm in which the inputs are a "before" and "after" picture pair.\newline
+
+    \item \textbf{OUath 2.0:} An open standard protocol for authorization, allowing secure access to user data across different services without revealing login credentials. OAuth is commonly used to enable single sign-on or to grant third-party applications limited access to a user's resources.\newline
+
+    \item \textbf{PPM (Pixels Per Metre):} A measurement used to define the resolution of digital images, specifically indicating the number of pixels within a meter of space. It is often used in imaging, mapping, and display technologies to describe the level of detail or clarity in an image.\newline
+
+    \item \textbf{FoV (Field of View):} In digital images, FoV refers to the extent of the observable area at any given moment. It is the angle/ scope that the camera sees.\newline
+
+    \item \textbf{UTC (Coordinated Universal Time):} A time standard used globally to regulate clocks and time. It is the primary time standard by which the world regulates time and is not affected by time zones or daylight saving changes. UTC is crucial for coordinating activities across different time zones, especially in computing, aviation, and telecommunications.\newline
+
+    \item \textbf{JS (JavaScript):} A popular, lightweight programming language commonly used to build dynamic content on websites. JavaScript allows developers to create interactive web pages and web applications.\newline
+
+    \item \textbf{TS (TypeScript):} A superset of JavaScript that introduces static types, making the code more robust and easier to debug. TypeScript is particularly helpful for large-scale applications by catching potential errors at compile time.\newline
+
+    \item \textbf{AWS (Amazon Web Services):} A comprehensive cloud computing platform provided by Amazon, offering a wide range of services such as computing power, storage, databases, and machine learning. AWS enables scalable and secure cloud solutions for various applications.\newline
+
+    \item \textbf{CI/CD (Continuous Integration and Continuous Deployment/Development):} A set of practices in software development aimed at automating and streamlining the process of integrating code changes (CI) and deploying applications (CD). CI/CD improves code quality, speeds up development cycles, and ensures faster delivery of new features or updates.\newline
+
+    \item \textbf{POC (Proof of Concept):} A prototype or small-scale experiment conducted to verify that an idea or technology is feasible. In software development, a POC helps validate whether a particular solution or approach will work as intended before full-scale implementation.\newline
+
+\end{flushleft}
+
 
 \nsection{E.2 Components}
 This section outlines the relevant external components that the system will interact with. These include existing systems or services, particularly software, that will provide or consume APIs. These interactions play a significant role in how the system operates within its broader ecosystem, impacting design and integration.
 \begin{flushleft}
-  \item \textbf{Motion-activated camera:} The app will be connected to a camera that is activated by motion in the shared space. This component is used for taking a “before” and “after” picture that serves as the input for the cleanliness detection model. \newline
+  \item \textbf{Motion-activated camera:} Room8 will be connected to a camera that is activated by motion in the shared space. This component is used for taking a “before” and “after” picture that serves as the input for the cleanliness detection model. \newline
   
-  \item \textbf{Object detector API:} The app will utilize an object detector that performs on a pair of images (i.e. the “before” and “after” picture) taken by the motion-activated camera. Object detection enables the algorithm to quantify the difference in room states as a function of objects and their transformations.\newline 
+  \item \textbf{Object detector API:} Room8 will utilize an object detector that performs on a pair of images (i.e. the “before” and “after” picture) taken by the motion-activated camera. Object detection enables the algorithm to quantify the difference in room states as a function of objects and their transformations.\newline 
   
   \item \textbf{Household items dataset:} The ML model will be pre-trained with a dataset containing common household and kitchen items. This will allow the object detector to classify the items it detects and is important for providing valuable output to students.\newline
    
-  \item \textbf{Third-party Calendar API:} The application will interface with a third-party calendar API to facilitate scheduling chores and events. This is critical for Room8's chore scheduling.\newline
+  \item \textbf{Google calendar API:} Room8 will interface with Google calendar to facilitate scheduling chores and events. This is critical for Room8's chore scheduling.\newline
 
-  \item \textbf{SMS Chatbot:} The application employs a chatbot to send notifications to students via SMS about their responsibilities in the home (i.e. cleaning their mess from shared spaces, upcoming chore deadlines, and money owed for shared bills). This helps with bookkeeping, enforcing fairness, and keeping shared spaces clean.\newline
+  \item \textbf{SMS Chatbot:} Room8 employs a chatbot to send notifications to students via SMS about their responsibilities in the home (i.e. cleaning their mess from shared spaces, upcoming chore deadlines, and money owed for shared bills). This helps with bookkeeping, enforcing fairness, and keeping shared spaces clean.\newline
 
   \item \textbf{OAuth 2.0:} The app utilizes the OAuth 2.0 protocol to manage user authentication and authorization securely. OAuth 2.0 allows Room8 to provide a seamless login experience using third-party identity providers without requiring users to create and manage separate credentials. OAuth 2.0 handles the app’s legal and privacy compliance standards.\newline
   
@@ -363,7 +411,7 @@ Constraints are non-negotiable limitations imposed on the system, stemming from 
 \nsection{E.4 Assumptions}
 Assumptions are conditions that are presumed to be true during development to simplify system design. These are not externally enforced but are accepted for the sake of convenience or efficiency. While helpful, assumptions must be carefully evaluated, as changes in the assumed conditions could affect the system’s success or performance.
 \begin{flushleft}
-  \item \textbf{Network connectivity:} The application assumes that there is reliable internet connection. Operating under this assumption, the camera is able to transfer images to the detector and users have access to updated synchronized information when using the app.\newline
+  \item \textbf{Network connectivity:} The application assumes that there is reliable internet connection. Operating under this assumption, the camera is able to transfer images to the detector and students have access to updated synchronized information when using the app.\newline
 
   \item \textbf{Operating system support:} The application is compatible with the versions of Android and iOS that are currently supported by mobile providers.\newline
   
@@ -375,9 +423,9 @@ Assumptions are conditions that are presumed to be true during development to si
 \nsection{E.5 Effects}
 This section describes how the system’s operations will influence its environment. These effects could be on processes, workflows, or other systems that interact with the system. Understanding these impacts is crucial to ensure that the system's operation aligns well with its intended environment and does not cause unintended disruptions.
 \begin{flushleft}
-  \item \textbf{Digital minimalism:} Members of the home conduct all interactions on one platform. All common virtual services are provided by the Room8 application, hence eliminating the need for other applications that clutter the digital space.\newline
+  \item \textbf{Digital minimalism:} Students part of a home cab conduct all interactions on one platform. All common virtual services are provided by the Room8 application, hence eliminating the need for other applications that clutter the digital space.\newline
 
-  \item \textbf{Accountability:} The application promotes social responsibility and user accountability by assessing the cleanliness state of the room before/after use and quantifying the difference in the 2 states. Students are given objective feedback on how their usage of the room contributed to cleanliness and all students in the group are held accountable for their usage.\newline
+  \item \textbf{Accountability:} Room8 promotes social responsibility and user accountability by assessing the cleanliness state of the room before/after use and quantifying the difference in the 2 states, providing a cleanliness score. Students are given objective feedback and all students in the home are held accountable for their actions.\newline
   
   \item \textbf{Ease social tension:} Students living in a home can feel tense about confronting their roommates when asking them to clean up, pay them back, or do the chores they agreed to. The chatbot sends reminders about these duties, taking the pressure off students to confront each other and risk compromising their relationships.\newline 
 \end{flushleft}
@@ -385,11 +433,14 @@ This section describes how the system’s operations will influence its environm
 \nsection{E.6 Invariants}
 Invariants are properties of the environment that the system must maintain throughout its operation. These are foundational conditions that must hold true at all times during system activities. Ensuring that these invariants remain intact is essential for the correct and safe functioning of the system within its environment.
 \begin{flushleft}
-  \item \textbf{Limited camera presence:} The motion-activated camera is initially triggered by motion, and takes a “before” picture. When motion has not been detected for a prolonged and predefined amount of time, it takes an “after” picture. These 2 images aside, the camera does not take any pictures or footage and thus does not have any insight on the activities occurring in the living space.  
+  \item \textbf{Limited camera presence:} The motion-activated camera is initially triggered by motion, and takes a “before” picture. When motion has not been detected for a prolonged and predefined amount of time, it takes an “after” picture. These 2 images aside, the camera does not take any pictures or footage and thus does not have any insight on the activities occurring in the environment.  
   \newline
   \item \textbf{Students' freedom to not comply:} While the application sends reminders to students for them to pay their debts or clean up their messes, it cannot enforce these events. Room8 serves as a logistical coordinator but it cannot have a direct impact on the physical environment.
   \newline
 \end{flushleft}
+
+
+
 %===============================================================
 \chapter*{System}
 \addcontentsline{toc}{chapter}{System book}
