@@ -305,20 +305,23 @@ System will not use images taken to train machine learning model.
 \hline
 \textbf{Stakeholder} & \textbf{Category} \\ \hline
 Students              & Direct  \\ \hline
-Home Managers         & Indirect \\ \hline
-University Housing and Social Committee & Indirect \\ \hline
+Landlords and Residence Assistants         & Indirect \\ \hline
+University Housing Committee & Indirect \\ \hline
 \end{tabular}
 \caption{Stakeholders and Categories}
 \end{table}
 
 \nsubsection{G.7.1 Direct Stakeholders}
-\textbf{Students} \\ Students are the primary direct stakeholders for Room8. They are the main users of the mobile application who create houses within the app and set up the camera systems. These students seek to maintain cleanliness in their shared living spaces and establish accountability when a mess is left behind by a roommate. The application addresses common challenges faced by students in shared living arrangements, such as maintaining cleanliness, splitting expenses, and scheduling activities. 
+\textbf{Students Off Campus} \\ Students are the primary direct stakeholders for Room8. They are the main users of the mobile application who create houses within the app and set up the camera systems. These students seek to maintain cleanliness in their shared living spaces and establish accountability when a mess is left behind by a roommate. The application addresses common challenges faced by students in shared living arrangements, such as maintaining cleanliness, splitting expenses, and scheduling activities. \\
+\\
+\textbf{Students On Campus} \\ Students of are the other direct stakeholders for Room8. They are the main mainly concerned with the chore and activity scheduling aspect of the app. In most cases students living on campus do not have a kitchen and individuals are responsible for keeping their own rooms clean so these types of students would benefit from scheduling the cleaning of public areas and events that are happening.
 
 \nsubsection{G.7.2 Indirect Stakeholders}
-\textbf{Home Managers} \\ Home managers are indirect stakeholders to the project. Home managers includes landlords renting out their homes to students or residence assistants managing a room of students. The home managers look to maintain the clean condition of the shared space which is done by holding students accountable for messes that are made. 
+\textbf{Landlords} \\ Landlords are the main indirect stakeholders to the project. Landlords are renting out their homes to students and are concerned with the condition their house is kept in. They are looking to maintain the clean condition of their home which is done by holding students accountable for messes that are made.\\
 \\
+\textbf{Residence Assistants} \\ Resident assistants are another indirect stakeholder who would benefit from Room8 specifically the activity scheduling feature. Resident assistants are responsible for hosting events for students living on campus and Room8 provides a calendar system to make events on a shared calendar to inform students of any upcoming activities.\\
 \\
-\textbf{University Housing and Social Committee} \\ The University Housing and Social Committee is another key indirect stakeholder in the project. These committees often seek to help students transition into living in shared spaces and provide guidance and support. Room8 offers a wide range of services that address common points of frustration faced by students, which are often brought up to these university committees. By facilitating better communication and organization, Room8 helps enhance the overall living experience for students.
+\textbf{University Housing Committee} \\ The University Housing Committee is another key indirect stakeholder in the project. These committees often seek to help students transition into living in shared spaces and provide guidance and support. Room8 offers a wide range of services that address common points of frustration faced by students, which are often brought up to these university committees. By facilitating better communication and organization, Room8 helps enhance the overall living experience for students.
 
 
 
@@ -344,7 +347,10 @@ This section outlines the relevant external components that the system will inte
    
   \item \textbf{Google calendar API:} The application will interface with Google calendar to facilitate scheduling chores and events. This is critical for Room8's chore scheduling.\newline
 
-  \item \textbf{Chatbot API:} 
+  \item \textbf{SMS Chatbot:} The application employs a chatbot to send notifications to students via SMS about their responsibilities in the home (i.e. cleaning their mess from shared spaces, upcoming chore deadlines, and money owed for shared bills). This helps with bookkeeping, enforcing fairness, and keeping shared spaces clean.\newline
+
+  \item \textbf{OAuth 2.0:} The app utilizes the OAuth 2.0 protocol to manage user authentication and authorization securely. OAuth 2.0 allows Room8 to provide a seamless login experience using third-party identity providers without requiring users to create and manage separate credentials. OAuth 2.0 handles the app’s legal and privacy compliance standards.\newline
+  
 
 \end{flushleft}
 
