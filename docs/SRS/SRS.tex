@@ -305,20 +305,23 @@ System will not use images taken to train machine learning model.
 \hline
 \textbf{Stakeholder} & \textbf{Category} \\ \hline
 Students              & Direct  \\ \hline
-Home Managers         & Indirect \\ \hline
-University Housing and Social Committee & Indirect \\ \hline
+Landlords and Residence Assistants         & Indirect \\ \hline
+University Housing Committee & Indirect \\ \hline
 \end{tabular}
 \caption{Stakeholders and Categories}
 \end{table}
 
 \nsubsection{G.7.1 Direct Stakeholders}
-\textbf{Students} \\ Students are the primary direct stakeholders for Room8. They are the main users of the mobile application who create houses within the app and set up the camera systems. These students seek to maintain cleanliness in their shared living spaces and establish accountability when a mess is left behind by a roommate. The application addresses common challenges faced by students in shared living arrangements, such as maintaining cleanliness, splitting expenses, and scheduling activities. 
+\textbf{Students Off Campus} \\ Students are the primary direct stakeholders for Room8. They are the main users of the mobile application who create houses within the app and set up the camera systems. These students seek to maintain cleanliness in their shared living spaces and establish accountability when a mess is left behind by a roommate. The application addresses common challenges faced by students in shared living arrangements, such as maintaining cleanliness, splitting expenses, and scheduling activities. \\
+\\
+\textbf{Students On Campus} \\ Students of are the other direct stakeholders for Room8. They are the main mainly concerned with the chore and activity scheduling aspect of the app. In most cases students living on campus do not have a kitchen and individuals are responsible for keeping their own rooms clean so these types of students would benefit from scheduling the cleaning of public areas and events that are happening.
 
 \nsubsection{G.7.2 Indirect Stakeholders}
-\textbf{Home Managers} \\ Home managers are indirect stakeholders to the project. Home managers includes landlords renting out their homes to students or residence assistants managing a room of students. The home managers look to maintain the clean condition of the shared space which is done by holding students accountable for messes that are made. 
+\textbf{Landlords} \\ Landlords are the main indirect stakeholders to the project. Landlords are renting out their homes to students and are concerned with the condition their house is kept in. They are looking to maintain the clean condition of their home which is done by holding students accountable for messes that are made.\\
 \\
+\textbf{Residence Assistants} \\ Resident assistants are another indirect stakeholder who would benefit from Room8 specifically the activity scheduling feature. Resident assistants are responsible for hosting events for students living on campus and Room8 provides a calendar system to make events on a shared calendar to inform students of any upcoming activities.\\
 \\
-\textbf{University Housing and Social Committee} \\ The University Housing and Social Committee is another key indirect stakeholder in the project. These committees often seek to help students transition into living in shared spaces and provide guidance and support. Room8 offers a wide range of services that address common points of frustration faced by students, which are often brought up to these university committees. By facilitating better communication and organization, Room8 helps enhance the overall living experience for students.
+\textbf{University Housing Committee} \\ The University Housing Committee is another key indirect stakeholder in the project. These committees often seek to help students transition into living in shared spaces and provide guidance and support. Room8 offers a wide range of services that address common points of frustration faced by students, which are often brought up to these university committees. By facilitating better communication and organization, Room8 helps enhance the overall living experience for students.
 
 
 
@@ -1022,11 +1025,21 @@ Thus, S.3 Interfaces will be available in a future revision of this document.
 \comment{The Project book describes all the constraints and expectations not about the system itself, but about how to develop and produce it.}
 
 \nsection{P.1 Roles and personnel}
-\comment{Main responsibilities in the project; required project staff and their needed qualifications.}\\
+Note: Roles that cannot be assigned to multiple people are denoted with a \textbf{*}\\
+\newline Role Switching: Roles can be switched and reassigned with an informal verbal agreement with the exception of Developer Liaison, which requires the previous liaison to notify all external contacts of the change in point of contact.\\
+\newline\textbf{Project Manager*: }Responsible for making sure Room8 project is operating smoothly. Ensures resources being allocated efficiently, issues on Github are being solved, project tasks are being tracked and chairs team meetings.\\
 \\
-\textbf{Project Manager: }Responsible for making sure Room8 project is operating smoothly. Ensures resources being allocated efficiently, issues on Github are being solved, project tasks are being tracked and main point of contact between stakeholders and developers.\\
+\textbf{Application Developer: }Responsible for developing the Room8 application which will be the main point of interaction between users and projects. Tasks this role is responsible for also include API design and UI/UX design.\\
 \\
-\textbf{Software Developer: }Developing and making sure Room8 application meets specifications, requirements and the specified tasks. Solves issues on Github and implementation of core functionalities.\\
+\textbf{DevOps Engineer: }Responsible for creating and maintaining CI/CD pipelines to ensure the latests builds are deployed to the production environment.\\
+\\
+\textbf{Cloud Engineer: }Responsible for creating designing, implementing, and managing any required cloud-based solutions needed for the project. These include cloud based storage containers and application deployments.\\
+\\
+\textbf{Hardware Specialist: }Responsible for researching and implementing any required hardware solutions as well integrating them with the application and other software components.\\
+\\
+\textbf{AI Engineer: }Responsible for researching, implementing, and tuning any required AI models needed for implementation.\\
+\\
+\textbf{Developer Liaison*: }The point of contact between project developers and stakeholders. The Liaison will be responsible for scheduling non-developer meetings and responding to questions from stakeholders. \\
 \\
 
 \nsection{P.2 Imposed technical choices}
