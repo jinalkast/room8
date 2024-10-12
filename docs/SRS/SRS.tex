@@ -435,30 +435,32 @@ Invariants are properties of the environment that the system must maintain throu
   	\begin{itemize}
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{FR1:} The system shall allow users to create an account using their name, email, and password.
-            \item \textbf{FR2:} The system shall allows users to log out of their account.
-            \item \textbf{FR3:} The system shall allow users to create a home group using the home name, address, and number of roommates.
-            \item \textbf{FR4:} The system shall allow users to invite other users to join their home group.
-            \item \textbf{FR5:} The system shall allow users to view the list of users in their home group.
-            \item \textbf{FR6:} The system shall allow users to remove users from their home group.
-            \item \textbf{FR7:} The system shall allow users to leave their home group.
+  			\item \textbf{FR211:} The system shall allow users to create an account using their name, email, and password.
+            \item \textbf{FR212:} The system shall allows users to log out of their account.
+            \item \textbf{FR213:} The system shall allow users to create a home group using the home name, address, and number of roommates.
+            \item \textbf{FR214:} The system shall allow users to invite other users to join their home group.
+            \item \textbf{FR215:} The system shall allow users to view the list of users in their home group.
+            \item \textbf{FR216:} The system shall allow users to remove users from their home group.
+            \item \textbf{FR217:} The system shall allow users to leave their home group.
+            \item \textbf{FR218:} The system shall allow users accept or decline invitations to homes.
+
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{NFR2.1.1:} All data related to authentication must be encrypted in both transit and in storage.
-  			\item \textbf{NFR2.1.2:} Error messages related to authentication should not disclose sensitive details such as "Incorrect Password".
-  			\item \textbf{NFR2.1.3:} All data related to authentication must be encrypted in both transit and in storage.
-  			\item \textbf{NFR2.1.4:} The system should be able to authenticate a user with a median response time of under 1 second.
+  			\item \textbf{NFR211:} All data related to authentication must be encrypted in both transit and in storage.
+  			\item \textbf{NFR212:} Error messages related to authentication should not disclose sensitive details such as "Incorrect Password".
+  			\item \textbf{NFR213:} All data related to houses such as addresses and residents should be encrypted in transit and in rest.
+  			\item \textbf{NFR214:} The system should be able to authenticate a user with a median response time of under 1 second.
   		\end{itemize}
   	\end{itemize}
   	\item \textbf{S.2.2 - ChatBot Configuration}
   	\begin{itemize}
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{FR8:} The system shall allow users to configure the chatbot settings to include or exclude messages corresponding to chore schedule, cleanliness manager, and bill splitter.
-            \item \textbf{FR9:} The ChatBot shall send reminders to the group chat about upcoming chores and events in the schedule 2 days in advance.
-            \item \textbf{FR10:} The ChatBot shall send notifications to the group chat about new shared living space cleanliness scores immediately after an event is added to the cleanliness manager page.
-            \item \textbf{FR11:} The ChatBot shall send notifications to the group chat about new shared expenses added to the bill splitter page immediately after its addition.
+  			\item \textbf{FR221:} The system shall allow users to configure the chatbot settings to include or exclude messages corresponding to chore schedule, cleanliness manager, and bill splitter.
+            \item \textbf{FR222:} The ChatBot shall send reminders to the group chat about upcoming chores and events in the schedule 2 days in advance.
+            \item \textbf{FR223:} The ChatBot shall send notifications to the group chat about new shared living space cleanliness scores immediately after an event is added to the cleanliness manager page.
+            \item \textbf{FR224:} The ChatBot shall send notifications to the group chat about new shared expenses added to the bill splitter page immediately after its addition.
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
@@ -470,10 +472,10 @@ Invariants are properties of the environment that the system must maintain throu
   	\begin{itemize}
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{FR12:} The system shall display the current cleanliness score of the shared living space.
-            \item \textbf{FR13:} The system shall display the detected messes in the shared living space.
-            \item \textbf{FR14:} The system shall allow users to view the cleanliness score of other users.
-            \item \textbf{FR15:} The system shall allow users to view the pending tasks of other users.
+  			\item \textbf{FR231:} The system shall display the current cleanliness score of the shared living space.
+            \item \textbf{FR232:} The system shall display the detected messes in the shared living space.
+            \item \textbf{FR233:} The system shall allow users to view the cleanliness score of other users.
+            \item \textbf{FR234:} The system shall allow users to view the pending tasks of other users.
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
@@ -490,31 +492,34 @@ Invariants are properties of the environment that the system must maintain throu
   	\begin{itemize}
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{FR16:} The system shall allow users to add a new chore to the schedule.
-            \item \textbf{FR17:} The system shall allow users to add a new event to the schedule.
-            \item \textbf{FR18:} The system shall allow users to input chore details (name, description, time, frequency, assigned users, etc.).
-            \item \textbf{FR19:} The system shall save the chore and send reminders to the assigned users.
-            \item \textbf{FR20:} The system shall allow users to view the schedule and mark chores as complete.
+  			\item \textbf{FR241:} The system shall allow users to add a new chore to the schedule.
+            \item \textbf{FR242:} The system shall allow users to add a new event to the schedule.
+            \item \textbf{FR243:} The system shall allow users to input chore details (name, description, time, frequency, assigned users, etc.).
+            \item \textbf{FR244:} The system shall save the chore and send reminders to the assigned users.
+            \item \textbf{FR245:} The system shall allow users to view the schedule and mark chores as complete.
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{NFR2.4.1:} The calendar system shall store all events in UTC
-  			\item \textbf{NFR2.4.2:} The calendar system shall display all calendar events to users in their time zone. 
-  			\item \textbf{NFR2.4.3:} The calendar system shall have a granularity of 5 minutes.
+  			\item \textbf{NFR241:} The calendar system shall store all calendar events in UTC
+  			\item \textbf{NFR242:} The calendar system shall display all calendar events to users in their time zone. 
+  			\item \textbf{NFR243:} The calendar system shall have a granularity of 5 minutes.
+  			\item \textbf{NFR244:} The calendar system shall encrypt all events stored.
   		\end{itemize}
   	\end{itemize}
   	\item \textbf{S.2.5 - Bill Splitter Configuration}
   	\begin{itemize}
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{FR21:} The system shall allow users to add a new expense to the bill splitter and notify the involved users.
-            \item \textbf{FR22:} The system shall allow users to view what he owes other housemates.
-            \item \textbf{FR23:} The system shall allow users to view what they owe others.
-            \item \textbf{FR24:} The system shall allow users to mark expenses as paid.
+  			\item \textbf{FR251:} The system shall allow users to add a new expense to the bill splitter and notify the involved users.
+            \item \textbf{FR252:} The system shall allow users to view what he owes other housemates.
+            \item \textbf{FR253:} The system shall allow users to view what they owe others.
+            \item \textbf{FR254:} The system shall allow users to mark expenses as paid.
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{NFR1 - Sample:}
+  			\item \textbf{NFR251:} The Bill Splitter system shall encrypt all events stored.
+  			\item \textbf{NFR252:} The Bill Splitter shall allow users to record numerical values of prices with a granularity of two decimal places.
+
   		\end{itemize}
   	\end{itemize}
 \end{flushleft}
@@ -797,7 +802,7 @@ Invariants are properties of the environment that the system must maintain throu
     \item \textbf{Success Postcondition:} New event is added to the schedule and housemates are notified. Housemates are able to view event in the schedule. Housemates are reminded of the event when it is approaching.
 \end{itemize}
 
-\nsubsection{S.4.11 User Schedules an Event}
+\nsubsection{S.4.11 User Views Chores Or Events}
 \begin{itemize}
     \item \textbf{Use Case:} UC3
     \item \textbf{Primary Actor:} User
