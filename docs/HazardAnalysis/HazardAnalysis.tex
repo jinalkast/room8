@@ -67,12 +67,43 @@ Date2 & Name(s) & Description of changes\\
 hazards.}
 
 \section{System Boundaries and Components}
+This section goes over the components that the system can be divided into.
 
-\wss{Dividing the system into components will help you brainstorm the hazards.
-You shouldn't do a full design of the components, just get a feel for the major
-ones.  For projects that involve hardware, the components will typically include
-each individual piece of hardware.  If your software will have a database, or an
-important library, these are also potential components.}
+\subsection{User Smart Phone}
+Smart phone the user is using with the supported version of Android or iOS.
+
+\subsection{Camera}
+Responsible for taking picture for cleanliness detection analysis when sensor sends information of user.
+
+\subsection{Motion Sensor}
+Detects movement in the shared space to determine if user has entered or exited shared space signaling the camera for a picture.
+
+\subsection{Smart Phone Application}
+A mobile application installed on smart phones which have versions of Android and iOS that is currently being supported mobile providers. This includes front-end of the system where users can see details and change settings of various back-end components listed below.
+
+
+\subsection{Authentication}
+Authentication using OAuth of user credentials and house details are processed in this component including the update of information mentioned previously.
+
+\subsection{SMS ChatBot}
+ChatBot responsible for sending messages to group chat of home members for notifying them of cleanliness assessment, expenses from bill splitter, or reminders to complete tasks.
+
+\subsection{Calendar Tool}
+Allows users to add events to calendar and display to other housemates, if involved in event, in their respective calendars. Also houses logic for generating chore/cleaning schedule and adding in calendars of users.
+
+\subsection{Cleanliness Manager}
+Responsible for handling and showing users information about their cleanliness after use of shared space and history of events in the space.
+
+\subsection{Bill Splitter}
+Calculate charges due from a shared expense and keeps track of which expenses are due from each user and who they owe using the SMS ChatBot to notify users. Also stores history of expenses and charges paid.
+
+\subsection{Database}
+Used to securely store user and house information, calendar events, expense history, and pictures for cleanliness calculator.
+
+\subsection{Cleanliness Calculator}
+Runs algorithm for detecting change in environment through input received from hardware and stores information for the user to view on application.
+
+
 
 \section{Critical Assumptions}
 
