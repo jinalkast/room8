@@ -153,10 +153,11 @@ documentation, and/or test cases.}\\
          Camera Takes Picture & Takes picture while space is blocked\newline & Inaccurate picture for Cleanliness Calculator.\newline & User is covering too much of space that needs to be analyzed.\newline & If picture before use differs too greatly from "clean" state take picture again. & SR? & H?? & BLANK\\
           & Takes final picture while user in frame. & User privacy is breached & Sensor does not detect movement& Remove picture from database and retake final picture when no motion is detected and analyze again for user.  & ??? & H?? & BLANK\\
          \hline
-         System Authenticates User & Bad actor logs in to a user's account& Bad actor alters account credentials.\newline\newline Sensitive user information is revealed such as full name and address.\newline\newline Unauthorized us of services occur.\newline\newline Account lockout.\newline\newline Bad actor impersonates user, allowing them to disrupt services for other users within the same house. & Data breach.\newline\newline Weak account password.\newline\newline Lack of multi-factor authentication.\newline\newline Outdated / insecure methods of storing user credentials.\newline\newline Man in the middle attacks.\newline\newline Brute force attacks. & Check for unusual login patterns such as different geolocations, IP addresses, and repeated failed attempts on the same login.\newline\newline Require all account passwords to satisfy a minimum password strength criteria.\newline\newline Impose rate limits on failed authentication attempts. & SR?, SR? & H?? & Medium\\
+         System Authenticates User & Bad actor logs in to a user's account& Bad actor alters account credentials.\newline\newline Sensitive user information is revealed such as full name and address.\newline\newline Unauthorized us of services occur.\newline\newline Account lockout.\newline\newline Bad actor impersonates user, allowing them to disrupt services for other users within the same house. & Data breach.\newline\newline Weak account password.\newline\newline Lack of multi-factor authentication.\newline\newline Outdated / insecure methods of storing user credentials.\newline\newline Man in the middle attacks.\newline\newline Brute force attacks. & Check for unusual login patterns such as different geolocations, IP addresses, and repeated failed attempts on the same login.\newline\newline Require all account passwords to satisfy a minimum password strength criteria.\newline\newline Impose rate limits on failed authentication attempts.\newline\newline Recommend multi-factor authentication to users. & SR?, SR? & H?? & Medium\\
          \hline
+         
          \hline
-         NEW & NEW\newline & NEW & NEW & NEW & SR?, SR? & H?? & Medium\\
+         Cleanliness Detection System Detects Changes in the Cleanliness of a Room & System falsely concludes that a room has become more dirty.\newline\newline System falsely concludes that a room has become more clean.\newline\newline System concludes that there are no changes despite there being changes.\newline\newline The system concludes that there are changes when there are no changes. & Conflict amongst roommates.\newline\newline Trust in the system declines. & Obstructions in the images captured by the camera.\newline\newline Improper calibration and timing of the motion sensor.\newline\newline Object detection algorithm has errors and classifies items incorrectly in an image.& Create base case tests for the cleanliness detection system which include a no change in cleanliness case, increase in cleanliness case, decrease in cleanliness case, and a no room state change case. \newline\newline Alert and instruct users to clear camera obstructions before setting up the system. & SR?, SR? & H?? & Low\\
          \hline
          
          \hline
@@ -166,6 +167,7 @@ documentation, and/or test cases.}\\
     \end{adjustbox}
     \label{tab:my_label}
 \end{table}
+
 
 \newpage
 
