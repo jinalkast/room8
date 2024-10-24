@@ -152,7 +152,10 @@ documentation, and/or test cases.}\\
          \hline
          Camera Takes Picture & Takes picture while space is blocked\newline & Inaccurate picture for Cleanliness Calculator.\newline & User is covering too much of space that needs to be analyzed.\newline & If picture before use differs too greatly from "clean" state take picture again. & SR? & H?? & BLANK\\
           & Takes final picture while user in frame. & User privacy is breached & Sensor does not detect movement& Remove picture from database and retake final picture when no motion is detected and analyze again for user.  & ??? & H?? & BLANK\\
-          \hline
+         \hline
+         System Authenticates User & Bad actor logs in to a user's account& Bad actor alters account credentials.\newline\newline Sensitive user information is revealed such as full name and address.\newline\newline Unauthorized us of services occur.\newline\newline Account lockout.\newline\newline Bad actor impersonates user, allowing them to disrupt services for other users within the same house. & Data breach.\newline\newline Weak account password.\newline\newline Lack of multi-factor authentication.\newline\newline Outdated / insecure methods of storing user credentials.\newline\newline Man in the middle attacks.\newline\newline Brute force attacks. & Check for unusual login patterns such as different geolocations, IP addresses, and repeated failed attempts on the same login.\newline\newline Require all account passwords to satisfy a minimum password strength criteria.\newline\newline Impose rate limits on failed authentication attempts. & SR?, SR? & H?? & Medium\\
+         \hline
+         \hline
          NEW & NEW\newline & NEW & NEW & NEW & SR?, SR? & H?? & Medium\\
          \hline
          
