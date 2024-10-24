@@ -145,15 +145,17 @@ documentation, and/or test cases.}\\
     \centering
     
 
-    \begin{tabular}{|p{0.30\linewidth} | p{0.30\linewidth} | p{0.20\linewidth}|  p{0.20\linewidth}|  p{0.30\linewidth}|  p{0.07\linewidth}|  p{0.07\linewidth}|p{0.12\linewidth}| }
+    \begin{tabular}{|p{0.27\linewidth} | p{0.25\linewidth} | p{0.22\linewidth}|  p{0.22\linewidth}|  p{0.30\linewidth}|  p{0.07\linewidth}|  p{0.07\linewidth}|p{0.12\linewidth}| }
     
     \hline
          \textbf{Design Functions} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref} & \textbf{Severity}\\
          \hline
-         Camera Takes Picture & Takes picture while space is blocked\newline & Inaccurate picture for Cleanliness Calculator.\newline & User is covering too much of space that needs to be analyzed.\newline & If picture before use differs too greatly from "clean" state take picture again. & SR? & H?? & BLANK\\
-          & Takes final picture while user in frame. & User privacy is breached & Sensor does not detect movement& Remove picture from database and retake final picture when no motion is detected and analyze again for user.  & ??? & H?? & BLANK\\
+         
+			NEW & NEW & NEW & NEW & NEW & SR? & H?? & Medium\\
+
           \hline
-         NEW & NEW\newline & NEW & NEW & NEW & SR?, SR? & H?? & Medium\\
+         Camera Takes Picture & Takes picture while space is blocked\newline & Inaccurate picture for Cleanliness Calculator.\newline & User is covering too much of space that needs to be analyzed.\newline & If picture before use differs too greatly from "clean" state take picture again. & SR? & H1.1 & BLANK\\
+          & Takes final picture while user in frame. & User privacy is breached & Sensor does not detect movement& Remove picture from database and retake final picture when no motion is detected and analyze again for user.  & ??? & H1.2 & BLANK\\
          \hline
          
          \hline
