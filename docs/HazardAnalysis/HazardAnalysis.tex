@@ -3,6 +3,12 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{adjustbox}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{chngpage}
+\usepackage{array}
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
@@ -72,7 +78,7 @@ The purpose of this hazard analysis is to identify, be aware, and mitigate losse
 \section{System Boundaries and Components}
 This section goes over the components that the system can be divided into.
 
-\subsection{User Smart Phone}
+\subsection{User Device}
 Smart phone the user is using with the supported version of Android or iOS.
 
 \subsection{Camera}
@@ -81,9 +87,8 @@ Responsible for taking picture for cleanliness detection analysis when sensor se
 \subsection{Motion Sensor}
 Detects movement in the shared space to determine if user has entered or exited shared space signaling the camera for a picture.
 
-\subsection{Smart Phone Application}
+\subsection{PWA Interface}
 A mobile application installed on smart phones which have versions of Android and iOS that is currently being supported mobile providers. This includes front-end of the system where users can see details and change settings of various back-end components listed below.
-
 
 \subsection{Authentication}
 Authentication using OAuth of user credentials and house details are processed in this component including the update of information mentioned previously.
@@ -95,17 +100,13 @@ ChatBot responsible for sending messages to group chat of home members for notif
 Allows users to add events to calendar and display to other housemates, if involved in event, in their respective calendars. Also houses logic for generating chore/cleaning schedule and adding in calendars of users.
 
 \subsection{Cleanliness Manager}
-Responsible for handling and showing users information about their cleanliness after use of shared space and history of events in the space.
+Runs algorithm for detecting change in environment through input received from hardware and stores user's information for the user to view on application along with history of cleanliness.
 
 \subsection{Bill Splitter}
-Calculate charges due from a shared expense and keeps track of which expenses are due from each user and who they owe using the SMS ChatBot to notify users. Also stores history of expenses and charges paid.
+Calculate charges due from a shared expense and keeps track of which expenses are due from each user and who they owe using the SMS ChatBot to notify users. Also stores history of expenses and charges paid for user to view.
 
 \subsection{Database}
 Used to securely store user and house information, calendar events, expense history, and pictures for cleanliness calculator.
-
-\subsection{Cleanliness Calculator}
-Runs algorithm for detecting change in environment through input received from hardware and stores information for the user to view on application.
-
 
 
 \section{Critical Assumptions}
@@ -121,7 +122,10 @@ this potential failure mode.}
 \item \textbf{CA4}: Users have used other applications before and are familiar with common signifiers, mappings, and UI metaphores (ex. Heart implies like).
 \item \textbf{CA5}: External services, such as location services, map integrations, and calendar APIs will be available and reliable.
 \item \textbf{CA6}: Users' devices will have additional free storage beyond the what's required for the applications install.
+\item \textbf{CA7}: Camera setup in shared environment will not be moved or blocked to ensure clear pictures of space.
 \end{itemize}
+
+\newpage
 
 \section{Failure Mode and Effect Analysis}
 
@@ -132,7 +136,28 @@ requirements you have already written, or you might need to add new
 requirements.}
 \wss{If no safety requirement can be devised, other mitigation strategies can be
 entered in the table, including strategies involving providing additional
-documentation, and/or test cases.}
+documentation, and/or test cases.}\\
+\begin{table}[H]
+    \caption{\bf FMEA Table}
+    \begin{adjustbox}{width=\textwidth}
+    \centering
+    
+
+    \begin{tabular}{|p{0.20\linewidth} | p{0.30\linewidth} | p{0.20\linewidth}|  p{0.20\linewidth}|  p{0.30\linewidth}|  p{0.07\linewidth}|  p{0.07\linewidth}|p{0.12\linewidth}| }
+    \hline
+         \textbf{Design Functions} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref} & \textbf{Severity}\\
+         \hline
+         TEXT & TEXT\newline & TEXT & TEXT & TEXT & SR? & H?? & High\\
+          & TEXT & TEXT & TEXT& TEXT   & ??? & H?? & Low\\
+          \hline
+         NEW & NEW\newline & NEW & NEW & NEW & SR?, SR? & H?? & Medium\\
+         \hline
+    \end{tabular}
+    \end{adjustbox}
+    \label{tab:my_label}
+\end{table}
+
+\newpage
 
 \section{Safety and Security Requirements}
 
