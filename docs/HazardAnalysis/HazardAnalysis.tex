@@ -129,7 +129,6 @@ this potential failure mode.}
 \item \textbf{CA4}: Users have used other applications before and are familiar with common signifiers, mappings, and UI metaphores (ex. Heart implies like).
 \item \textbf{CA5}: External services, such as location services, map integrations, and calendar APIs will be available and reliable.
 \item \textbf{CA6}: Users' devices will have additional free storage beyond the what's required for the applications install.
-\item \textbf{CA7}: Camera setup in shared environment will not be moved or blocked to ensure clear pictures of space.
 \end{itemize}
 
 \newpage
@@ -165,42 +164,40 @@ documentation, and/or test cases.}\\
     
     \hline
     \endlastfoot
-    
-    Camera Uploads Image to Cleanliness Detection System & Image gets compressed. & Same as HR2.1. & Network speeds are slow and compresses image to save space and and send image faster. & Take another picture and upload to cleanliness detection system again. & IR1 & H1.1 & BLANK\\
 
 
     \hline
-    Camera Takes Picture & Something irregular occuring in-frame \newline & Cleanliness detection algorithm does not produce good results due to bad input\newline & a. Camera field of view being blocked \newline b. Problem with lighting  \newline & a. Take hourly pictures (i.e. as long as motion not detected), use last picture taken \newline b. Same as H2.1a  \newline & IR2  \newline & H2.1  \newline & BLANK\\
-    & Delay in camera shot timing & User in-frame, user privacy is breached & a. Motion sensor not properly connected to camera  \newline b. Motion sensor not working &  a. Remove picture from database, follow H2.1a, do troubleshooting for motion sensor \newline b. Same as H2.2a \newline & SR1 & H2.2 & BLANK\\
+    Camera Takes Picture & Something irregular occuring in-frame \newline & Cleanliness detection algorithm does not produce good results due to bad input\newline & a. Camera field of view being blocked \newline b. Problem with lighting  \newline & a. Take hourly pictures (i.e. as long as motion not detected), use last picture taken \newline b. Same as H2.1a  \newline & IR1  \newline & H1.1  \newline & BLANK\\
+    & Delay in camera shot timing & User in-frame, user privacy is breached & a. Motion sensor not properly connected to camera  \newline b. Motion sensor not working &  a. Remove picture from database, follow H2.1a, do troubleshooting for motion sensor \newline b. Same as H1.2a \newline & SR1 & H1.2 & BLANK\\
     
     \hline
-    Camera Uploads Image Pair To Cleanliness Management System & Camera fails to upload the images \newline & Cleanliness management system does not detect or notify users of the changes to the space\newline & a. Internet connectivity issues \newline & a. Retry to upload images multiple times \newline b. Notify users if there has been no activity detected from the camera for an extended period of time  \newline & SR?  \newline & H3.1  \newline & BLANK\\  
+    Camera Uploads Image Pair To Cleanliness Management System & Camera fails to upload the images \newline & Cleanliness management system does not detect or notify users of the changes to the space\newline & a. Internet shuts down for an extended period of time \newline & a. Retry to upload images multiple times \newline b. Notify users if there has been no activity detected from the camera for an extended period of time  \newline & SR?  \newline & H2.1  \newline & BLANK\\  
     \hline
-    Motion Sensor Detects Motion  & Motion should not be detected (false positive) \newline  & Unnecessary computation and notifications \newline & a. Motion sensor is overly sensitive \newline b. Some brief/light movement that should not be classified as motion occurred (e.g., insect flew by) \newline c. Continuous movement that should not be classified as motion is occurring (e.g., air conditioner causing curtain to move) \newline  & a. Include regular motion-calibration testing in system design \newline b. Have a clause in the cleanliness detection algorithm to check for false positives (i.e., if the before/after pictures do not meet a threshold to be considered dissimilar) \newline c. ???? & SR?, SR? & H4.1 & Medium\\
-    & Motion is not detected although it is occurring (false negative) \newline & Cleanliness detection does not occur \newline & a. Motion sensor is underly sensitive \newline b. Motion sensor is broken \newline &  a. Same as H3.1a \newline b. Same as H4.1a \newline & ??? & H4.2 & BLANK\\
+    Motion Sensor Detects Motion  & Motion should not be detected (false positive) \newline  & Unnecessary computation and notifications \newline & a. Motion sensor is overly sensitive \newline b. Some brief/light movement that should not be classified as motion occurred (e.g., insect flew by) \newline c. Continuous movement that should not be classified as motion is occurring (e.g., air conditioner causing curtain to move) \newline  & a. Include regular motion-calibration testing in system design \newline b. Have a clause in the cleanliness detection algorithm to check for false positives (i.e., if the before/after pictures do not meet a threshold to be considered dissimilar) \newline c. ???? & SR?, SR? & H3.1 & Medium\\
+    & Motion is not detected although it is occurring (false negative) \newline & Cleanliness detection does not occur \newline & a. Motion sensor is underly sensitive \newline b. Motion sensor is broken \newline &  a. Same as H2.1a \newline b. Same as H3.1a \newline & ??? & H3.2 & BLANK\\
     
 
     \hline
-    System Authenticates User  & Bad actor is able to log into user's account \newline & Sensitive user information is revealed, such as full name and address. User privacy is violated. \newline & a. Data breach \newline b. Weak account password \newline c. Lack of multi-factor authentication \newline d. Brute force attacks \newline e. Man-int-the-middle attacks \newline f. Outdated/insecure methods of storing user credentials \newline & a. Check for unusual login patterns, such as different geolocations, IP addresses, and repeated failed attempts on same login \newline b. Require all account passwords to satisfy a minimum password strength criterion \newline c. Reccommend multi-factor authentication for logging in \newline d. Impose rate limits on failed authentication attempts \newline e. Salt and hash passwords \newline & ??? \newline & H5.1 & Medium\\
-    & Bad actor alters account credentials \newline & User cannot access their account \newline & a. Lack of multi-factor authentication for changing account credentials \newline  &  a. Require multi-factor authentication for changing account credentials \newline & ??? & H5.2 & BLANK\\
-    & Bad actor impersonates user \newline & Violation of user privacy and distruption of services for other house members \newline & a. Log-in procedures not secure \newline  &  a. Same as 4.1a - 4.1f \newline & ??? & H5.3 & BLANK\\
-    & User forgot their password \newline & User cannot log-in \newline & a. No way to recover account \newline  &  a. System has a "forgot password" clause where multi-factor authentication is used to create new password \newline & ??? & H5.4 & BLANK\\
+    System Authenticates User  & Bad actor is able to log into user's account \newline & Sensitive user information is revealed, such as full name and address. User privacy is violated. \newline & a. Data breach \newline b. Weak account password \newline c. Lack of multi-factor authentication \newline d. Brute force attacks \newline e. Man-int-the-middle attacks \newline f. Outdated/insecure methods of storing user credentials \newline & a. Check for unusual login patterns, such as different geolocations, IP addresses, and repeated failed attempts on same login \newline b. Require all account passwords to satisfy a minimum password strength criterion \newline c. Reccommend multi-factor authentication for logging in \newline d. Impose rate limits on failed authentication attempts \newline e. Salt and hash passwords \newline & ??? \newline & H4.1 & Medium\\
+    & Bad actor alters account credentials \newline & User cannot access their account \newline & a. Lack of multi-factor authentication for changing account credentials \newline  &  a. Require multi-factor authentication for changing account credentials \newline & ??? & H4.2 & BLANK\\
+    & Bad actor impersonates user \newline & Violation of user privacy and distruption of services for other house members \newline & a. Log-in procedures not secure \newline  &  a. Same as 4.1a - 4.1f \newline & ??? & H4.3 & BLANK\\
+    & User forgot their password \newline & User cannot log-in \newline & a. No way to recover account \newline  &  a. System has a "forgot password" clause where multi-factor authentication is used to create new password \newline & ??? & H4.4 & BLANK\\
 
 
     
     \hline
-    ChatBot Sends Notifaction & User is notified of deleted event & False information sent to user and user gets annoyed& a. ChatBot SMS did not get update from calendar that event was deleted and user does not need to be informed \newline & a. Have test cases covering testing if ChatBot SMS is updated when calendar events update & NFR222 & H6.1 & Medium\\
+    ChatBot Sends Notifaction & User is notified of deleted event & False information sent to user and user gets annoyed& a. ChatBot SMS did not get update from calendar that event was deleted and user does not need to be informed \newline & a. Have test cases covering testing if ChatBot SMS is updated when calendar events update & NFR222 & H5.1 & Medium\\
     
-    & User is not notified of an event & Same as HR7.1 & a. ChatBot SMS failed to get event from calendar & a. Make sure ChatBot SMS synchronizes with calendar. & NFR222 & H6.2 & BLANK\\
+    & User is not notified of an event & Same as HR7.1 & a. ChatBot SMS failed to get event from calendar & a. Make sure ChatBot SMS synchronizes with calendar. & NFR222 & H5.2 & BLANK\\
     
      \hline
-    Scheduling an Event in the Calendar & Event cannot be scheduled & User is frustrated, and important information is not being sent to roommates &  a. Conflict occurred due to multiple users scheduling events simultaneously &  a. Put a lock on the calendar resource & SR?, SR? & H7.1 & Medium\\
+    Scheduling an Event in the Calendar & Event cannot be scheduled & User is frustrated, and important information is not being sent to roommates &  a. Conflict occurred due to multiple users scheduling events simultaneously &  a. Put a lock on the calendar resource & SR?, SR? & H6.1 & Medium\\
     
     \hline
-    Cleanliness Management System Detects Changes in the Cleanliness of a Room & System falsely concludes that a room has become more dirty.\newline\newline System falsely concludes that a room has become more clean.\newline\newline System concludes that there are no changes despite there being changes.\newline\newline The system concludes that there are changes when there are no changes. & Conflict amongst roommates.\newline\newline Trust in the system declines. & Obstructions in the images captured by the camera.\newline\newline Improper calibration and timing of the motion sensor.\newline\newline Object detection algorithm has errors and classifies items incorrectly in an image.& Create base case tests for the cleanliness management system, including no change, increase, decrease, and no room state change cases.\newline\newline Alert and instruct users to clear camera obstructions before setting up the system. & SR?, SR? & H8.1 & Low\\
+    Cleanliness Management System Detects Changes in the Cleanliness of a Room & System falsely concludes that a room has become more dirty.\newline\newline System falsely concludes that a room has become more clean.\newline\newline System concludes that there are no changes despite there being changes.\newline\newline The system concludes that there are changes when there are no changes. & Conflict amongst roommates.\newline\newline Trust in the system declines. & Obstructions in the images captured by the camera.\newline\newline Improper calibration and timing of the motion sensor.\newline\newline Object detection algorithm has errors and classifies items incorrectly in an image.& Create base case tests for the cleanliness management system, including no change, increase, decrease, and no room state change cases.\newline\newline Alert and instruct users to clear camera obstructions before setting up the system. & SR?, SR? & H7.1 & Low\\
 
     \hline
-    Inputting into Bill Splitter & Amount owing not accurate & Users receiving false information & a. User made an error inputting bill \newline b. The bill changed (i.e. amount or people owing) \newline c. Bad actor creating false bills & a. Provide users with a mechanism to edit outstanding bills \newline b. Same as 8.1a \newline c. System has a way for roommates to delete bills and report misuse & SR?, SR? & H9.1 & Medium\\
+    Inputting into Bill Splitter & Amount owing not accurate & Users receiving false information & a. User made an error inputting bill \newline b. The bill changed (i.e. amount or people owing) \newline c. Bad actor creating false bills & a. Provide users with a mechanism to edit outstanding bills \newline b. Same as 8.1a \newline c. System has a way for roommates to delete bills and report misuse & SR?, SR? & H8.1 & Medium\\
     
     \hline
     Database something & NEW & NEW & NEW & NEW & SR?, SR? & H?? & Medium\\
@@ -231,8 +228,6 @@ The following lists new requirements which will be added to the Software Require
 
 \subsection{Integrity Requirements}
 \begin{enumerate}[{IR}1. ]
-    \item The system will be able to send high quality images over the network without compression.\\
-    \textbf{Rationale}: It is important that the image does not lose quality so the cleanliness detection system does not have inaccurate results. 
     \item The system will send clear images of the shared space.\\
     \textbf{Rationale}: It is important the images are not hindered by objects covering majority of the share space. 
 \end{enumerate} 
