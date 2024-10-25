@@ -142,7 +142,7 @@ documentation, and/or test cases.}\\
 \begin{table}[H]
     \caption{\bf FMEA Table}
     \begin{adjustbox}{width=\textwidth}
-    \centering
+    \raggedright
     
 
     \begin{tabular}{|p{0.25\linewidth} | p{0.25\linewidth} | p{0.22\linewidth}|  p{0.22\linewidth}|  p{0.30\linewidth}|  p{0.085\linewidth}|  p{0.05\linewidth}|p{0.12\linewidth}| }
@@ -161,11 +161,11 @@ documentation, and/or test cases.}\\
          \hline
          Cleanliness Detection System Detects Changes in the Cleanliness of a Room & System falsely concludes that a room has become more dirty.\newline\newline System falsely concludes that a room has become more clean.\newline\newline System concludes that there are no changes despite there being changes.\newline\newline The system concludes that there are changes when there are no changes. & Conflict amongst roommates.\newline\newline Trust in the system declines. & Obstructions in the images captured by the camera.\newline\newline Improper calibration and timing of the motion sensor.\newline\newline Object detection algorithm has errors and classifies items incorrectly in an image.& Create base case tests for the cleanliness detection system which include a no change in cleanliness case, increase in cleanliness case, decrease in cleanliness case, and a no room state change case. \newline\newline Alert and instruct users to clear camera obstructions before setting up the system. & SR?, SR? & H4.1 & Low\\
          \hline
-         
-         \hline
          ChatBot & Texts user about deleted event\newline & False information sent to user and user gets annoyed& ChatBot SMS did not get update from calendar that event was deleted and no longer needs to inform user.& Have test cases covering testing if ChatBot SMS is updated when calendar events update.& NFR222 & H5.1 & Medium\\
          \hline
-         Bill splitter & Amount owing not accurate\newline\newline\newline\newline Bill splitter crashing \ & Users recieving false information \newline\newline\newline\newline Inputs to bill splitter are not being saved/processed & a. There has been an update to the bill (i.e. amount or people owing) \newline\newline a. User has poor internet connection \newline b. Room8's server is down  & a. Provide users with a mechanism to edit previously input bill \newline\newline\newline a. Warn users that their internet is not working and to try again when they have proper connection \newline b. Warn users that Room8's server is down, provide update on how it is being dealt with/ timeline of server being up again & SR?, SR? & H?? & Medium\\
+         \raggedright Bill splitter &\raggedright Amount owing not accurate\newline\newline\newline\newline Bill splitter crashing \ &\raggedright Users recieving false information \newline\newline\newline\newline Inputs to bill splitter are not being saved/ processed &\raggedright a. There has been an update to the bill (i.e. amount or people owing) \newline\newline a. User has poor internet connection \newline b. Room8's server is down  &\raggedright a. Provide users with a mechanism to edit previously input bill \newline\newline\newline a. Warn users that their internet is not working and to try again when they have proper connection \newline b. Warn users that Room8's server is down, provide update on how it is being dealt with/ timeline of server being up again & SR?, SR? & H6.1 & Medium\\
+         \hline
+         \raggedright Scheduling a chore in the calendar &\raggedright Event cannot be scheduled &\raggedright User is frustrated and important information is not being sent to roommates &\raggedright a. User has poor internet connection \newline b. Room8's server or calendar API server is down \newline c. Conflict occurred due to multiple users scheduling event simultaneously &\raggedright a. Same as H6.2a \newline b. Same as H6.2b \newline c. Put a lock on the calendar resource & SR?, SR? & 7.1 & Medium\\
          \hline
          NEW & NEW\newline & NEW & NEW & NEW & SR?, SR? & H?? & Medium\\
          \hline
