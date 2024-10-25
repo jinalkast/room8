@@ -4,12 +4,12 @@
 \usepackage{tabularx}
 \usepackage{hyperref}
 \usepackage{adjustbox}
+\usepackage{longtable}
 \usepackage{float}
 \usepackage{enumerate}
 \usepackage{multirow}
-\usepackage{chngpage}
 \usepackage{array}
-\usepackage[left=35mm,right=35mm,top=35mm,bottom=35mm,paper=a4paper]{geometry}
+\usepackage[margin=35mm,paper=a4paper]{geometry}
 
 
 \hypersetup{
@@ -32,6 +32,9 @@
 
 \input{../Comments}
 \input{../Common}
+
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
 
 \begin{document}
 
@@ -129,6 +132,8 @@ this potential failure mode.}
 
 \newpage
 
+\newgeometry{left=5mm,right=5mm}
+
 \section{Failure Mode and Effect Analysis}
 
 \wss{Include your FMEA table here. This is the most important part of this document.}
@@ -139,41 +144,52 @@ requirements.}
 \wss{If no safety requirement can be devised, other mitigation strategies can be
 entered in the table, including strategies involving providing additional
 documentation, and/or test cases.}\\
-\begin{table}[H]
-    \caption{\bf FMEA Table}
-    \begin{adjustbox}{width=\textwidth}
-    \raggedright
-    
 
-    \begin{tabular}{|p{0.25\linewidth} | p{0.25\linewidth} | p{0.22\linewidth}|  p{0.22\linewidth}|  p{0.30\linewidth}|  p{0.085\linewidth}|  p{0.05\linewidth}|p{0.12\linewidth}| }
+\begin{longtable}{|>{\centering\arraybackslash}p{0.13\linewidth} | >{\centering\arraybackslash}p{0.13\linewidth} | >{\centering\arraybackslash}p{0.13\linewidth}| >{\centering\arraybackslash}p{0.13\linewidth}| >{\centering\arraybackslash}p{0.13\linewidth}| >{\centering\arraybackslash}p{0.05\linewidth}| >{\centering\arraybackslash}p{0.05\linewidth}| >{\centering\arraybackslash}p{0.07\linewidth}|}
+    \caption{\bf FMEA Table} \label{tab:my_label} \\
     
     \hline
-         \textbf{Design Functions} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref} & \textbf{Severity}\\
-         \hline
-         Camera Takes Picture & Takes picture while space is blocked\newline & Inaccurate picture for Cleanliness Calculator.\newline & User is covering too much of space that needs to be analyzed.\newline & If picture before use differs too greatly from "clean" state take picture again. & SR? & H1.1 & BLANK\\
-          & Takes final picture while user in frame. & User privacy is breached & Sensor does not detect movement& Remove picture from database and retake final picture when no motion is detected and analyze again for user.  & ??? & H1.2 & BLANK\\
-         \hline
-         Motion Sensor Detects Motion  & Motion should not be detected (false positive) \newline\newline\newline\newline\newline\newline\newline\newline\newline\newline\newline\newline\newline\newline Motion is not detected although it is occurring (false negative) & Unneccessary computation and notifications \newline\newline\newline\newline\newline\newline\newline\newline\newline\newline\newline\newline\newline\newline Cleanliness detection does not occur & a. Motion sensor is overly sensitive \newline b. Some brief/light movement that should not be classified as motion occurred (e.g. insect flew by) \newline c. Continuous movement that should not be classified as motion is occurring (e.g. air conditioner causing curtain to move)\newline\newline a. Motion sensor is underly sensitive \newline b. Motion sensor is out of battery \newline c. Signal not detected Motion sensor has disconnected from system \newline d. Motion sensor is broken & a. Include regular motion-calibration testing in system design \newline b. Have a clause in the cleanliness detection algorithm to check for false positives (i.e. if the before/after pictures do not meet a threshold to be considered dissimilar) \newline c. IDK YET REPLACE THIS \newline\newline\newline\newline\newline a. Same as H2-1a \newline b. Issue low-battery warning notification to users in advance of battery dying \newline c. Provide users with troubleshooting guide for reconnecting sensor to system \newline d. Require system to check for response from components and provide tech support in case of failure   & SR?, SR? & H2.1 & Medium\\
-         \hline
-         System Authenticates User & Bad actor logs in to a user's account& Bad actor alters account credentials.\newline\newline Sensitive user information is revealed such as full name and address.\newline\newline Unauthorized us of services occur.\newline\newline Account lockout.\newline\newline Bad actor impersonates user, allowing them to disrupt services for other users within the same house. & Data breach.\newline\newline Weak account password.\newline\newline Lack of multi-factor authentication.\newline\newline Outdated / insecure methods of storing user credentials.\newline\newline Man in the middle attacks.\newline\newline Brute force attacks. & Check for unusual login patterns such as different geolocations, IP addresses, and repeated failed attempts on the same login.\newline\newline Require all account passwords to satisfy a minimum password strength criteria.\newline\newline Impose rate limits on failed authentication attempts.\newline\newline Recommend multi-factor authentication to users. & SR?, SR? & H3.1 & Medium\\
-         \hline
-         
-         \hline
-         Cleanliness Detection System Detects Changes in the Cleanliness of a Room & System falsely concludes that a room has become more dirty.\newline\newline System falsely concludes that a room has become more clean.\newline\newline System concludes that there are no changes despite there being changes.\newline\newline The system concludes that there are changes when there are no changes. & Conflict amongst roommates.\newline\newline Trust in the system declines. & Obstructions in the images captured by the camera.\newline\newline Improper calibration and timing of the motion sensor.\newline\newline Object detection algorithm has errors and classifies items incorrectly in an image.& Create base case tests for the cleanliness detection system which include a no change in cleanliness case, increase in cleanliness case, decrease in cleanliness case, and a no room state change case. \newline\newline Alert and instruct users to clear camera obstructions before setting up the system. & SR?, SR? & H4.1 & Low\\
-         \hline
-         ChatBot & Texts user about deleted event\newline & False information sent to user and user gets annoyed& ChatBot SMS did not get update from calendar that event was deleted and no longer needs to inform user.& Have test cases covering testing if ChatBot SMS is updated when calendar events update.& NFR222 & H5.1 & Medium\\
-         \hline
-         \raggedright Bill splitter &\raggedright Amount owing not accurate\newline\newline\newline\newline Bill splitter crashing \ &\raggedright Users recieving false information \newline\newline\newline\newline Inputs to bill splitter are not being saved/ processed &\raggedright a. There has been an update to the bill (i.e. amount or people owing) \newline\newline a. User has poor internet connection \newline b. Room8's server is down  &\raggedright a. Provide users with a mechanism to edit previously input bill \newline\newline\newline a. Warn users that their internet is not working and to try again when they have proper connection \newline b. Warn users that Room8's server is down, provide update on how it is being dealt with/ timeline of server being up again & SR?, SR? & H6.1 & Medium\\
-         \hline
-         \raggedright Scheduling a chore in the calendar &\raggedright Event cannot be scheduled &\raggedright User is frustrated and important information is not being sent to roommates &\raggedright a. User has poor internet connection \newline b. Room8's server or calendar API server is down \newline c. Conflict occurred due to multiple users scheduling event simultaneously &\raggedright a. Same as H6.2a \newline b. Same as H6.2b \newline c. Put a lock on the calendar resource & SR?, SR? & 7.1 & Medium\\
-         \hline
-         NEW & NEW\newline & NEW & NEW & NEW & SR?, SR? & H?? & Medium\\
-         \hline
-    \end{tabular}
-    \end{adjustbox}
-    \label{tab:my_label}
-\end{table}
-
+    \textbf{Design Functions} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref} & \textbf{Severity}\\
+    \hline
+    \endfirsthead
+    
+    \hline
+    \textbf{Design Functions} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref} & \textbf{Severity}\\
+    \hline
+    \endhead
+    
+    \hline
+    \endfoot
+    
+    \hline
+    \endlastfoot
+    
+    Camera Takes Picture & Takes picture while space is blocked\newline & Inaccurate picture for Cleanliness Calculator.\newline & User is covering too much of space that needs to be analyzed.\newline & If picture before use differs too greatly from "clean" state take picture again. & SR? & H1.1 & BLANK\\
+    & Takes final picture while user in frame. & User privacy is breached & Sensor does not detect movement& Remove picture from database and retake final picture when no motion is detected and analyze again for user.  & ??? & H1.2 & BLANK\\
+    
+    \hline
+    Motion Sensor Detects Motion  & Motion should not be detected (false positive) \newline Motion is not detected although it is occurring (false negative) & Unnecessary computation and notifications \newline Cleanliness detection does not occur & a. Motion sensor is overly sensitive \newline b. Some brief/light movement that should not be classified as motion occurred (e.g., insect flew by) \newline c. Continuous movement that should not be classified as motion is occurring (e.g., air conditioner causing curtain to move) \newline a. Motion sensor is underly sensitive \newline b. Motion sensor is out of battery \newline c. Signal not detected Motion sensor has disconnected from system \newline d. Motion sensor is broken & a. Include regular motion-calibration testing in system design \newline b. Have a clause in the cleanliness detection algorithm to check for false positives (i.e., if the before/after pictures do not meet a threshold to be considered dissimilar) \newline c. Replace with alternative response for false positives/negatives & SR?, SR? & H2.1 & Medium\\
+    
+    \hline
+    System Authenticates User & Bad actor logs in to a user's account& Bad actor alters account credentials. Sensitive user information is revealed, such as full name and address. Unauthorized use of services occurs. Account lockout. Bad actor impersonates user, allowing them to disrupt services for other users within the same house. & Data breach. Weak account password. Lack of multi-factor authentication. Outdated/insecure methods of storing user credentials. Man-in-the-middle attacks. Brute force attacks. & Check for unusual login patterns, such as different geolocations, IP addresses, and repeated failed attempts on the same login. Require all account passwords to satisfy a minimum password strength criterion. Impose rate limits on failed authentication attempts. Recommend multi-factor authentication to users. & SR?, SR? & H3.1 & Medium\\
+    
+    \hline
+    Cleanliness Detection System Detects Changes in the Cleanliness of a Room & System falsely concludes that a room has become more dirty. System falsely concludes that a room has become more clean. System concludes that there are no changes despite there being changes. The system concludes that there are changes when there are no changes. & Conflict amongst roommates. Trust in the system declines. & Obstructions in the images captured by the camera. Improper calibration and timing of the motion sensor. Object detection algorithm has errors and classifies items incorrectly in an image.& Create base case tests for the cleanliness detection system, including no change, increase, decrease, and no room state change cases. Alert and instruct users to clear camera obstructions before setting up the system. & SR?, SR? & H4.1 & Low\\
+    
+    \hline
+    ChatBot & Texts user about deleted event & False information sent to user and user gets annoyed& ChatBot SMS did not get update from calendar that event was deleted and no longer needs to inform user.& Have test cases covering testing if ChatBot SMS is updated when calendar events update.& NFR222 & H5.1 & Medium\\
+    
+    \hline
+    Bill splitter & Amount owing not accurate or Bill splitter crashing & Users receiving false information. Inputs to bill splitter are not being saved/processed & a. There has been an update to the bill (i.e., amount or people owing). a. User has poor internet connection. b. Room8's server is down. & a. Provide users with a mechanism to edit previously input bill. a. Warn users that their internet is not working and to try again when they have a proper connection. b. Warn users that Room8's server is down and provide updates. & SR?, SR? & H6.1 & Medium\\
+    
+    \hline
+    Scheduling a chore in the calendar & Event cannot be scheduled & User is frustrated, and important information is not being sent to roommates & a. User has poor internet connection. b. Room8's server or calendar API server is down. c. Conflict occurred due to multiple users scheduling events simultaneously & a. Same as H6.2a. b. Same as H6.2b. c. Put a lock on the calendar resource. & SR?, SR? & 7.1 & Medium\\
+    
+    \hline
+    NEW & NEW & NEW & NEW & NEW & SR?, SR? & H?? & Medium\\
+    
+\end{longtable}
+\restoregeometry 
 
 \newpage
 
