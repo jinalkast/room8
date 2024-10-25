@@ -218,21 +218,14 @@ Which requirements will be implemented in the future?}
 
 \section*{Appendix --- Reflection}
 
-\wss{Not required for CAS 741}
-
-\input{../Reflection.tex}
-
 \begin{enumerate}
-    \item What went well while writing this deliverable? 
-    \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-    \item Which of your listed risks had your team thought of before this
-    deliverable, and which did you think of while doing this deliverable? For
-    the latter ones (ones you thought of while doing the Hazard Analysis), how
-    did they come about?
-    \item Other than the risk of physical harm (some projects may not have any
-    appreciable risks of this form), list at least 2 other types of risk in
-    software products. Why are they important to consider?
+    \item While writing this deliverable, the team had a relatively difficult time constructing the FEMA table. Referring back to previous documents, such as the SRS and the Development Plan, made it easy to extract the core design functions of our application and start evaluating the associated hazards. Another thing that had gone well when writing this deliverable was the discovery of new requirements/tests for the sake of minimizing requirements. An example of this is the cleanliness detection system, we determine that the recommended action for ensuring no false positives and negatives is to create a set of test cases. Finally, we think a good thing that came out of this deliverable was that we realized we had missed a lot of requirements from our SRS, and we're expecting to use what we learned from this document to revise it.
+    
+    \item The most prominent pain point when writing this deliverable was that we had difficulty dividing the work and working in parallel. This document is a lot shorter than the SRS, and in this deliverable, each section was a lot more dependent on its previous sections. When it was time to work on the deliverable, the team got caught up with other obligations, leading to less time to work on this than we would have liked. Combining this fact with the fact that some people had to wait for others in order to finalize their sections led to a time crunch.\newline Another pain point was the flexibility in formatting our document compared to the SRS. The SRS was more structured than this document, and we knew exactly how to format our deliverable, as there wasn't freedom to alter it. This deliverable gave the group a lot more freedom in formatting some sections, which led to inconsistencies when working on the deliverable. These inconsistencies required group discussions as we needed to agree on a style, and then we had to revise our document to ensure it was cohesive and consistent. 
+    
+    \item The listed risk related to the design function "Camera Takes Picture" with the effect "User in-frame, user privacy is breached", had been discussed before. This risk was discovered by our supervisor Dr. Ratnasingham (Thamas) Tharmarasa, who pointed out that many users would feel uncomfortable being photographed. The discussion resulted in us revising our idea to capture the state of the room before and after a user interacts with a shared living space and declaring that photographing a user was a failure and a breach of their privacy. Some other risks, particularly involving bad actors accessing user accounts, had been discussed before this deliverable, but only in passing when some implementation ideas were discussed as a group in an informal setting. The other risks had all come about naturally by simply trying to ask ourselves, "What could happen?" and "If this did happen, what could go wrong?".
+    
+    \item Other risks in software products include data privacy risks and security risks. Data privacy risks refer to risks that arise when a software product handles users' personal data poorly, leading to potential data leaks. Data privacy is arguably the most important requirement when designing a software system that accesses sensitive user data. If you mishandle a user's private information, the developer of the software is liable for the damage caused, which could be very severe depending on the type of data stolen. Not only will mishandling user data lead to a severe loss in user trust, but failing to comply with regulations can lead to legal consequences.\newline Security risks involve vulnerabilities that could allow malicious actors to gain unauthorized access, manipulate data, or disrupt services. Security breaches are important as well because they can cause severe harm to users and lead to financial loss due to operational losses. Without the proper security measures, malicious actors could disrupt your service, gain access to large amounts of user data, and use that to produce harm outside the scope of your software service.
 \end{enumerate}
 
 \end{document}
