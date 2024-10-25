@@ -166,7 +166,7 @@ documentation, and/or test cases.}\\
     \hline
     \endlastfoot
     
-    Camera Uplaods Image to Cleanliness Detection System & Image gets compressed. & Same as HR2.1. & Network speeds are slow and compresses image to save space and and send image faster. & Take another picture and upload to cleanliness detection system again. & IR1 & H1.1 & BLANK\\
+    Camera Uploads Image to Cleanliness Detection System & Image gets compressed. & Same as HR2.1. & Network speeds are slow and compresses image to save space and and send image faster. & Take another picture and upload to cleanliness detection system again. & IR1 & H1.1 & BLANK\\
 
 
     \hline
@@ -181,7 +181,7 @@ documentation, and/or test cases.}\\
     
 
     \hline
-    System Authenticates User  & Bad actor is able to log into user's account \newline & Sensitive user information is revealed, such as full name and address. User privacy is violated. \newline & a. Data breach \newline b. Weak account password \newline c. Lack of multi-factor authentication \newline d. Brute force attacks \newline e. Man-int-the-middle attacks \newline f. Outdated/insecure methods of storing user credentials \newline & a. Check for unusual login patterns, such as different geolocations, IP addresses, and repeated failed attempts on same login \newline b. Require all account passwords to satisfy a minimum password strength criterion \newline c. Reccommend multi-factor authentication for logging in \newline d. Impose rate limits on failed authentication attempts \newline e. IDK HELP \newline f. IDK but is this even an issue if we're using OAuth? \newline & ??? \newline & H5.1 & Medium\\
+    System Authenticates User  & Bad actor is able to log into user's account \newline & Sensitive user information is revealed, such as full name and address. User privacy is violated. \newline & a. Data breach \newline b. Weak account password \newline c. Lack of multi-factor authentication \newline d. Brute force attacks \newline e. Man-int-the-middle attacks \newline f. Outdated/insecure methods of storing user credentials \newline & a. Check for unusual login patterns, such as different geolocations, IP addresses, and repeated failed attempts on same login \newline b. Require all account passwords to satisfy a minimum password strength criterion \newline c. Reccommend multi-factor authentication for logging in \newline d. Impose rate limits on failed authentication attempts \newline e. Salt and hash passwords \newline & ??? \newline & H5.1 & Medium\\
     & Bad actor alters account credentials \newline & User cannot access their account \newline & a. Lack of multi-factor authentication for changing account credentials \newline  &  a. Require multi-factor authentication for changing account credentials \newline & ??? & H5.2 & BLANK\\
     & Bad actor impersonates user \newline & Violation of user privacy and distruption of services for other house members \newline & a. Log-in procedures not secure \newline  &  a. Same as 4.1a - 4.1f \newline & ??? & H5.3 & BLANK\\
     & User forgot their password \newline & User cannot log-in \newline & a. No way to recover account \newline  &  a. System has a "forgot password" clause where multi-factor authentication is used to create new password \newline & ??? & H5.4 & BLANK\\
