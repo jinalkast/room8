@@ -164,12 +164,12 @@ documentation, and/or test cases.}\\
     \hline
     \endlastfoot
     
-    User Setting Up Camera & ??? \newline & ???\newline & ???  \newline & ??? \newline???  \newline & SR?  \newline & H1.1  \newline & BLANK\\
+    Camera Uplaods Image to Cleanliness Detection System & Image gets compressed. & Same as HR2.1. & Network speeds are slow and compresses image to save space and and send image faster. & Take another picture and upload to cleanliness detection system again. & IR1 & H1.1 & BLANK\\
 
 
     \hline
-    Camera Takes Picture & Something irregular occuring in-frame \newline & Cleanliness detection algorithm does not produce good results due to bad input\newline & a. Camera field of view being blocked \newline b. Problem with lighting  \newline & a. Take hourly pictures (i.e. as long as motion not detected), use last picture taken \newline b. Same as H2.1a  \newline & SR?  \newline & H2.1  \newline & BLANK\\
-    & Delay in camera shot timing & User in-frame, user privacy is breached & a. Motion sensor not properly connected to camera  \newline b. Motion sensor not working &  a. Remove picture from database, follow H2.1a, do troubleshooting for motion sensor \newline b. Same as H2.2a \newline & ??? & H2.2 & BLANK\\
+    Camera Takes Picture & Something irregular occuring in-frame \newline & Cleanliness detection algorithm does not produce good results due to bad input\newline & a. Camera field of view being blocked \newline b. Problem with lighting  \newline & a. Take hourly pictures (i.e. as long as motion not detected), use last picture taken \newline b. Same as H2.1a  \newline & IR2  \newline & H2.1  \newline & BLANK\\
+    & Delay in camera shot timing & User in-frame, user privacy is breached & a. Motion sensor not properly connected to camera  \newline b. Motion sensor not working &  a. Remove picture from database, follow H2.1a, do troubleshooting for motion sensor \newline b. Same as H2.2a \newline & SR1 & H2.2 & BLANK\\
     
     \hline
     Camera Uploads Image Pair To Cleanliness Management System & Camera fails to upload the images \newline & Cleanliness management system does not detect or notify users of the changes to the space\newline & a. Internet connectivity issues \newline & a. Retry to upload images multiple times \newline b. Notify users if there has been no activity detected from the camera for an extended period of time  \newline & SR?  \newline & H3.1  \newline & BLANK\\  
@@ -187,9 +187,11 @@ documentation, and/or test cases.}\\
 
     
     \hline
-    ChatBot Sends Notifaction & User is notified of deleted event & False information sent to user and user gets annoyed& a. ChatBot SMS did not get update from calendar that event was deleted and user does not need to be informed & a. Have test cases covering testing if ChatBot SMS is updated when calendar events update & NFR222 & H6.1 & Medium\\
+    ChatBot Sends Notifaction & User is notified of deleted event & False information sent to user and user gets annoyed& a. ChatBot SMS did not get update from calendar that event was deleted and user does not need to be informed \newline & a. Have test cases covering testing if ChatBot SMS is updated when calendar events update & NFR222 & H6.1 & Medium\\
     
-    \hline
+    & User is not notified of event & Same as HR7.1 & a. ChatBot SMS failed to get event from calendar & a. Make sure ChatBot SMS synchronizes with calendar. & NFR222 & H6.2 & BLANK\\
+    
+     \hline
     Scheduling an Event in the Calendar & Event cannot be scheduled & User is frustrated, and important information is not being sent to roommates &  a. Conflict occurred due to multiple users scheduling events simultaneously &  a. Put a lock on the calendar resource & SR?, SR? & H7.1 & Medium\\
     
     \hline
@@ -209,7 +211,29 @@ documentation, and/or test cases.}\\
 \section{Safety and Security Requirements}
 
 \wss{Newly discovered requirements.  These should also be added to the SRS.  (A
-rationale design process how and why to fake it.)}
+rationale design process how and why to fake it.)}\\
+
+The following lists new requirements which will be added to the Software Requirements Specification Document.
+
+\subsection{Safety and Security Requirements}
+\begin{enumerate}[{SR}1. ]
+    \item The system will not show images of other users in the frame without proper sensoring.\\
+    \textbf{Rationale}: To maintain user privacy and comfort. 
+\end{enumerate} 
+
+\subsection{Access Requirements}
+\begin{enumerate}[{AR}1. ]
+    \item This is a sample.\\
+    \textbf{Rationale}: This is a sample. 
+\end{enumerate} 
+
+\subsection{Integrity Requirements}
+\begin{enumerate}[{IR}1. ]
+    \item The system will be able to send high quality images over the network without compression.\\
+    \textbf{Rationale}: It is important that the image does not lose quality so the cleanliness detection system does not have inaccurate results. 
+    \item The system will send clear images of the shared space.\\
+    \textbf{Rationale}: It is important the images are not hindered by objects covering majority of the share space. 
+\end{enumerate} 
 
 \section{Roadmap}
 
