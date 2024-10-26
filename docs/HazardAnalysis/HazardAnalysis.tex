@@ -259,6 +259,14 @@ The following lists new requirements which will be added to the Software Require
     \item The system will allow users to recover their password using their email.\\
     \textbf{Rationale}: To allow users access to their account in case they forget their password. 
 \end{enumerate} 
+\begin{enumerate}[{SR}Zay1. ]
+    \item The system will use cloud storage with high-availability and auto-scaling capabilities to ensure continuous access to data.\\
+    \textbf{Rationale}: To minimize downtime and allow users uninterrupted access to information by using the redundancy and high availability support provided by cloud infrastructure. Cloud storage also provides many benefits such as automatic scaling and monitoring. 
+\end{enumerate} 
+\begin{enumerate}[{SR}Zay2. ]
+    \item The system will encrypt all sensitive data at rest and in transit using industry-standard encryption protocols.\\
+    \textbf{Rationale}: To protect sensitive user information from unauthorized access and ensure compliance with data security standards.
+\end{enumerate} 
 \begin{enumerate}[{SR}Jan1. ]
     \item The system will perform regular hardware tests.\\
     \textbf{Rationale}: To ensure hardware components are operating as expected.
@@ -272,6 +280,14 @@ The following lists new requirements which will be added to the Software Require
 \begin{enumerate}[{AR}1. ]
     \item This is a sample.\\
     \textbf{Rationale}: This is a sample. 
+\end{enumerate} 
+\begin{enumerate}[{AR}Zay1. ]
+    \item The system will implement optimal index using database index advisors to ensure data retrieval times do not exceed 3 seconds under normal load.\\
+    \textbf{Rationale}: To improve user experience and ensure timely access to stored information.
+\end{enumerate} 
+\begin{enumerate}[{AR}Zay2. ]
+    \item The system will enforce multi-factor authentication (MFA) for all users with access to sensitive information. \\
+    \textbf{Rationale}: To prevent unauthorized access by adding an extra layer of security to sensitive data access from developers.
 \end{enumerate} 
 
 \subsection{Integrity Requirements}
@@ -291,6 +307,20 @@ The following lists new requirements which will be added to the Software Require
     \item The system will take pictures of the space at regular intervals so long as motion is not being detected.\\
     \textbf{Rationale}: This will allow the system to have a series of images over various lighting and atmospheric changes. Bad input into the cleanliness detection algorithm is mitigated, since an improper (e.g. noisy, obstructed) picture at time of movement can be swapped with a good picture that represents the same cleanliness state.
 \end{enumerate} 
+\begin{enumerate}[{IR}Zay1. ]
+    \item The system will implement data integrity checks during data writing operations to verify successful storage.\\
+    \textbf{Rationale}:  To ensure that user data remains uncorrupted and reliable for future retrieval. System will also be able to alert users if data is corrupted or if the action has failed, reducing confusion and frustration.
+\end{enumerate} 
+\begin{enumerate}[{IR}Zay2. ]
+    \item The system will monitor storage capacity in real-time and alert administrators when usage exceeds 80\% of total storage capacity.\\
+    \textbf{Rationale}:  To prevent system slowdowns and failure to store new data by ensuring storage capacity is sufficient before reaching limit thresholds.
+\end{enumerate} 
+\begin{enumerate}[{IR}Zay3. ]
+    \item The system will perform data validation checks during data retrieval to verify the completeness and correctness of requested information.\\
+    \textbf{Rationale}:  To ensure users receive accurate and complete data, maintaining trust in the system. System will also be able to alert users if data is missing or incorrect, reducing confusion and frustration.
+\end{enumerate} 
+
+
 
 \section{Roadmap}
 
