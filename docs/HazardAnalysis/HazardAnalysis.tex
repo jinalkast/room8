@@ -205,7 +205,26 @@ documentation, and/or test cases.}\\
     Inputting into Bill Splitter & Amount owing not accurate & Users receiving false information & a. User made an error inputting bill \newline b. The bill changed (i.e. amount or people owing) \newline c. Bad actor creating false bills & a. Provide users with a mechanism to edit outstanding bills \newline b. Same as 8.1a \newline c. System has a way for roommates to delete bills and report misuse & SR?, SR? & H8.1 & Medium\\
     
     \hline
-    Database something & NEW & NEW & NEW & NEW & SR?, SR? & H?? & Medium\\
+    Data Storing User Data & Data is corrupted during storage & User unable to track actions \newline\newline User experiences unresponsive interface \newline\newline Database synchronization failure & Database hardware failure \newline\newline Power loss during write operations \newline\newline Software bugs during data writing or saving processes & Use redundant and fault-tolerant storage solutions (cloud storage) \newline\newline Perform regular backups \newline\newline Use transaction logs to ensure data integrity \newline& SR?, SR? & H10.1 & Medium \\
+
+    & Insufficient storage capacity for new data & System failure or user actions being blocked \newline\newline System slows down as disk capacity nears limit & Poor data capacity planning \newline\newline Lack of automated database scaling \newline\newline Failure to monitor storage space usage in real time & Implement real-time monitoring and alerts of storage space usage \newline\newline Use cloud storage with automatic scaling options \newline\newline Archive or delete obsolete data to free up space \newline & SR?, SR? & H10.2 & Medium \\
+
+
+    \hline
+    Users Retrieving Stored Data & Slow response when retrieving data & Delays in system performance, leading to poor user experience \newline\newline Data query timeouts causing other systems to fail & Poorly optimized queries and lack of indexing \newline\newline High database traffic without load balancing & Optimize queries and implement indexing strategies \newline\newline Implement load balancing and database replication to handle high traffic & SR?, SR? & H11.1 & Low \\
+
+    & Incorrect or missing data during retrieval & Users make incorrect decisions based on incomplete or incorrect data \newline\newline Loss of trust in the system if the information retrieved is unreliable & Incorrect query logic or data corruption \newline\newline Data deletion or loss during storage processes & Perform thorough testing of queries and retrieval functions \newline\newline Implement data validation during retrieval to catch incorrect or missing records \newline & SR?, SR? & H11.2 & Medium \\
+
+
+    & System becomes unavailable during data retrieval & Users cannot access data, resulting in downtime or service outages \newline\newline Lost productivity and user dissatisfaction & System crashes due to hardware or network failures \newline\newline Overload on the database server due to high traffic \newline\newline Software bugs causing server crashes & Use high-availability database solutions and clusters \newline\newline Implement real-time monitoring and alerts for system load \newline\newline Scale infrastructure based on traffic spikes & SR?, SR? & H11.3 & Low \\
+
+
+    \hline
+
+    Database Protecting User Information & Data exposed due to a security breach & Compromise of sensitive user information, leading to legal or regulatory consequences \newline\newline Loss of user trust and damage to application reputation \newline\newline Hesitancy to use camera for cleanliness monitoring & Weak encryption for sensitive data \newline\newline SQL injection attacks and cyber attacks \newline\newline Poor access control policies & Encrypt all sensitive data both in transit and at rest \newline\newline Parametrize queries and sanitize inputs to avoid SQL injection \newline\newline Implement strict access controls such as RBA & SR?, SR? & H12.1 & High \\
+
+    & Unauthorized access to sensitive data & Malicious actors gain access to sensitive data, risking data misuse or theft \newline\newline Potential for data manipulation or malicious changes to critical information & Weak authentication mechanisms \newline\newline Lack of multi-factor authentication (MFA) \newline\newline Social engineering or phishing attacks on developers & Implement multi-factor authentication for database access \newline\newline Enforce strong password policies with regular expiration \newline\newline Educate developers on phishing and social engineering threats & SR?, SR? & H12.2  & High \\
+
     
 \end{longtable}
 \restoregeometry 
