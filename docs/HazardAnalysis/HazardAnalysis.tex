@@ -3,6 +3,14 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{adjustbox}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage[margin=35mm,paper=a4paper]{geometry}
+
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
@@ -12,14 +20,21 @@
     urlcolor=cyan           % color of external links
 }
 
-\title{Hazard Analysis\\\progname}
+\title{Hazard Analysis\\Room8}
 
-\author{\authname}
+\author{Mohammed Abed \\ 
+        Maged Armanios\\
+        Jinal Kasturiarachchi\\
+        Jane Klavir\\
+        Harshil Patel\\}
 
-\date{}
+\date{2024-10-25}
 
 \input{../Comments}
 \input{../Common}
+
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
 
 \begin{document}
 
@@ -36,9 +51,11 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+2024-10-25 & Mohammed Abed, & Document Created\\
+ & Maged Armanios, & \\
+ & Jinal Kasturiarachchi, & \\
+ & Jinal Klavir, & \\
+ & Harshil Patel & \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -51,72 +68,251 @@ Date2 & Name(s) & Description of changes\\
 
 \pagenumbering{arabic}
 
-\wss{You are free to modify this template.}
-
 \section{Introduction}
 
-\wss{You can include your definition of what a hazard is here.}
+Room8 is a suite of tools aimed at reducing the occurrence of frustrating situations between roommates. Room8 is expected to be implemented as a mobile application and interact with the physical world using a camera and as a result, is expected to handle sensitive user data such as addresses, names, birthdays, images, and financial details. As a result, the application can pose potential hazards to users with a hazard defined as any property or state of the system that could cause our users harm. This document aims to outline the scope, critical assumptions, potential failures, and mitigation strategies for Room8 in order to allow the development to design mitigations for these hazards.
+
 
 \section{Scope and Purpose of Hazard Analysis}
 
-\wss{You should say what \textbf{loss} could be incurred because of the
-hazards.}
+The purpose of this document is to identify and mitigate losses that can be incurred from system hazards. There are multiple ways to mitigate the losses, such as following appropriate regulations, implementing thorough testing, and informing users how to properly use the system. By examining as many scenarios as possible where the system can cause harm and recording it in this document, the development team aims to minimize the harm exposed to users, stakeholders, and the development team. Possible losses that can occur from hazards include financial loss, loss of reputation, and service disruptions.      
 
 \section{System Boundaries and Components}
+This section goes over the components that the system can be divided into.
 
-\wss{Dividing the system into components will help you brainstorm the hazards.
-You shouldn't do a full design of the components, just get a feel for the major
-ones.  For projects that involve hardware, the components will typically include
-each individual piece of hardware.  If your software will have a database, or an
-important library, these are also potential components.}
+\subsection{User Device}
+Smart phone the user is using with the supported version of Android or iOS.
+
+\subsection{Camera}
+Responsible for taking picture for cleanliness detection analysis when sensor sends information of user.
+
+\subsection{Motion Sensor}
+Detects movement in the shared space to determine if user has entered or exited shared space signaling the camera for a picture.
+
+\subsection{User-Facing Application}
+A mobile application installed on smart phones which have versions of Android and iOS that is currently being supported mobile providers. This includes front-end of the system where users can see details and change settings of various back-end components listed below.
+
+\subsection{Authentication}
+Authentication using OAuth of user credentials and house details are processed in this component including the update of information mentioned previously.
+
+\subsection{SMS ChatBot}
+ChatBot responsible for sending messages to group chat of home members for notifying them of cleanliness assessment, expenses from bill splitter, or reminders to complete tasks.
+
+\subsection{Calendar Tool}
+Allows users to add events to calendar and display to other housemates, if involved in event, in their respective calendars. Also houses logic for generating chore/cleaning schedule and adding in calendars of users.
+
+\subsection{Cleanliness Manager}
+Runs algorithm for detecting change in environment through input received from hardware and stores user's information for the user to view on application along with history of cleanliness.
+
+\subsection{Bill Splitter}
+Calculate charges due from a shared expense and keeps track of which expenses are due from each user and who they owe using the SMS ChatBot to notify users. Also stores history of expenses and charges paid for user to view.
+
+\subsection{Database}
+Used to securely store user and house information, calendar events, expense history, and pictures for cleanliness calculator.
+
 
 \section{Critical Assumptions}
 
-\wss{These assumptions that are made about the software or system.  You should
-minimize the number of assumptions that remove potential hazards.  For instance,
-you could assume a part will never fail, but it is generally better to include
-this potential failure mode.}
+\begin{itemize}
+\item \textbf{CA1}: Homes will have a consistent and uninterrupted supply of electricity available.
+\item \textbf{CA2}: Homes will have internet speeds capable of streaming video.
+\item \textbf{CA3}: Every resident of a shared home will have their own personal electronic device.
+\item \textbf{CA4}: Users have used other applications before and are familiar with common signifiers, mappings, and UI metaphores (ex. Heart implies like).
+\item \textbf{CA5}: External services, such as location services, map integrations, and calendar APIs will be available and reliable.
+\item \textbf{CA6}: Users' devices will have additional free storage beyond the what's required for the applications install.
+\end{itemize}
+
+\newpage
+
+\newgeometry{left=5mm,right=5mm}
 
 \section{Failure Mode and Effect Analysis}
 
-\wss{Include your FMEA table here. This is the most important part of this document.}
-\wss{The safety requirements in the table do not have to have the prefix SR.
-The most important thing is to show traceability to your SRS. You might trace to
-requirements you have already written, or you might need to add new
-requirements.}
-\wss{If no safety requirement can be devised, other mitigation strategies can be
-entered in the table, including strategies involving providing additional
-documentation, and/or test cases.}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.13\linewidth} | >{\raggedright\arraybackslash}p{0.13\linewidth} | >{\raggedright\arraybackslash}p{0.13\linewidth}| >{\raggedright\arraybackslash}p{0.13\linewidth}| >{\raggedright\arraybackslash}p{0.13\linewidth}| >{\raggedright\arraybackslash}p{0.06\linewidth}| >{\raggedright\arraybackslash}p{0.04\linewidth}| >{\raggedright\arraybackslash}p{0.07\linewidth}|}
+    \caption{\bf FMEA Table} \label{tab:my_label} \\
+    
+    \hline
+    \textbf{Design Functions} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref} & \textbf{Severity}\\
+    \hline
+    \endfirsthead
+    
+    \hline
+    \textbf{Design Functions} & \textbf{Failure Modes} & \textbf{Effects of Failure} & \textbf{Causes of Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref} & \textbf{Severity}\\
+    \hline
+    \endhead
+    
+    \hline
+    \endfoot
+    
+    \hline
+    \endlastfoot
+
+
+    \hline
+    Camera Takes Picture & Camera captures unclear image \newline & Cleanliness detection algorithm does not produce good results due to bad input\newline & a. Camera field of view being blocked \newline b. Problem with lighting  \newline & a. Take hourly pictures (i.e. as long as motion not detected), use last picture taken \newline b. Same as H1.1a  \newline & IR1, \newline IR2 \newline & H1.1  \newline & Medium\\
+    
+    \hline
+    Camera Uploads Image Pair To Cleanliness Management System & Camera fails to upload the images \newline & Cleanliness management system does not detect or notify users of the changes to the space\newline & a. Internet shuts down for an extended period of time \newline & a. Retry to upload images multiple times \newline b. Notify users if there has been no activity detected from the camera for an extended period of time  \newline & IR3, \newline IR4  \newline & H2.1  \newline & Low\\  
+    \hline
+    Motion Sensor Detects Motion  & Motion should not be detected (false positive) \newline  & Unnecessary computation and notifications \newline & a. Motion sensor is overly sensitive \newline b. Some brief/light movement that should not be classified as motion occurred (e.g., insect flew by) \newline c. Continuous movement that should not be classified as motion is occurring (e.g., air conditioner causing curtain to move) \newline  & a. Include regular motion-calibration testing in system design \newline b. Have a clause in the cleanliness detection algorithm to check for false positives (i.e., if the before/after pictures do not meet a threshold to be considered dissimilar) \newline c. System does not classify minor continuous movement (i.e. that does not exceed some threshold) as motion & SR2 & H3.1 & Medium\\
+    & Motion is not detected although it is occurring (false negative) \newline & Cleanliness detection does not occur \newline & a. Motion sensor is underly sensitive \newline b. Motion sensor is broken \newline &  a. Same as H3.1a \newline b. Same as H3.1a \newline & SR2 & H3.2 & Low\\
+    
+
+    \hline
+    System Authenticates User  & Bad actor is able to log into user's account \newline & Sensitive user information is revealed, such as full name and address. User privacy is violated. \newline & a. Data breach \newline b. Weak account password \newline c. Lack of multi-factor authentication \newline d. Brute force attacks \newline e. Man-in-the-middle attacks \newline f. Outdated/insecure methods of storing user credentials \newline & a. Check for unusual login patterns, such as different geolocations, IP addresses, and repeated failed attempts on same login \newline b. Require all account passwords to satisfy a minimum password strength criterion \newline c. Reccommend multi-factor authentication for logging in \newline d. Impose rate limits on failed authentication attempts \newline e. Salt and hash passwords \newline & SR3, \newline SR4, \newline SR5 \newline & H4.1 & High\\
+    & Bad actor alters account credentials \newline & User cannot access their account \newline & a. Lack of multi-factor authentication for changing account credentials \newline  &  a. Require multi-factor authentication for changing account credentials \newline b. Same as 4.1a\newline c. Same as 4.1d\newline & SR3, \newline SR6 & H4.2 & High\\
+    
+    & User forgot their password \newline & User cannot access their account \newline & a. No way to recover account \newline  &  a. System has a "forgot password" clause where multi-factor authentication is used to create new password \newline & SR6 \newline & H4.3 & Low\\
+
+
+    
+    \hline
+    ChatBot Sends Notifaction & User is notified of deleted event & False information sent to user and user gets annoyed& a. ChatBot SMS did not get update from calendar that event was deleted and user does not need to be informed \newline & a. Have test cases covering testing if ChatBot SMS is updated when calendar events update & NFR222 & H5.1 & Medium\\
+    
+    & User is not notified of an event & Same as HR7.1 & a. ChatBot SMS failed to get event from calendar & a. Make sure ChatBot SMS synchronizes with calendar. & NFR222 & H5.2 & Medium\\
+    
+     \hline
+    Scheduling an Event in the Calendar & Event cannot be scheduled & User is frustrated, and important information is not being sent to roommates &  a. Conflict occurred due to multiple users scheduling events simultaneously &  a. Put a lock on the calendar resource & SR7 & H6.1 & Medium\\
+    
+    \hline
+    Cleanliness Management System Detects Changes in the Cleanliness of a Room & System falsely concludes that a room has become more dirty & Conflict amongst roommates and trust in the system declines & a. Obstructions in the images captured by the camera\newline b. Improper calibration and timing of the motion sensor\newline c. Object detection algorithm has errors and classifies items incorrectly in an image& a. Create base case tests for the cleanliness management system, including no change, increase, decrease, and no room state change cases\newline b. Alert and instruct users to clear camera obstructions before setting up the system & FR231, \newline FR232, \newline FR233 & H7.1 & Low\\
+    
+     & System falsely concludes that a room has become more clean & Same as H7.1 \newline & Same as H7.1 \newline  & Same as H7.1 \newline & SR6 \newline & H7.2 & Low\\
+     
+      & System concludes that there are no changes despite there being changes & Same as H7.1 \newline & Same as H7.1\newline  &  Same as H7.1 \newline & SR6 \newline & H4.3 & Low\\
+      
+       & The system concludes that there are changes when there are no changes & Confusion among users and a decline in trust of the system \newline & Same as H7.1 \newline  & Same as H7.1 \newline & SR6 \newline & H7.3 & Low\\
+
+    \hline
+    Inputting into Bill Splitter & Amount owing not accurate & Users receiving false information & a. User made an error inputting bill \newline b. The bill changed (i.e. amount or people owing) \newline c. Bad actor creating false bills & a. Provide users with a mechanism to edit outstanding bills \newline b. Same as 8.1a \newline c. System has a way for roommates to delete bills and report misuse & FR252, FR253 & H8.1 & Medium\\
+    
+    \hline
+    Data Storing User Data & Data is corrupted during storage & a. User unable to track actions \newline b. User experiences unresponsive interface \newline c. Database synchronization failure & a. Database hardware failure \newline b. Power loss during write operations \newline c. Software bugs during data writing or saving processes & a. Use redundant and fault-tolerant storage solutions (cloud storage) \newline b. Perform regular backups \newline c. Use transaction logs to ensure data integrity \newline& SR8, IR5 & H10.1 & Medium \\
+
+    & Insufficient storage capacity for new data & a. System failure or user actions being blocked \newline b. System slows down as disk capacity nears limit & a. Poor data capacity planning \newline b. Lack of automated database scaling \newline c. Failure to monitor storage space usage in real time & a. Implement real-time monitoring and alerts of storage space usage \newline b. Use cloud storage with automatic scaling options \newline c. Archive or delete obsolete data to free up space \newline & IR6 & H10.2 & Medium \\
+
+
+    \hline
+    Users Retrieving Stored Data & Slow response when retrieving data & a. Delays in system performance, leading to poor user experience \newline b. Data query timeouts causing other systems to fail & a. Poorly optimized queries and lack of indexing \newline b. High database traffic without load balancing & a. Optimize queries and implement indexing strategies \newline b. Implement load balancing and database replication to handle high traffic \newline & AR1 & H11.1 & Low \\
+
+    & Incorrect or missing data during retrieval & a. Users make incorrect decisions based on incomplete or incorrect data \newline b. Loss of trust in the system if the information retrieved is unreliable & a. Incorrect query logic or data corruption \newline b. Data deletion or loss during storage processes & a. Perform thorough testing of queries and retrieval functions \newline b. Implement data validation during retrieval to catch incorrect or missing records \newline & IR7 & H11.2 & Medium \\
+
+
+    & System becomes unavailable during data retrieval & a. Users cannot access data, resulting in downtime or service outages \newline b. Lost productivity and user dissatisfaction & a. System crashes due to hardware or network failures \newline b. Overload on the database server due to high traffic \newline c. Software bugs causing server crashes & a. Use high-availability database solutions and clusters \newline b. Implement real-time monitoring and alerts for system load \newline c. Scale infrastructure based on traffic spikes & SR8 & H11.3 & Low \\
+
+
+    \hline
+
+    Database Protecting User Information & Data exposed due to a security breach & a. Compromise of sensitive user information, leading to legal or regulatory consequences \newline b. Loss of user trust and damage to application reputation \newline c. Hesitancy to use camera for cleanliness monitoring \newline & a. Weak encryption for sensitive data \newline b. SQL injection attacks and cyber attacks \newline c. Poor access control policies & a. Encrypt all sensitive data both in transit and at rest \newline b. Parametrize queries and sanitize inputs to avoid SQL injection \newline c. Implement strict access controls such as RBA  & SR9 & H12.1 & High \\
+
+    & Unauthorized access to sensitive data & a. Malicious actors gain access to sensitive data, risking data misuse or theft \newline b. Potential for data manipulation or malicious changes to critical information & a. Weak authentication mechanisms \newline b. Lack of multi-factor authentication (MFA) \newline c. Social engineering or phishing attacks on developers & a. Implement multi-factor authentication for database access \newline b. Enforce strong password policies with regular expiration \newline c. Educate developers on phishing and social engineering threats & AR2 & H12.2  & High \\
+
+    
+\end{longtable}
+\restoregeometry 
+
+\newpage
 
 \section{Safety and Security Requirements}
 
-\wss{Newly discovered requirements.  These should also be added to the SRS.  (A
-rationale design process how and why to fake it.)}
+The following lists new requirements which will be added to the Software Requirements Specification Document.
+
+\subsection{Safety and Security Requirements}
+\begin{enumerate}[{SR}1. ]
+    \item The system will not show images of other users in the frame without proper sensoring.\\
+    \textbf{Rationale}: To maintain user privacy and comfort. 
+\end{enumerate}
+\begin{enumerate}[{SR}2. ]
+    \item The system will perform regular hardware tests.\\
+    \textbf{Rationale}: To ensure hardware components are operating as expected.
+\end{enumerate}  
+\begin{enumerate}[{SR}3. ]
+    \item The system deny suspicious login and password recovery attempts. This includes logins from drastically different geolocations or repeated login attempts.\\
+    \textbf{Rationale}: To maintain a users' account security. 
+\end{enumerate} 
+\begin{enumerate}[{SR}4. ]
+    \item The system will implement a minimum password strength criteria.\\
+    \textbf{Rationale}: To maintain a users' account security. 
+\end{enumerate} 
+\begin{enumerate}[{SR}5. ]
+    \item The system will hash and salt all confidential user data.\\
+    \textbf{Rationale}: To maintain users' data privacy. 
+\end{enumerate} 
+\begin{enumerate}[{SR}6. ]
+    \item The system will allow users to recover their password using their email.\\
+    \textbf{Rationale}: To allow users access to their account in case they forget their password. 
+\end{enumerate}
+\begin{enumerate}[{SR}7. ]
+    \item The system will lock the calendar resource when a user is scheduling an event.\\
+    \textbf{Rationale}: To prevent scheduling conflicts with other users.
+\end{enumerate}  
+\begin{enumerate}[{SR}8. ]
+    \item The system will use cloud storage with high-availability and auto-scaling capabilities to ensure continuous access to data.\\
+    \textbf{Rationale}: To minimize downtime and allow users uninterrupted access to information by using the redundancy and high availability support provided by cloud infrastructure. Cloud storage also provides many benefits such as automatic scaling and monitoring. 
+\end{enumerate} 
+\begin{enumerate}[{SR}9. ]
+    \item The system will encrypt all sensitive data at rest and in transit using industry-standard encryption protocols.\\
+    \textbf{Rationale}: To protect sensitive user information from unauthorized access and ensure compliance with data security standards.
+\end{enumerate}
+
+\subsection{Access Requirements}
+\begin{enumerate}[{AR}1. ]
+    \item The system will implement optimal index using database index advisors to ensure data retrieval times do not exceed 3 seconds under normal load.\\
+    \textbf{Rationale}: To improve user experience and ensure timely access to stored information.
+\end{enumerate} 
+\begin{enumerate}[{AR}2. ]
+    \item The system will enforce multi-factor authentication (MFA) for all users with access to sensitive information. \\
+    \textbf{Rationale}: To prevent unauthorized access by adding an extra layer of security to sensitive data access from developers.
+\end{enumerate} 
+
+\subsection{Integrity Requirements}
+\begin{enumerate}[{IR}1. ]
+    \item The system will send clear images of the shared space.\\
+    \textbf{Rationale}: It is important the images are not hindered by objects covering majority of the share space. 
+\end{enumerate}
+\begin{enumerate}[{IR}2. ]
+    \item The system will take pictures of the space at regular intervals so long as motion is not being detected.\\
+    \textbf{Rationale}: This will allow the system to have a series of images over various lighting and atmospheric changes. Bad input into the cleanliness detection algorithm is mitigated, since an improper (e.g. noisy, obstructed) picture at time of movement can be swapped with a good picture that represents the same cleanliness state.
+\end{enumerate}  
+\begin{enumerate}[{IR}3. ]
+    \item The system will retry to upload images when network connectivity is restored if it has failed has failed due to connectivity issues.\\
+    \textbf{Rationale}: The cleanliness management system is one of our core features, to make the system more robust to periods of time when the network shutdown it should attempt to retry so an event that happens when there's no internet is still captured. 
+\end{enumerate} 
+\begin{enumerate}[{IR}4. ]
+    \item The system will notify users if there has been no camera activity for an extended period of time.\\
+    \textbf{Rationale}: The system is expected to be set up in a high traffic area, prone to frequent use. A lack of activity in that area would be unusual and could imply the system isn't working properly.
+\end{enumerate}
+\begin{enumerate}[{IR}5. ]
+    \item The system will implement data integrity checks during data writing operations to verify successful storage.\\
+    \textbf{Rationale}:  To ensure that user data remains uncorrupted and reliable for future retrieval. System will also be able to alert users if data is corrupted or if the action has failed, reducing confusion and frustration.
+\end{enumerate} 
+\begin{enumerate}[{IR}6. ]
+    \item The system will monitor storage capacity in real-time and alert administrators when usage exceeds 80\% of total storage capacity.\\
+    \textbf{Rationale}:  To prevent system slowdowns and failure to store new data by ensuring storage capacity is sufficient before reaching limit thresholds.
+\end{enumerate} 
+\begin{enumerate}[{IR}7. ]
+    \item The system will perform data validation checks during data retrieval to verify the completeness and correctness of requested information.\\
+    \textbf{Rationale}:  To ensure users receive accurate and complete data, maintaining trust in the system. System will also be able to alert users if data is missing or incorrect, reducing confusion and frustration.
+\end{enumerate} 
+
+\newpage
 
 \section{Roadmap}
 
-\wss{Which safety requirements will be implemented as part of the capstone timeline?
-Which requirements will be implemented in the future?}
+The hazard analysis has led to identifying essential safety, security, access, and integrity requirements to mitigate the possible risks in our system. The current focus will be on implementing core requirements which prevent major issues down the line as well as foundational tasks of the application that are harder to change in later stages of development. These include tasks such as data encryption, secure authentication, and high-availability and reliability cloud storage. In the next stage of development, feature component hazards will be tackled, such as safeguards for the calendar tool, cleanliness manager, and the bill splitter. Due to time constraints, certain non-critical requirements may not be fully implemented within the project timeline. For instance, more advanced cloud storage auto-scaling and redundancy configurations may be considered for future releases, whereas industry standard defaults will be used in the initial development stages. Towards the end of the project, the hazard analysis will be revisited to assess which risks have been effectively mitigated and identify any remaining vulnerabilities that require attention in future iterations.
 
 \newpage{}
 
 \section*{Appendix --- Reflection}
 
-\wss{Not required for CAS 741}
-
-\input{../Reflection.tex}
-
 \begin{enumerate}
-    \item What went well while writing this deliverable? 
-    \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-    \item Which of your listed risks had your team thought of before this
-    deliverable, and which did you think of while doing this deliverable? For
-    the latter ones (ones you thought of while doing the Hazard Analysis), how
-    did they come about?
-    \item Other than the risk of physical harm (some projects may not have any
-    appreciable risks of this form), list at least 2 other types of risk in
-    software products. Why are they important to consider?
+    \item While writing this deliverable, the team had a relatively difficult time constructing the FEMA table. Referring back to previous documents, such as the SRS and the Development Plan, made it easy to extract the core design functions of our application and start evaluating the associated hazards. Another thing that had gone well when writing this deliverable was the discovery of new requirements/tests for the sake of minimizing requirements. An example of this is the cleanliness management system, we determine that the recommended action for ensuring no false positives and negatives is to create a set of test cases. Finally, we think a good thing that came out of this deliverable was that we realized we had missed a lot of requirements from our SRS, and we're expecting to use what we learned from this document to revise it.
+    
+    \item The most prominent pain point when writing this deliverable was that we had difficulty dividing the work and working in parallel. This document is a lot shorter than the SRS, and in this deliverable, each section was a lot more dependent on its previous sections. When it was time to work on the deliverable, the team got caught up with other obligations, leading to less time to work on this than we would have liked. Combining this fact with the fact that some people had to wait for others in order to finalize their sections led to a time crunch.\newline Another pain point was the flexibility in formatting our document compared to the SRS. The SRS was more structured than this document, and we knew exactly how to format our deliverable, as there wasn't freedom to alter it. This deliverable gave the group a lot more freedom in formatting some sections, which led to inconsistencies when working on the deliverable. These inconsistencies required group discussions as we needed to agree on a style, and then we had to revise our document to ensure it was cohesive and consistent. 
+    
+    \item The risks related obstructions related to the camera as well as false positives, negatives, and misclassification of cleanliness changes had been discussed before. These risks were discovered by our supervisor Dr. Ratnasingham (Thamas) Tharmarasa, who challenged many of our ideas when we were initially pitching the project and had asked us questions which made us realize we had made too many assumptions about our environment. Some other risks, particularly involving bad actors accessing user accounts, had been discussed before this deliverable, but only in passing when some implementation ideas were discussed as a group in an informal setting. The other risks had all come about naturally by simply trying to ask ourselves, "What could happen?" and "If this did happen, what could go wrong?".
+    
+    \item Other risks in software products include data privacy risks and security risks. Data privacy risks refer to risks that arise when a software product handles users' personal data poorly, leading to potential data leaks. Data privacy is arguably the most important requirement when designing a software system that accesses sensitive user data. If you mishandle a user's private information, the developer of the software is liable for the damage caused, which could be very severe depending on the type of data stolen. Not only will mishandling user data lead to a severe loss in user trust, but failing to comply with regulations can lead to legal consequences.\newline Security risks involve vulnerabilities that could allow malicious actors to gain unauthorized access, manipulate data, or disrupt services. Security breaches are important as well because they can cause severe harm to users and lead to financial loss due to operational losses. Without the proper security measures, malicious actors could disrupt your service, gain access to large amounts of user data, and use that to produce harm outside the scope of your software service.
 \end{enumerate}
 
 \end{document}
