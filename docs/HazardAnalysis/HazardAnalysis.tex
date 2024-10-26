@@ -167,13 +167,13 @@ documentation, and/or test cases.}\\
 
 
     \hline
-    Camera Takes Picture & Camera captures unclear image \newline & Cleanliness detection algorithm does not produce good results due to bad input\newline & a. Camera field of view being blocked \newline b. Problem with lighting  \newline & a. Take hourly pictures (i.e. as long as motion not detected), use last picture taken \newline b. Same as H1.1a  \newline & IR1  \newline & H1.1  \newline & BLANK\\
+    Camera Takes Picture & Camera captures unclear image \newline & Cleanliness detection algorithm does not produce good results due to bad input\newline & a. Camera field of view being blocked \newline b. Problem with lighting  \newline & a. Take hourly pictures (i.e. as long as motion not detected), use last picture taken \newline b. Same as H1.1a  \newline & IR1\newline IRJan1  \newline & H1.1  \newline & BLANK\\
     
     \hline
     Camera Uploads Image Pair To Cleanliness Management System & Camera fails to upload the images \newline & Cleanliness management system does not detect or notify users of the changes to the space\newline & a. Internet shuts down for an extended period of time \newline & a. Retry to upload images multiple times \newline b. Notify users if there has been no activity detected from the camera for an extended period of time  \newline & IRMag2\newline IRMag3  \newline & H2.1  \newline & LOW\\  
     \hline
-    Motion Sensor Detects Motion  & Motion should not be detected (false positive) \newline  & Unnecessary computation and notifications \newline & a. Motion sensor is overly sensitive \newline b. Some brief/light movement that should not be classified as motion occurred (e.g., insect flew by) \newline c. Continuous movement that should not be classified as motion is occurring (e.g., air conditioner causing curtain to move) \newline  & a. Include regular motion-calibration testing in system design \newline b. Have a clause in the cleanliness detection algorithm to check for false positives (i.e., if the before/after pictures do not meet a threshold to be considered dissimilar) \newline c. ???? & SR?, SR? & H3.1 & Medium\\
-    & Motion is not detected although it is occurring (false negative) \newline & Cleanliness detection does not occur \newline & a. Motion sensor is underly sensitive \newline b. Motion sensor is broken \newline &  a. Same as H3.1a \newline b. Same as H3.1a \newline & ??? & H3.2 & BLANK\\
+    Motion Sensor Detects Motion  & Motion should not be detected (false positive) \newline  & Unnecessary computation and notifications \newline & a. Motion sensor is overly sensitive \newline b. Some brief/light movement that should not be classified as motion occurred (e.g., insect flew by) \newline c. Continuous movement that should not be classified as motion is occurring (e.g., air conditioner causing curtain to move) \newline  & a. Include regular motion-calibration testing in system design \newline b. Have a clause in the cleanliness detection algorithm to check for false positives (i.e., if the before/after pictures do not meet a threshold to be considered dissimilar) \newline c. System does not classify minor continuous movement (i.e. that does not exceed some threshold) as motion & SRJan1 & H3.1 & Medium\\
+    & Motion is not detected although it is occurring (false negative) \newline & Cleanliness detection does not occur \newline & a. Motion sensor is underly sensitive \newline b. Motion sensor is broken \newline &  a. Same as H3.1a \newline b. Same as H3.1a \newline & SRJan1 & H3.2 & BLANK\\
     
 
     \hline
@@ -190,7 +190,7 @@ documentation, and/or test cases.}\\
     & User is not notified of an event & Same as HR7.1 & a. ChatBot SMS failed to get event from calendar & a. Make sure ChatBot SMS synchronizes with calendar. & NFR222 & H5.2 & BLANK\\
     
      \hline
-    Scheduling an Event in the Calendar & Event cannot be scheduled & User is frustrated, and important information is not being sent to roommates &  a. Conflict occurred due to multiple users scheduling events simultaneously &  a. Put a lock on the calendar resource & SR?, SR? & H6.1 & Medium\\
+    Scheduling an Event in the Calendar & Event cannot be scheduled & User is frustrated, and important information is not being sent to roommates &  a. Conflict occurred due to multiple users scheduling events simultaneously &  a. Put a lock on the calendar resource & SRJan2 & H6.1 & Medium\\
     
     \hline
     Cleanliness Management System Detects Changes in the Cleanliness of a Room & System falsely concludes that a room has become more dirty & Conflict amongst roommates and trust in the system declines & a. Obstructions in the images captured by the camera\newline b. Improper calibration and timing of the motion sensor\newline c. Object detection algorithm has errors and classifies items incorrectly in an image& a. Create base case tests for the cleanliness management system, including no change, increase, decrease, and no room state change cases\newline b. Alert and instruct users to clear camera obstructions before setting up the system & SR?, SR? & H7.1 & Low\\
@@ -237,8 +237,16 @@ The following lists new requirements which will be added to the Software Require
     \textbf{Rationale}: To maintain users' data privacy. 
 \end{enumerate} 
 \begin{enumerate}[{SR}Mag5. ]
-    \item The will alove users to recover their password using their email.\\
+    \item The system will allow users to recover their password using their email.\\
     \textbf{Rationale}: To allow users access to their account in case they forget their password. 
+\end{enumerate} 
+\begin{enumerate}[{SR}Jan1. ]
+    \item The system will perform regular hardware tests.\\
+    \textbf{Rationale}: To ensure hardware components are operating as expected.
+\end{enumerate} 
+\begin{enumerate}[{SR}Jan2. ]
+    \item The system will lock the calendar resource when a user is scheduling an event.\\
+    \textbf{Rationale}: To prevent scheduling conflicts with other users.
 \end{enumerate} 
 
 \subsection{Access Requirements}
@@ -259,6 +267,10 @@ The following lists new requirements which will be added to the Software Require
 \begin{enumerate}[{IR}Mag3. ]
     \item The system will notify users if there has been no camera activity for an extended period of time.\\
     \textbf{Rationale}: The system is expected to be set up in a high traffic area, prone to frequent use. A lack of activity in that area would be unusual and could imply the system isn't working properly.
+\end{enumerate}
+\begin{enumerate}[{IR}Jan1. ]
+    \item The system will take pictures of the space at regular intervals so long as motion is not being detected.\\
+    \textbf{Rationale}: This will allow the system to have a series of images over various lighting and atmospheric changes. Bad input into the cleanliness detection algorithm is mitigated, since an improper (e.g. noisy, obstructed) picture at time of movement can be swapped with a good picture that represents the same cleanliness state.
 \end{enumerate} 
 
 \section{Roadmap}
