@@ -512,7 +512,7 @@ I'm sorry, but as an AI programming assistant, I don't have the capability to ge
 
     \textbf{Description} & TODO \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR231 \\ 
 
     \textbf{Type} & TODO \\ 
 
@@ -551,29 +551,72 @@ I'm sorry, but as an AI programming assistant, I don't have the capability to ge
 
 \begin{center}
   \testcase{
-    \textbf{FST-SC-1} & \textbf{Adding Schedule Chore}\\\hline
+    \textbf{FST-SC-1} & \textbf{Adding Event to Schedule}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests that new event appears in calendar after it is inputted. \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR241, FR242, FR243, FR245 \\ 
 
     \textbf{Type} & TODO \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & Calendar displaying chores and events pertaining to the house. \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & Title, date, time, and duration. \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & Chore/event containing input parameters.  \\ 
+
+    \textbf{Pass} & Calendar displays new event.  \\ 
 
     \textbf{Procedure} & TODO \\ 
   }
 
+    \testcase{
+      \textbf{FST-SC-2} & \textbf{Removing Event from Schedule}\\\hline
+  
+      \textbf{Description} & Tests that event disappears from calendar after existing event is removed. \\ 
+  
+      \textbf{References} & FR244 \\ 
+  
+      \textbf{Type} & TODO \\ 
+  
+      \textbf{Initial State} & Calendar displaying chores and events pertaining to the house. \\ 
+  
+      \textbf{Input} & Chore/event from calendar represented by name, date, time, and duration. \\ 
+  
+      \textbf{Output} & void \\ 
+
+      \textbf{Pass} & Chore/event that was removed is no longer displayed in its previous timeblock in the calendar.  \\
+  
+      \textbf{Procedure} & TODO \\ 
+    }
+
+      \testcase{
+        \textbf{FST-SC-3} & \textbf{Editing Event in Schedule}\\\hline
+    
+        \textbf{Description} & Tests that changes can be made to an already-existing event. \\ 
+    
+        \textbf{References} & FR244 \\ 
+    
+        \textbf{Type} & TODO \\ 
+    
+        \textbf{Initial State} & Calendar displaying chores and events pertaining to the house. \\ 
+    
+        \textbf{Input} & Chore/event from calendar represented by name, date, time, and duration. \\ 
+    
+        \textbf{Output} & Chore/event from calendar represented by name, date, time, and duration.  \\ 
+
+        \textbf{Pass} & Chore/event displayed in calendar after edits contains updated information (i.e. name, date, time, and/or duration).  \\
+    
+        \textbf{Procedure} & TODO \\ 
+      }
+
+
   \testcase{
-    \textbf{FST-SC-2} & \textbf{Display Chore Schedule}\\\hline
+    \textbf{FST-SC-4} & \textbf{Display Event Schedule}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests that all events displayed in calendar view. \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR245 \\ 
 
     \textbf{Type} & TODO \\ 
 
