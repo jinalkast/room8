@@ -13,6 +13,9 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage{amsmath}
+\usepackage{array}
+
 
 \input{../Comments}
 \input{../Common}
@@ -349,6 +352,26 @@ the contents of the subsections.}
 		
 \paragraph{Title for Test}
 
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \begin{tabular}{|p{3cm} p{10cm}|}\hline
+    \textbf{Test \#2:} & \textbf{Move left}\\\hline
+
+    \textbf{Description:} & Tests if the hero moves left when the corresponding input is received when the hero is initially stationary \\ 
+
+    \textbf{Type:} & Unit Test (dynamic, automated) \\ 
+
+    \textbf{Initial State:} & Custom in-game state with a hero object having x-velocity of zero \\ 
+
+    \textbf{Input:} & Keyboard function called with simulated left key down stroke \\ 
+
+    \textbf{Output:} & Hero object x-velocity \\ 
+
+    \textbf{Pass:} & Hero object x-velocity is less than zero \\ 
+    
+    \hline\end{tabular}
+\end{center}
+  
 \begin{enumerate}
 
 \item{test-id1\\}
