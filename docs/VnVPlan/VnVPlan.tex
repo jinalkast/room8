@@ -3,6 +3,7 @@
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage[shortlabels]{enumitem}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -441,7 +442,46 @@ How test will be performed:
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Area of Testing: Authentication and House Management}
+This section covers encryption standards for authentication and house management data of the application, as presented in SRS, Section S.2.1.
+
+\paragraph{Encryption of Authentication Data}
+
+\begin{enumerate}
+
+\item{test-encryption-01\\}
+
+Type: Automatic.
+					
+Initial State: Application open with user ready to login.
+					
+Input/Condition: User inputted data in login elements.
+					
+Output/Result: All data in transit and stored is encrypted.
+					
+How test will be performed: 
+\begin{enumerate}[1.]
+	\item Capture data in transit between client and server.
+	\item Verify data in transit encrypted using network monitoring tools.
+	\item Verify database is using encrypted storage type.
+\end{enumerate}
+					
+\item{test-security-01\\}
+
+Type: Manual.
+					
+Initial State: User has application open on login screen.
+					
+Input: Incorrect login credentials.
+					
+Output: Error message that avoids revealing sensitive information.
+					
+How test will be performed: 
+\begin{enumerate}[1.]
+	\item Attempt to login with incorrect password but correct email.
+	\item Observe error message displayed.
+\end{enumerate}
+\end{enumerate}
 
 ...
 
