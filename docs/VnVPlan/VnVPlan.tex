@@ -350,93 +350,93 @@ I'm sorry, but as an AI programming assistant, I don't have the capability to ge
 \renewcommand{\arraystretch}{1.5}
 \begin{center}
   \testcase{
-    \textbf{FST-UAHM-1} & \textbf{Account Creation}\\\hline
+    \textbf{FST-UAHM-1} & \textbf{Profile Creation}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests if the system is able to handle creating user profiles in the system from frontend inputs \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR211 \\ 
 
-    \textbf{Type} & TODO \\ 
+    \textbf{Type} & System Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & Frontend inputs are empty. User profile does not exist in the system \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & Unique testing email, any name, any password \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & User profile entry is created in the system using the inputted email, name, and password. Frontend redirects user to the dashboard\\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent navigates to the account creation page of the application. Agent enters a unique testing email address, any name, and any password. Agent submits account creation  \\ 
   }
 
   \testcase{
     \textbf{FST-UAHM-2} & \textbf{System Login}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests if the system is able to recognize a user profile and to authenticate them to the system \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR212 \\ 
 
-    \textbf{Type} & TODO \\ 
+    \textbf{Type} & System Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & Testing profile exists in the system. System does not have the profile currently authenticated \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & Valid email and password matching the profile in the system \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & User profile is authenticated with a new session entry. Frontend redirects user to the dashboard \\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent navigates to the account login page of the application. Agent enters a valid testing account email address and password. Agent submits account login  \\ 
   }
 
   \testcase{
     \textbf{FST-UAHM-3} & \textbf{System Logout}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests if the system logs the user out, invalidating their session and returning them to the homepage \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR213 \\ 
 
-    \textbf{Type} & TODO \\ 
+    \textbf{Type} & System Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & Testing profile is logged in with an active session \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & User clicks on the logout button \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & The system invalidates the session and redirects the user to the homepage \\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent clicks the logout button and confirms that the user is logged out and redirected to the homepage \\ 
   }
 
   \testcase{
     \textbf{FST-UAHM-4} & \textbf{Create Home Instance}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests if the system allows users to create a new home group with specified details \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR214 \\ 
 
-    \textbf{Type} & TODO \\ 
+    \textbf{Type} & System Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & User is logged in, and no home group exists for their account \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & Home name, address, and number of roommates \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & A new home group instance is created with the specified details, and the user is added as a member \\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent navigates to the home creation page, enters the home name, address, and number of roommates, and submits the form. Confirm that the home instance is created and the user is added as a member \\ 
   }
 
   \testcase{
     \textbf{FST-UAHM-5} & \textbf{Invite and Remove Users From Home Instance}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests if the system allows users to invite others to join a home group and remove them as needed \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR215, FR217 \\ 
 
-    \textbf{Type} & TODO \\ 
+    \textbf{Type} & System Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & A home group exists with only the logged-in user as a member \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & Valid email address of another user to invite; selection of a user to remove \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & The invited user receives an invitation, joins the home group upon acceptance, and can be removed by the home admin \\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent invites another user via their email. Once accepted, confirm the user is added to the home group. Then, the agent removes the user and confirms their removal from the group. \\ 
   }
 
 \end{center}
@@ -449,55 +449,55 @@ I'm sorry, but as an AI programming assistant, I don't have the capability to ge
   \testcase{
     \textbf{FST-CC-1} & \textbf{Update Chatbot Settings}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests if the chatbot settings can be updated successfully by an authorized user \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR221 \\ 
 
-    \textbf{Type} & TODO \\ 
+    \textbf{Type} & System Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & Chatbot is configured with default settings \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & Randomized array of include and exclude inputs \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & ChatBot settings entry in database reflect the array of inputs \\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent navigates to the chatbot settings page, iterates through each setting checkbox corresponding to randomized boolean input array. Agent saves changes. Database is verified to contain the updated array of inputs \\ 
   }
 
   \testcase{
-    \textbf{FST-CC-2} & \textbf{ChatBot Phone Number Added to Groupchat}\\\hline
+    \textbf{FST-CC-2} & \textbf{GroupChat Created with ChatBot}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests if all users attached to a home instance are added to a groupchat alongside the ChatBot \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & TODO: ADD FR REQUIREMENT FOR ADDING CHATBOT TO GC IN SRS \\ 
 
-    \textbf{Type} & TODO \\ 
+    \textbf{Type} & System Test (dynamic, manual) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & Agent has user profile and is part of a home instance with more than 2 users linked. Chatbot phone number is not present in the group chat. ChatBot has no corresponding groupchat entry \\
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & User clicks "Create GroupChat" button \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & All users are added to the group chat alongside the ChatBot \\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent navigates to the group chat creation page and clicks the "Create GroupChat" button. Agent verifies that all users are added to the group chat alongside the ChatBot \\
   }
 
   \testcase{
     \textbf{FST-CC-3} & \textbf{ChatBot Sends Messages to Groupchats}\\\hline
     
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests if the ChatBot is able to send messages to a group chat as per configuration \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR222, FR223, FR224\\ 
 
-    \textbf{Type} & TODO \\ 
+    \textbf{Type} & System Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & Chatbot is added to a group chat with configured message triggers \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & New database entry created for a chore, cleanliness score, and a shared expense \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & Chatbot sends the appropriate configured messages to the group chat \\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent creates a new database entry for a chore, cleanliness score, and a shared expense. Agent verifies that the ChatBot sends the appropriate messages to the group chat according to the configured ChatBot settings\\
   }
 
 \end{center}
@@ -510,37 +510,37 @@ I'm sorry, but as an AI programming assistant, I don't have the capability to ge
   \testcase{
     \textbf{FST-CM-1} & \textbf{System Evaluates Cleanliness}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests if the system can evaluate and record cleanliness scores based on captured images \\ 
 
     \textbf{References} & FR231 \\ 
 
-    \textbf{Type} & TODO \\ 
+    \textbf{Type} & System Test (dynamic, manual) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & Cleanliness management camera is setup and connected to home instance \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & N/A \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & Cleanliness scores are updated based on user actions \\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Home resident enters camera view and creates a mess. Resident verifies that the cleanliness score is updated to reflect the mess. Resident then cleans the mess and verifies that the cleanliness score is updated to reflect the clean state \\ 
   }
 
   \testcase{
     \textbf{FST-CM-2} & \textbf{Display Cleanliness Scores}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests if the system displays cleanliness scores to users in a group \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR232, FR233, FR234, FR235 display requirements \\ 
 
-    \textbf{Type} & TODO \\ 
+    \textbf{Type} & System Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & Cleanliness scores are available for the group \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & N/A \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & Cleanliness scores are displayed accurately to the user \\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent navigates to the cleanliness score display page and verifies that the scores are shown accurately \\ 
   }
 
 \end{center}
@@ -639,41 +639,40 @@ I'm sorry, but as an AI programming assistant, I don't have the capability to ge
   \testcase{
     \textbf{FST-BSC-1} & \textbf{Add and Split Expense}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests if the system allows users to add a new expense and splits it among group members \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR251 \\ 
 
-    \textbf{Type} & TODO \\ 
+    \textbf{Type} & System Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & No expenses recorded for the current month \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & New expense with an amount and shared expense roommates \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & Expense is split equally among group members and recorded \\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent navigates to the add expense page, enters details, and verifies that the expense is split among group members \\ 
   }
 
   \testcase{
     \textbf{FST-BSC-2} & \textbf{Display User Expenses}\\\hline
 
-    \textbf{Description} & TODO \\ 
+    \textbf{Description} & Tests if the system displays all expenses associated with a user \\ 
 
-    \textbf{References} & TODO \\ 
+    \textbf{References} & FR252, FR253 \\ 
 
-    \textbf{Type} & TODO \\ 
+    \textbf{Type} & System Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & Recorded expenses are available in the system \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & User navigates to their expenses page \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & System displays all expenses associated with the user \\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent navigates to the user expenses page and verifies that all expenses are displayed correctly \\ 
   }
 
 \end{center}
-  
 
 \subsection{Tests for Nonfunctional Requirements}
 
