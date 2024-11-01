@@ -95,6 +95,11 @@ This document ... \wss{provide an introductory blurb and roadmap of the
 
 \wss{Say what software is being tested.  Give its name and a brief overview of
   its general functions.}
+  
+Shared living environments often create tension between roommates. It can be inconvenient and sometimes awkward to explicitly reach out to a roommate about the messes they leave behind in a shared space, concerns over bill payments, household upkeep, and more. Our project, Room8,
+aims to prevent these cumbersome interactions by providing an application and the
+necessary hardware components to help monitor the cleanliness of shared spaces,
+schedule tasks, track shared billing cycles, and alert roommates of any issues within the shared house.
 
 \subsection{Objectives}
 
@@ -115,6 +120,8 @@ so what are you going to prioritize?  As an example, if your system depends on a
 external library, you can explicitly state that you will assume that external library 
 has already been verified by its implementation team.}
 
+The objective for this document, and the VnV plan that it outlines, is to support the idea that all software built for the project is correct, complete, and provides a satisfying user experience. The reason why these qualities are emphasized are due to the fact that the outputs of our system have real-life implications (i.e. cleanliness detector determining the incorrect roommate made a mess, bill splitter incorrectly calculating amounts due, etc.), making correctness and completion essential. Additionally, since the application is very user-centric, the user experience is central to the project's success and must be treated as such. Since this will be the main focus of our testing efforts, there are certain elements of our project which will not be tested extensively by our own team. For example, any external libraries that will be used as a part of Room8 will be assumed to have rigorous verification and validation already completed by the implementation team who created it. Additionally, extreme scalability/load testing will not be completed as part of the initial VnV. This is due to the hypothetical nature of the project in its current state, which doesn't require the system to be able to withstand many concurrent users at a time. 
+
 \subsection{Challenge Level and Extras}
 
 \wss{State the challenge level (advanced, general, basic) for your project.
@@ -131,6 +138,8 @@ been approved by the course instructor as included in your problem statement.
 You can use a pull request to update your extras (in TeamComposition.csv or
 Repos.csv) if your plan changes as a result of the VnV planning exercise.}
 
+The challenge level of our project is general. The extras that will be completed as part of this project include additional features related to student housing and user documentation. Since the main functionality of Room8 is the cleanliness detector and  image processing is not a novel concept (mess detecting software already exists), the challenge level is not advanced. However, the program still presents a variety of difficulties on the implementation side, preventing it from being classified as basic. The extras include the user-facing software which provide all of the other student housing features (i.e. bill splitter, scheduler, etc.), and a thorough guide for use of the application and/or installation of the hardware will be delivered upon the project's completion. 
+
 \subsection{Relevant Documentation}
 
 \wss{Reference relevant documentation.  This will definitely include your SRS
@@ -139,10 +148,12 @@ Repos.csv) if your plan changes as a result of the VnV planning exercise.}
   is done, they will be written.  You can create BibTeX entries for your
   documents and within those entries include a hyperlink to the documents.}
 
-\citet{SRS}
+\cite{SRS}
 
 \wss{Don't just list the other documents.  You should explain why they are relevant and 
 how they relate to your VnV efforts.}
+
+The SRS is a key document that will be referenced throughout the VnV process, as it contains all of the system requirements which will be verified and validated through testing. Every requirement in the SRS will be referenced by one or more test(s) in this document, to ensure that the system is functioning as expected and everything that is required of the system is being completed.
 
 \section{Plan}
 
@@ -902,7 +913,7 @@ How test will be performed:
 \subsection{Traceability Between Test Cases and Modules}
 
 \wss{Provide evidence that all of the modules have been considered.}
-				
+
 \bibliographystyle{plainnat}
 
 \bibliography{../../refs/References}
