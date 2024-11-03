@@ -723,39 +723,39 @@ This section covers encryption standards for authentication and house management
 \renewcommand{\arraystretch}{1.5}
 \begin{center}
   \testcase{
-    \textbf{NFST-UAHM-1} & \textbf{Encryption of Authentication Data}\\\hline
-
-    \textbf{Description} & Tests if system encrypts data in transit and when stored \\ 
-
-    \textbf{References} & NFR211 \\ 
-
-    \textbf{Type} & System Test (Automated) \\ 
-
-    \textbf{Initial State} & Frontend inputs for login are filled with user data. User profile exists in the system. \\ 
-
-    \textbf{Input} & User inputted data in login elements. \\ 
-
-    \textbf{Output} & Stored and data in transit are encrypted.\\ 
-
-    \textbf{Procedure} & Capture data in transit between client and server, use network monitoring tools to inspect data transmission and check database storage for encryption compliance. \\ 
+		\textbf{NFST-UAHM-1} & \textbf{Encryption of Authentication Data}\\\hline
+	
+	    \textbf{Description} & Tests if system encrypts data in transit and when stored \\ 
+	
+	    \textbf{References} & NFR211 \\ 
+	
+	    \textbf{Type} & System Test (Automated) \\ 
+	
+	    \textbf{Initial State} & Frontend inputs for login are filled with user data. User profile exists in the system. \\ 
+	
+	    \textbf{Input} & User inputted data in login elements. \\ 
+	
+	    \textbf{Output} & Stored and data in transit are encrypted.\\ 
+	
+	    \textbf{Procedure} & Capture data in transit between client and server, use network monitoring tools to inspect data transmission and check database storage for encryption compliance. \\ 
   }
 
   \testcase{
-    \textbf{NFST-UAHM-2} & \textbf{Sensitive Information Error Management}\\\hline
-
-    \textbf{Description} & Tests if the system does not reveal sensitive user information during login attempts \\ 
-
-    \textbf{References} & NFR212 \\ 
-
-    \textbf{Type} & System Test (Manual) \\ 
-
-    \textbf{Initial State} &  Login elements are filled with user data. User profile exists in system.\\ 
-
-    \textbf{Input} & Valid email and incorrect password. \\ 
-
-    \textbf{Output} & Error message that avoids revealing sensitive information \\ 
-
-    \textbf{Procedure} & Attempts to login with incorrect password but correct email, observing error message that is displayed on frontend.  \\ 
+	    \textbf{NFST-UAHM-2} & \textbf{Sensitive Information Error Management}\\\hline
+	
+	    \textbf{Description} & Tests if the system does not reveal sensitive user information during login attempts \\ 
+	
+	    \textbf{References} & NFR212 \\ 
+	
+	    \textbf{Type} & System Test (Manual) \\ 
+	
+	    \textbf{Initial State} &  Login elements are filled with user data. User profile exists in system.\\ 
+	
+	    \textbf{Input} & Valid email and incorrect password. \\ 
+	
+	    \textbf{Output} & Error message that avoids revealing sensitive information \\ 
+	
+	    \textbf{Procedure} & Attempts to login with incorrect password but correct email, observing error message that is displayed on frontend.  \\ 
   }
   
     \testcase{
@@ -795,6 +795,46 @@ This section covers encryption standards for authentication and house management
   }
 \end{center}
 
+\subsubsection{Area of Testing: ChatBot Configuration}
+This section covers the ChatBot's compliance to not disclose sensitive data and minimize user interaction, as presented in SRS, Section S.2.2.
+
+\begin{center}
+  \testcase{
+		\textbf{NFST-CC-1} & \textbf{Sensitive Information Non-Disclosure}\\\hline
+	
+	    \textbf{Description} & Tests if the chatbot avoids disclosing sensitive user data. \\ 
+	
+	    \textbf{References} & NFR221 \\ 
+	
+	    \textbf{Type} & System Test (Manual) \\ 
+	
+	    \textbf{Initial State} & ChatBot configured and messaging application  chat with ChatBot open. \\ 
+	
+	    \textbf{Input} & Message box with query prompting to reveal sensitive data. \\ 
+	
+	    \textbf{Output} & ChatBot responds without sensitive information like addresses or full names..\\ 
+	
+	    \textbf{Procedure} & Send message to ChatBot asking for sensitive information and verify reply from ChatBot complies with non-disclosure requirements. \\ 
+  }
+
+  \testcase{
+	    \textbf{NFST-CC-2} & \textbf{User Messaging Frequency}\\\hline
+	
+	    \textbf{Description} & Tests ChatBot to ensure it reasonably messages user and not too frequently. \\ 
+	
+	    \textbf{References} & NFR222 \\ 
+	
+	    \textbf{Type} & System Test (Manual) \\ 
+	
+	    \textbf{Initial State} &  ChatBot configured and active for user interaction.\\ 
+	
+	    \textbf{Input} & Trigger multiple notifications. \\ 
+	
+	    \textbf{Output} & Verify notifications are not excessively frequent. \\ 
+	
+	    \textbf{Procedure} & Initiate different prompts and events to trigger notifications and monitor frequency to ensure user is not annoyed.  \\ 
+  }
+\end{center}
 
 \subsection{Traceability Between Test Cases and Requirements}
 
