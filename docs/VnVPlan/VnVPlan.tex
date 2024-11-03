@@ -432,7 +432,7 @@ When a group of students chooses to adopt Room8 to help with their house, the fi
 
     \textbf{Description} & Tests if the system allows users to create a new home group with specified details \\ 
 
-    \textbf{References} & FR214 \\ 
+    \textbf{References} & FR214, FR216 \\ 
 
     \textbf{Type} & System Test (dynamic, automated) \\ 
 
@@ -450,7 +450,7 @@ When a group of students chooses to adopt Room8 to help with their house, the fi
 
     \textbf{Description} & Tests if the system allows users to invite others to join a home group and remove them as needed \\ 
 
-    \textbf{References} & FR215, FR217 \\ 
+    \textbf{References} & FR215, FR217, FR218 \\ 
 
     \textbf{Type} & System Test (dynamic, automated) \\ 
 
@@ -461,6 +461,24 @@ When a group of students chooses to adopt Room8 to help with their house, the fi
     \textbf{Output} & The invited user receives an invitation, joins the home group upon acceptance, and can be removed by the home admin \\ 
 
     \textbf{Procedure} & Testing agent invites another user via their email. Once accepted, confirm the user is added to the home group. Then, the agent removes the user and confirms their removal from the group. \\ 
+  }
+  
+  \testcase{
+    \textbf{FST-UAHM-6} & \textbf{Leave Home Instance}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to leave a home group as needed \\ 
+
+    \textbf{References} & FR216, FR218 \\ 
+
+    \textbf{Type} & System Test (dynamic, automated) \\ 
+
+    \textbf{Initial State} & A home group exists with user as a member \\ 
+
+    \textbf{Input} & ID of a home group to leave\\ 
+
+    \textbf{Output} & User receives feedback on their action to leave the home group \\ 
+
+    \textbf{Procedure} & Testing agent views home group then selects the option to leave the home group. The testing agent then verifies that the user has left the home group. \\ 
   }
 
 \end{center}
@@ -679,7 +697,7 @@ Various expenses will inevitably accumulate for a group of roommates. The bill s
 
     \textbf{Description} & Tests if the system displays all expenses associated with a user \\ 
 
-    \textbf{References} & FR252, FR253 \\ 
+    \textbf{References} & FR252, FR253. FR255 \\ 
 
     \textbf{Type} & System Test (dynamic, automated) \\ 
 
@@ -690,6 +708,24 @@ Various expenses will inevitably accumulate for a group of roommates. The bill s
     \textbf{Output} & System displays all expenses associated with the user \\ 
 
     \textbf{Procedure} & Testing agent navigates to the user expenses page and verifies that all expenses are displayed correctly \\ 
+  }
+  
+   \testcase{
+    \textbf{FST-BSC-3} & \textbf{Mark Expense as Paid}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to mark an expense as paid \\ 
+
+    \textbf{References} & FR253, FR254 \\ 
+
+    \textbf{Type} & System Test (dynamic, automated) \\ 
+
+    \textbf{Initial State} & An unpaid expense is available in the system \\ 
+
+    \textbf{Input} & User navigated to an expenses page and marks an expense as paid \\ 
+
+    \textbf{Output} & System updates the UI state and displays all expenses associated with the user \\ 
+
+    \textbf{Procedure} & Testing agent navigates to the user expenses page and marks an expense as paid. The system then refreshes the UI and the testing agent will verify that the marked expense is displayed as paid\\ 
   }
 
 \end{center}
@@ -954,6 +990,8 @@ This section covers the Cleanliness Manager's compliance not capture users, encr
 
 \wss{Provide a table that shows which test cases are supporting which
   requirements.}
+  
+ 
 
 \section{Unit Test Description}
 \label{section:unitTests}
