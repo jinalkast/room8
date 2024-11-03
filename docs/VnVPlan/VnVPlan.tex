@@ -691,6 +691,24 @@ Various expenses will inevitably accumulate for a group of roommates. The bill s
 
     \textbf{Procedure} & Testing agent navigates to the user expenses page and verifies that all expenses are displayed correctly \\ 
   }
+  
+   \testcase{
+    \textbf{FST-BSC-3} & \textbf{Mark Expense as Paid}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to mark an expense as paid \\ 
+
+    \textbf{References} & FR253, FR254 \\ 
+
+    \textbf{Type} & System Test (dynamic, automated) \\ 
+
+    \textbf{Initial State} & An unpaid expense is available in the system \\ 
+
+    \textbf{Input} & User navigated to an expenses page and marks an expense as paid \\ 
+
+    \textbf{Output} & System updates the UI state and displays all expenses associated with the user \\ 
+
+    \textbf{Procedure} & Testing agent navigates to the user expenses page and marks an expense as paid. The system then refreshes the UI and the testing agent will verify that the marked expense is displayed as  paid.\\ 
+  }
 
 \end{center}
 
