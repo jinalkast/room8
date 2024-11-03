@@ -986,6 +986,65 @@ This section covers the Cleanliness Manager's compliance not capture users, encr
   
 \end{center}
 
+\subsubsection{Area of Testing: Schedule Configuration}
+This section covers the schedule's ability to accurately store, handle and schedule events with respect to time zones, as presented in SRS, Section S.2.4.
+
+\begin{center}
+  \testcase{
+		\textbf{NFIT-SC-1} & \textbf{Calendar Event Time Storage and Display}\\\hline
+	
+	    \textbf{Description} & Tests calendar to ensure event time in database is in UTC but on user's application is displayed in user's local time. \\ 
+	
+	    \textbf{References} & NFR241, NFR242 \\ 
+	
+	    \textbf{Type} & Integrational Test (Automatic) \\ 
+	
+	    \textbf{Initial State} & User is on calendar section of application. \\ 
+	
+	    \textbf{Input} & Event scheduled with specific time and date. \\ 
+	
+	    \textbf{Output} & Event in database in UTC and on user's calendar in their local time.\\ 
+	
+	    \textbf{Procedure} & Local timezone on test device is not UTC, event is created in the app, verify event can be seen on calendar in local time, verify in database event is in UTC. \\ 
+  }
+
+  \testcase{
+	    \textbf{NFST-SC-2} & \textbf{Event Granularity}\\\hline
+	
+	    \textbf{Description} & Test calendar event scheduler to ensure events have granularity of five minutes. \\ 
+	
+	    \textbf{References} & NFR243 \\ 
+	
+	    \textbf{Type} & System Test (Automatic) \\ 
+	
+	    \textbf{Initial State} &  User is on calendar section of application.\\ 
+	
+	    \textbf{Input} & Creating event and setting time. \\ 
+	
+	    \textbf{Output} & Options to set minutes should be multiples of five. \\ 
+	
+	    \textbf{Procedure} & In calendar screen create event, in setting event time section verify the setting the minute of the event is in intervals of five.  \\ 
+  }
+ 
+  \testcase{
+	    \textbf{NFST-SC-3} & \textbf{Events Are Encrypted}\\\hline
+	
+	    \textbf{Description} & Tests if system encrypts stored events. \\ 
+	
+	    \textbf{References} & NFR244 \\ 
+	
+	    \textbf{Type} & System Test (Automatic) \\ 
+	
+	    \textbf{Initial State} &  Calendar is active and has events created.\\ 
+	
+	    \textbf{Input} & Creating event. \\ 
+	
+	    \textbf{Output} & Event is encrypted in transit and storage. \\ 
+	
+	    \textbf{Procedure} & Check event data in the database and transit and verify encryption using network monitoring tools.  \\ 
+  }
+\end{center}
+
 \subsection{Traceability Between Test Cases and Requirements}
 
 \wss{Provide a table that shows which test cases are supporting which
