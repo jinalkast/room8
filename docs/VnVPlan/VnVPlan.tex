@@ -1045,6 +1045,48 @@ This section covers the schedule's ability to accurately store, handle and sched
   }
 \end{center}
 
+\subsubsection{Area of Testing: Bill Splitter Configuration}
+This section covers the bill splitters's ability to accurately and precisely handle data, as presented in SRS, Section S.2.5.
+
+\begin{center}
+ 
+  \testcase{
+	    \textbf{NFST-BSC-1} & \textbf{Events Are Encrypted}\\\hline
+	
+	    \textbf{Description} & Tests if system encrypts bill splitter events. \\ 
+	
+	    \textbf{References} & NFR251 \\ 
+	
+	    \textbf{Type} & System Test (Automatic) \\ 
+	
+	    \textbf{Initial State} &  Bill splitter is active and has history of events.\\ 
+	
+	    \textbf{Input} & Bill splitting is used. \\ 
+	
+	    \textbf{Output} & Event is encrypted in transit and storage. \\ 
+	
+	    \textbf{Procedure} & Check bill splitting event data in the database and transit and verify encryption using network monitoring tools.  \\ 
+  }
+  
+   \testcase{
+		\textbf{NFCT-BSC-2} & \textbf{Precision of Numerical Values}\\\hline
+	
+	    \textbf{Description} & Tests bill splitter's ability to calculate and display numerical values with preicion of two decimal places. \\ 
+	
+	    \textbf{References} & NFR252 \\ 
+	
+	    \textbf{Type} & Compliance Test (Automatic) \\ 
+	
+	    \textbf{Initial State} & Bill splitter is active . \\ 
+	
+	    \textbf{Input} & Prices entered to split between two users. \\ 
+	
+	    \textbf{Output} & Price each user owes is display.\\ 
+	
+	    \textbf{Procedure} & Price entered does not evenly divide by two (e.g. 33.15), verify price displayed is rounded to two decimal places and is stored in database with two decimals of precision. \\ 
+  }
+\end{center}
+
 \subsection{Traceability Between Test Cases and Requirements}
 
 \wss{Provide a table that shows which test cases are supporting which
