@@ -741,13 +741,13 @@ This section covers encryption standards for authentication and house management
   }
 
   \testcase{
-	    \textbf{NFST-UAHM-2} & \textbf{Sensitive Information Error Management}\\\hline
+	    \textbf{NFCT-UAHM-2} & \textbf{Sensitive Information Error Management}\\\hline
 	
 	    \textbf{Description} & Tests if the system does not reveal sensitive user information during login attempts \\ 
 	
 	    \textbf{References} & NFR212 \\ 
 	
-	    \textbf{Type} & System Test (Manual) \\ 
+	    \textbf{Type} & Compliance Test (Manual) \\ 
 	
 	    \textbf{Initial State} &  Login elements are filled with user data. User profile exists in system.\\ 
 	
@@ -777,7 +777,7 @@ This section covers encryption standards for authentication and house management
   }
 
     \testcase{
-	    \textbf{NFST-UAHM-4} & \textbf{Authentication Response Time}\\\hline
+	    \textbf{NFPT-UAHM-4} & \textbf{Authentication Response Time}\\\hline
 	
 	    \textbf{Description} & Tests if system authenticates a user within a median response time of under 1 second. \\ 
 	
@@ -800,19 +800,19 @@ This section covers the ChatBot's compliance to not disclose sensitive data and 
 
 \begin{center}
   \testcase{
-		\textbf{NFST-CC-1} & \textbf{Sensitive Information Non-Disclosure}\\\hline
+		\textbf{NFCT-CC-1} & \textbf{Sensitive Information Non-Disclosure}\\\hline
 	
 	    \textbf{Description} & Tests if the chatbot avoids disclosing sensitive user data. \\ 
 	
 	    \textbf{References} & NFR221 \\ 
 	
-	    \textbf{Type} & System Test (Manual) \\ 
+	    \textbf{Type} & Compliance Test (Manual) \\ 
 	
 	    \textbf{Initial State} & ChatBot configured and messaging application  chat with ChatBot open. \\ 
 	
 	    \textbf{Input} & Message box with query prompting to reveal sensitive data. \\ 
 	
-	    \textbf{Output} & ChatBot responds without sensitive information like addresses or full names..\\ 
+	    \textbf{Output} & ChatBot responds without sensitive information like addresses or full names.\\ 
 	
 	    \textbf{Procedure} & Send message to ChatBot asking for sensitive information and verify reply from ChatBot complies with non-disclosure requirements. \\ 
   }
@@ -834,6 +834,66 @@ This section covers the ChatBot's compliance to not disclose sensitive data and 
 	
 	    \textbf{Procedure} & Initiate different prompts and events to trigger notifications and monitor frequency to ensure user is not annoyed.  \\ 
   }
+\end{center}
+
+\subsubsection{Area of Testing: Cleanliness Manager}
+This section covers the Cleanliness Manager's compliance not capture users, encrypt and store pictures of high quality safely and correctly process and detect messes within specified time, as presented in SRS, Section S.2.3.
+
+\begin{center}
+  \testcase{
+		\textbf{NFCT-CM-1} & \textbf{User Hidden During Recording and Picture}\\\hline
+	
+	    \textbf{Description} & Tests if the system refrains from capturing user. \\ 
+	
+	    \textbf{References} & NFR231, NFR232 \\ 
+	
+	    \textbf{Type} & Compliance Test (Manual) \\ 
+	
+	    \textbf{Initial State} & Cleanliness manager is active and ready for use. \\ 
+	
+	    \textbf{Input} & Simulated interaction of shared space. \\ 
+	
+	    \textbf{Output} & User is not found in recordings or pictures taken stored in logs and database of system.\\ 
+	
+	    \textbf{Procedure} & After shared space is used check logs and database for any recordings or pictures of user during simulated interaction. \\ 
+  }
+
+  \testcase{
+	    \textbf{NFST-CM-2} & \textbf{Encryption of Images and Videos}\\\hline
+	
+	    \textbf{Description} & Tests system to ensure encryption and secure storage of images and videos. \\ 
+	
+	    \textbf{References} & NFR233 \\ 
+	
+	    \textbf{Type} & System Test (Automatic) \\ 
+	
+	    \textbf{Initial State} &  Cleanliness manager is initialized and ready for use.\\ 
+	
+	    \textbf{Input} & Captured image and recording of shared space. \\ 
+	
+	    \textbf{Output} & Image recording in storage are encrypted. \\ 
+	
+	    \textbf{Procedure} & Capture image and record space using the system and verify encryption in the database.  \\ 
+  }
+  
+  \testcase{
+	    \textbf{NFFT-CM-3} & \textbf{Image Quality Validation}\\\hline
+	
+	    \textbf{Description} & Test to check if captured image have sufficient quality. \\ 
+	
+	    \textbf{References} & NFR234 \\ 
+	
+	    \textbf{Type} & Functional Test (Manual) \\ 
+	
+	    \textbf{Initial State} &  Cleanliness manager is initialized and ready for use.\\ 
+	
+	    \textbf{Input} & Captured image of shared space. \\ 
+	
+	    \textbf{Output} & Image of shared space. \\ 
+	
+	    \textbf{Procedure} & Capture image and manually verify clarity and object visibility.  \\ 
+  }
+  
 \end{center}
 
 \subsection{Traceability Between Test Cases and Requirements}
