@@ -877,13 +877,13 @@ This section covers the Cleanliness Manager's compliance not capture users, encr
   }
   
   \testcase{
-	    \textbf{NFFT-CM-3} & \textbf{Image Quality Validation}\\\hline
+	    \textbf{NFST-CM-3} & \textbf{Image Quality Validation}\\\hline
 	
 	    \textbf{Description} & Test to check if captured image have sufficient quality. \\ 
 	
 	    \textbf{References} & NFR234 \\ 
 	
-	    \textbf{Type} & Functional Test (Manual) \\ 
+	    \textbf{Type} & System Test (Manual) \\ 
 	
 	    \textbf{Initial State} &  Cleanliness manager is initialized and ready for use.\\ 
 	
@@ -892,6 +892,60 @@ This section covers the Cleanliness Manager's compliance not capture users, encr
 	    \textbf{Output} & Image of shared space. \\ 
 	
 	    \textbf{Procedure} & Capture image and manually verify clarity and object visibility.  \\ 
+  }
+  
+  \testcase{
+	    \textbf{NFPT-CM-4} & \textbf{Image Processing Time}\\\hline
+	
+	    \textbf{Description} & Test to ensure images are processed within time frame. \\ 
+	
+	    \textbf{References} & NFR235 \\ 
+	
+	    \textbf{Type} & Performance Test (Automatic) \\ 
+	
+	    \textbf{Initial State} &  Image is taken and sent over to server/database ready for processing.\\ 
+	
+	    \textbf{Input} & Uploaded image of shared space. \\ 
+	
+	    \textbf{Output} & Image after process of cleanliness manager within time of 30 minutes. \\ 
+	
+	    \textbf{Procedure} & Tracking time between start of image process to end with processing done within 30 minutes.  \\ 
+  }
+
+  \testcase{
+	    \textbf{NFCT-CM-5} & \textbf{False Event Prevention}\\\hline
+	
+	    \textbf{Description} & Test to check if system avoids false report accusing users and lowering cleanliness score. \\ 
+	
+	    \textbf{References} & NFR236 \\ 
+	
+	    \textbf{Type} & Compliance Test (Manual) \\ 
+	
+	    \textbf{Initial State} &  Cleanliness manager is initialized and ready for use.\\ 
+	
+	    \textbf{Input} & User uses shared space but does not make a mess. \\ 
+	
+	    \textbf{Output} & User cleanliness score is not reduced. \\ 
+	
+	    \textbf{Procedure} & User activities are simulated where no mess is made and the cleanliness manager outputs cleanliness score and verify score is not reduced.  \\ 
+	}
+
+  \testcase{
+	    \textbf{NFST-CM-6} & \textbf{End of Use}\\\hline
+	
+	    \textbf{Description} & Test to check if system detects that the user is no longer using the space. \\ 
+	
+	    \textbf{References} & NFR237 \\ 
+	
+	    \textbf{Type} & System Test (Manual) \\ 
+	
+	    \textbf{Initial State} &  Cleanliness manager is initialized and ready for use.\\ 
+	
+	    \textbf{Input} & User uses shared space and leaves after use. \\ 
+	
+	    \textbf{Output} & Final picture. \\ 
+	
+	    \textbf{Procedure} & After simulated use of the shared space and no activity has been detected for a determined period of time, system declares the space is no longer in use and takes final picture.  \\ 
   }
   
 \end{center}
