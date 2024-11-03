@@ -717,80 +717,84 @@ format for the tests given below.}
 How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
 
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
-
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Area of Testing: Authentication and House Management}
+\subsubsection{Area of Testing: User Authentication and House Management}
 This section covers encryption standards for authentication and house management data of the application, as presented in SRS, Section S.2.1.
 
-\paragraph{Encryption of Authentication Data}
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{NFST-UAHM-1} & \textbf{Encryption of Authentication Data}\\\hline
 
-\begin{enumerate}
+    \textbf{Description} & Tests if system encrypts data in transit and when stored \\ 
 
-\item{test-encryption-01\\}
+    \textbf{References} & NFR211 \\ 
 
-Type: Automatic.
-					
-Initial State: Application open with user ready to login.
-					
-Input/Condition: User inputted data in login elements.
-					
-Output/Result: All data in transit and stored is encrypted.
-					
-How test will be performed: 
-\begin{enumerate}[1.]
-	\item Capture data in transit between client and server.
-	\item Verify data in transit encrypted using network monitoring tools.
-	\item Verify database is using encrypted storage type.
-\end{enumerate}
-					
-\item{test-security-01\\}
+    \textbf{Type} & System Test (Automated) \\ 
 
-Type: Manual.
-					
-Initial State: User has application open on login screen.
-					
-Input: Incorrect login credentials.
-					
-Output: Error message that avoids revealing sensitive information.
-					
-How test will be performed: 
-\begin{enumerate}[1.]
-	\item Attempt to login with incorrect password but correct email.
-	\item Observe error message displayed.
-\end{enumerate}
-\end{enumerate}
+    \textbf{Initial State} & Frontend inputs for login are filled with user data. User profile exists in the system. \\ 
 
-...
+    \textbf{Input} & User inputted data in login elements. \\ 
+
+    \textbf{Output} & Stored and data in transit are encrypted.\\ 
+
+    \textbf{Procedure} & Capture data in transit between client and server, use network monitoring tools to inspect data transmission and check database storage for encryption compliance. \\ 
+  }
+
+  \testcase{
+    \textbf{NFST-UAHM-2} & \textbf{Sensitive Information Error Management}\\\hline
+
+    \textbf{Description} & Tests if the system does not reveal sensitive user information during login attempts \\ 
+
+    \textbf{References} & NFR212 \\ 
+
+    \textbf{Type} & System Test (Manual) \\ 
+
+    \textbf{Initial State} &  Login elements are filled with user data. User profile exists in system.\\ 
+
+    \textbf{Input} & Valid email and incorrect password. \\ 
+
+    \textbf{Output} & Error message that avoids revealing sensitive information \\ 
+
+    \textbf{Procedure} & Attempts to login with incorrect password but correct email, observing error message that is displayed on frontend.  \\ 
+  }
+  
+    \testcase{
+	    \textbf{NFST-UAHM-3} & \textbf{Encryption of House Data}\\\hline
+	
+	    \textbf{Description} & Tests if system encrypts all data related to houses in transit and at rest. \\ 
+	
+		\textbf{References} & NFR213 \\ 
+	
+		\textbf{Type} & System Test (Automated) \\ 
+	
+		\textbf{Initial State} & House data stored in the database and transmitted over the network. \\ 
+	
+		\textbf{Input} & View or edit house data. \\ 
+	
+		\textbf{Output} & Verification that data in transit and stored data are encrypted. \\ 
+	
+		\textbf{Procedure} & Use network monitoring tools to inspect data transmission and check database storage for encryption compliance. \\
+  }
+
+    \testcase{
+	    \textbf{NFST-UAHM-4} & \textbf{Authentication Response Time}\\\hline
+	
+	    \textbf{Description} & Tests if system authenticates a user within a median response time of under 1 second. \\ 
+	
+		\textbf{References} & NFR214 \\ 
+	
+		\textbf{Type} & Performance Test (Automated) \\ 
+	
+		\textbf{Initial State} & On login page and user profile exists. \\ 
+	
+		\textbf{Input} & Correct user login credentials filled in login elements. \\ 
+	
+		\textbf{Output} & Authentication process completed within one second. \\ 
+	
+		\textbf{Procedure} & Measure the time from when login credentials are submitted until a response is received using performance monitoring tools. \\
+  }
+\end{center}
+
 
 \subsection{Traceability Between Test Cases and Requirements}
 
