@@ -87,11 +87,11 @@ in.}
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
+This document provides the VnV plans for all relevant aspects of this project. These include the verification and validation plans for the SRS, system architecture, implementation, and requirements. In addition, this document outlines expected software and tools to be used in the VnV and the expected roles / responsibilities of the project team. \\\\This document begins with a 
+\hyperref[sec:generalInfo]{General Information Section} that acts as a primer to the project and contains all the background information needed to understand the document.\\\\Following the primer, \hyperref[section:JustPlan]{Section 3} outlines the VnV plans for project and is followed by \hyperref[section:systemTests]{System Tests} for all the requirements outlined in the SRS. In future revisions a 5th section outlining detailed unit tests will be added to this document, but at the time of writing the detailed design had not been completed.
 
 \section{General Information}
-
+\label{sec:generalInfo}
 \subsection{Summary}
 
 \wss{Say what software is being tested.  Give its name and a brief overview of
@@ -157,6 +157,7 @@ how they relate to your VnV efforts.}
 The SRS is a key document that will be referenced throughout the VnV process, as it contains all of the system requirements which will be verified and validated through testing. Every requirement in the SRS will be referenced by one or more test(s) in this document, to ensure that the system is functioning as expected and everything that is required of the system is being completed.
 
 \section{Plan}
+\label{section:JustPlan}
 
 \wss{Introduce this section.  You can provide a roadmap of the sections to
   come.}
@@ -283,7 +284,7 @@ The Verification and Validation Plan will be read by each member of the team to 
 walkthrough.  There is also a possibility of using the final presentation (in
 CAS741) for a partial usability survey.}
 
-The system implementation will be verified using a plethora of tools and techniques. First, the implementation of the system will be verified using the \hyperref[section:systemTests]{system tests} and \hyperref[section:unitTests]{unit tests} outlined in sections 4 and 5. Additionally, the development team will create integration tests to see if the interactions between different modules is expected. Any tests that can be used during CI/CD using will be done with them to ensure changes to the source code do not create a loss functionality. Finally the team will perform an acceptance test, running the application and acting out the key use-case scenarios outlined the SRS.\\
+The system implementation will be verified using a plethora of tools and techniques. First, the implementation of the system will be verified using the \hyperref[section:systemTests]{system tests} and \hyperref[section:unitTests]{unit tests} outlined in sections \hyperref[section:systemTests]{4} and 5 (5 is omitted until the detailed design is complete). Additionally, the development team will create integration tests to see if the interactions between different modules is expected. Any tests that can be used during CI/CD using will be done with them to ensure changes to the source code do not create a loss functionality. Finally the team will perform an acceptance test, running the application and acting out the key use-case scenarios outlined the SRS.\\
 \\
 During development, the team will use static analysis tools to help minimize common development mistakes such as referencing non-existent variables, incorrect type operations, etc.\\
 \\ Additional tests that can be executed if required are:
@@ -357,10 +358,10 @@ In the \hyperref[section:SRSVerificationPlan]{SRS verifcation plan}, a meeting w
 
 \wss{There should be text between all headings, even if it is just a roadmap of
 the contents of the subsections.}
-This section outlines the tests that will be used to verify and validate that Room8 is meeting its requirements. 4.1 and 4.2 designate tests for functional and nonfunctional requirements respectively, and tests are furthermore split into Room8's various modules for ease of readability and traceability. The output section of each test case describes the pass condition, thus this is the criteria the app developers will use to confirm that the app aligns with requirements. 
+This section outlines the tests that will be used to verify and validate that Room8 is meeting its requirements. \hyperref[subsec:testsForFunc]{4.1} and \hyperref[subsec:testsForNonFunc]{4.2} designate tests for functional and nonfunctional requirements respectively, and tests are furthermore split into Room8's various modules for ease of readability and traceability. The output section of each test case describes the pass condition, thus this is the criteria the app developers will use to confirm that the app aligns with requirements. 
 
 \subsection{Tests for Functional Requirements}
-
+\label{subsec:testsForFunc}
 \wss{Subsets of the tests may be in related, so this section is divided into
   different areas.  If there are no identifiable subsets for the tests, this
   level of document structure can be removed.}
@@ -732,6 +733,7 @@ Various expenses will inevitably accumulate for a group of roommates. The bill s
 \end{center}
 
 \subsection{Tests for Nonfunctional Requirements}
+\label{subsec:testsForNonFunc}
 
 \wss{The nonfunctional requirements for accuracy will likely just reference the
   appropriate functional tests from above.  The test cases should mention
@@ -1102,130 +1104,7 @@ This section covers the bill splitters's ability to accurately and precisely han
  
 
 \section{Unit Test Description}
-\label{section:unitTests}
-
-\wss{This section should not be filled in until after the MIS (detailed design
-  document) has been completed.}
-
-\wss{Reference your MIS (detailed design document) and explain your overall
-philosophy for test case selection.}  
-
-\wss{To save space and time, it may be an option to provide less detail in this section.  
-For the unit tests you can potentially layout your testing strategy here.  That is, you 
-can explain how tests will be selected for each module.  For instance, your test building 
-approach could be test cases for each access program, including one test for normal behaviour 
-and as many tests as needed for edge cases.  Rather than create the details of the input 
-and output here, you could point to the unit testing code.  For this to work, you code 
-needs to be well-documented, with meaningful names for all of the tests.}
-
-\subsection{Unit Testing Scope}
-
-\wss{What modules are outside of the scope.  If there are modules that are
-  developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software, but
-  have a lower priority for verification than others.  If this is the case,
-  explain your rationale for the ranking of module importance.}
-
-\subsection{Tests for Functional Requirements}
-
-\wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing based
-  technique.  That can also be documented in this section.}
-
-\subsubsection{Module 1}
-
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
-
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-
-\item{...\\}
-    
-\end{enumerate}
-
-\subsubsection{Module 2}
-
-...
-
-\subsection{Tests for Nonfunctional Requirements}
-
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
-
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
-
-\subsubsection{Module ?}
-		
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Module ?}
-
-...
-
-\subsection{Traceability Between Test Cases and Modules}
-
-\wss{Provide evidence that all of the modules have been considered.}
+To be included in future revisions.
 
 \bibliographystyle{plainnat}
 
