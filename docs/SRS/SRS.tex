@@ -106,6 +106,8 @@
         \hline
         \makecell{Mohammed A. \\ Maged A. \\ Jinal K. \\ Jane K. \\ Harshil P.} & 2024-10-11 & First Draft & 0.0\\
         \hline
+        \makecell{Mohammed A.} & 2024-11-04 & Added FR225 for ChatBot & 0.1\\
+        \hline
     \end{tabular}
 \end{center}
 
@@ -487,7 +489,7 @@ Invariants are properties of the environment that the system must maintain throu
   	\begin{itemize}
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{FR211:} The system shall allow users to create an account using their name, email, and password.
+  			\item \textbf{FR211:} The system shall allow users to create an account using their name, email, phone number, and password.
             \item \textbf{FR212:} The system shall allows users to log in to their account.
             \item \textbf{FR213:} The system shall allows users to log out of their account.
             \item \textbf{FR214:} The system shall allow users to create a home group using the home name, address, and number of roommates.
@@ -512,6 +514,7 @@ Invariants are properties of the environment that the system must maintain throu
             \item \textbf{FR222:} The ChatBot shall send reminders to the group chat about upcoming chores and events in the schedule 2 days in advance.
             \item \textbf{FR223:} The ChatBot shall send notifications to the group chat about new shared living space cleanliness scores immediately after an event is added to the cleanliness manager page.
             \item \textbf{FR224:} The ChatBot shall send notifications to the group chat about new shared expenses added to the bill splitter page immediately after its addition.
+            \item \textbf{FR225:} The system shall allow users to activate the ChatBot feature which will create combined groupchat including all the residents as well the bot itself.
   		\end{itemize}
   		\item \textbf{Non-Functional Requirements:}
   		\begin{itemize}
@@ -594,7 +597,7 @@ Thus, S.3 Interfaces will be available in a future revision of this document.
     \begin{enumerate}
         \item User accesses the Room8 app.
         \item User selects the "Create Account" option.
-        \item User fills in personal information (name, email, password).
+        \item User fills in personal information (name, email, phone number, password).
         \item User submits the form.
         \item System validates the information and creates the account.
         \item System authenticates the user.
