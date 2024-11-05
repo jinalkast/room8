@@ -90,8 +90,8 @@ in.}
 
 \pagenumbering{arabic}
 
-This document provides the VnV plans for all relevant aspects of this project. These include the verification and validation plans for the SRS, system architecture, implementation, and requirements. In addition, this document outlines expected software and tools to be used in the VnV and the expected roles / responsibilities of the project team. \\\\This document begins with a 
-\hyperref[sec:generalInfo]{General Information Section} that acts as a primer to the project and contains all the background information needed to understand the document.\\\\Following the primer, \hyperref[section:JustPlan]{Section 3} outlines the VnV plans for project and is followed by \hyperref[section:systemTests]{System Tests} for all the requirements outlined in the SRS. In future revisions a 5th section outlining detailed unit tests will be added to this document, but at the time of writing the detailed design had not been completed.
+This document provides the VnV plans for all relevant aspects of this project. These include the VnV plans for the SRS, system architecture, implementation, and requirements. In addition, this document outlines the expected software and tools to be used in the VnV and the expected roles/responsibilities of the project team. \\\\This document begins with a 
+\hyperref[sec:generalInfo]{General Information Section} that acts as a primer to the project and contains all the background information needed to understand the document.\\\\Following the primer, \hyperref[section:JustPlan]{Section 3} outlines the VnV plans for project and is followed by \hyperref[section:systemTests]{System Tests} for all the requirements outlined in the SRS. In future revisions, a 5th section outlining detailed unit tests will be added to this document, but at the time of writing the detailed design had not been completed.
 
 \section{General Information}
 \label{sec:generalInfo}
@@ -142,7 +142,7 @@ been approved by the course instructor as included in your problem statement.
 You can use a pull request to update your extras (in TeamComposition.csv or
 Repos.csv) if your plan changes as a result of the VnV planning exercise.}
 
-The challenge level of our project is general. The extras that will be completed as part of this project include additional features related to student housing and user documentation. Since the main functionality of Room8 is the cleanliness detector and  image processing is not a novel concept (mess detecting software already exists), the challenge level is not advanced. However, the program still presents a variety of difficulties on the implementation side, preventing it from being classified as basic. The extras include the user-facing software which provide all of the other student housing features (i.e. bill splitter, scheduler, etc.), and a thorough guide for use of the application and/or installation of the hardware will be delivered upon the project's completion. 
+The challenge level of our project is general. The extras that will be completed as part of this project include additional features related to student housing and user documentation. Since the main functionality of Room8 is the cleanliness detector and image processing is not a novel concept (mess detecting software already exists), the challenge level is not advanced. However, the program still presents a variety of difficulties on the implementation side, preventing it from being classified as basic. The extras include the user-facing software, which provides all of the other student housing features (i.e. bill splitter, scheduler, etc.), and a thorough guide for the application and installation of the hardware will be delivered upon the project's completion.  
 
 \subsection{Relevant Documentation}
 
@@ -157,14 +157,14 @@ The challenge level of our project is general. The extras that will be completed
 \wss{Don't just list the other documents.  You should explain why they are relevant and 
 how they relate to your VnV efforts.}
 
-The SRS is a key document that will be referenced throughout the VnV process, as it contains all of the system requirements which will be verified and validated through testing. Every requirement in the SRS will be referenced by one or more test(s) in this document, to ensure that the system is functioning as expected and everything that is required of the system is being completed.
+The SRS will be referenced throughout the VnV process, as it contains all of the system requirements, which will be verified and validated through testing. Every requirement in the SRS will be referenced by one or more test(s) in this document to ensure that the system is functioning as expected and that everything required from the system is being completed.
 
 \section{Plan}
 \label{section:JustPlan}
 
 \wss{Introduce this section.  You can provide a roadmap of the sections to
   come.}
-The following section outlines the execution plan for verifying project documentation and validating the software. The sections begins outlining the verification and validation team. Following section 3.1, sections 3.2 till 3.4 outline the plans for verifying documentation, while sections 3.5-3.7 discuss verification and validation for the system.
+The following section outlines the execution plan for verifying project documentation and validating the software. The sections begin outlining the verification and validation team. Following section 3.1, sections 3.2 and 3.4 outline the plans for verifying documentation, while sections 3.5-3.7 discuss verification and validation for the system.
 
 \subsection{Verification and Validation Team}
 \wss{Your teammates.  Maybe your supervisor.
@@ -194,18 +194,18 @@ The following section outlines the execution plan for verifying project document
     \hline
     Mohammed Abed & Developer & Mohammed's role will be focused on automating test cases using online tools such as GitHub actions and any other tools the team chooses to use. Since Mohammed's strengths and past experiences are in web development, he will also provide support in developing tests for the user-facing application. \\
    	\hline
-    Maged Armanios & Developer & Maged's role will focus on developing unit and usability tests for the user facing application and it's backend. These tests will be then automated by Mohammed using tools like GitHub Actions. \\
+    Maged Armanios & Developer & Maged's role will focus on developing unit and usability tests for the user-facing application and its backend. These tests will be then automated by Mohammed using tools like GitHub Actions. \\
     \hline
-    Jinal Kasturiarachchi & Developer & Jinal will verify usability requirements for the system. In addition, due to the expected workload of each role being unknown at the time of writing, Jinal will support any other developer who has received a larger than average workload. \\
+    Jinal Kasturiarachchi & Developer & Jinal will verify the usability requirements for the system. In addition, due to the expected workload of each role being unknown at the time of writing, Jinal will support any other developer who has received a larger-than-average workload. \\
     \hline
     Jane Klavir & Developer & Jane's role will have her verify the cleanliness management system meets the requirements outlined. This includes that it'll be able to detect created messes, cleaned messes, and states of no change. \\
     \hline
     Harshil Patel & Developer & Harshil will focus on testing the safety and security of the system. This includes ensuring all data is stored securely, access tokens are confidential, and authorization is secure on the user's end.  \\
 	\hline
-	Dr. R Tharmarasa & Supervisor & Dr. Tharmarasa's role will be to provide the team with support on making decisions related to the cleanliness management algorithm. Additionally, Dr. Tharmarasa will provide his input on the feasibility of requirements related to the cleanliness management system using his research experience in classification and related topics.
+	Dr. R Tharmarasa & Supervisor & Dr. Tharmarasa's role will be to provide the team with support in making decisions related to the cleanliness management algorithm. Additionally, Dr. Tharmarasa will provide his input on the feasibility of requirements related to the cleanliness management system using his research experience in classification and related topics.
 \end{longtable}
 
-\textbf{Note about project roles}: While each member of the team does has specified project roles, all members of the team are expected to be able to support each other when required. The roles defined on the table above are simply the optimal roles for each member based on their expertise and does not restrict the work they are able to undergo to only what's outlined in the table above.
+\textbf{Note about project roles}: While each team member has specific roles, all members of the team are expected to be able to support each other when required. The roles defined in the table above are simply the optimal roles for each member based on their expertise and do not restrict the work they are able to undergo to only what's outlined in the table above.
 
 \subsection{SRS Verification Plan}
 \label{section:SRSVerificationPlan}
@@ -221,8 +221,8 @@ Will you give them instructions for a task-based inspection?  Will you use your
 issue tracker?}\\
 \wss{Maybe create an SRS checklist?}\\
 
-To verify our SRS, the development team will have a meeting with project supervisor Dr. Tharmarasa. In this meeting, the group will present a summarized version of the SRS which outlines the components, functionality, constraints, and assumptions. This presentation will be accompanied some form of presentation of the use-case scenarios outlined in the SRS. This can be done with either a low-fidelity mock up or a live-demo of the system if sufficient development has been completed. After the presentation, we will ask the supervisor whether they found any use cases unimportant and requirements unverifiable. After meeting with our supervisor, the team will redraft the requirements and use cases according to his feedback. \\\\
-In the event we are unable to meet with our supervisor for review, an alternative approach would be to seek peer review and feedback from our primary project reviewers. The meeting would have a similar structure to that which would be done with Dr. Tharmarasa. \\\\
+To verify our SRS, the development team will meet with the project supervisor, dr. Tharmarasa. In this meeting, the group will present a summarized version of the SRS which outlines the components, functionality, constraints, and assumptions. This presentation will be accompanied by some form of presentation of the use-case scenarios outlined in the SRS. This can be done with either a low-fidelity mock-up or a live demo of the system if sufficient development has been completed. After the presentation, we will ask the supervisor whether they found any use cases unimportant and requirements unverifiable. After meeting with our supervisor, the team will redraft the requirements and use cases according to his feedback. \\\\
+In the event we are unable to meet with our supervisor for review, an alternative approach would be to seek peer review and feedback from our primary project reviewers. The meeting would have a similar structure to that which, would be done with Dr. Tharmarasa. \\
 
 Additionally, the development team will review the SRS document to verify each requirement:
 \begin{itemize}
@@ -245,7 +245,7 @@ The system architecture will be verified by the development team in a formal mee
 \item For each requirement and/or use case defined in the SRS, does the architecture enable the system to do so?
 \item Is there no overlap between the modules (separation of concerns)?
 \item Is the system easy to scale (consider both horizontal and vertical scaling)? If you were to scale the system, how would you do so?
-\item Is the architecture include security measures to satisfy the non-functional requirements in the SRS?
+\item Does the architecture include security measures to satisfy the non-functional requirements in the SRS?
 \item Does the architecture support unit testing?
 \item Does the architecture support the addition of new modules (extension)? 
 \end{itemize}
@@ -287,7 +287,7 @@ The Verification and Validation Plan will be read by each member of the team to 
 walkthrough.  There is also a possibility of using the final presentation (in
 CAS741) for a partial usability survey.}
 
-The system implementation will be verified using a plethora of tools and techniques. First, the implementation of the system will be verified using the \hyperref[section:systemTests]{system tests} and \hyperref[section:unitTests]{unit tests} outlined in sections \hyperref[section:systemTests]{4} and 5 (5 is omitted until the detailed design is complete). Additionally, the development team will create integration tests to see if the interactions between different modules is expected. Any tests that can be used during CI/CD using will be done with them to ensure changes to the source code do not create a loss functionality. Finally the team will perform an acceptance test, running the application and acting out the key use-case scenarios outlined the SRS.\\
+The system implementation will be verified using a plethora of tools and techniques. First, the implementation of the system will be verified using the \hyperref[section:systemTests]{system tests} and \hyperref[section:unitTests]{unit tests} outlined in sections \hyperref[section:systemTests]{4} and 5 (5 is omitted until the detailed design is complete). Additionally, the development team will create integration tests to see if the interactions between different modules are expected. Any tests that can be used during CI/CD use will be done with them to ensure changes to the source code do not create a loss of functionality. Finally, the team will perform an acceptance test, running the application and acting out the key use-case scenarios outlined in the SRS.\\
 \\
 During development, the team will use static analysis tools to help minimize common development mistakes such as referencing non-existent variables, incorrect type operations, etc.\\
 \\ Additional tests that can be executed if required are:
@@ -312,17 +312,17 @@ that document.}
 
 \wss{The details of this section will likely evolve as you get closer to the
   implementation.}\\ 
-  At the time of writing, the programming languages have not been finalized. Nonetheless, this section outlines the expected tools that will be utilized for the expected programming languages and frameworks. Currently, the expected programming languages and frameworks are expected to be JavaScript/TypeScript for the frontend application, utilizing the React framework, and Python for the cleanliness management system.
+	At the time of writing, the programming languages have not been finalized. Nonetheless, this section outlines the expected tools that will be utilized for the expected programming languages and frameworks. Currently, the expected programming languages and frameworks are expected to be JavaScript/TypeScript for the frontend application, utilizing the React framework, and Python for the cleanliness management system.
   
   \textbf{TypeScript}:
    \begin{itemize}
    \item Jest: The preferred framework for testing React-based applications
    \item Puppeteer: Provides high-level APIs to control Chrome and allows for automating UI testing, form submissions, and keyboard inputs easily
-   \item ESLint: A code linter that helps catch common programming mistakes and can be enhanced to enforce code styling. Automates the detection of potential vulnerabilities and life-cycle methods for React based projects.
+   \item ESLint: A code linter that helps catch common programming mistakes and can be enhanced to enforce code styling. Automates the detection of potential vulnerabilities and life-cycle methods for React-based projects.
    \end{itemize}
    \textbf{Python}:
    \begin{itemize}
-   \item Pylance: A language server, providing tools features like intelliSense, logical linting, code actions, code navigation, and semantic colourization. These features can assist developers in catching errors while developing.
+   \item Pylance: A language server providing tools features like IntelliSense, logical linting, code actions, code navigation, and semantic colorization. These features can assist developers in catching errors while developing.
    \item Flake8: A command-line utility for enforcing style consistency across Python projects. Includes lint checks.
    \item Pytest and PyUnit: Testing frameworks.
    \end{itemize}
@@ -332,7 +332,7 @@ that document.}
   \end{itemize}
     \textbf{API Testing Tools}:
   \begin{itemize}
-  \item Postman: Can run API functional and performance tests to determine average and median API response times. Can also be used to ensure the correctness of an API's response 
+  \item Postman: Can run API functional and performance tests to determine average and median API response times. Postman can also be used to ensure the correctness of an API's response 
   \end{itemize}
 
 \subsection{Software Validation Plan}
@@ -355,7 +355,7 @@ as a Rev 0 demo for the supervisor.}
 
 \wss{This section might reference back to the SRS verification section.}
 
-In the \hyperref[section:SRSVerificationPlan]{SRS verifcation plan}, a meeting with the project supervisor Dr. Tharmarasa was mentioned which had him review the use cases and requirements of the project. This session will also act as part of the software validation plan since Dr. Tharmarasa is independent from the development and project team. Additionally, feedback from primary reviewers and primary stakeholders (people living in shared living spaces) will be taken into consideration and possibly used to revise some requirements.  
+In the \hyperref[section:SRSVerificationPlan]{SRS verification plan}, a meeting with the project supervisor, dr. Tharmarasa was mentioned, which had him review the use cases and requirements of the project. This session will also act as part of the software validation plan since Dr. Tharmarasa is independent of the development and project team. Additionally, feedback from primary reviewers and primary stakeholders (people living in shared living spaces) will be taken into consideration and possibly used to revise some requirements.    
 \section{System Tests}
 \label{section:systemTests}
 
@@ -758,6 +758,9 @@ format for the tests given below.}
 \wss{If you introduce static tests in your plan, you need to provide details.
 How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
+
+
+This subsection contains the tests for the nonfunctional requirements outlined the in the SRS
 
 \subsubsection{Area of Testing: User Authentication and House Management}
 This section covers encryption standards for authentication and house management data of the application, as presented in SRS, Section S.2.1.
