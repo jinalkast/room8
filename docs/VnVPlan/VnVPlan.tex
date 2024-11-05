@@ -445,6 +445,48 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
 
 \begin{center}
   \testcase{
+    \textbf{FST-CM-1} & \textbf{System Evaluates Cleanliness}\\\hline
+
+    \textbf{Description} & Tests if the system can evaluate and record cleanliness scores based on captured images \\ 
+
+    \textbf{References} & FR231 \\ 
+
+    \textbf{Type} & System Test (dynamic, manual) \\ 
+
+    \textbf{Initial State} & Cleanliness management camera is setup and connected to home instance \\ 
+
+    \textbf{Input} & N/A \\ 
+
+    \textbf{Output} & Cleanliness scores are updated based on user actions \\ 
+
+    \textbf{Procedure} & Home resident enters camera view and creates a mess. Resident verifies that the cleanliness score is updated to reflect the mess. Resident then cleans the mess and verifies that the cleanliness score is updated to reflect the clean state \\ 
+  }
+
+  \testcase{
+    \textbf{FST-CM-2} & \textbf{Display Cleanliness Scores}\\\hline
+
+    \textbf{Description} & Tests if the system displays cleanliness scores to users in a group \\ 
+
+    \textbf{References} & FR232, FR233, FR234, FR235 \\ 
+
+    \textbf{Type} & Functional Test (dynamic, automated) \\ 
+
+    \textbf{Initial State} & Cleanliness scores are available for the group \\ 
+
+    \textbf{Input} & N/A \\ 
+
+    \textbf{Output} & Cleanliness scores are displayed accurately to the user \\ 
+
+    \textbf{Procedure} & Testing agent navigates to the cleanliness score display page and verifies that the scores are shown accurately \\ 
+  }
+
+\end{center}
+
+\subsubsection{Schedule Configuration}
+Room8 provides a convenient calendar to allow users to schedule chores and events and stay organized, as outlined by requirements FR241-FR245. The tests here will be used to ensure this component of the app is functioning correctly.
+
+\begin{center}
+  \testcase{
     \textbf{FST-SC-1} & \textbf{Adding Event to Schedule}\\\hline
 
     \textbf{Description} & Tests that new event appears in calendar after it is inputted. \\ 
@@ -457,11 +499,9 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
 
     \textbf{Input} & Title, date, time, and duration. \\ 
 
-    \textbf{Output} & Chore/event containing input parameters.  \\ 
+    \textbf{Output} & Calendar displaying new chore/event with input parameters.  \\ 
 
-    \textbf{Pass} & Calendar displays new event.  \\ 
-
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent navigates to calendar, generates a series of events with random inputs, and adds them to the schedule. Agent verifies that the events with the same input parameters exist in the schedule.  \\ 
   }
 
     \testcase{
@@ -477,11 +517,9 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
   
       \textbf{Input} & Chore/event from calendar represented by name, date, time, and duration. \\ 
   
-      \textbf{Output} & void \\ 
-
-      \textbf{Pass} & Chore/event that was removed is no longer displayed in its previous timeblock in the calendar.  \\
+      \textbf{Output} & Chore/event that was removed is no longer displayed in its previous timeblock in the calendar. \\ 
   
-      \textbf{Procedure} & TODO \\ 
+      \textbf{Procedure} & Testing agent navigates to calendar, and removes the series of events it generated in FST-SC-1. Agent verifies that the events it removed do not exist in the schedule.  \\ 
     }
 
       \testcase{
@@ -496,12 +534,10 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
         \textbf{Initial State} & Calendar displaying chores and events pertaining to the house. \\ 
     
         \textbf{Input} & Chore/event from calendar represented by name, date, time, and duration. \\ 
-    
-        \textbf{Output} & Chore/event from calendar represented by name, date, time, and duration.  \\ 
 
-        \textbf{Pass} & Chore/event displayed in calendar after edits contains updated information (i.e. name, date, time, and/or duration).  \\
+        \textbf{Output} & Chore/event displayed in calendar after edits contains updated information (i.e. name, date, time, and/or duration).  \\
     
-        \textbf{Procedure} & TODO \\ 
+        \textbf{Procedure} & Testing agent navigates to calendar, and adds an event with random input. Then, testing agent edits that event by changing name, date, time, and duration one-by-one, verifying each time that the parameter edited has changed. Then, testing agent edits 2 random parameters simultaneously, then 3 random parameters simultaneously, and finally all the parameters simultaneously, verifying after each step. \\ 
       }
 
 
@@ -514,13 +550,13 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
 
     \textbf{Type} & Functional Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & TODO \\ 
+    \textbf{Initial State} & User is logged in and registered in home group \\ 
 
-    \textbf{Input} & TODO \\ 
+    \textbf{Input} & User requests to view calendar \\ 
 
-    \textbf{Output} & TODO \\ 
+    \textbf{Output} & Calendar displaying chores and events pertaining to the home group \\ 
 
-    \textbf{Procedure} & TODO \\ 
+    \textbf{Procedure} & Testing agent navigates to calendar and confirms that chores and events are displayed accurately. \\ 
   }
 
 \end{center}
