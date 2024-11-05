@@ -41,29 +41,15 @@
 \end{tabularx}
 
 ~\\
-\wss{The intention of the VnV plan is to increase confidence in the software.
-However, this does not mean listing every verification and validation technique
-that has ever been devised.  The VnV plan should also be a \textbf{feasible}
-plan. Execution of the plan should be possible with the time and team available.
-If the full plan cannot be completed during the time available, it can either be
-modified to ``fake it'', or a better solution is to add a section describing
-what work has been completed and what work is still planned for the future.}
 
-\wss{The VnV plan is typically started after the requirements stage, but before
-the design stage.  This means that the sections related to unit testing cannot
-initially be completed.  The sections will be filled in after the design stage
-is complete.  the final version of the VnV plan should have all sections filled
-in.}
 
 \newpage
 
 \tableofcontents
 
 \listoftables
-\wss{Remove this section if it isn't needed}
 
 \listoffigures
-\wss{Remove this section if it isn't needed}
 
 \newpage
 
@@ -81,11 +67,6 @@ in.}
   \bottomrule
 \end{tabular}\\
 
-\wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
-  \citep{SRS} tables, if appropriate}
-
-\wss{Remove this section if it isn't needed}
-
 \newpage
 
 \pagenumbering{arabic}
@@ -97,9 +78,6 @@ This document provides the VnV plans for all relevant aspects of this project. T
 \label{sec:generalInfo}
 \subsection{Summary}
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
-  
 Shared living environments often create tension between roommates. It can be inconvenient and sometimes awkward to explicitly reach out to a roommate about the messes they leave behind in a shared space, concerns over bill payments, household upkeep, and more. Our project, Room8,
 aims to prevent these cumbersome interactions by providing an application and the
 necessary hardware components to help monitor the cleanliness of shared spaces,
@@ -107,70 +85,22 @@ schedule tasks, track shared billing cycles, and alert roommates of any issues w
 
 \subsection{Objectives}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
-
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
-worthwhile to justify why the objectives are left out.}
-
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
-has already been verified by its implementation team.}
 
 The objective for this document, and the VnV plan that it outlines, is to support the idea that all software built for the project is correct, complete, and provides a satisfying user experience. The reason why these qualities are emphasized are due to the fact that the outputs of our system have real-life implications (i.e. cleanliness detector determining the incorrect roommate made a mess, bill splitter incorrectly calculating amounts due, etc.), making correctness and completion essential. Additionally, since the application is very user-centric, the user experience is central to the project's success and must be treated as such. Since this will be the main focus of our testing efforts, there are certain elements of our project which will not be tested extensively by our own team. For example, any external libraries that will be used as a part of Room8 will be assumed to have rigorous verification and validation already completed by the implementation team who created it. Additionally, extreme scalability/load testing will not be completed as part of the initial VnV. This is due to the hypothetical nature of the project in its current state, which doesn't require the system to be able to withstand many concurrent users at a time. 
 
 \subsection{Challenge Level and Extras}
 
-\wss{State the challenge level (advanced, general, basic) for your project.
-Your challenge level should exactly match what is included in your problem
-statement.  This should be the challenge level agreed on between you and the
-course instructor.  You can use a pull request to update your challenge level
-(in TeamComposition.csv or Repos.csv) if your plan changes as a result of the
-VnV planning exercise.}
-
-\wss{Summarize the extras (if any) that were tackled by this project.  Extras
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  Extras should have already
-been approved by the course instructor as included in your problem statement.
-You can use a pull request to update your extras (in TeamComposition.csv or
-Repos.csv) if your plan changes as a result of the VnV planning exercise.}
 
 The challenge level of our project is general. The extras that will be completed as part of this project include additional features related to student housing and user documentation. Since the main functionality of Room8 is the cleanliness detector and image processing is not a novel concept (mess detecting software already exists), the challenge level is not advanced. However, the program still presents a variety of difficulties on the implementation side, preventing it from being classified as basic. The extras include the user-facing software, which provides all of the other student housing features (i.e. bill splitter, scheduler, etc.), and a thorough guide for the application and installation of the hardware will be delivered upon the project's completion.  
 
 \subsection{Relevant Documentation}
-
-\wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (design documents, like MG, MIS, etc).  You
-  can include these even before they are written, since by the time the project
-  is done, they will be written.  You can create BibTeX entries for your
-  documents and within those entries include a hyperlink to the documents.}
-
-\cite{SRS}
-
-\wss{Don't just list the other documents.  You should explain why they are relevant and 
-how they relate to your VnV efforts.}
-
 The SRS will be referenced throughout the VnV process, as it contains all of the system requirements, which will be verified and validated through testing. Every requirement in the SRS will be referenced by one or more test(s) in this document to ensure that the system is functioning as expected and that everything required from the system is being completed.
 
 \section{Plan}
 \label{section:JustPlan}
-
-\wss{Introduce this section.  You can provide a roadmap of the sections to
-  come.}
 The following section outlines the execution plan for verifying project documentation and validating the software. The sections begin outlining the verification and validation team. Following section 3.1, sections 3.2 and 3.4 outline the plans for verifying documentation, while sections 3.5-3.7 discuss verification and validation for the system.
 
 \subsection{Verification and Validation Team}
-\wss{Your teammates.  Maybe your supervisor.
-  You should do more than list names.  You should say what each person's role is
-  for the project's verification.  A table is a good way to summarize this information.}
-
 \begin{longtable}{|>{\raggedright\arraybackslash}p{0.21\linewidth} | >{\raggedright\arraybackslash}p{0.21\linewidth} | >{\raggedright\arraybackslash}p{0.60\linewidth}| >{\raggedright\arraybackslash}p{0.21\linewidth}| }
     \caption{\bf Verification and Validation Team} \label{tab:my_label} \\
     
@@ -209,18 +139,6 @@ The following section outlines the execution plan for verifying project document
 
 \subsection{SRS Verification Plan}
 \label{section:SRSVerificationPlan}
-
-\wss{List any approaches you intend to use for SRS verification.  This may
-  include ad hoc feedback from reviewers, like your classmates (like your
-  primary reviewer), or you may plan for something more rigorous/systematic.}
-
-\wss{If you have a supervisor for the project, you shouldn't just say they will
-read over the SRS.  You should explain your structured approach to the review.
-Will you have a meeting?  What will you present?  What questions will you ask?
-Will you give them instructions for a task-based inspection?  Will you use your
-issue tracker?}\\
-\wss{Maybe create an SRS checklist?}\\
-
 To verify our SRS, the development team will meet with the project supervisor, dr. Tharmarasa. In this meeting, the group will present a summarized version of the SRS which outlines the components, functionality, constraints, and assumptions. This presentation will be accompanied by some form of presentation of the use-case scenarios outlined in the SRS. This can be done with either a low-fidelity mock-up or a live demo of the system if sufficient development has been completed. After the presentation, we will ask the supervisor whether they found any use cases unimportant and requirements unverifiable. After meeting with our supervisor, the team will redraft the requirements and use cases according to his feedback. \\\\
 In the event we are unable to meet with our supervisor for review, an alternative approach would be to seek peer review and feedback from our primary project reviewers. The meeting would have a similar structure to that which, would be done with Dr. Tharmarasa. \\
 
@@ -233,13 +151,6 @@ Additionally, the development team will review the SRS document to verify each r
 
 
 \subsection{Design Verification Plan}
-
-\wss{Plans for design verification}
-
-\wss{The review will include reviews by your classmates}
-
-\wss{Create a checklists?}
-
 The system architecture will be verified by the development team in a formal meeting. The meeting will have each member read through the system architecture and verify it according to the following checklist:
 \begin{itemize}
 \item For each requirement and/or use case defined in the SRS, does the architecture enable the system to do so?
@@ -251,13 +162,6 @@ The system architecture will be verified by the development team in a formal mee
 \end{itemize}
 
 \subsection{Verification and Validation Plan Verification Plan}
-
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
-
-\wss{The review will include reviews by your classmates}
-
-\wss{Create a checklists?}\\
 The Verification and Validation Plan will be read by each member of the team to confirm the following:
 \begin{itemize}
 \item Each teammember referenced has clear, defined roles with a clause for role switching and overlapping roles
@@ -275,18 +179,6 @@ The Verification and Validation Plan will be read by each member of the team to 
 
 
 \subsection{Implementation Verification Plan}
-
-\wss{You should at least point to the tests listed in this document and the unit
-  testing plan.}
-
-\wss{In this section you would also give any details of any plans for static
-  verification of the implementation.  Potential techniques include code
-  walkthroughs, code inspection, static analyzers, etc.}
-
-\wss{The final class presentation in CAS 741 could be used as a code
-walkthrough.  There is also a possibility of using the final presentation (in
-CAS741) for a partial usability survey.}
-
 The system implementation will be verified using a plethora of tools and techniques. First, the implementation of the system will be verified using the \hyperref[section:systemTests]{system tests} and \hyperref[section:unitTests]{unit tests} outlined in sections \hyperref[section:systemTests]{4} and 5 (5 is omitted until the detailed design is complete). Additionally, the development team will create integration tests to see if the interactions between different modules are expected. Any tests that can be used during CI/CD use will be done with them to ensure changes to the source code do not create a loss of functionality. Finally, the team will perform an acceptance test, running the application and acting out the key use-case scenarios outlined in the SRS.\\
 \\
 During development, the team will use static analysis tools to help minimize common development mistakes such as referencing non-existent variables, incorrect type operations, etc.\\
@@ -298,21 +190,7 @@ During development, the team will use static analysis tools to help minimize com
 
 \subsection{Automated Testing and Verification Tools}
 \label{subsec:tools}
-\wss{What tools are you using for automated testing.  Likely a unit testing
-  framework and maybe a profiling tool, like ValGrind.  Other possible tools
-  include a static analyzer, make, continuous integration tools, test coverage
-  tools, etc.  Explain your plans for summarizing code coverage metrics.
-  Linters are another important class of tools.  For the programming language
-  you select, you should look at the available linters.  There may also be tools
-  that verify that coding standards have been respected, like flake9 for
-  Python.}
-
-\wss{If you have already done this in the development plan, you can point to
-that document.}
-
-\wss{The details of this section will likely evolve as you get closer to the
-  implementation.}\\ 
-	At the time of writing, the programming languages have not been finalized. Nonetheless, this section outlines the expected tools that will be utilized for the expected programming languages and frameworks. Currently, the expected programming languages and frameworks are expected to be JavaScript/TypeScript for the frontend application, utilizing the React framework, and Python for the cleanliness management system.
+At the time of writing, the programming languages have not been finalized. Nonetheless, this section outlines the expected tools that will be utilized for the expected programming languages and frameworks. Currently, the expected programming languages and frameworks are expected to be JavaScript/TypeScript for the frontend application, utilizing the React framework, and Python for the cleanliness management system.
   
   \textbf{TypeScript}:
    \begin{itemize}
@@ -336,41 +214,13 @@ that document.}
   \end{itemize}
 
 \subsection{Software Validation Plan}
-
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
-
-\wss{You might want to use review sessions with the stakeholder to check that
-the requirements document captures the right requirements.  Maybe task based
-inspection?}
-
-\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
-be used as an opportunity to validate the requirements.  You should plan on 
-demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
-The feedback from your supervisor will be very useful for improving your project.}
-
-\wss{For teams without an external supervisor, user testing can serve the same purpose 
-as a Rev 0 demo for the supervisor.}
-
-\wss{This section might reference back to the SRS verification section.}
-
 In the \hyperref[section:SRSVerificationPlan]{SRS verification plan}, a meeting with the project supervisor, dr. Tharmarasa was mentioned, which had him review the use cases and requirements of the project. This session will also act as part of the software validation plan since Dr. Tharmarasa is independent of the development and project team. Additionally, feedback from primary reviewers and primary stakeholders (people living in shared living spaces) will be taken into consideration and possibly used to revise some requirements.    
 \section{System Tests}
 \label{section:systemTests}
-
-\wss{There should be text between all headings, even if it is just a roadmap of
-the contents of the subsections.}
 This section outlines the tests that will be used to verify and validate that Room8 is meeting its requirements. \hyperref[subsec:testsForFunc]{4.1} and \hyperref[subsec:testsForNonFunc]{4.2} designate tests for functional and nonfunctional requirements respectively, and tests are furthermore split into Room8's various modules for ease of readability and traceability. The output section of each test case describes the pass condition, thus this is the criteria the app developers will use to confirm that the app aligns with requirements. 
 
 \subsection{Tests for Functional Requirements}
 \label{subsec:testsForFunc}
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
-
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
 Functional requirements pertain to the core functionality of the app. Room8 has the core functionality of registering users into a home, deploying a ChatBot for notifications, establishing a cleanliness managegement system, providing an event scheduler, and implementing a bill-splitter. The following tests will provide evidence of these integral components being successfully fulfilled.
 
 \subsubsection{User Authentication and House Management}
@@ -738,26 +588,7 @@ Various expenses will inevitably accumulate for a group of roommates. The bill s
 \subsection{Tests for Nonfunctional Requirements}
 \label{subsec:testsForNonFunc}
 
-\wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy.}
 
-\wss{For some nonfunctional tests, you won't be setting a target threshold for
-passing the test, but rather describing the experiment you will do to measure
-the quality for different inputs.  For instance, you could measure speed versus
-the problem size.  The output of the test isn't pass/fail, but rather a summary
-table or graph.}
-
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
-
-\wss{Static tests, review, inspections, and walkthroughs, will not follow the
-format for the tests given below.}
-
-\wss{If you introduce static tests in your plan, you need to provide details.
-How will they be done?  In cases like code (or document) walkthroughs, who will
-be involved? Be specific.}
 
 
 This subsection contains the tests for the nonfunctional requirements outlined the in the SRS
@@ -1098,9 +929,6 @@ This section covers the bill splitters's ability to accurately and precisely han
 
 \subsection{Traceability Between Test Cases and Requirements}
 
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
-
 \begin{figure}[h!]
   \makebox[\textwidth][l]{\hspace{-3cm}\includegraphics[width=1.4\textwidth]{nonfunc_trac_mat.png}}
   \caption{Non-functional requirements - tests traceability}
@@ -1129,12 +957,10 @@ Their values are defined in this section for easy maintenance.
 
 \subsection{Usability Survey Questions?}
 
-\wss{This is a section that would be appropriate for some projects.}
 
 \newpage{}
 \section*{Appendix --- Reflection}
 
-\wss{This section is not required for CAS 741}
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.
