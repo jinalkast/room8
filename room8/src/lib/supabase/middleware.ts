@@ -34,8 +34,6 @@ export async function updateSession(request: NextRequest) {
 
   const url = new URL(request.url);
 
-  console.log(url, user);
-
   if (user) {
     if (url.pathname === '/auth') {
       return NextResponse.redirect(new URL('/dashboard', request.url));

@@ -3,16 +3,7 @@ import { Button } from '@/components/ui/button';
 import { KeyRound } from 'lucide-react';
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
 import { supabaseBrowser } from '@/lib/supabase/browser';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog';
 
 export default function AuthPage() {
   const handleLoginWithOAuth = (provider: 'google') => {
@@ -27,7 +18,7 @@ export default function AuthPage() {
 
   return (
     <div className="flex items-center justify-center w-full min-h-screen">
-      <div className=" w-96 rounded-md border p-5 space-y-5 relative bg-slate-900">
+      <div className=" w-96 rounded-md border p-5 space-y-5 relative">
         <div className="flex items-center gap-2">
           <KeyRound />
           <h1 className="text-2xl font-bold">Room8</h1>

@@ -1,16 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter, Radley } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import QueryProvider from '@/components/query-provider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-
-const radley = Radley({
-  subsets: ['latin'],
-  variable: '--font-radley',
-  weight: '400'
-});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -24,8 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body
-        className={`${radley.variable} ${inter.variable} font-sans antialiased vsc-initialized`}>
+      <body className={`${inter.variable} font-sans antialiased vsc-initialized`}>
         <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
             {children}
