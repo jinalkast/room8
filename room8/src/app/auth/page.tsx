@@ -4,12 +4,18 @@ import { KeyRound } from "lucide-react";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { useSearchParams } from "next/navigation";
+import { supabaseBrowser } from "@/lib/supabase/browser";
 
 export default function AuthPage() {
-  const params = useSearchParams();
-  const next = params.get("next") || "";
-  const handleLoginWithOAuth = (provider: "github" | "google") => {};
+  const handleLoginWithOAuth = (provider: "github" | "google") => {
+    const supabase = supabaseBrowser();
+    supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: location.origin + "/auth/callback",
+      },
+    });
+  };
 
   return (
     <div className="flex items-center justify-center w-full min-h-screen">
@@ -20,13 +26,13 @@ export default function AuthPage() {
         </div>
 
         <div className="flex flex-col gap-5">
-          <Button
+          {/* <Button
             className=" w-full flex items-center gap-2 "
             variant="outline"
             onClick={() => handleLoginWithOAuth("github")}
           >
             <FaGithub /> Github
-          </Button>
+          </Button> */}
           <Button
             className=" w-full flex items-center gap-2 "
             variant="outline"
