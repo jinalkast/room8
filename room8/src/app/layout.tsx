@@ -1,17 +1,14 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter, Radley } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+
+const radley = Radley({
+  subsets: ["latin"],
+  variable: "--font-radley",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -25,14 +22,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${radley.variable} ${inter.variable} font-sans antialiased vsc-initialized`}
       >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          enableSystem
           disableTransitionOnChange
         >
           {children}
