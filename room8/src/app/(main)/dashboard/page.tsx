@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import useSignOut from "@/app/auth/hooks/useSignOut";
-import useUser from "@/app/auth/hooks/useUser";
-import { Button } from "@/components/ui/button";
+import useSignOut from '@/app/auth/hooks/useSignOut';
+import useUser from '@/app/auth/hooks/useUser';
+import { Button } from '@/components/ui/button';
 
 export default function DashboardPage() {
   const { data: user, isLoading: userLoading } = useUser();
@@ -15,8 +15,7 @@ export default function DashboardPage() {
       <Button
         onClick={() => {
           signout();
-        }}
-      >
+        }}>
         Sign Out
       </Button>
     </div>

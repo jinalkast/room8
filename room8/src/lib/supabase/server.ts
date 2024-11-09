@@ -1,6 +1,6 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { cookies } from "next/headers";
-import { Database } from "../types/supabase";
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { cookies } from 'next/headers';
+import { Database } from '../types/supabase';
 
 export async function supabaseServer() {
   const cookieStore = await cookies();
@@ -23,8 +23,8 @@ export async function supabaseServer() {
             // This can be ignored if you have middleware refreshing
             // user sessions.
           }
-        },
-      },
+        }
+      }
     }
   );
 }

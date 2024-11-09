@@ -1,19 +1,27 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { KeyRound } from "lucide-react";
-import React from "react";
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
-import { supabaseBrowser } from "@/lib/supabase/browser";
+'use client';
+import { Button } from '@/components/ui/button';
+import { KeyRound } from 'lucide-react';
+import React from 'react';
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
+import { supabaseBrowser } from '@/lib/supabase/browser';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog';
 
 export default function AuthPage() {
-  const handleLoginWithOAuth = (provider: "github" | "google") => {
+  const handleLoginWithOAuth = (provider: 'google') => {
     const supabase = supabaseBrowser();
     supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: location.origin + "/auth/callback",
-      },
+        redirectTo: location.origin + '/auth/callback'
+      }
     });
   };
 
@@ -26,18 +34,10 @@ export default function AuthPage() {
         </div>
 
         <div className="flex flex-col gap-5">
-          {/* <Button
-            className=" w-full flex items-center gap-2 "
-            variant="outline"
-            onClick={() => handleLoginWithOAuth("github")}
-          >
-            <FaGithub /> Github
-          </Button> */}
           <Button
             className=" w-full flex items-center gap-2 "
             variant="outline"
-            onClick={() => handleLoginWithOAuth("google")}
-          >
+            onClick={() => handleLoginWithOAuth('google')}>
             <FcGoogle /> Google
           </Button>
         </div>
