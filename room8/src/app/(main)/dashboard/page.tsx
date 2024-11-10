@@ -14,7 +14,7 @@ export default function DashboardPage() {
   const signout = useSignOut();
 
   return (
-    <div className="grid place-content-center min-h-screen gap-2 text-center">
+    <div className="grid place-content-center h-full gap-2 text-center">
       <p>Dashboard Page</p>
       {user && <p>{user.name}</p>}
       <Button
