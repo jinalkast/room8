@@ -1,16 +1,27 @@
-export default function MainLayout({
+import Menu from '@/components/menu';
+import { supabaseServer } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
+
+export default async function MainLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await supabaseServer();
+  const {
+    data: { user },
+    error
+  } = await supabase.auth.getUser();
+  if (error || !user) {
+    redirect('/login');
+  }
+
   return (
     <div className="min-h-screen flex">
       <div className="basis-[400px]">
-        <div className="fixed w-[300px] h-[90vh] top-[0] left-[0] border-r bg-[#7A003C] rounded-lg m-12 p-6">
-          <h1 className="text-2xl font-extrabold">Room8</h1>
-        </div>
+        <Menu />
       </div>
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 mt-[70px]">{children}</div>
     </div>
   );
 }

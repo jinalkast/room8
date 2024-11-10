@@ -1,1 +1,7 @@
-export const PROTECTED_PATHS = ['/dashboard'];
+export const PROTECTED_PATHS = [
+  '/dashboard',
+  '/bill-splitter',
+  '/schedule',
+  '/chatbot',
+  '/settings'
+];

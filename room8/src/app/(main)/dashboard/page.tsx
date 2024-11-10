@@ -14,17 +14,17 @@ export default function DashboardPage() {
   const signout = useSignOut();
 
   return (
-    <div className="grid place-content-center h-full gap-2 text-center">
-      <p>Dashboard Page</p>
-      {user && <p>{user.name}</p>}
-      <Button
+    user && (
+      <div className="">
+        <h2 className="text-4xl">Hello, {user.name}</h2>
+        {/* <Button
         onClick={() => {
           signout();
         }}>
         Sign Out
-      </Button>
+      </Button> */}
 
-      <Modal
+        {/* <Modal
         open={open}
         onOpenChange={setOpen}
         title="Add Entry"
@@ -36,7 +36,8 @@ export default function DashboardPage() {
           </DialogClose>
         }>
         hello world
-      </Modal>
-    </div>
+      </Modal> */}
+      </div>
+    )
   );
 }
