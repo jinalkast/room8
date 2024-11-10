@@ -3,29 +3,155 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
+      bills: {
+        Row: {
+          created_at: string;
+          id: string;
+          name: string;
+          owed_by: string | null;
+          owed_to: string;
+          total: number;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          name?: string;
+          owed_by?: string | null;
+          owed_to: string;
+          total?: number;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          name?: string;
+          owed_by?: string | null;
+          owed_to?: string;
+          total?: number;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'bills_owed_to_fkey';
+            columns: ['owed_to'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
+      houses: {
+        Row: {
+          address: string | null;
+          created_at: string;
+          id: string;
+          owner: string;
+          updated_at: string;
+        };
+        Insert: {
+          address?: string | null;
+          created_at?: string;
+          id?: string;
+          owner: string;
+          updated_at?: string;
+        };
+        Update: {
+          address?: string | null;
+          created_at?: string;
+          id?: string;
+          owner?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'houses_owner_fkey';
+            columns: ['owner'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
+      owes: {
+        Row: {
+          amount: number;
+          bill_id: string;
+          created_at: string;
+          debtor: string | null;
+          id: string;
+          updated_at: string;
+        };
+        Insert: {
+          amount: number;
+          bill_id: string;
+          created_at?: string;
+          debtor?: string | null;
+          id?: string;
+          updated_at?: string;
+        };
+        Update: {
+          amount?: number;
+          bill_id?: string;
+          created_at?: string;
+          debtor?: string | null;
+          id?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'owes_bill_id_fkey';
+            columns: ['bill_id'];
+            isOneToOne: false;
+            referencedRelation: 'bills';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'owes_debtor_fkey';
+            columns: ['debtor'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
       profiles: {
         Row: {
           created_at: string;
           email: string;
+          house_id: string | null;
           id: string;
           image_url: string;
           name: string;
+          updated_at: string;
         };
         Insert: {
           created_at?: string;
           email: string;
+          house_id?: string | null;
           id?: string;
           image_url: string;
           name: string;
+          updated_at?: string;
         };
         Update: {
           created_at?: string;
           email?: string;
+          house_id?: string | null;
           id?: string;
           image_url?: string;
           name?: string;
+          updated_at?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: 'profiles_house_id_fkey';
+            columns: ['house_id'];
+            isOneToOne: false;
+            referencedRelation: 'houses';
+            referencedColumns: ['id'];
+          }
+        ];
       };
     };
     Views: {
