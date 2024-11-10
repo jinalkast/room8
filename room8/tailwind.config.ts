@@ -15,6 +15,9 @@ export default {
         sans: ['var(--font-inter)', ...fontFamily.sans]
       },
       colors: {
+        macAccent: '#FDBF57',
+        macGray: '#495965',
+        macMaroon: '#7A003C',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
