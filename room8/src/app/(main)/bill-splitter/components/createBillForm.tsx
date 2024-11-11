@@ -34,7 +34,15 @@ export default function CreateBillForm() {
   const { data: roommates, status } = useRoommates();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    console.log('values: ', values);
+    const res = await fetch(`/api/bills`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...values,
+        debts: Object.fromEntries(values.debts)
+      })
+    });
   }
 
   const form = useForm<z.infer<typeof formSchema>>({
