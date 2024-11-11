@@ -93,16 +93,18 @@ export default function CreateBillForm() {
             </FormItem>
           )}
         /> */}
-        <FormField
-          control={form.control}
-          name="debts"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Debtors</FormLabel>
-              <FormControl>
-                <div className="space-y-2">
-                  {roommates &&
-                    roommates.map((roommate, index) => (
+        {status === 'pending' && <div>Fetching your roommates...</div>}
+        {status === 'error' && <div>Error getting your roommates. Try refreshing</div>}
+        {status === 'success' && (
+          <FormField
+            control={form.control}
+            name="debts"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Debtors</FormLabel>
+                <FormControl>
+                  <div className="space-y-2">
+                    {roommates!.map((roommate, index) => (
                       <div className="flex gap-2" key={index}>
                         <Avatar>
                           <AvatarImage src={roommate.image_url} />
@@ -112,24 +114,30 @@ export default function CreateBillForm() {
                           type="number"
                           min={0}
                           step={0.01}
+                          placeholder={'0'}
                           onChange={(e) => {
-                            field.value.set(roommate.id, parseFloat(e.target.value));
-                            console.log(field.name);
+                            let value: number = parseFloat(e.target.value);
+                            if (value <= 0) {
+                              field.value.delete(roommate.id);
+                            } else {
+                              field.value.set(roommate.id, parseFloat(e.target.value));
+                            }
                             console.log(field.value);
                           }}
-                          placeholder={'0'}
                         />
                       </div>
                     ))}
-                </div>
-              </FormControl>
-              <FormMessage />
-              <FormDescription>
-                How much does everyone owe you? Leave it as 0 if they don&apos;t owe you anything
-              </FormDescription>
-            </FormItem>
-          )}
-        />
+                  </div>
+                </FormControl>
+                <FormMessage />
+                <FormDescription>
+                  How much does everyone owe you? Leave it as 0 if they don&apos;t owe you anything
+                </FormDescription>
+              </FormItem>
+            )}
+          />
+        )}
+
         <Button type="submit">Submit</Button>
       </form>
     </Form>
