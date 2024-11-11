@@ -8,24 +8,44 @@ export async function POST(req: NextRequest) {
 
     const {
       data: { user },
-      error: auth_error
+      error: authError
     } = await supabase.auth.getUser();
 
-    if (auth_error || !user) {
+    if (authError || !user) {
       throw new Error('User not authenticated');
     }
 
-    console.log(data);
+    const { data: billData, error: billError } = await supabase
+      .from('bills')
+      .insert({ name: data.name, total: data.amount, loaner_id: user.id })
+      .select();
+
+    if (billError) {
+      console.log('billError:', billError);
+      throw new Error('Error creating bill');
+    }
+
+    for (const [debtorId, debtValue] of Object.entries(data.debts)) {
+      const { data: debtData, error: debtError } = await supabase
+        .from('owes')
+        .insert({ bill_id: billData[0].id, debtor_id: debtorId, amount: debtValue as number })
+        .select();
+
+      if (debtError) {
+        await supabase.from('bills').delete().eq('id', billData![0].id); // Cascading deletes delete all owes for this bill
+        throw new Error('Error creating debt');
+      }
+    }
 
     return NextResponse.json(
       {
-        data: { gang: 'gang' },
-        message: 'Successfully retrieved list of roomates'
+        data: { bill: billData },
+        message: 'Successfully Created Bill'
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error in GET /habits:', error);
+    console.error('Error in POST /bills:', error);
     return NextResponse.json(
       {
         data: null,
