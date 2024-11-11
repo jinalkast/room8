@@ -17,12 +17,13 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const formSchema = z.object({
   name: z.string(),
-  amount: z.number(),
+  amount: z.coerce.number(),
   equally: z.boolean(),
-  debts: z.array(z.map(z.string(), z.number()))
+  debts: z.map(z.string(), z.number())
 });
 
 export default function CreateBillForm() {
@@ -42,7 +43,7 @@ export default function CreateBillForm() {
       name: '',
       amount: 0,
       equally: false,
-      debts: []
+      debts: new Map()
     }
   });
 
@@ -69,16 +70,16 @@ export default function CreateBillForm() {
             <FormItem>
               <FormLabel>Bill Amount</FormLabel>
               <FormControl>
-                <Input type="number" step={0.01} placeholder="Ex: 10.24" {...field} />
+                <Input type="number" step={0.01} min={0} placeholder="Ex: 10.24" {...field} />
               </FormControl>
               <FormDescription>Enter the amount you paid</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
+        {/* <FormField
           control={form.control}
-          name="amount"
+          name="equally"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Split the bill equally</FormLabel>
@@ -91,7 +92,7 @@ export default function CreateBillForm() {
               </FormDescription>
             </FormItem>
           )}
-        />
+        /> */}
         <FormField
           control={form.control}
           name="debts"
@@ -99,29 +100,33 @@ export default function CreateBillForm() {
             <FormItem>
               <FormLabel>Debtors</FormLabel>
               <FormControl>
-                <div>
+                <div className="space-y-2">
                   {roommates &&
                     roommates.map((roommate, index) => (
-                      <div key={index}>
-                        <label>
-                          {roommate.name}:
-                          <input
-                            type="number"
-                            onChange={(e) =>
-                              setDebts([
-                                ...debts,
-                                { key: roommate.id, value: e.target.value as unknown as number }
-                              ])
-                            }
-                            placeholder="Enter how much they owe"
-                          />
-                        </label>
+                      <div className="flex gap-2" key={index}>
+                        <Avatar>
+                          <AvatarImage src={roommate.image_url} />
+                        </Avatar>
+                        {roommate.name}:
+                        <input
+                          type="number"
+                          min={0}
+                          step={0.01}
+                          onChange={(e) => {
+                            field.value.set(roommate.id, parseFloat(e.target.value));
+                            console.log(field.name);
+                            console.log(field.value);
+                          }}
+                          placeholder={'0'}
+                        />
                       </div>
                     ))}
                 </div>
               </FormControl>
               <FormMessage />
-              <FormDescription>Select who owes you money for this bill</FormDescription>
+              <FormDescription>
+                How much does everyone owe you? Leave it as 0 if they don&apos;t owe you anything
+              </FormDescription>
             </FormItem>
           )}
         />
