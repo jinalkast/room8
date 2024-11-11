@@ -83,7 +83,7 @@ export default function CreateBillForm() {
             <FormItem>
               <FormLabel>Split the bill equally</FormLabel>
               <FormControl>
-                <Input type="checkbox" {...field} />
+                <Input className="w-5" type="checkbox" {...field} />
               </FormControl>
               <FormMessage />
               <FormDescription>

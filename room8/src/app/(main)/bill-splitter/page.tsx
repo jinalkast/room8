@@ -50,7 +50,7 @@ export default function BillSplitterPage() {
               }
             )}>
             {tab.icon}
-            {tab.title}
+            <div className="hidden lg:block">{tab.title}</div>
           </div>
         ))}
       </nav>
