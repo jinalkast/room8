@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import useRoommates from '@/hooks/useRoommates';
+import UserSkeleton from '@/components/userSkelton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -17,7 +18,7 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 
 const formSchema = z.object({
   name: z.string(),
@@ -28,21 +29,29 @@ const formSchema = z.object({
 
 export default function CreateBillForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [debts, setDebts] = useState<Array<{ key: string; value: number }>>([]);
+  const [error, setError] = useState<boolean | null>(null);
 
-  const { data: roommates, status } = useRoommates();
+  const { data: roommates, status: roommatesStatus } = useRoommates();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log('values: ', values);
-    const res = await fetch(`/api/bills`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...values,
-        debts: Object.fromEntries(values.debts)
-      })
-    });
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/bills`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...values,
+          debts: Object.fromEntries(values.debts)
+        })
+      });
+      setError(false);
+    } catch (error) {
+      console.log(error);
+      setError(true);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -101,15 +110,18 @@ export default function CreateBillForm() {
             </FormItem>
           )}
         /> */}
-        {status === 'pending' && <div>Fetching your roommates...</div>}
-        {status === 'error' && <div>Error getting your roommates. Try refreshing</div>}
-        {status === 'success' && (
-          <FormField
-            control={form.control}
-            name="debts"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Debtors</FormLabel>
+
+        <FormField
+          control={form.control}
+          name="debts"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Debtors</FormLabel>
+              {roommatesStatus === 'pending' && <UserSkeleton />}
+              {roommatesStatus === 'error' && (
+                <div>Error getting your roommates. Try refreshing</div>
+              )}
+              {roommatesStatus === 'success' && (
                 <FormControl>
                   <div className="space-y-2">
                     {roommates!.map((roommate, index) => (
@@ -137,16 +149,18 @@ export default function CreateBillForm() {
                     ))}
                   </div>
                 </FormControl>
-                <FormMessage />
-                <FormDescription>
-                  How much does everyone owe you? Leave it as 0 if they don&apos;t owe you anything
-                </FormDescription>
-              </FormItem>
-            )}
-          />
-        )}
+              )}
+              <FormMessage />
+              <FormDescription>
+                How much does everyone owe you? Leave it as 0 if they don&apos;t owe you anything
+              </FormDescription>
+            </FormItem>
+          )}
+        />
 
-        <Button type="submit">Submit</Button>
+        <Button disabled={isLoading || roommatesStatus !== 'success'} type="submit">
+          Submit
+        </Button>
       </form>
     </Form>
   );
