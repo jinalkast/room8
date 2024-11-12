@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { FilePen, House, HandCoins, Receipt } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import CreateBillForm from './components/createBillForm';
+import OutstandingDebtsTable from './components/outstandingDebtsTable';
 
 type Tab = {
   icon: JSX.Element;
@@ -26,7 +27,7 @@ export default function BillSplitterPage() {
     debts: {
       icon: <HandCoins />,
       title: 'Outstanding Debts',
-      component: <div>Outstanding</div>
+      component: <OutstandingDebtsTable />
     },
     loans: {
       icon: <Receipt />,

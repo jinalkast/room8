@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        data: { bill: billData },
+        data: billData,
         message: 'Successfully Created Bill'
       },
       { status: 200 }
