@@ -5,7 +5,7 @@ export const activateChatbot = async (): Promise<Json | null> => {
   const res = await fetch(`/api/chatbot`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ to: "+1234567890" }),
+    body: JSON.stringify({ participants: ["+1234567890", "+2345678901"] }),
   });
 
   const json = await res.json();
