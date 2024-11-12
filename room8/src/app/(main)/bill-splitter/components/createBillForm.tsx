@@ -43,7 +43,6 @@ export default function CreateBillForm() {
       debts: new Map()
     }
   });
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
