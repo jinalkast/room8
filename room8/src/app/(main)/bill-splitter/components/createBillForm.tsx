@@ -25,7 +25,7 @@ const formSchema = z.object({
   name: z.string(),
   amount: z.coerce.number(),
   equally: z.boolean(),
-  debts: z.map(z.string(), z.number())
+  owes: z.map(z.string(), z.number())
 });
 
 export default function CreateBillForm() {
@@ -40,7 +40,7 @@ export default function CreateBillForm() {
       name: '',
       amount: 0,
       equally: false,
-      debts: new Map()
+      owes: new Map()
     }
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -51,7 +51,7 @@ export default function CreateBillForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...values,
-          debts: Object.fromEntries(values.debts)
+          owes: Object.fromEntries(values.owes)
         })
       });
       toast({
@@ -119,7 +119,7 @@ export default function CreateBillForm() {
 
         <FormField
           control={form.control}
-          name="debts"
+          name="owes"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Debtors</FormLabel>

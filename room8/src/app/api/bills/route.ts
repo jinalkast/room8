@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
       throw new Error('Error creating bill');
     }
 
-    for (const [debtorId, debtValue] of Object.entries(data.debts)) {
+    for (const [debtorId, debtValue] of Object.entries(data.owes)) {
       const { data: debtData, error: debtError } = await supabase
         .from('owes')
         .insert({ bill_id: billData[0].id, debtor_id: debtorId, amount: debtValue as number })

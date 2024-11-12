@@ -4,7 +4,7 @@ export type TRoommate = {
   image_url: string;
 };
 
-export type TDebt = {
+export type TOwe = {
   amount_owed: number;
   bill_id: string;
   bill_name: string;
