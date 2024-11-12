@@ -125,7 +125,7 @@ export default function CreateBillForm() {
                 <FormControl>
                   <div className="space-y-2">
                     {roommates!.map((roommate, index) => (
-                      <div className="flex gap-2" key={index}>
+                      <div className="flex gap-2 items-center" key={index}>
                         <Avatar>
                           <AvatarImage src={roommate.image_url} />
                         </Avatar>
