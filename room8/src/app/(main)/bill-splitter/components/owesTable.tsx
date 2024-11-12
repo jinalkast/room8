@@ -10,16 +10,32 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 export default function OwesTable() {
-  const { data: owes, status: owesStatus } = useOwes();
+  const { data: owes, status: owesStatus, refetch: refetchOwes } = useOwes();
+  const { toast } = useToast();
 
   async function toggleOweStatus(debtId: string, isPaid: boolean) {
-    const res = await fetch(`/api/bills/owes/${debtId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ paid: !isPaid })
-    });
+    try {
+      const res = await fetch(`/api/bills/owes/${debtId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ paid: !isPaid })
+      });
+      toast({
+        title: 'Success!',
+        description: 'Bill status updated'
+      });
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: 'Error',
+        description: "We couldn't update your bill status"
+      });
+    } finally {
+      refetchOwes();
+    }
 
     // if (res.ok) {
     //   alert('Debt status updated');
@@ -61,7 +77,15 @@ export default function OwesTable() {
                 <TableCell>{owe.owed_by}</TableCell>
                 <TableCell>{owe.amount_owed}</TableCell>
                 <TableCell className="text-right">
-                  <Button onClick={() => toggleOweStatus(owe.owe_id, owe.paid)}>Pay off</Button>
+                  <Button
+                    onClick={async (e) => {
+                      const button = e.currentTarget;
+                      button.disabled = true;
+                      await toggleOweStatus(owe.owe_id, owe.paid);
+                      button.disabled = false;
+                    }}>
+                    {owe.paid ? 'Unpay' : 'Pay Off'}
+                  </Button>
                 </TableCell>
               </TableRow>
             ))

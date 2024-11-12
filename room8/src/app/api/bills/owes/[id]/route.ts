@@ -1,20 +1,17 @@
 import { supabaseServer } from '@/lib/supabase/server';
 import { NextResponse, NextRequest } from 'next/server';
 
-export async function PATCH(req: NextRequest) {
+export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const reqData = await req.json();
-    const supabase = await supabaseServer();
-    const {
-      data: { user },
-      error: authError
-    } = await supabase.auth.getUser();
+    const { id } = await params;
 
-    if (authError || !user) {
-      throw new Error('User not authenticated');
+    const { paid } = await req.json();
+    if (typeof paid !== 'boolean') {
+      throw new Error('Invalid request body');
     }
 
-    // supabase.from('owe').upsert();
+    const supabase = await supabaseServer();
+    await supabase.from('owes').update({ paid: paid }).eq('id', id);
 
     return NextResponse.json(
       {
