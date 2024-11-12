@@ -23,14 +23,14 @@ export default function BillSplitterPage() {
       title: 'Create Bill',
       component: <CreateBillForm />
     },
-    outstanding: {
+    debts: {
       icon: <HandCoins />,
-      title: 'Outstanding Bills',
+      title: 'Outstanding Debts',
       component: <div>Outstanding</div>
     },
-    pending: {
+    loans: {
       icon: <Receipt />,
-      title: 'Pending Bills',
+      title: 'Outstanding Loans',
       component: <div>Pending</div>
     }
   };

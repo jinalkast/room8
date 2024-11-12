@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import useRoommates from '@/hooks/useRoommates';
+import useRoommates from '@/hooks/use-roommates';
 import UserSkeleton from '@/components/userSkelton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
