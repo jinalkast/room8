@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -18,7 +19,7 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
   name: z.string(),
@@ -29,30 +30,9 @@ const formSchema = z.object({
 
 export default function CreateBillForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean | null>(null);
 
   const { data: roommates, status: roommatesStatus } = useRoommates();
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/bills`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...values,
-          debts: Object.fromEntries(values.debts)
-        })
-      });
-      setError(false);
-    } catch (error) {
-      console.log(error);
-      setError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,6 +43,33 @@ export default function CreateBillForm() {
       debts: new Map()
     }
   });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`/api/bills`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...values,
+          debts: Object.fromEntries(values.debts)
+        })
+      });
+      toast({
+        title: 'Success!',
+        description: "You're bill has been created"
+      });
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: 'Error',
+        description: "So, something went wrong when creating you're bill"
+      });
+    } finally {
+      setIsLoading(false);
+      form.reset();
+    }
+  }
 
   return (
     <Form {...form}>
