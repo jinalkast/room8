@@ -45,7 +45,7 @@ class HouseObject:
         return [(self.x2 - self.x1)/2, (self.y2 - self.y1)/2] 
     
     @property
-    def type(self):
+    def object_type(self):
         return COCO_LABELS[self.class_num]
     
     def distance(self, other: 'HouseObject') -> float:
@@ -93,25 +93,24 @@ class CleanlinessDetector:
         tsr = self.process_image(img)
         with torch.no_grad():                           # No gradient => something about reducing complexity
             predictions = self.model(tsr)
-        all_boxes = predictions[0]['boxes']
-        all_labels = predictions[0]['labels']
-        all_scores = predictions[0]['scores']
-        labels, boxes = [], []
+        bboxes = predictions[0]['boxes']
+        labels = predictions[0]['labels']
+        scores = predictions[0]['scores']
+        objects = []
         # Only consider predictions for objects over the confidence threshold
-        for i, box in enumerate(all_boxes):
-            if all_scores[i].item() > CONF_THRESH:
-                labels.append(all_labels[i].item())
-                boxes.append(box.tolist())              #x1, y1, x2, y2
+        for i, box in enumerate(bboxes):
+            if scores[i].item() > CONF_THRESH:
+                objects.append(HouseObject(labels[i].item(), [b.item() for b in box]))
         if(display):
-            self.display_image(img, labels, boxes)
-        return labels, boxes
+            self.display_image(img, objects)
+        return objects
     
-    def display_image(self, img: Image, labels, boxes):
+    def display_image(self, img: Image, objects: HouseObject):
         img= cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
-        for i, box in enumerate(boxes):
-            x1, y1, x2, y2 = [int(b) for b in box]
+        for i, obj in enumerate(objects):
+            x1, y1, x2, y2 = obj.bbox
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            cv2.putText(img, COCO_LABELS[labels[i]], (x1, y1 - 10),
+            cv2.putText(img, obj.object_type, (x1, y1 - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
         plt.axis('off')
@@ -120,12 +119,14 @@ class CleanlinessDetector:
 if __name__=="__main__":
     cd = CleanlinessDetector()
     # Process images
-    before_img = Image.open("cleanliness_detection/samples/2/before.png")
-    after_img = Image.open("cleanliness_detection/samples/2/after.png")
+    before_img = Image.open("cleanliness_detection/samples/1/before.png")
+    after_img = Image.open("cleanliness_detection/samples/1/after.png")
 
     # Extract bounding boxes, labels, and scores for the "before" image
-    labels_before, boxes_before = cd.predict(before_img, display=True)
-    labels_after, boxes_after = cd.predict(after_img, display=True)  
+    detections_before = cd.predict(before_img, display=True)
+    detections_after = cd.predict(after_img, display=True)
+    det_types_before = [det.object_type for det in detections_before]
+    det_types_after = [det.object_type for det in detections_after]
 
-    new_objects = [COCO_LABELS[i] for i in labels_after if i not in labels_before]
+    new_objects = [obj for obj in det_types_after if obj not in det_types_before]
     print("Objects added: " + ", ".join(new_objects))
