@@ -5,73 +5,77 @@ import torchvision.transforms as T
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+from typing import Tuple
+
+CONF_THRESH = 0.5                                                                           # Minimum confidence for object detector
+# Faster R-CNN is trained on COCO dataset
+COCO_LABELS = {                                                                             # COCO class label mapping
+    1: "person", 2: "bicycle", 3: "car", 4: "motorcycle", 5: "airplane",
+    6: "bus", 7: "train", 8: "truck", 9: "boat", 10: "traffic light",
+    11: "fire hydrant", 13: "stop sign", 14: "parking meter", 15: "bench",
+    16: "bird", 17: "cat", 18: "dog", 19: "horse", 20: "sheep",
+    21: "cow", 22: "elephant", 23: "bear", 24: "zebra", 25: "giraffe",
+    27: "backpack", 28: "umbrella", 31: "handbag", 32: "tie", 33: "suitcase",
+    34: "frisbee", 35: "skis", 36: "snowboard", 37: "sports ball", 38: "kite",
+    39: "baseball bat", 40: "baseball glove", 41: "skateboard", 42: "surfboard", 43: "tennis racket",
+    44: "bottle", 46: "wine glass", 47: "cup", 48: "fork", 49: "knife",
+    50: "spoon", 51: "bowl", 52: "banana", 53: "apple", 54: "sandwich",
+    55: "orange", 56: "broccoli", 57: "carrot", 58: "hot dog", 59: "pizza",
+    60: "donut", 61: "cake", 62: "chair", 63: "couch", 64: "potted plant",
+    65: "bed", 67: "dining table", 70: "toilet", 72: "TV", 73: "laptop",
+    74: "mouse", 75: "remote", 76: "keyboard", 77: "cell phone", 78: "microwave",
+    79: "oven", 80: "toaster", 81: "sink", 82: "refrigerator", 84: "book",
+    85: "clock", 86: "vase", 87: "scissors", 88: "teddy bear", 89: "hair drier",
+    90: "toothbrush"
+}
 
 class CleanlinessDetector:
     def __init__(self):
-        pass
+        self.model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)   # Load Faster R-CNN model
+        self.model.eval()                                                                    # Set to evaluation mode
+        self.transform = T.Compose([T.ToTensor()])                                           # Function to convert to tensor
 
-    def forward(self):
-        pass
+    def process_image(self, img: Image) -> torch.Tensor:
+        tsr = self.transform(img).unsqueeze(0)
+        tsr = tsr[:, :3, :, :]
+        return tsr
+    
+    def predict(self, img: Image, display=False) -> Tuple[list, list]:
+        tsr = self.process_image(img)
+        with torch.no_grad():
+            predictions = self.model(tsr)
+        all_boxes = predictions[0]['boxes']
+        all_labels = predictions[0]['labels']
+        all_scores = predictions[0]['scores']
+        labels, boxes = [], []
+        for i, box in enumerate(all_boxes):
+            if all_scores[i].item() > CONF_THRESH:
+                labels.append(all_labels[i].item())
+                boxes.append(box.tolist())
+        if(display):
+            self.display_image(img, labels, boxes)
+        return labels, boxes
+    
+    def display_image(self, img: Image, labels, boxes):
+        img= cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+        for i, box in enumerate(boxes):
+            x1, y1, x2, y2 = [int(b) for b in box]
+            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(img, COCO_LABELS[labels[i]], (x1, y1 - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+        plt.axis('off')
+        plt.show()
 
 if __name__=="__main__":
-    model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)   # Load Faster R-CNN model
-    model.eval()                                                                    # Set to evaluation mode
-    transform = T.Compose([T.ToTensor()])                                           # Function to convert to tensor
-
-    # Process the "before" image
+    cd = CleanlinessDetector()
+    # Process images
     before_img = Image.open("cleanliness_detection/samples/2/before.png")
-    before_tensor = transform(before_img).unsqueeze(0)                              # Adds batch dimension
-    before_tensor = before_tensor[:, :3, :, :]                                      # Ensures RGB channels only
-
-    with torch.no_grad():
-        predictions_before = model(before_tensor)
+    after_img = Image.open("cleanliness_detection/samples/2/after.png")
 
     # Extract bounding boxes, labels, and scores for the "before" image
-    boxes_before = predictions_before[0]['boxes']
-    labels_before = predictions_before[0]['labels']
-    scores_before = predictions_before[0]['scores']
+    labels_before, boxes_before = cd.predict(before_img, display=True)
+    labels_after, boxes_after = cd.predict(after_img, display=True)  
 
-    label_numbers_before = [labels_before[i].item() for i in range(len(scores_before)) if scores_before[i] > 0.5]
-    print("Detected label numbers in 'before' image:", label_numbers_before)
-
-    # Convert the "before" image to a NumPy array for OpenCV visualization
-    img_np_before = cv2.cvtColor(np.array(before_img), cv2.COLOR_RGB2BGR)
-    for i, box in enumerate(boxes_before):
-        if scores_before[i] > 0.5:
-            x1, y1, x2, y2 = box.int().tolist()
-            cv2.rectangle(img_np_before, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            cv2.putText(img_np_before, f'Label: {labels_before[i].item()}', (x1, y1 - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-
-    # Process the "after" image
-    after_img = Image.open("cleanliness_detection/samples/2/after.png")
-    after_tensor = transform(after_img).unsqueeze(0)
-    after_tensor = after_tensor[:, :3, :, :]
-
-    with torch.no_grad():
-        predictions_after = model(after_tensor)
-
-    # Extract bounding boxes, labels, and scores for the "after" image
-    boxes_after = predictions_after[0]['boxes']
-    labels_after = predictions_after[0]['labels']
-    scores_after = predictions_after[0]['scores']
-
-    label_numbers_after = [labels_after[i].item() for i in range(len(scores_after)) if scores_after[i] > 0.5]
-    print("Detected label numbers in 'after' image:", label_numbers_after)
-
-    print(f"Here are the objects that have been added to the space: {[val for val in label_numbers_after if val not in label_numbers_before]}")
-
-    # Convert the "after" image to a NumPy array for OpenCV visualization
-    img_np_after = cv2.cvtColor(np.array(after_img), cv2.COLOR_RGB2BGR)
-    for i, box in enumerate(boxes_after):
-        if scores_after[i] > 0.5:
-            x1, y1, x2, y2 = box.int().tolist()
-            cv2.rectangle(img_np_after, (x1, y1), (x2, y2), (255, 0, 0), 2)  # Using a different color for clarity
-            cv2.putText(img_np_after, f'Label: {labels_after[i].item()}', (x1, y1 - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
-
-    # Display the "after" image
-    plt.imshow(cv2.cvtColor(img_np_after, cv2.COLOR_BGR2RGB))
-    plt.axis('off')
-    plt.title("After Image")
-    plt.show()
+    new_objects = [COCO_LABELS[i] for i in labels_after if i not in labels_before]
+    print("Objects added: " + ", ".join(new_objects))
