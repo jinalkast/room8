@@ -31,7 +31,6 @@ export async function GET() {
             .from('profiles')
             .select('id, name, image_url, phone')
             .eq('house_id', house_id)
-            .neq('id', user.id)
         : { data: [], error: null };
 
     if (roommates_error || responseData === null) {

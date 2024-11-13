@@ -53,13 +53,18 @@ export async function POST(req: NextRequest) {
         )
     );
 
+    // Check if the chatbot identity already exists
+    const chatbotExists = existingParticipants.some(
+        (participant) => participant.identity === 'Chatbot'
+    );
+  
     // Step 3: Add Chatbot (Twilio Phone Number) as a participant if not already present
-    if (!existingParticipantAddresses.includes(senderPhoneNumber)) {
+    if (!chatbotExists) {
       await client.conversations.v1.conversations(conversation.sid)
         .participants.create({ identity: 'Chatbot', 'messagingBinding.projectedAddress': senderPhoneNumber });
     }
 
-    // Step 4: Send the initial message in the conversation
+    // Step 4: Send the message in the conversation
     const messageResponse = await client.conversations.v1
       .conversations(conversation.sid)
       .messages.create({
