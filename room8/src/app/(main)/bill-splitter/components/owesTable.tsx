@@ -11,38 +11,35 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { useMutation } from '@tanstack/react-query';
 
 export default function OwesTable() {
   const { data: owes, status: owesStatus, refetch: refetchOwes } = useOwes();
   const { toast } = useToast();
-
-  async function toggleOweStatus(debtId: string, isPaid: boolean) {
-    try {
+  const mutation = useMutation({
+    mutationFn: async ({ debtId, isPaid }: { debtId: string; isPaid: boolean }) => {
       const res = await fetch(`/api/bills/owes/${debtId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ paid: !isPaid })
       });
+      const json = await res.json();
+      return json.data;
+    },
+    onSuccess: () => {
       toast({
         title: 'Success!',
         description: 'Bill status updated'
       });
-    } catch (error) {
-      console.log(error);
+      refetchOwes();
+    },
+    onError: () => {
       toast({
         title: 'Error',
-        description: "We couldn't update your bill status"
+        description: 'We coud not update the bill status'
       });
-    } finally {
-      refetchOwes();
     }
-
-    // if (res.ok) {
-    //   alert('Debt status updated');
-    // } else {
-    //   alert('Failed to update debt status');
-    // }
-  }
+  });
 
   return (
     <Table>
@@ -78,11 +75,9 @@ export default function OwesTable() {
                 <TableCell>{owe.amount_owed}</TableCell>
                 <TableCell className="text-right">
                   <Button
-                    onClick={async (e) => {
-                      const button = e.currentTarget;
-                      button.disabled = true;
-                      await toggleOweStatus(owe.owe_id, owe.paid);
-                      button.disabled = false;
+                    disabled={mutation.isPending}
+                    onClick={(e) => {
+                      mutation.mutate({ debtId: owe.owe_id, isPaid: owe.paid });
                     }}>
                     {owe.paid ? 'Unpay' : 'Pay Off'}
                   </Button>
