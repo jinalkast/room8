@@ -12,6 +12,6 @@ export type TActivity = {
   id: string;
   title: string;
   description: string | null;
-  time: Date;
+  time: string;
   responsible: any[];
 };

@@ -13,6 +13,7 @@ export type Database = {
         Row: {
           created_at: string
           description: string | null
+          house_id: string | null
           id: number
           time: string
           title: string
@@ -20,6 +21,7 @@ export type Database = {
         Insert: {
           created_at?: string
           description?: string | null
+          house_id?: string | null
           id?: number
           time: string
           title: string
@@ -27,11 +29,20 @@ export type Database = {
         Update: {
           created_at?: string
           description?: string | null
+          house_id?: string | null
           id?: number
           time?: string
           title?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "activities_house_id_fkey"
+            columns: ["house_id"]
+            isOneToOne: false
+            referencedRelation: "houses"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       bills: {
         Row: {
@@ -205,6 +216,7 @@ export type Database = {
           id: string
           image_url: string
           name: string
+          phone: string | null
           updated_at: string
         }
         Insert: {
@@ -214,6 +226,7 @@ export type Database = {
           id?: string
           image_url: string
           name: string
+          phone?: string | null
           updated_at?: string
         }
         Update: {
@@ -223,6 +236,7 @@ export type Database = {
           id?: string
           image_url?: string
           name?: string
+          phone?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -293,18 +307,31 @@ export type Database = {
           bill_id: string | null
           bill_name: string | null
           bill_total: number | null
+          created_at: string | null
           debtor_id: string | null
           debtor_name: string | null
           loaner_id: string | null
           loaner_name: string | null
           owe_id: string | null
           paid: boolean | null
+          updated_at: string | null
         }
         Relationships: []
       }
     }
     Functions: {
-      [_ in never]: never
+      get_bill_summary_for_user: {
+        Args: {
+          user_id_param: string
+          result_offset?: number
+        }
+        Returns: {
+          bill_id: string
+          bill_name: string
+          sum_paid_back: number
+          total_owed: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

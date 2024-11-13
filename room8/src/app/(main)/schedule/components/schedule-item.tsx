@@ -6,6 +6,9 @@ import { CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 import useRoommates from '../../../../../hooks/useRoomates';
 import Image from 'next/image';
+import { DialogClose } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import useDeleteChore from '../../../../../hooks/useDeleteChore';
 
 type props = {
   item: TActivity;
@@ -14,6 +17,8 @@ type props = {
 export default function ScheduleItem({ item }: props) {
   const [open, setOpen] = useState(false);
   const { data: roommates, isLoading: roommatesLoading } = useRoommates();
+
+  const deleteChore = useDeleteChore();
 
   const responsibleRoommates = roommates?.filter((roommate) =>
     item.responsible.includes(roommate.id)
@@ -29,6 +34,18 @@ export default function ScheduleItem({ item }: props) {
           <p className="text-sm mr-2">{item.title}</p>
           <CheckCircle className="ml-auto" size={20} />
         </div>
+      }
+      footer={
+        <DialogClose asChild>
+          <Button
+            variant="destructive"
+            onClick={() => {
+              deleteChore.mutate(item.id);
+              setOpen(false);
+            }}>
+            Delete
+          </Button>
+        </DialogClose>
       }>
       <div className="py-4">
         {item.description && (

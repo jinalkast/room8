@@ -10,8 +10,10 @@
     "lint": "next lint --fix"
   },
   "dependencies": {
+    "@radix-ui/react-checkbox": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-radio-group": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.1",
     "@supabase/ssr": "^0.5.1",

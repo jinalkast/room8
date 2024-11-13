@@ -1,6 +1,6 @@
 import { getUserHouseId } from '@/lib/services';
 import { supabaseServer } from '@/lib/supabase/server';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
   try {
@@ -50,4 +50,87 @@ export async function GET() {
       { status: 500 }
     );
   }
+}
+
+export async function POST(req: NextRequest) {
+  // Create chore from title, description, and list of uuids
+
+  const { title, date, description, responsible } = await req.json();
+
+  if (!title || !description || !responsible || !date) {
+    return NextResponse.json(
+      {
+        data: null,
+        message: 'Missing required fields'
+      },
+      { status: 400 }
+    );
+  }
+
+  const houseId = await getUserHouseId();
+
+  if (!houseId) {
+    return NextResponse.json(
+      {
+        data: null,
+        message: 'User does not have a house'
+      },
+      { status: 400 }
+    );
+  }
+
+  const supabase = await supabaseServer();
+
+  console.log(title, date, description, responsible, houseId);
+
+  const { data, error } = await supabase
+    .from('activities')
+    .insert([
+      {
+        title,
+        description,
+        time: date.toLowerCase(),
+        house_id: houseId
+      }
+    ])
+    .select();
+
+  console.log(error);
+
+  if (error) {
+    return NextResponse.json(
+      {
+        data: null,
+        message: 'Failed to create activity'
+      },
+      { status: 500 }
+    );
+  }
+
+  responsible.forEach(async (profile_id: string) => {
+    const { error: responsible_error } = await supabase.from('responsible').insert([
+      {
+        activity_id: data[0].id,
+        profile_id
+      }
+    ]);
+
+    if (responsible_error) {
+      return NextResponse.json(
+        {
+          data: null,
+          message: 'Failed to create responsible'
+        },
+        { status: 500 }
+      );
+    }
+  });
+
+  return NextResponse.json(
+    {
+      data: data,
+      message: 'Successfully created activity'
+    },
+    { status: 200 }
+  );
 }
