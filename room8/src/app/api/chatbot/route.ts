@@ -21,36 +21,57 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Step 1: Create a Conversation
-    const conversation = await client.conversations.v1.conversations.create({
-      messagingServiceSid: messagingServiceSid,
-      friendlyName: 'Group Chat',
-    });
+    // Step 1: Check if the conversation already exists
+    const friendlyName = 'Group Chat';
+    let conversation = null;
+    const allConversations = await client.conversations.v1.conversations.list();
+    conversation = allConversations.find(conv => conv.friendlyName === friendlyName);
 
-    // Step 2: Add Participants to the Conversation
-    await Promise.all(
-      participants.map((participant: string) =>
-        client.conversations.v1.conversations(conversation.sid)
-          .participants.create({ 'messagingBinding.address': participant })
-      )
+    if (!conversation) {
+      // Create a new conversation if it doesn't exist
+      conversation = await client.conversations.v1.conversations.create({
+        messagingServiceSid: messagingServiceSid,
+        friendlyName,
+      });
+    }
+
+    // Step 2: Add participants to the conversation if not already present
+    const existingParticipants = await client.conversations.v1
+      .conversations(conversation.sid)
+      .participants.list();
+
+    const existingParticipantAddresses = existingParticipants.map(
+      (participant) => participant.messagingBinding?.address
     );
 
-    // Step 3: Add Chatbot (Twilio Phone Number) to the Conversation
-    await client.conversations.v1.conversations(conversation.sid)
-        .participants.create({  identity: 'Chatbot', 'messagingBinding.projectedAddress': senderPhoneNumber });
+    await Promise.all(
+      participants
+        .filter((participant: string) => !existingParticipantAddresses.includes(participant))
+        .map((participant: string) =>
+          client.conversations.v1.conversations(conversation.sid)
+            .participants.create({ 'messagingBinding.address': participant })
+        )
+    );
 
-    // Step 4: Send the initial message in the Conversation
+    // Step 3: Add Chatbot (Twilio Phone Number) as a participant if not already present
+    if (!existingParticipantAddresses.includes(senderPhoneNumber)) {
+      await client.conversations.v1.conversations(conversation.sid)
+        .participants.create({ identity: 'Chatbot', 'messagingBinding.projectedAddress': senderPhoneNumber });
+    }
+
+    // Step 4: Send the initial message in the conversation
     const messageResponse = await client.conversations.v1
       .conversations(conversation.sid)
-      .messages.create({ 
+      .messages.create({
         author: 'Chatbot',
-        body: 'Hello World from Room8! This is an MMS Group Chat.', });
+        body: 'Hello World from Room8! This is an MMS Group Chat. I can now get roommate phone numbers from Supabase 😎',
+      });
 
     return NextResponse.json(
       {
-        message: 'Group MMS sent successfully',
+        message: 'Message sent successfully to the group conversation',
         conversationSid: conversation.sid,
-        initialMessageSid: messageResponse.sid,
+        messageSid: messageResponse.sid,
       },
       { status: 200 }
     );
