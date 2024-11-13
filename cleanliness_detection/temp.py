@@ -19,7 +19,7 @@ if __name__=="__main__":
     transform = T.Compose([T.ToTensor()])                                           # Function to convert to tensor
 
     # Process the "before" image
-    before_img = Image.open("cleanliness_detection/samples/1/before.png")
+    before_img = Image.open("cleanliness_detection/samples/2/before.png")
     before_tensor = transform(before_img).unsqueeze(0)                              # Adds batch dimension
     before_tensor = before_tensor[:, :3, :, :]                                      # Ensures RGB channels only
 
@@ -32,7 +32,6 @@ if __name__=="__main__":
     scores_before = predictions_before[0]['scores']
 
     label_numbers_before = [labels_before[i].item() for i in range(len(scores_before)) if scores_before[i] > 0.5]
-    label_numbers_before.append(47)
     print("Detected label numbers in 'before' image:", label_numbers_before)
 
     # Convert the "before" image to a NumPy array for OpenCV visualization
@@ -45,7 +44,7 @@ if __name__=="__main__":
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
     # Process the "after" image
-    after_img = Image.open("cleanliness_detection/samples/1/after.png")
+    after_img = Image.open("cleanliness_detection/samples/2/after.png")
     after_tensor = transform(after_img).unsqueeze(0)
     after_tensor = after_tensor[:, :3, :, :]
 
