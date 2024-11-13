@@ -19,11 +19,14 @@ export const activateChatbot = async (user: any, roommates: Array<{ phone: strin
 };
 
 export default function useActivateChatbot() {
-    const { data: user } = useUser();
+    const { data: user, status: userStatus } = useUser();
     const { data: roommates, status: roommatesStatus } = useRoommates();
 
     return useMutation({
         mutationFn: () => {
+            if (userStatus !== "success") {
+                throw new Error("Error getting user");
+            }
             if (roommatesStatus !== "success") {
                 throw new Error("Error getting roommates");
             }
