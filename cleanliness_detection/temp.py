@@ -32,27 +32,32 @@ COCO_LABELS = {                                                                 
 
 """Define a class to represent a detection"""
 class HouseObject:
-    def __init__(self, label: int, bbox: list):
+    def __init__(self, label: int, bbox: list) -> 'HouseObject':
         self.class_num = label
         self.x1, self.y1, self.x2, self.y2 = [int(b) for b in bbox]
 
+    """x1, y1, x2, y2"""
     @property
-    def bbox(self):
+    def bbox(self) -> list[int]:
         return [self.x1, self.y1, self.x2, self.y2]
     
+    """Centroid coordinates"""
     @property
-    def centroid(self):
-        return [(self.x2 - self.x1)/2, (self.y2 - self.y1)/2] 
+    def centroid(self) -> list[int]:
+        return [int((self.x2 - self.x1)/2), int((self.y2 - self.y1)/2)] 
     
+    """Class label"""
     @property
-    def object_type(self):
+    def object_type(self) -> str:
         return COCO_LABELS[self.class_num]
     
+    """Distance between 2 house objects"""
     def distance(self, other: 'HouseObject') -> float:
         x1, y1 = self.centroid
         x2, y2 = other.centroid
         return math.sqrt((x2-x1)^2 + (y2-y1)^2)
 
+    """Intersection over union of 2 house objects"""
     def iou(self, other: 'HouseObject') -> float:
         x_min1, y_min1, x_max1, y_max1 = self.bbox
         x_min2, y_min2, x_max2, y_max2 = other.bbox
@@ -79,23 +84,25 @@ class HouseObject:
 
 
 class CleanlinessDetector:
-    def __init__(self):
+    def __init__(self) -> 'CleanlinessDetector':
         self.model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)   # Load Faster R-CNN model
         self.model.eval()                                                                    # Set to evaluation mode
         self.transform = T.Compose([T.ToTensor()])                                           # Function to convert to tensor
 
+    """Convert image to tensor"""
     def process_image(self, img: Image) -> torch.Tensor:
         tsr = self.transform(img).unsqueeze(0)
-        tsr = tsr[:, :3, :, :]
+        tsr = tsr[:, :3, :, :]                          # Only keep RGB channels
         return tsr
     
-    def predict(self, img: Image, display=False) -> Tuple[list, list]:
+    """Given an image, return list of objects detected"""
+    def detect_objects(self, img: Image, display=False) -> list[HouseObject]:
         tsr = self.process_image(img)
         with torch.no_grad():                           # No gradient => something about reducing complexity
             predictions = self.model(tsr)
-        bboxes = predictions[0]['boxes']
-        labels = predictions[0]['labels']
-        scores = predictions[0]['scores']
+        bboxes = predictions[0]['boxes']                # (x1, y1, x2, y2) for each detection
+        labels = predictions[0]['labels']               # COCO class #
+        scores = predictions[0]['scores']               # Confidence score
         objects = []
         # Only consider predictions for objects over the confidence threshold
         for i, box in enumerate(bboxes):
@@ -105,7 +112,23 @@ class CleanlinessDetector:
             self.display_image(img, objects)
         return objects
     
-    def display_image(self, img: Image, objects: HouseObject):
+    """
+    Do nearest neighbor for objects in before_img and after_img, identify matches
+    No match => added/ removed
+    If object within threshold (i.e. distance and iou) then it didn't move and shouldn't be considered
+    If object not within threshold then it has moved
+    """
+    def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
+        moved, added, removed = [], [], []
+        return moved, added, removed
+
+    """Idk"""
+    def calculate_cleanliness_score(self, moved: list[HouseObject], added: list[HouseObject], removed: list[HouseObject]) -> float:
+        score = 0
+        return score
+    
+    """Draw bboxes and show classes for objects detected in image"""
+    def display_image(self, img: Image, objects: HouseObject) -> None:
         img= cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
         for i, obj in enumerate(objects):
             x1, y1, x2, y2 = obj.bbox
@@ -116,6 +139,7 @@ class CleanlinessDetector:
         plt.axis('off')
         plt.show()
 
+
 if __name__=="__main__":
     cd = CleanlinessDetector()
     # Process images
@@ -123,8 +147,8 @@ if __name__=="__main__":
     after_img = Image.open("cleanliness_detection/samples/1/after.png")
 
     # Extract bounding boxes, labels, and scores for the "before" image
-    detections_before = cd.predict(before_img, display=True)
-    detections_after = cd.predict(after_img, display=True)
+    detections_before = cd.detect_objects(before_img, display=True)
+    detections_after = cd.detect_objects(after_img, display=True)
     det_types_before = [det.object_type for det in detections_before]
     det_types_after = [det.object_type for det in detections_after]
 
