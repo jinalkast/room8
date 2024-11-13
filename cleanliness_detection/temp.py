@@ -114,9 +114,9 @@ class CleanlinessDetector:
     
     """
     Do nearest neighbor for objects in before_img and after_img, identify matches
-    No match => added/ removed
-    If object within threshold (i.e. distance and iou) then it didn't move and shouldn't be considered
-    If object not within threshold then it has moved
+    No match => object added/ removed
+    Match within threshold (i.e. distance and iou) then it didn't move and shouldn't be considered
+    Match not within threshold then it has moved
     """
     def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
         moved, added, removed = [], [], []
@@ -143,8 +143,8 @@ class CleanlinessDetector:
 if __name__=="__main__":
     cd = CleanlinessDetector()
     # Process images
-    before_img = Image.open("cleanliness_detection/samples/1/before.png")
-    after_img = Image.open("cleanliness_detection/samples/1/after.png")
+    before_img = Image.open("cleanliness_detection/samples/3/before.png")
+    after_img = Image.open("cleanliness_detection/samples/3/after.png")
 
     # Extract bounding boxes, labels, and scores for the "before" image
     detections_before = cd.detect_objects(before_img, display=True)
