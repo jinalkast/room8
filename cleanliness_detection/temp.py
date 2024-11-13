@@ -1,3 +1,4 @@
+import math
 import torch
 import torchvision
 from PIL import Image
@@ -29,6 +30,54 @@ COCO_LABELS = {                                                                 
     90: "toothbrush"
 }
 
+"""Define a class to represent a detection"""
+class HouseObject:
+    def __init__(self, label: int, bbox: list):
+        self.class_num = label
+        self.x1, self.y1, self.x2, self.y2 = [int(b) for b in bbox]
+
+    @property
+    def bbox(self):
+        return [self.x1, self.y1, self.x2, self.y2]
+    
+    @property
+    def centroid(self):
+        return [(self.x2 - self.x1)/2, (self.y2 - self.y1)/2] 
+    
+    @property
+    def type(self):
+        return COCO_LABELS[self.class_num]
+    
+    def distance(self, other: 'HouseObject') -> float:
+        x1, y1 = self.centroid
+        x2, y2 = other.centroid
+        return math.sqrt((x2-x1)^2 + (y2-y1)^2)
+
+    def iou(self, other: 'HouseObject') -> float:
+        x_min1, y_min1, x_max1, y_max1 = self.bbox
+        x_min2, y_min2, x_max2, y_max2 = other.bbox
+
+        # Calculate intersection
+        x_min_inter = max(x_min1, x_min2)
+        y_min_inter = max(y_min1, y_min2)
+        x_max_inter = min(x_max1, x_max2)
+        y_max_inter = min(y_max1, y_max2)
+
+        # No intersection
+        if x_min_inter >= x_max_inter or y_min_inter >= y_max_inter:
+            return 0  
+
+        intersection_area = (x_max_inter - x_min_inter) * (y_max_inter - y_min_inter)
+
+        # Calculate union
+        bbox1_area = (x_max1 - x_min1) * (y_max1 - y_min1)
+        bbox2_area = (x_max2 - x_min2) * (y_max2 - y_min2)
+        union_area = bbox1_area + bbox2_area - intersection_area
+
+        return intersection_area / union_area
+
+
+
 class CleanlinessDetector:
     def __init__(self):
         self.model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)   # Load Faster R-CNN model
@@ -42,16 +91,17 @@ class CleanlinessDetector:
     
     def predict(self, img: Image, display=False) -> Tuple[list, list]:
         tsr = self.process_image(img)
-        with torch.no_grad():
+        with torch.no_grad():                           # No gradient => something about reducing complexity
             predictions = self.model(tsr)
         all_boxes = predictions[0]['boxes']
         all_labels = predictions[0]['labels']
         all_scores = predictions[0]['scores']
         labels, boxes = [], []
+        # Only consider predictions for objects over the confidence threshold
         for i, box in enumerate(all_boxes):
             if all_scores[i].item() > CONF_THRESH:
                 labels.append(all_labels[i].item())
-                boxes.append(box.tolist())
+                boxes.append(box.tolist())              #x1, y1, x2, y2
         if(display):
             self.display_image(img, labels, boxes)
         return labels, boxes
