@@ -1,6 +1,51 @@
 import { supabaseServer } from '@/lib/supabase/server';
 import { NextResponse, NextRequest } from 'next/server';
 
+export async function GET(req: NextRequest) {
+  try {
+    const searchParams = req.nextUrl.searchParams;
+    const page = searchParams.get('page');
+
+    const supabase = await supabaseServer();
+
+    const {
+      data: { user },
+      error: authError
+    } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      throw new Error('User not authenticated');
+    }
+
+    const { data: billData, error: billError } = await supabase.rpc('get_bill_summary_for_user', {
+      result_offset: page !== null ? (parseInt(page) - 1) * 10 : 0,
+      user_id_param: user.id
+    });
+
+    if (billError) {
+      console.log('billError:', billError);
+      throw new Error('Error fetching bills');
+    }
+
+    return NextResponse.json(
+      {
+        data: billData,
+        message: 'Successfully Fetched Bills'
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Error in GET /bills:', error);
+    return NextResponse.json(
+      {
+        data: null,
+        message: (error as Error).message
+      },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
