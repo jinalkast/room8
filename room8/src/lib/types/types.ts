@@ -17,3 +17,10 @@ export type TOwe = {
   owed_by: string;
   paid: boolean;
 };
+
+export type TBill = {
+  bill_id: string;
+  bill_name: string;
+  sum_paid_back: number;
+  total_owed: number;
+};

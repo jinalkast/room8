@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { TOwe } from '@/lib/types/types';
+import { TBill } from '@/lib/types/types';
 
-export const fetchOwes = async (): Promise<TOwe[] | null> => {
-  const res = await fetch(`/api/bills/owes`, {
+export const fetchBills = async (): Promise<TBill[] | null> => {
+  const res = await fetch(`/api/bills`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
   });
@@ -11,9 +11,9 @@ export const fetchOwes = async (): Promise<TOwe[] | null> => {
   return json.data ?? null;
 };
 
-export default function useOwes() {
+export default function useBills() {
   return useQuery({
-    queryKey: ['owes'],
-    queryFn: async () => fetchOwes()
+    queryKey: ['bills'],
+    queryFn: async () => fetchBills()
   });
 }

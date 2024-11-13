@@ -1,4 +1,4 @@
-import useOwes from '@/app/(main)/bill-splitter/hooks/use-owes';
+import useBills from '@/app/(main)/bill-splitter/hooks/use-bills';
 import React from 'react';
 import {
   Table,
@@ -12,9 +12,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useMutation } from '@tanstack/react-query';
+import Link from 'next/link';
 
-export default function OwesTable() {
-  const { data: owes, status: owesStatus, refetch: refetchOwes } = useOwes();
+export default function BillsTable() {
+  const { data: bills, status: billsStatus, refetch: refetchBills } = useBills();
   const { toast } = useToast();
   const mutation = useMutation({
     mutationFn: async ({ debtId, isPaid }: { debtId: string; isPaid: boolean }) => {
@@ -31,7 +32,7 @@ export default function OwesTable() {
         title: 'Success!',
         description: 'Bill status updated'
       });
-      refetchOwes();
+      refetchBills();
     },
     onError: () => {
       toast({
@@ -43,44 +44,34 @@ export default function OwesTable() {
 
   return (
     <Table>
-      <TableCaption>Your outstanding debts.</TableCaption>
+      <TableCaption>What You&apos;re Owed.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Name</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Owed To</TableHead>
-          <TableHead>Owed By</TableHead>
-          <TableHead>Amount</TableHead>
+          <TableHead>Total Paid Back</TableHead>
+          <TableHead>Total Owed</TableHead>
           <TableHead className="text-right"> </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {owesStatus === 'pending' ? (
+        {billsStatus === 'pending' ? (
           <TableRow>
             <TableCell>Loading...</TableCell>
           </TableRow>
         ) : null}
-        {owesStatus === 'error' ? (
+        {billsStatus === 'error' ? (
           <TableRow>
-            <TableCell>Failed to get debts</TableCell>
+            <TableCell>Failed to get bills</TableCell>
           </TableRow>
         ) : null}
-        {owesStatus === 'success'
-          ? owes!.map((owe) => (
-              <TableRow key={owe.owe_id}>
-                <TableCell className="font-medium">{owe.bill_name}</TableCell>
-                <TableCell>{owe.paid === true ? 'Paid' : 'Unpaid'}</TableCell>
-                <TableCell>{owe.loaner_name}</TableCell>
-                <TableCell>{owe.owed_by}</TableCell>
-                <TableCell>{owe.amount_owed}</TableCell>
+        {billsStatus === 'success'
+          ? bills?.map((bill) => (
+              <TableRow key={bill.bill_id}>
+                <TableCell className="font-medium">{bill.bill_name}</TableCell>
+                <TableCell>{bill.sum_paid_back.toFixed(2)}</TableCell>
+                <TableCell>{bill.total_owed.toFixed(2)}</TableCell>
                 <TableCell className="text-right">
-                  <Button
-                    disabled={mutation.isPending}
-                    onClick={(e) => {
-                      mutation.mutate({ debtId: owe.owe_id, isPaid: owe.paid });
-                    }}>
-                    {owe.paid ? 'Unpay' : 'Pay Off'}
-                  </Button>
+                  <Link href={`/bill-spliter/bill/${bill.bill_id}`}>view Bill details</Link>
                 </TableCell>
               </TableRow>
             ))

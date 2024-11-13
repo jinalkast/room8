@@ -5,6 +5,7 @@ import { FilePen, House, HandCoins, Receipt } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import CreateBillForm from './components/createBillForm';
 import OwesTable from './components/owesTable';
+import BillsTable from './components/billsTable';
 
 type Tab = {
   icon: JSX.Element;
@@ -32,7 +33,7 @@ export default function BillSplitterPage() {
     loans: {
       icon: <Receipt />,
       title: 'Outstanding Loans',
-      component: <div>Pending</div>
+      component: <BillsTable />
     }
   };
 
