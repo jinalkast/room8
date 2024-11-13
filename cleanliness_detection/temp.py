@@ -7,8 +7,10 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 from typing import Tuple
+from sklearn.neighbors import NearestNeighbors
 
 CONF_THRESH = 0.5                                                                           # Minimum confidence for object detector
+DIST_THRESH = 15                                                                            # Number of pixels for object that moved slightly to still be considered in same spot                                                                     #
 # Faster R-CNN is trained on COCO dataset
 COCO_LABELS = {                                                                             # COCO class label mapping
     1: "person", 2: "bicycle", 3: "car", 4: "motorcycle", 5: "airplane",
@@ -115,11 +117,27 @@ class CleanlinessDetector:
     """
     Do nearest neighbor for objects in before_img and after_img, identify matches
     No match => object added/ removed
-    Match within threshold (i.e. distance and iou) then it didn't move and shouldn't be considered
-    Match not within threshold then it has moved
+    Match within threshold (i.e. distance and iou)=> object didn't move and shouldn't be considered
+    Match not within threshold => object has moved
     """
     def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
         moved, added, removed = [], [], []
+        objects_before = self.detect_objects(before_img)
+        objects_after = self.detect_objects(after_img)
+        centroids_before = np.array([obj.centroid for obj in objects_before])
+        centroids_after = np.array([obj.centroid for obj in objects_after])
+
+        nbrs = NearestNeighbors(n_neighbors=1).fit(centroids_before)
+        dists, inds = nbrs.kneighbors(centroids_after)
+
+        c = 0
+        for [dist, idx] in zip(dists, inds):
+            obj1 = objects_before[idx[0]]
+            obj2 = objects_after[c]
+            if dist <= DIST_THRESH:
+                pass
+            c += 1
+
         return moved, added, removed
 
     """Idk"""
@@ -146,11 +164,13 @@ if __name__=="__main__":
     before_img = Image.open("cleanliness_detection/samples/3/before.png")
     after_img = Image.open("cleanliness_detection/samples/3/after.png")
 
-    # Extract bounding boxes, labels, and scores for the "before" image
-    detections_before = cd.detect_objects(before_img, display=True)
-    detections_after = cd.detect_objects(after_img, display=True)
-    det_types_before = [det.object_type for det in detections_before]
-    det_types_after = [det.object_type for det in detections_after]
+    cd.calculate_difference(before_img, after_img)
 
-    new_objects = [obj for obj in det_types_after if obj not in det_types_before]
-    print("Objects added: " + ", ".join(new_objects))
+    # # Extract bounding boxes, labels, and scores for the "before" image
+    # detections_before = cd.detect_objects(before_img, display=True)
+    # detections_after = cd.detect_objects(after_img, display=True)
+    # det_types_before = [det.object_type for det in detections_before]
+    # det_types_after = [det.object_type for det in detections_after]
+
+    # new_objects = [obj for obj in det_types_after if obj not in det_types_before]
+    # print("Objects added: " + ", ".join(new_objects))
