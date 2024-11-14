@@ -5,3 +5,13 @@ export const PROTECTED_PATHS = [
   '/chatbot',
   '/settings'
 ];
+
+export const daysOfWeek = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+];
