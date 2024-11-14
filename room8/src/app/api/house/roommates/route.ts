@@ -29,7 +29,7 @@ export async function GET() {
       house_id !== null
         ? await supabase
             .from('profiles')
-            .select('id, name, image_url')
+            .select('id, name, image_url, phone')
             .eq('house_id', house_id)
         : { data: [], error: null };
 
