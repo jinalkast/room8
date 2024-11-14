@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import useUser from '@/app/auth/hooks/useUser';
 
 const formSchema = z.object({
   name: z.string(),
@@ -30,7 +31,7 @@ const formSchema = z.object({
 
 export default function CreateBillForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const { data: user, status: userStatus } = useUser();
   const { data: roommates, status: roommatesStatus } = useRoommates();
   const { toast } = useToast();
 
@@ -127,32 +128,36 @@ export default function CreateBillForm() {
               {roommatesStatus === 'error' && (
                 <div>Error getting your roommates. Try refreshing</div>
               )}
-              {roommatesStatus === 'success' && (
+              {roommatesStatus === 'success' && userStatus === 'success' && (
                 <FormControl>
                   <div className="space-y-2">
-                    {roommates!.map((roommate, index) => (
-                      <div className="flex gap-2 items-center" key={index}>
-                        <Avatar>
-                          <AvatarImage src={roommate.image_url} />
-                        </Avatar>
-                        {roommate.name}:
-                        <input
-                          type="number"
-                          min={0}
-                          step={0.01}
-                          placeholder={'0'}
-                          onChange={(e) => {
-                            let value: number = parseFloat(e.target.value);
-                            if (value <= 0) {
-                              field.value.delete(roommate.id);
-                            } else {
-                              field.value.set(roommate.id, parseFloat(e.target.value));
-                            }
-                            console.log(field.value);
-                          }}
-                        />
-                      </div>
-                    ))}
+                    {roommates!.map((roommate, index) =>
+                      roommate.id !== user!.id ? (
+                        <div className="flex gap-2 items-center justify-between" key={index}>
+                          <div className='flex items-center gap-1'>
+                            <Avatar>
+                              <AvatarImage src={roommate.image_url} />
+                            </Avatar>
+                            {roommate.name}:
+                          </div>
+                          <input
+                            type="number"
+                            min={0}
+                            step={0.01}
+                            placeholder={'0'}
+                            onChange={(e) => {
+                              let value: number = parseFloat(e.target.value);
+                              if (value <= 0) {
+                                field.value.delete(roommate.id);
+                              } else {
+                                field.value.set(roommate.id, parseFloat(e.target.value));
+                              }
+                              console.log(field.value);
+                            }}
+                          />
+                        </div>
+                      ) : null
+                    )}
                   </div>
                 </FormControl>
               )}
