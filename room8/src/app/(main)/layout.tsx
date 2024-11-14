@@ -21,7 +21,7 @@ export default async function MainLayout({
       <div className="basis-[400px]">
         <Menu />
       </div>
-      <div className="flex-1 mt-[70px]">{children}</div>
+      <div className="flex-1 mt-[70px] mr-[60px]">{children}</div>
     </div>
   );
 }

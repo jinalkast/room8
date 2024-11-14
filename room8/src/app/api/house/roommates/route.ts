@@ -29,7 +29,7 @@ export async function GET() {
       house_id !== null
         ? await supabase
             .from('profiles')
-            .select('id, name, image_url, phone')
+            .select('id, name, image_url')
             .eq('house_id', house_id)
         : { data: [], error: null };
 
@@ -45,7 +45,7 @@ export async function GET() {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error in GET /roommates:', error);
+    console.error('Error in GET /habits:', error);
     return NextResponse.json(
       {
         data: null,
