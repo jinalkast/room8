@@ -19,7 +19,7 @@ type Tabs = {
 
 export default function BillSplitterPage() {
   const TABS: Tabs = {
-    summary: { icon: <House />, title: 'Summary', component: <div>Summary</div> },
+    // summary: { icon: <House />, title: 'Summary', component: <div>Summary</div> },
     create: {
       icon: <FilePen />,
       title: 'Create Bill',
@@ -37,7 +37,7 @@ export default function BillSplitterPage() {
     }
   };
 
-  const [activeTab, setActiveTab] = useState(TABS.summary);
+  const [activeTab, setActiveTab] = useState(TABS.create);
   return (
     <div>
       <nav className={cn('flex justify-center gap-6 ')}>
