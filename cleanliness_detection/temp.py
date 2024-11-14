@@ -165,7 +165,7 @@ class CleanlinessDetector:
         return added, removed, moved
 
     """Idk"""
-    def calculate_cleanliness_score(self, moved: list[HouseObject], added: list[HouseObject], removed: list[HouseObject]) -> float:
+    def calculate_cleanliness_score(self, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> float:
         score = 0
         return score
     
