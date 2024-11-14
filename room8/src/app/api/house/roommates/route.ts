@@ -27,7 +27,10 @@ export async function GET() {
 
     const { data: responseData, error: roommates_error } =
       house_id !== null
-        ? await supabase.from('profiles').select('id, name, image_url').eq('house_id', house_id)
+        ? await supabase
+            .from('profiles')
+            .select('id, name, image_url')
+            .eq('house_id', house_id)
         : { data: [], error: null };
 
     if (roommates_error || responseData === null) {
