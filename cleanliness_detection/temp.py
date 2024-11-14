@@ -123,8 +123,8 @@ class CleanlinessDetector:
     """Find all objects in 2 images and identify what was added, removed, and moved"""
     def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
         added, removed, moved = [], [], []
-        objects_before = self.detect_objects(before_img, display=False)
-        objects_after = self.detect_objects(after_img, display=False)
+        objects_before = self.detect_objects(before_img)
+        objects_after = self.detect_objects(after_img)
         centroids_before = np.array([obj.centroid for obj in objects_before])
         centroids_after = np.array([obj.centroid for obj in objects_after])
 
@@ -135,8 +135,8 @@ class CleanlinessDetector:
         objects_after_cp = objects_after.copy()
 
         # case 1: object didn't move (disregard these objects)
-        for obj1, dist, idx in zip(objects_before_cp, dists, inds):
-            obj2 = objects_after_cp[idx[0]]
+        for obj2, dist, idx in zip(objects_after_cp, dists, inds):
+            obj1 = objects_before_cp[idx[0]]
             if dist <= DIST_THRESH and obj1.iou(obj2) > IOU_THRESH and obj1.class_num == obj2.class_num:
                 objects_before.remove(obj1)
                 objects_after.remove(obj2)
@@ -160,7 +160,14 @@ class CleanlinessDetector:
                 objects_before.remove(obj)
 
         # case 4: object moved
-        moved = list(set(objects_before) & set(objects_after))
+        objects_before_classes = [obj.class_num for obj in objects_before]
+        objects_after_classes = [obj.class_num for obj in objects_after]
+        
+        moved_class_nums = list(set(objects_before_classes) & set(objects_after_classes))
+        for n in moved_class_nums:
+            before_matches = [obj for obj in objects_before if obj.class_num == n]
+            after_matches = [obj for obj in objects_after if obj.class_num == n]
+            moved.append([before_matches, after_matches])
 
         return added, removed, moved
 
@@ -185,13 +192,13 @@ class CleanlinessDetector:
 if __name__=="__main__":
     cd = CleanlinessDetector()
     # Process images
-    before_img = Image.open("cleanliness_detection/samples/1/before.png")
-    after_img = Image.open("cleanliness_detection/samples/1/after.png")
+    before_img = Image.open("cleanliness_detection/samples/4/before.png")
+    after_img = Image.open("cleanliness_detection/samples/4/after.png")
 
     added, removed, moved = cd.calculate_difference(before_img, after_img)
     added = [obj.class_name for obj in added]
     removed = [obj.class_name for obj in removed]
-    moved = [obj.class_name for obj in moved]
+    moved = [obj[0][0].class_name for obj in moved]
     print("Objects added: " + ", ".join(added))
     print("Objects removed: " + ", ".join(removed))
     print("Objects moved: " + ", ".join(moved))
