@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
       .conversations(conversation.sid)
       .messages.create({
         author: 'Chatbot',
-        body: 'Hello World from Room8! This is an MMS Group Chat. I can now get roommate phone numbers from Supabase 😎',
+        body: "Hey everyone! 👋 I’m RoomBot, your friendly digital helper here in the Room8 app! 🎉\n\nI’m here to make roommate life a little easier, whether it’s keeping track of chores, reminding everyone about bills, or just helping keep things organized.",
       });
 
     return NextResponse.json(
