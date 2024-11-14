@@ -9,8 +9,9 @@ import matplotlib.pyplot as plt
 from typing import Tuple
 from sklearn.neighbors import NearestNeighbors
 
-CONF_THRESH = 0.5                                                                           # Minimum confidence for object detector
-DIST_THRESH = 15                                                                            # Number of pixels for object that moved slightly to still be considered in same spot                                                                     #
+CONF_THRESH = 0.5                                                                           # min confidence for object detector
+DIST_THRESH = 15                                                                            # max number of pixels for object that moved slightly to still be considered in same spot                                                                     #
+IOU_THRESH = 0.8                                                                            # min IOU threshold for object to be considered in same spot
 # Faster R-CNN is trained on COCO dataset
 COCO_LABELS = {                                                                             # COCO class label mapping
     1: "person", 2: "bicycle", 3: "car", 4: "motorcycle", 5: "airplane",
@@ -35,7 +36,7 @@ COCO_LABELS = {                                                                 
 """Define a class to represent a detection"""
 class HouseObject:
     def __init__(self, label: int, bbox: list) -> 'HouseObject':
-        self.class_num = label
+        self.label = label
         self.x1, self.y1, self.x2, self.y2 = [int(b) for b in bbox]
 
     """x1, y1, x2, y2"""
@@ -50,8 +51,13 @@ class HouseObject:
     
     """Class label"""
     @property
-    def object_type(self) -> str:
-        return COCO_LABELS[self.class_num]
+    def class_num(self) -> str:
+        return self.label
+
+    """Class label"""
+    @property
+    def class_name(self) -> str:
+        return COCO_LABELS[self.label]
     
     """Distance between 2 house objects"""
     def distance(self, other: 'HouseObject') -> float:
@@ -64,19 +70,19 @@ class HouseObject:
         x_min1, y_min1, x_max1, y_max1 = self.bbox
         x_min2, y_min2, x_max2, y_max2 = other.bbox
 
-        # Calculate intersection
+        # calculate intersection
         x_min_inter = max(x_min1, x_min2)
         y_min_inter = max(y_min1, y_min2)
         x_max_inter = min(x_max1, x_max2)
         y_max_inter = min(y_max1, y_max2)
 
-        # No intersection
+        # no intersection
         if x_min_inter >= x_max_inter or y_min_inter >= y_max_inter:
             return 0  
 
         intersection_area = (x_max_inter - x_min_inter) * (y_max_inter - y_min_inter)
 
-        # Calculate union
+        # calculate union
         bbox1_area = (x_max1 - x_min1) * (y_max1 - y_min1)
         bbox2_area = (x_max2 - x_min2) * (y_max2 - y_min2)
         union_area = bbox1_area + bbox2_area - intersection_area
@@ -87,26 +93,26 @@ class HouseObject:
 
 class CleanlinessDetector:
     def __init__(self) -> 'CleanlinessDetector':
-        self.model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)   # Load Faster R-CNN model
-        self.model.eval()                                                                    # Set to evaluation mode
-        self.transform = T.Compose([T.ToTensor()])                                           # Function to convert to tensor
+        self.model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)   # load Faster R-CNN model
+        self.model.eval()                                                                    # set to evaluation mode
+        self.transform = T.Compose([T.ToTensor()])                                           # function to convert to tensor
 
     """Convert image to tensor"""
     def process_image(self, img: Image) -> torch.Tensor:
         tsr = self.transform(img).unsqueeze(0)
-        tsr = tsr[:, :3, :, :]                          # Only keep RGB channels
+        tsr = tsr[:, :3, :, :]                          # only keep RGB channels
         return tsr
     
     """Given an image, return list of objects detected"""
     def detect_objects(self, img: Image, display=False) -> list[HouseObject]:
         tsr = self.process_image(img)
-        with torch.no_grad():                           # No gradient => something about reducing complexity
+        with torch.no_grad():                           # no gradient => something about reducing complexity
             predictions = self.model(tsr)
         bboxes = predictions[0]['boxes']                # (x1, y1, x2, y2) for each detection
         labels = predictions[0]['labels']               # COCO class #
-        scores = predictions[0]['scores']               # Confidence score
+        scores = predictions[0]['scores']               # confidence score
         objects = []
-        # Only consider predictions for objects over the confidence threshold
+        # only consider predictions for objects over the confidence threshold
         for i, box in enumerate(bboxes):
             if scores[i].item() > CONF_THRESH:
                 objects.append(HouseObject(labels[i].item(), [b.item() for b in box]))
@@ -114,31 +120,49 @@ class CleanlinessDetector:
             self.display_image(img, objects)
         return objects
     
-    """
-    Do nearest neighbor for objects in before_img and after_img, identify matches
-    No match => object added/ removed
-    Match within threshold (i.e. distance and iou)=> object didn't move and shouldn't be considered
-    Match not within threshold => object has moved
-    """
+    """Find all objects in 2 images and identify what was added, removed, and moved"""
     def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
-        moved, added, removed = [], [], []
-        objects_before = self.detect_objects(before_img)
-        objects_after = self.detect_objects(after_img)
+        added, removed, moved = [], [], []
+        objects_before = self.detect_objects(before_img, display=False)
+        objects_after = self.detect_objects(after_img, display=False)
         centroids_before = np.array([obj.centroid for obj in objects_before])
         centroids_after = np.array([obj.centroid for obj in objects_after])
 
         nbrs = NearestNeighbors(n_neighbors=1).fit(centroids_before)
         dists, inds = nbrs.kneighbors(centroids_after)
 
-        c = 0
-        for [dist, idx] in zip(dists, inds):
-            obj1 = objects_before[idx[0]]
-            obj2 = objects_after[c]
-            if dist <= DIST_THRESH:
-                pass
-            c += 1
+        objects_before_cp = objects_before.copy()
+        objects_after_cp = objects_after.copy()
 
-        return moved, added, removed
+        # case 1: object didn't move (disregard these objects)
+        for obj1, dist, idx in zip(objects_before_cp, dists, inds):
+            obj2 = objects_after_cp[idx[0]]
+            if dist <= DIST_THRESH and obj1.iou(obj2) > IOU_THRESH and obj1.class_num == obj2.class_num:
+                objects_before.remove(obj1)
+                objects_after.remove(obj2)
+
+        # case 2: object was added to scene
+        objects_after_cp = objects_after.copy()
+        objects_before_classes = [obj.class_num for obj in objects_before]
+
+        for obj in objects_after_cp:
+            if obj.class_num not in objects_before_classes:
+                added.append(obj)
+                objects_after.remove(obj)
+
+        # case 3: object removed from scene
+        objects_before_cp = objects_before.copy()
+        objects_after_classes = [obj.class_num for obj in objects_after]
+
+        for obj in objects_before_cp:
+            if obj.class_num not in objects_after_classes:
+                removed.append(obj)
+                objects_before.remove(obj)
+
+        # case 4: object moved
+        moved = list(set(objects_before) & set(objects_after))
+
+        return added, removed, moved
 
     """Idk"""
     def calculate_cleanliness_score(self, moved: list[HouseObject], added: list[HouseObject], removed: list[HouseObject]) -> float:
@@ -151,7 +175,7 @@ class CleanlinessDetector:
         for i, obj in enumerate(objects):
             x1, y1, x2, y2 = obj.bbox
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            cv2.putText(img, obj.object_type, (x1, y1 - 10),
+            cv2.putText(img, obj.class_name, (x1, y1 - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
         plt.axis('off')
@@ -161,16 +185,13 @@ class CleanlinessDetector:
 if __name__=="__main__":
     cd = CleanlinessDetector()
     # Process images
-    before_img = Image.open("cleanliness_detection/samples/3/before.png")
-    after_img = Image.open("cleanliness_detection/samples/3/after.png")
+    before_img = Image.open("cleanliness_detection/samples/1/before.png")
+    after_img = Image.open("cleanliness_detection/samples/1/after.png")
 
-    cd.calculate_difference(before_img, after_img)
-
-    # # Extract bounding boxes, labels, and scores for the "before" image
-    # detections_before = cd.detect_objects(before_img, display=True)
-    # detections_after = cd.detect_objects(after_img, display=True)
-    # det_types_before = [det.object_type for det in detections_before]
-    # det_types_after = [det.object_type for det in detections_after]
-
-    # new_objects = [obj for obj in det_types_after if obj not in det_types_before]
-    # print("Objects added: " + ", ".join(new_objects))
+    added, removed, moved = cd.calculate_difference(before_img, after_img)
+    added = [obj.class_name for obj in added]
+    removed = [obj.class_name for obj in removed]
+    moved = [obj.class_name for obj in moved]
+    print("Objects added: " + ", ".join(added))
+    print("Objects removed: " + ", ".join(removed))
+    print("Objects moved: " + ", ".join(moved))
