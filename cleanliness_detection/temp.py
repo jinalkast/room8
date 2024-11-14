@@ -33,6 +33,27 @@ COCO_LABELS = {                                                                 
     90: "toothbrush"
 }
 
+SCORE_WEIGHTS = {
+    "person": [0, 0, 0], "bicycle": [0, 0, 0], "car": [0, 0, 0], "motorcycle": [0, 0, 0], "airplane": [0, 0, 0],
+    "bus": [0, 0, 0], "train": [0, 0, 0], "truck": [0, 0, 0], "boat": [0, 0, 0], "traffic light": [0, 0, 0],
+    "fire hydrant": [0, 0, 0], "stop sign": [0, 0, 0], "parking meter": [0, 0, 0], "bench": [0, 0, 0],
+    "bird": [0, 0, 0], "cat": [0, 0, 0], "dog": [0, 0, 0], "horse": [0, 0, 0], "sheep": [0, 0, 0],
+    "cow": [0, 0, 0], "elephant": [0, 0, 0], "bear": [0, 0, 0], "zebra": [0, 0, 0], "giraffe": [0, 0, 0],
+    "backpack": [-2, 2, 0], "umbrella": [-1, 1, 0], "handbag": [-1, 1, 0], "tie": [-1, 1, 0], "suitcase": [-2, 2, 0],
+    "frisbee": [-1, 1, 0], "skis": [-3, 3, 0], "snowboard": [-3, 3, 0], "sports ball": [-1, 1, 0], "kite": [-1, 1, 0],
+    "baseball bat": [-2, 2, 0], "baseball glove": [-1, 1, 0], "skateboard": [-2, 2, 0], "surfboard": [-3, 3, 0], "tennis racket": [-2, 2, 0],
+    "bottle": [-1.5, 1.5, 0], "wine glass": [-1, 1, 0], "cup": [-1, 1, 0], "fork": [-0.5, 0.5, 0], "knife": [-0.5, 0.5, 0],
+    "spoon": [-0.5, 0.5, 0], "bowl": [-1, 1, 0], "banana": [-1, 1, 0], "apple": [-1, 1, 0], "sandwich": [-1, 1, 0],
+    "orange": [0, 0, 0], "broccoli": [-1, 1, 0], "carrot": [-1, 1, 0], "hot dog": [-1, 1, 0], "pizza": [-2, 2, 0],
+    "donut": [0, 0, 0], "cake": [0, 0, 0], "chair": [0, 0, 0], "couch": [0, 0, 0], "potted plant": [0, 0, 0],
+    "bed": [0, 0, 0], "dining table": [0, 0, 0], "toilet": [0, 0, 0], "TV": [0, 0, 0], "laptop": [0, 0, 0],
+    "mouse": [0, 0, 0], "remote": [0, 0, 0], "keyboard": [-2, 2, 0], "cell phone": [0, 0, 0], "microwave": [0, 0, 0],
+    "oven": [0, 0, 0], "toaster": [0, 0, 0], "sink": [0, 0, 0], "refrigerator": [0, 0, 0], "book": [0, 0, 0],
+    "clock": [0, 0, 0], "vase": [0, 0, 0], "scissors": [0, 0, 0], "teddy bear": [0, 0, 0], "hair drier": [0, 0, 0],
+    "toothbrush": [0, 0, 0]
+}
+
+
 """Define a class to represent a detection"""
 class HouseObject:
     def __init__(self, label: int, bbox: list) -> 'HouseObject':
@@ -174,9 +195,13 @@ class CleanlinessDetector:
     """Idk"""
     def calculate_cleanliness_score(self, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> float:
         score = 0
+        for i in added:
+            score += SCORE_WEIGHTS.get(i)[0]
+        for j in removed:
+            score += SCORE_WEIGHTS.get(j)[1]
         return score
     
-    """Draw bboxes and show classes for objects detected in image"""
+    """Draw boxes and show classes for objects detected in image"""
     def display_image(self, img: Image, objects: HouseObject) -> None:
         img= cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
         for i, obj in enumerate(objects):
@@ -192,13 +217,18 @@ class CleanlinessDetector:
 if __name__=="__main__":
     cd = CleanlinessDetector()
     # Process images
-    before_img = Image.open("cleanliness_detection/samples/4/before.png")
-    after_img = Image.open("cleanliness_detection/samples/4/after.png")
+    before_img = Image.open("cleanliness_detection/samples/3/before.png")
+    after_img = Image.open("cleanliness_detection/samples/3/after.png")
 
     added, removed, moved = cd.calculate_difference(before_img, after_img)
     added = [obj.class_name for obj in added]
     removed = [obj.class_name for obj in removed]
     moved = [obj[0][0].class_name for obj in moved]
+
+    cleanliness_score = cd.calculate_cleanliness_score(added, removed, moved)
+
     print("Objects added: " + ", ".join(added))
     print("Objects removed: " + ", ".join(removed))
     print("Objects moved: " + ", ".join(moved))
+
+    print(f"Cleanliness score for this iteration is: {cleanliness_score}")
