@@ -11,8 +11,10 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { TOwe } from '@/lib/types/types';
 
 export default function BillsTable() {
   const { data: bills, status: billsStatus, refetch: refetchBills } = useBills();
@@ -71,11 +73,58 @@ export default function BillsTable() {
                 <TableCell>{bill.sum_paid_back.toFixed(2)}</TableCell>
                 <TableCell>{bill.total_owed.toFixed(2)}</TableCell>
                 <TableCell className="text-right">
-                  <Link href={`/bill-spliter/bill/${bill.bill_id}`}>view Bill details</Link>
+                  <HoverCard>
+                    <HoverCardTrigger>
+                      <Button>Hover To View Bill Details</Button>
+                    </HoverCardTrigger>
+                    <HoverCardContent>
+                      <BillDetailsContent billId={bill.bill_id} />{' '}
+                    </HoverCardContent>
+                  </HoverCard>
                 </TableCell>
               </TableRow>
             ))
           : null}
+      </TableBody>
+    </Table>
+  );
+}
+
+async function fetchBillDetails(billId: string): Promise<TOwe[]> {
+  const res = await fetch(`/api/bills/${billId}`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  });
+  const json = await res.json();
+  return json.data;
+}
+
+function BillDetailsContent({ billId }: { billId: string }) {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['billDetails', billId],
+    queryFn: () => fetchBillDetails(billId)
+  });
+
+  if (isLoading) return <div>Loading details...</div>;
+  if (error) return <div>Failed to load details.</div>;
+
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[300px]">Debtor</TableHead>
+          <TableHead>Amount</TableHead>
+          <TableHead className="text-right">Status</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {data!.map((owe) => (
+          <TableRow key={owe.owe_id}>
+            <TableCell>{owe.debtor_name}</TableCell>
+            <TableCell>{owe.amount_owed}</TableCell>
+            <TableCell className="text-right">{owe.paid === true ? 'Paid' : 'Unpaid'}</TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );
