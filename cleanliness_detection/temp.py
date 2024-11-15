@@ -8,6 +8,9 @@ import cv2
 import matplotlib.pyplot as plt
 from typing import Tuple
 from sklearn.neighbors import NearestNeighbors
+from pathlib import Path
+from datetime import datetime
+import csv
 
 CONF_THRESH = 0.5                                                                           # min confidence for object detector
 DIST_THRESH = 15                                                                            # max number of pixels for object that moved slightly to still be considered in same spot                                                                     #
@@ -192,7 +195,7 @@ class CleanlinessDetector:
 
         return added, removed, moved
 
-    """Idk"""
+    """"""
     def calculate_cleanliness_score(self, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> float:
         score = 0
         for i in added:
@@ -201,6 +204,42 @@ class CleanlinessDetector:
             score += SCORE_WEIGHTS.get(j)[1]
         return score
     
+    """Exporting results to export_results folder"""
+    def export_results(self, before_img: Image, after_img: Image, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]):
+        formatted_datetime = datetime.now().strftime("%Y-%m-%d %Hh-%Mm-%Ss")
+
+        # Path and making folder
+        folder_path = Path(f"{Path(__file__).parent}/exported_results/{formatted_datetime}")
+        folder_path.mkdir(parents=True, exist_ok=True)
+
+        csv_path = folder_path / "results.csv"
+
+        # Writing to the CSV
+        with open(csv_path, 'w', newline='') as file:
+            writer = csv.writer(file)
+            # Headers of CSV
+            fields = ["Added", "Removed", "Moved", "Score"]
+
+            max_length = max(len(added), len(removed), len(moved))
+
+            writer.writerow(fields)
+
+            for i in range(max_length):
+                added_obj = added[i] if i < len(added) else ""
+                removed_obj = removed[i] if i < len(removed) else ""
+                moved_obj = moved[i] if i < len(moved) else ""
+
+                # Calculate scores for added, removed, and moved objects
+                added_score = SCORE_WEIGHTS.get(added_obj, [0, 0, 0])[0] if added_obj else 0
+                removed_score = SCORE_WEIGHTS.get(removed_obj, [0, 0, 0])[1] if removed_obj else 0
+                moved_score = SCORE_WEIGHTS.get(moved_obj, [0, 0, 0])[2] if moved_obj else 0
+
+                # Calculate total score for the row
+                total_score = added_score + removed_score + moved_score
+
+                # Write row
+                writer.writerow([added_obj, removed_obj, moved_obj, total_score])
+
     """Draw boxes and show classes for objects detected in image"""
     def display_image(self, img: Image, objects: HouseObject) -> None:
         img= cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
@@ -217,8 +256,8 @@ class CleanlinessDetector:
 if __name__=="__main__":
     cd = CleanlinessDetector()
     # Process images
-    before_img = Image.open("cleanliness_detection/samples/3/before.png")
-    after_img = Image.open("cleanliness_detection/samples/3/after.png")
+    before_img = Image.open("cleanliness_detection/samples/2/before.png")
+    after_img = Image.open("cleanliness_detection/samples/2/after.png")
 
     added, removed, moved = cd.calculate_difference(before_img, after_img)
     added = [obj.class_name for obj in added]
@@ -232,3 +271,5 @@ if __name__=="__main__":
     print("Objects moved: " + ", ".join(moved))
 
     print(f"Cleanliness score for this iteration is: {cleanliness_score}")
+
+    cd.export_results(before_img, after_img, added, removed, moved)
