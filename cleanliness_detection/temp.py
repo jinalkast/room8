@@ -147,8 +147,8 @@ class CleanlinessDetector:
     """Find all objects in 2 images and identify what was added, removed, and moved"""
     def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
         added, removed, moved = [], [], []
-        objects_before = self.detect_objects(before_img)
-        objects_after = self.detect_objects(after_img)
+        objects_before = self.detect_objects(before_img, display=True)
+        objects_after = self.detect_objects(after_img, display=True)
         centroids_before = np.array([obj.centroid for obj in objects_before])
         centroids_after = np.array([obj.centroid for obj in objects_after])
 
