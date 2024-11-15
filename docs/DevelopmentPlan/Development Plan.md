@@ -1,4 +1,4 @@
-9
+
 
 # Development Plan
 
@@ -14,7 +14,8 @@ Table 1: Revision History
 
 | Date | Developer(s) | Change |
 | :---- | :---- | :---- |
-| 2024-09-24 | Mohammed, Maged, Jinal, Jane, Harshil | Version 1.0 |
+| 2024-09-24 | Mohammed, Maged, Jinal, Jane, Harshil | Version 0 |
+| 2024-11-14 | Jinal | Version 0.1 |
 
 # 1 \- Confidential Information
 
@@ -152,25 +153,30 @@ GitHub Project Link: [https://github.com/users/jinalkast/projects/1](https://git
 
 ## 9.1 Plan for Demonstration
 
-The Proof of Concept (POC) demo will demonstrate the artificial intelligence (AI) algorithm’s ability to observe an ideal environment using this as a baseline. After usage of the environment the algorithm will be able to analyze and compare it to the original reference. It will then determine whether the current state is acceptable and remains consistent with the reference or if the usage of the environment caused it to no longer meet the standard of the ideal conditions. If the deviation is big enough from the original a rating/level will be given to the user that had used the environment for accountability purposes.
+The Proof of Concept (POC) demo will demonstrate a variety of features related to the Room8 application. The main purpose of the demonstration is to prove that the core functionalities of the system are feasible. It will be broken down into two main components: the web application which houses a number of useful features, and the artificial intelligence (AI) algorithm for cleanliness detection. The features of the web application include a bill splitter, scheduler, and chatbot group message notifier. The bill splitter allows roommates to enter shared bills and split them with their fellow roommates. The scheduler displays a calendar view with the ability to add activities and assign them to members of the same house (i.e. chores, group events, etc.). The final component of the web app is the chatbot, which when activated, creates a group chat with all members of the house and sends relevant messages For the POC demo, the cleanliness detection algorithm will have some basic functionality. First, it will utilize a pre-trained model to detect objects in an image. Then, our own algorithm will output the difference of states between two consecutive frames (“before” and “after” picture of the shared space, i.e. kitchen).
 
 ## 9.2 Risks Involved
 
 The following are the risks involved with the POC demo:
 
-* **Cleanliness Detection:** Ensure the detection algorithm does not consider an environment “messy” or “dirty” if the change made to the original is very small such as different lighting or angle of an object is changed.  
-* **Magnitude of Deviation:** If a deviation from the baseline is detected then verify the detection algorithm will be able to give the environment a range or scale of how bad it has deviated from the baseline.  
-* **Privacy of Users:** Make sure user privacy is taken into consideration for those in the environment by only activating the camera when no individuals are in frame but need a system to implement tracking of environment usage to maintain privacy and accountability.  
-* **Training Algorithm:** Finding enough usable data to train and develop our algorithm.
+* **Usability and User Experience Issues:** If the complexity of the components in the web app or their integration with each other is difficult for a user to navigate, it could cause them to be frustrated with their experience. The interactions should be intuitive.  
+* **Technical Limitations and Performance:** Since the POC build will not be built with scalability in mind (as it is treated as “throwaway” code), it may face issues handling multiple requests and slow down/crash.  
+* **Relying on a Pre-Trained Algorithm for Object Detection:** The pre-trained model may not be robust enough for our specific use cases of common areas such as kitchens or living rooms. This may result in poor performance and could prompt the team to consider training our own model instead.  
+* **Chatbot Sending Excessive Notifications:** Since the chatbot is configured to send notifications for new bills, chores, and other related events to the house, users may be spammed with messages and be dissatisfied with the feature.  
+* **Synchronization Between Features:** If data entered for one of the features (i.e. bill splitter, chore scheduler) does not update correctly, then users will face the issue of seeing inaccurate and/or invalid data for other related features.  
+* **Limited Error Handling:** Since the POC is focused on delivering basic functionality and proving their feasibility, there isn’t an emphasis on handling errors appropriately. This may result in users receiving inadequate feedback when they interact with the system in a way that it was not expecting.
 
 ## 9.3 Criteria for Success
 
 If the following has been successfully demonstrated at the POC demo then the POC will be successful:
 
-* The AI Algorithm is able to detect when an environment has been altered past the given baseline and is considered messy.  
-* Small changes such as positioning of items is considered the same as baseline.  
-* When a mess is detected the AI Algorithm will give the environment a rating and tell users who have left it in an unacceptable state.  
-* Users are not captured in any pictures taken by camera.
+* Users are able to create an account and login on the web application  
+* Users can create bills, manage bills, and view past bills on the bill splitter page  
+* Users can see a schedule for the upcoming week and create activities which are assignable to other members of the house  
+* Users are able to activate the chatbot for their house which sends an introduction message to a group SMS created with all members of the house and the chatbot  
+* The algorithm is supplied with before and after images and then detects objects that were added, removed or moved and gives a cleanliness score depending on what was added or removed.
+
+# 
 
 # 10 \- Expected Technology
 
@@ -234,10 +240,10 @@ This deliverable did not produce any major disagreements as the team had many lo
 
 | Name | Specialization(s) |
 | :---- | :---- |
-| Mohammed Abed | Devops Cloud platforms |
-| Maged Armanios | Mobile development |
+| Mohammed Abed | Devops Cloud Platforms |
+| Maged Armanios | Mobile Development |
 | Jinal Kasturiarachchi | Accessibility & Frontend Design   |
-| Jane Klavir | Artificial Intelligence & image detection |
+| Jane Klavir | Artificial Intelligence & Image Detection |
 | Harshil Patel | Security & Privacy |
 
 ## Team Values and Principles
