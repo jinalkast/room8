@@ -1,0 +1,403 @@
+\documentclass{article}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float}
+
+\title{Development Plan\\\progname}
+
+\author{\authname}
+
+\date{}
+
+\input{../Comments}
+\input{../Common}
+
+\begin{document}
+
+\maketitle
+
+\begin{table}[hp]
+\caption{Revision History} \label{TblRevisionHistory}
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+2024-09-24 & Team & Version 1.0 \\
+2024-11-14 & Jinal & Version 1.1 \\
+2025-01-08 & Maged & Version 1.2: Implemented TA feedback \\
+... & ... & ...\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage{}
+
+The Development Plan outlines the workflows, processes, and resources required to successfully develop and deliver this project. It defines the timelines, roles, and responsibilities while ensuring alignment with the project’s objectives and the team's success criteria.
+
+\section{Confidential Information?}
+There is no confidential information associated to this project.
+
+\section{IP to Protect}
+There is no intellectual property to protect in this project.
+
+\section{Copyright License}
+MIT License: \href{https://github.com/jinalkast/room8/blob/main/LICENSE}{\underline{link}} 
+
+\section{Team Meeting Plan}
+\begin{itemize}
+\item The team will meet two times a week without the supervisor on Tuesday and Friday evenings
+\begin{itemize}
+\item Meetings will be held virtually over Discord unless specified otherwise
+\end{itemize}
+\item Meetings with the industry supervisor (R. Tharmarasa) have not been scheduled yet
+\item The project manager (Jinal) will begin every meeting with a discussion of existing action items,
+followed by a discussion of the coming deliverable, and finally end the meetings by assigning
+action items to the developers
+\end{itemize}
+
+\section{Team Communication Plan}
+The platforms used for communicating will be iMessage, Discord, and GitHub. iMessage will be
+used for informal discussion and to schedule ad hoc meetings (either virtual or in-person).
+Discord will be used to host virtual meetings, and to share relevant links and resources to other
+developers. Finally, GitHub will be used to keep a formal track of all technical issues and
+meeting minutes.
+
+\section{Team Member Roles}
+Assigned roles are subject to change and do not exempt members from working on differing
+aspects of the project. These roles serve as expertise guidelines for members and stakeholders
+for more efficient communication.
+
+\begin{table}[H]
+\caption{Team Roles}
+\label{tab:team-roles}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Name} & \textbf{Roles} \\ \hline
+Mohammed & General Developer, DevOps Developer \\ \hline
+Maged & General Developer, Frontend Developer \\ \hline
+Jinal & General Developer, Project Manager, Frontend Developer \\ \hline
+Jane & General Developer, Team Liaison, ML Developer \\ \hline
+Harshil & General Developer, Backend Developer \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\caption{Role Definitions}
+\label{tab:role-definitions}
+\begin{tabular}{|l|l|}
+\hline 
+\textbf{Role} & \textbf{Responsibilities} \\
+\hline 
+Project Manager & In charge of organizing project deadlines, creating \\
+& meetings, allocating tasks accordingly, and ensuring \\
+& project milestones are followed on time.\\
+\hline
+General Developer & In charge of contributing code to the repository,\\
+& creating tests for their code, creating and managing \\
+& issues as they arise, reviewing pull requests, and \\
+& creating adequate documentation for their code.\\
+\hline 
+Team Liaison & In charge of communicating with the supervisors and \\
+& faculty.\\
+\hline 
+Frontend Developer & In charge of building and styling the frontend UI \\
+& elements of the application. \\
+\hline 
+Backend Developer & In charge of handling server side functionality and \\
+&  network logic.\\
+\hline 
+DevOps Developer & In charge of ensuring CI/CD pipeline and \\ 
+& infrastructure operate smoothly and that automation \\ 
+& is done efficiently\\
+\hline 
+ML Developer & Responsible for researching and developing \\
+& models tailored to meet the requirements of the project. \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Changing Roles}
+Team members may change their roles by altering this document to reflect the changes discussed. Since changes to the repository require approval from two other members of the team this will act as a voting process to approve the change.
+\subsection{Taking over the  Roles}
+Team members may change take over another members roles via an informal agreement with another team member as long as this is communicated to a majority of team members verbally or mentioned in one of the communication platforms outlined in the communication plan.
+
+\section{Workflow Plan}
+\subsection{Issue Tracking}
+All tickets will be managed in GitHub Issues and linked to GitHub projects' Kanban board. Issues will be created using one of the following templates inside the ".github/issue\_template" folder:
+\begin{itemize}
+\item bug\_report.md
+\item feature.md
+\item research.md
+\item general.md
+\end{itemize}
+Issues will also use the following labels accordingly
+\begin{itemize}
+\item Code
+\item Management
+\item Bug
+\item Documentation
+\item Research
+\item Feature
+\item Maintenance
+\item Enhancement
+\end{itemize}
+
+Once an issue is created and filled with the appropriate information and labels, it will then be
+added to the backlog list inside the Kanban board.\\\\
+The Kanban board will have a “Backlog” list for all the current tasks, a “To Do” list for the current
+sprint’s tickets, “In Progress” for currently active tickets, “In Review” when the ticket with the
+associated pull request is being reviewed, “Dev” for tickets which are live on the development
+environment and are being tested, and “Done” for all the finished tickets and code which is in
+the production environment.
+
+\subsection{Git Workflow}
+All tasks must have an associated GitHub issue to track the progress and completeness of
+work. Tickets assigned the “Code” label require the approval of a pull request (PR) to be
+completed. Tickets without the “Code” label require the review of one other member before the
+task is marked as completed.
+The repository will maintain two deployed branches. A “dev” branch for development and testing
+and the “main” branch for production.
+Here are the steps for a code ticket:
+\begin{itemize}
+\item Move the ticket to “In Progress” inside of the Kanban board.
+\item Pull the latest “dev” branch
+\item Checkout a new branch following the naming convention
+“ticketnumber-short-description”. For example, “23-integrate-new-model”.
+\item Complete the corresponding changes
+\item Commit and push the branch to the remote repository
+\item Create a pull request to the “dev” branch with a short description of the changes
+\item Add any relevant screenshots
+\item Add the “Closes” tag. For example: “Closes \#23”
+\item Assign a reviewer
+\item Move the ticket to “In Review”
+\end{itemize}
+
+Once the pull request is approved and all automated pipelines are successfully passed, the
+ticket will be merged to the “dev” environment and the CI/CD pipeline will deploy the new
+changes to the “dev” application. The ticket should now be moved to “Dev”.
+Releases will be done aperiodically according to project deadlines. All associated tickets in
+“Dev” should be moved to “Done”.
+\subsection{CI/CD Pipelines}
+GitHub Actions will be used to automate the testing and deployment of changes in the “dev”
+repository. The deployment of the “main” branch will be completed manually as releases will be completed
+on an as-needed basis.\\\\
+Sample workflow:
+\begin{itemize}
+\item Trigger workflow on new commits to the “dev” branch
+\item Build and run applications and complete automated tests
+\item Build production application
+\item Update infrastructure and corresponding environment variables
+\item Deploy new code
+\end{itemize}
+
+
+\section{Project Decomposition and Scheduling}
+GitHub Project Link: \href{https://github.com/jinalkast/room8/blob/main/LICENSE}{\underline{https://github.com/jinalkast/room8/blob/main/LICENSE}} 
+\subsection{Tasks and Due Dates}
+
+\begin{table}[H]
+\caption{Tasks and Due Dates}
+\label{tab:due-dates}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Task To Be Completed} & \textbf{Date Due} \\ \hline
+Problem Statement, POC Plan, & September 24 \\ 
+and Dev Plan & \\ \hline
+Requirements Doc Rev0 & October 9 \\ \hline
+Hazard Analysis Rev0 & October 23 \\ \hline
+VnV Plan Rev0 & Novemeber 1 \\ \hline
+POC Demo & Novemeber 11-12 (Exact Date TBD) \\ \hline.
+Design Doc Rev0 Demo & January 15 \\ \hline
+Rev0 Demo & February 3-14 (Exact Date TBD) \\ \hline
+VnV Report Rev0 & March 7 \\ \hline
+Final Demo (Rev1) & March 24-30\\ \hline
+Final Documentation(Rev1) & April 2 \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Proof of Concept Demonstration Plan}
+\subsection{Plan For Demonstration}
+The Proof of Concept (POC) demo will demonstrate a variety of features related to the Room8 application. The main purpose of the demonstration is to prove that the core functionalities of the system are feasible. It will be broken down into two main components: the web application which houses a number of useful features, and the artificial intelligence (AI) algorithm for cleanliness detection. The features of the web application include a bill splitter, scheduler, and chatbot group message notifier. The bill splitter allows roommates to enter shared bills and split them with their fellow roommates. The scheduler displays a calendar view with the ability to add activities and assign them to members of the same house (i.e. chores, group events, etc.). The final component of the web app is the chatbot, which when activated, creates a group chat with all members of the house and sends relevant messages For the POC demo, the cleanliness detection algorithm will have some basic functionality. First, it will utilize a pre-trained model to detect objects in an image. Then, our own algorithm will output the difference of states between two consecutive frames (“before” and “after” picture of the shared space, i.e. kitchen).
+
+\subsection{Risks Involved}
+The following are the risks involved with the POC Demo:
+\begin{itemize}
+\item \textbf{Usability and User Experience Issues:} If the complexity of the components in the web app or their integration with each other is difficult for a user to navigate, it could cause them to be frustrated with their experience. The interactions should be intuitive. 
+\item \textbf{Technical Limitations and Performance:} Since the POC build will not be built with scalability in mind (as it is treated as “throwaway” code), it may face issues handling multiple requests and slow down/crash.
+\item \textbf{Relying on a Pre-Trained Algorithm for Object Detection:} The pre-trained model may not be robust enough for our specific use cases of common areas such as kitchens or living rooms. This may result in poor performance and could prompt the team to consider training our own model instead.
+\item \textbf{Chatbot Sending Excessive Notifications:} Since the chatbot is configured to send notifications for new bills, chores, and other related events to the house, users may be spammed with messages and be dissatisfied with the feature.
+\item \textbf{Synchronization Between Features:} If data entered for one of the features (i.e. bill splitter, chore scheduler) does not update correctly, then users will face the issue of seeing inaccurate and/or invalid data for other related features.
+\item \textbf{Limited Error Handling:} Since the POC is focused on delivering basic functionality and proving their feasibility, there isn’t an emphasis on handling errors appropriately. This may result in users receiving inadequate feedback when they interact with the system in a way that it was not expecting.
+\end{itemize}
+
+\subsection{Criteria for Success}
+If the following has been successfully demonstrated at the POC demo then the POC will be successful:
+\begin{itemize}
+\item Users are able to create an account and login on the web application
+\item Users can create bills, manage bills, and view past bills on the bill splitter page
+\item Users can see a schedule for the upcoming week and create activities which are assignable to other members of the house
+\item Users are able to activate the chatbot for their house which sends an introduction message to a group SMS created with all members of the house and the chatbot
+\item The algorithm is supplied with before and after images and then detects objects that were added, removed or moved and gives a cleanliness score depending on what was added or removed.
+\end{itemize}
+\section{Expected Technology}
+
+\begin{table}[H]
+\caption{Expected Technologies}
+\label{tab:expected-tech}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Technology} & \textbf{Reasoning} \\ \hline
+ReactJS, AngularJS, & Application will be built as a Progressive \\ 
+VueJS & Web Application (PWA). This enables the \\
+& team to build both a desktop and mobile version  \\
+& without requiring building separate frontends. \\
+\hline
+ExpressJS, NextJS, & Backend will be built using popular frameworks\\
+Django, FastAPI, Go (Gin) & due to the abundance of documentation \\
+& as well as available boilerplate. \\
+& \\
+& Django and FastAPI provide access to Python’s \\
+& many libraries such as TensorFlow and PyTorch \\
+& which would ease the implementation of the AI \\ 
+& model.\\
+\hline 
+Firebase, Supabase, AWS & Backend-as-a-service to remove database, \\
+Amplify, Appwrite & authentication, and account management  \\
+& implementation details. \\
+\hline
+PostgresSQL, MySQL, & Further inquiry is required to decide upon \\
+MongoDB &  document vs. relational databases. The use of \\
+& a BaaS would limit the possible database options \\
+& and flexibility. \\
+\hline
+PyTorch, TensorFlow & These technologies can be used to implement \\
+& the AI model. This can be done directly in the  \\
+& backend or as separate microservices. \\
+\hline
+AWS, Google Cloud & AI model can be built using existing \\ 
+Platform, Azure & technologies on cloud providers, providing \\ 
+& us with more computing power and reduced load \\ 
+& on our backend servers. \\
+\hline
+Docker, Terraform, & CI/CD pipeline and infrastructure as code \\ 
+Kubernetes, GitHub & if cloud technologies are used. \\ 
+Actions & \\
+\hline
+AWS, Google Cloud, & Application hosting. \\ 
+Platform Azure, Vercel & \\
+\hline
+Jest, Cypress & Automated testing. \\ 
+\hline
+Git, GitHub & Version control and repository management. \\ 
+\hline
+\end{tabular}
+\end{table}
+
+\section{Coding Standard}
+\subsection{Naming Conventions}
+The naming conventions will be the standard for the respective programming language (ex: snake case for python). Boolean variables will always be named as a question (ex: isReady).
+
+\subsection{Comments and Documentation}
+Adhering to the points below will ensure readable and understandable code:
+\begin{itemize}
+\item Add comments for code sections that are not easily understood at first glance
+\item Clear and brief comments
+\item If longer descriptions are needed for functions and methods then should be appropriately
+documented in description document when applicable
+\end{itemize}
+
+
+\newpage{}
+
+\section*{Appendix --- Reflection}
+\subsection*{Questions}
+\begin{enumerate}
+    \item Why is it important to create a development plan prior to starting the
+    project?
+    \item In your opinion, what are the advantages and disadvantages of using
+    CI/CD?
+    \item What disagreements did your group have in this deliverable, if any,
+    and how did you resolve them?
+\end{enumerate}
+\subsection*{Answers}
+\begin{enumerate}
+    \item Creating a development plan before starting the project has several benefits. Firstly, when creating and working on a project disagreements are inevitable. Creating the plan first can help deal with these disagreements before development starts so developers don’t have different standards, goals, technologies, or programming practices. Secondly, the development plan can create a timeline/structure for the development team to follow and stay on track, in the event anyone forgets or is confused about how to proceed with the project, the development plan can always be referenced as a single source of truth. In summary, creating the development plan first is beneficial because it aligns the team on the project plan and can always be referred to when developing to realign team members.
+    \item The benefits of CI/CD in a software project can be grouped into three benefits. These benefits are saved time, reduced human error, and increased visibility to where breaking changes occur. CI/CD saves you time because it can run repetitive tasks in place of a developer after pushes, commits, or creating merge requests. Some tasks it can automate include running tests, pushing builds to test/production environments, and enforcing code styling. Automated testing after every commit or pull will inform developers if any new code has introduced a change that broke previous functionality (assuming the presence of well-written tests) and prevent it from being introduced into the production codebase. Finally, enforcing code styling using CI/CD by preventing merges that break the styling convention will force developers to adhere to the standards established and make reading other developers' code easier as its style is consistent with the entire project.
+    \item This deliverable did not produce any major disagreements as the team had many long discussions before this delivery about our project and plan of action. In addition, our team is aware of each other's skills and often relies on the person with the most experience in a specific skill to make decisions on matters they're well-versed in, preventing disagreements.
+\end{enumerate}
+\newpage{}
+\section*{Appendix - Team Charter}
+
+\subsection*{Project Information}
+
+\textbf{Project Name:} Room8 \\
+\textbf{Project Description:} Roommates often complain about cleanliness of communal spaces and have a difficult time holding each other accountable. Shared living spaces often cause friction in communicating expectations and frustrations. This application uses computer vision to detect the cleanliness of indoor environments, quantify who is creating/cleaning messes, and relay that information to occupants. It essentially serves as a mediator for student houses. \\
+\textbf{Project Supervisor:} R. Tharmarasa \\
+\textbf{Project Repository:} \href{https://github.com/jinalkast/room8}{\underline{https://github.com/jinalkast/room8}} 
+
+\subsection*{Team Members}
+\begin{table}[H]
+\caption{Team Members}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Name} & \textbf{Specialization(s)} \\ \hline
+Mohammed Abed & Devops Cloud Platforms \\ \hline
+Maged Armanios & Mobile Development \\ \hline
+Jinal Kasturiarachchi & Accessibility \& Frontend Design \\ \hline
+Jane Klavir & Artificial Intelligence \& Image Detection \\ \hline
+Harshil Patel & Security \& Privacy \\ \hline
+\end{tabular}
+\label{tab:charter-team-members}
+\end{table}
+
+\subsection*{Team Values and Principles}
+\begin{table}[H]
+\caption{Team Values and Principles}
+\begin{tabular}{|l|p{12cm}|}
+\hline
+\textbf{ID} & \textbf{Value or Principle} \\ \hline
+1 & We don’t expect each other to know everything beforehand and we know there'll be a lot of learning throughout this project. \\ \hline
+2 & We will work as a team to complete our objectives. \\ \hline
+3 & We can always ask each other for support at any time. \\ \hline
+4 & We will work hard to ensure a good work-life balance for the team. \\ \hline
+\end{tabular}
+\label{tab:team-values}
+\end{table}
+
+\subsection*{Communication \& Meeting Guidelines}
+\begin{table}[H]
+\caption{Communication \& Meeting Guidelines}
+\centering
+\begin{tabular}{|l|p{12cm}|}
+\hline
+\textbf{ID} & \textbf{Guideline} \\ \hline
+1 & When reaching out to teammates, be clear and concise in your communication, specifying the purpose of your message and any action items needed. Choose an appropriate medium, such as email or a group chat, and ensure your message is respectful and professional. It's also helpful to be mindful of your teammates' schedules and deadlines. \\ \hline
+2 & When responding to teammates, aim to reply promptly to avoid project delays. Acknowledge their messages within 24 hours and provide clear, constructive feedback or answers. If you need additional time to address a complex issue, let them know within the same 24-hour deadline that you need additional time to respond and set a reasonable deadline for your response. \\ \hline
+3 & For effective meetings, the person who initiates must chair it and come prepared with a clear agenda and actionable items. All participants should respect each other’s opinions and avoid rude behavior such as arguing, interrupting others, or not paying attention while someone is speaking. Meetings should conclude with next steps or action items for members to execute/follow up on. \\ \hline
+4 & It is not expected for everyone to attend every meeting as the members can often have conflicting schedules or other priorities come up. It is recommended that each member attend as much as they can to prevent additional discussions to realign absent members. Members who are unable to make a meeting that requires their presence should propose an alternative meeting time instead of expecting the person to constantly reach out to avoid frustration amongst members. \\ \hline
+\end{tabular}
+\label{tab:communication-guidelines}
+\end{table}
+
+\subsection*{Work Guidelines}
+\begin{table}[H]
+\caption{Work Guidelines}
+\centering
+\begin{tabular}{|l|p{12cm}|}
+\hline
+\textbf{ID} & \textbf{Guideline} \\ \hline
+1 & All work completed is to be proofread for typos and be formatted with the appropriate headers. \\ \hline
+2 & If necessary, the work should also be dated and include signature sections to show the group's collective. \\ \hline
+3 & Every individual on the team is forbidden from submitting a deliverable without every piece of work in the document being proofread by a majority of the group. \\ \hline
+4 & Guide 4 can be altered in circumstances where a member is absent to a majority of the members minus the absent members. \\ \hline
+5 & If you feel another team member is not fulfilling their responsibilities, remind them of their responsibilities early on. \\ \hline
+6 & If a team member is blocked on an action item for any reason, discuss as a team how to support them in their work so the deadlines can be met. \\ \hline
+7 & If there is a long-term blocker that would prevent the team member from working on the project for a considerable amount of time, the blocked team member is to address this to the professor or TA. \\ \hline
+\end{tabular}
+\label{tab:work-guidelines}
+\end{table}
+
+
+
+\end{document}

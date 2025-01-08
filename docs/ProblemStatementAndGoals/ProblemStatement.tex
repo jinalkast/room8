@@ -1,0 +1,128 @@
+\documentclass{article}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+\title{Problem Statement and Goals\\\progname}
+
+\author{\authname}
+
+\date{}
+
+\input{../Comments}
+\input{../Common}
+
+\begin{document}
+
+\maketitle
+
+\begin{table}[hp]
+\caption{Revision History} \label{TblRevisionHistory}
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\midrule
+2024-09-24 & Team & Version 1.0 \\
+2024-09-25 & Maged & Implementing TA feedback and changed extras\\
+... & ... & ...\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Problem Statement}
+\subsection{Problem}
+A common experience that the vast majority of the human population encounters is a
+shared living arrangement, whether that be with family members or, prevalently in
+post-secondary studies, roommates. This scenario offers a number of challenges, including the
+maintenance of shared spaces such as a kitchen or living room. As the power dynamic between
+roommates are typically equal, it can often feel cumbersome to reach out to a roommate and
+complain about the mess that they leave behind in a common space. This friction can be
+avoided by setting a standard for the cleanliness that is expected of any and all members of the
+same residence. Our project aims to deliver a camera system, paired with an application, which
+assesses the cleanliness of a shared space (before an individual enters, and after they exit).
+Additionally, the application will include features that will benefit users who have roommates by
+addressing other issues that may rise from the living arrangement, such as splitting shared
+expenses, scheduling activities and chores, and encouraging communication between
+members.
+
+\subsection{Inputs and Outputs}
+\subsubsection{Inputs}
+\begin{itemize}
+\item Images of the monitored area
+\item Sensor data detecting when to begin capturing images
+\item Data about chores, bills, etc provided by users through the application (expected to be in JSON format)
+\end{itemize}
+\subsubsection{Outputs}
+For the system which monitors the cleanliness of the shared space, the output is still undecided. Some possible options include
+\begin{itemize}
+\item An image with an indicator showing where messes were made / cleaned
+\item A numerical value indicating the net change in the cleanliness of a shared space
+\item Images taken before and after an individual has altered the shared space
+\end{itemize}
+Additionally, the application will provide users with
+\begin{itemize}
+\item A summary of all outstanding bills you owe and are owed to other individuals of the shared house
+\item A list of expected tasks (chores) to do in the house with deadlines for all members of the house
+\end{itemize}
+\subsection{Stakeholders}
+The stakeholders of this project are members of any shared living situation, but it is
+primarily directed towards students who live in student housing/campus residence.
+
+\subsection{Environment}
+\subsubsection{Hardware Environment}
+The hardware environment mainly consists of the camera and sensor system that will be
+installed in the shared space. The camera will be used to capture images of the area, while the
+sensor(s) will be used to detect when someone enters and/or exists.
+\subsubsection{Software Environment}
+The software environment is twofold. For the cleanliness detection system, an algorithm
+will need to be produced in order to assess the space. Besides that, there must also be a
+full-stack web and/or mobile application developed, for the assessment to be displayed, along
+with the other additional functionality that was previously mentioned (bill splitter, scheduler,
+group chat, etc.)
+\section{Goals}
+All goals listed below stem from the problem statement and aim to achieve the mission of reducing tension and friction common in shared living arrangements:
+\begin{itemize}
+\item Provide users a platform to centralize information about tasks and finances related to their shared home
+\item Create a hardware system which can capture images of a selected area during a desired period of time based on motion activity of the area
+\item Create an algorithm which given images of an area in chronological order, evaluate whether or not that area has been made more "messy" or "clean"
+\end{itemize}
+\section{Stretch Goals}
+\begin{itemize}
+\item Provide item-level results (i.e Items a person leaves/uses in the area) in the output of the algorithm which detects the changes to the cleanliness of a living space
+\begin{itemize}
+\item The specificity of the output would make the scoring algorithm as objective as possible, and would lay-out the precise steps users can take to improve their cleanliness
+\end{itemize}
+\item The system allows users to select a cleanliness detection model that adapts to the specific living space and learns its features. It then uses its learnings to curate a specific instance of its general classification algorithm. This curated algorithm is used solely for that user group
+\begin{itemize}
+\item Beyond the generic algorithm, having this mechanism would make results more individualized and better-suited for specific environments
+\end{itemize}
+\end{itemize}
+\section{Challenge Level and Extras}
+
+Challenge Level: General
+Extras:
+\begin{itemize}
+\item User Documentation
+\item Usability Testing
+\end{itemize}
+
+\newpage{}
+
+\section*{Appendix --- Reflection}
+\subsection*{Questions}
+\begin{enumerate}
+    \item What went well while writing this deliverable? 
+    \item What pain points did you experience during this deliverable, and how
+    did you resolve them?
+    \item How did you and your team adjust the scope of your goals to ensure
+    they are suitable for a Capstone project (not overly ambitious but also of
+    appropriate complexity for a senior design project)?
+\end{enumerate}  
+\subsection*{Answers}
+\begin{enumerate}
+\item Generally speaking, the writing of this deliverable went pretty smoothly. I will speak about this more in the following question, but after getting over the hurdles of defining our project and what we wanted it to be (after much back and forth), it was straightforward to take a look at the different sections of the deliverable and what they were asking, and produce a document that we’re all proud of.
+\item A large majority of the pain points that we experienced during this deliverable were due to the
+uncertainties that we had coming into this phase of the project. Initially, we were debating between two options for our project, one from the list of potential projects, and the other being this one, our original idea. There was a lot of back and forth, and it took us quite a bit of time to meet with the potential supervisors as well. Eventually, we reached a settling point on this concept, while securing a supervisor for the project as well. This reassurance is what allowed us to focus on defining the scope of the problem, and cleared up the confusion about what content we wanted to deliver in this paper.
+\item Initially we had very large ambitions for the project that we wanted to deliver, however, we were able to adjust our expectations after having an initial discussion with our supervisor. Since he has much more domain knowledge than us, we were asked many questions that we were unsure about or still had to explore. This left us asking ourselves even more questions, which helped narrow down the scope of what we want to achieve in our project. To be specific, a main point that we hadn’t discussed at all was the issue of privacy, which seems quite obvious when discussing a camera system that’s installed in an area such as a kitchen, but we have since made many considerations regarding privacy and will continue doing so moving forward.
+\end{enumerate}
+\end{document}
