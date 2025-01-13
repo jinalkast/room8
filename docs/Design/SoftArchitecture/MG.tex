@@ -157,11 +157,13 @@ adapted here is called design for
 change.
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+\item[\refstepcounter{acnum} \actheacnum \label{acML}:] The implementation details of the detection algorithm. Including data preprocessing techniques and machine learning techniques.
+\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific hardware in which the camera and sensor system is running.
+\item[\refstepcounter{acnum} \actheacnum \label{acSensor}:] The kind of sensor used to detect activity.
+\item[\refstepcounter{acnum} \actheacnum \label{acCaptureCriteria}:] The criteria for signalling the camera to capture.
+\item[\refstepcounter{acnum} \actheacnum \label{acAlgoOutput}:] The output of the cleanliness detection algorithm whether it be an image outlining changes or a number quantifying the change in a room.
+\item[\refstepcounter{acnum} \actheacnum \label{acWebFrameworks}:] The frontend technologies used to create the user interface for the web platform (ex: React, NextJs).
+\item[\refstepcounter{acnum} \actheacnum \label{acAppFeatures}:] Specific flows of frontend features such as the bill splitting feature and chore scheduling. Changes are dependant on usability test results.
 \end{description}
 
 \wss{Anticipated changes relate to changes that would be made in requirements,
@@ -178,9 +180,10 @@ will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucPython}:] The use of Python for the implementation of the cleanliness detection algorithm. This is due to the plethora of machine learning libraries such as PyTorch available.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucWeb}:] The user facing application being implemented as a web application.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucSql}:] The data persistence for the application being implemented with a relational database, specially PostgreSQL.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucAuth}:]Utilizing a third-party service to implement OAuth for user login.
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -192,10 +195,25 @@ actually be implemented.
 
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
+\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
 \item ...
 \end{description}
 
+\begin{itemize}
+\item Sensor reading - Harsh
+\item Image capture module - Harshi
+\item Image upload module - Harshy
+\item Preprocessing module - Janet
+\item Object detection module - Janel
+\item Scoring module - Janille
+\item Bill splitting - Maged
+\item (Thing that exposes cleanliness detector to camera (makes it an API) - Patel
+\item (cleanliness detector Communicates with backend) module - enaJ
+\item Chore Scheduling Module - Maged
+\item Group chat module - Maged
+\item (FRONTEND Communicates with backend) module - Maged
 
+\end{itemize}
 \begin{table}[h!]
 \centering
 \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
