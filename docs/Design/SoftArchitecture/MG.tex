@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{graphicx}
+\graphicspath{ {./UIMockups/} }
 \usepackage{float}
 \usepackage{hyperref}
 \hypersetup{
@@ -74,6 +75,8 @@ This section records information for easy reference.
   SRS & Software Requirements Specification\\
   \progname & Explanation of program name\\
   UC & Unlikely Change \\
+  UI & User Interface \\
+  UX & User Experience \\
   \wss{etc.} & \wss{...}\\
   \bottomrule
 \end{tabular}\\
@@ -164,6 +167,7 @@ change.
 \item[\refstepcounter{acnum} \actheacnum \label{acAlgoOutput}:] The output of the cleanliness detection algorithm whether it be an image outlining changes or a number quantifying the change in a room.
 \item[\refstepcounter{acnum} \actheacnum \label{acWebFrameworks}:] The frontend technologies used to create the user interface for the web platform (ex: React, NextJs).
 \item[\refstepcounter{acnum} \actheacnum \label{acAppFeatures}:] Specific flows of frontend features such as the bill splitting feature and chore scheduling. Changes are dependant on usability test results.
+\item[\refstepcounter{acnum} \actheacnum \label{acUserDetection}:] Allowing users to see the cleanliness score of another user and detecting which user made a mess.
 \end{description}
 
 \wss{Anticipated changes relate to changes that would be made in requirements,
@@ -194,9 +198,19 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mSR}:] Sensor Reading Module
+\item [\refstepcounter{mnum} \mthemnum \label{mIC}:] Image Capture Module
+\item [\refstepcounter{mnum} \mthemnum \label{mIU}:] Image Upload Module
+\item [\refstepcounter{mnum} \mthemnum \label{mIP}:] Image Preprocessing Module
+\item [\refstepcounter{mnum} \mthemnum \label{mOD}:] Object Detection Module
+\item [\refstepcounter{mnum} \mthemnum \label{mS}:] Scoring Module 
+\item [\refstepcounter{mnum} \mthemnum \label{mRL}:] Request Listener Module (Cleanliness Detection System)
+\item [\refstepcounter{mnum} \mthemnum \label{mDU}:] Data Uploading Module (Cleanliness Detection System)
+\item [\refstepcounter{mnum} \mthemnum \label{mCS}:] Chore Schedule Module
+\item [\refstepcounter{mnum} \mthemnum \label{mCB}:] Chat Bot Module
+\item [\refstepcounter{mnum} \mthemnum \label{mBS}:] Bill Splitting Module
+\item [\refstepcounter{mnum} \mthemnum \label{mUA}:] User Authentication Module
+\item [\refstepcounter{mnum} \mthemnum \label{mHM}:] Home Management Module
 \end{description}
 
 \begin{itemize}
@@ -336,19 +350,22 @@ requirements and between the modules and the anticipated changes.
 \centering
 \begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
 \toprule
-\textbf{Req.} & \textbf{Modules}\\
+\textbf{Module} & \textbf{Reqs.}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+\mref{mSR} & NFR237\\
+\mref{mIC} & NFR231-232, NFR234\\
+\mref{mIU} & NFR233\\
+\mref{mIP} & NFR235\\
+\mref{mOD} & FR233, NFR235-236\\
+\mref{mS} & FR231\\
+\mref{mRL} & NFR235\\
+\mref{mDU} & NFR233\\
+\mref{mCS} & FR241-245, NFR241-244\\
+\mref{mCB} & FR221-224, NFR221-222\\
+\mref{mBS} & FR251-255, NFR251-252\\
+\mref{mUA} & FR211-213, NFR211-212, NFR214 \\
+\mref{mHM} & FR214-218, FR234-235, NFR213 \\
+
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -361,18 +378,14 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \toprule
 \textbf{AC} & \textbf{Modules}\\
 \midrule
-\acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\mref{acML} & \mref{mIP}, \mref{mOD}, \mref{mS} \\
+\mref{acHardware} & \mref{mSR}, \mref{mIC}, \mref{mIU} \\
+\mref{acSensor} & \mref{mSR} \\
+\mref{acCaptureCriteria} & \mref{mIC} \\
+\mref{acAlgoOutput} & \mref{mS}, \mref{mIU}, \mref{mHM} \\
+\mref{acWebFrameworks} & \mref{mCS}, \mref{mCB}, \mref{mBS}, \mref{mUA}, \mref{mHM} \\
+\mref{acAppFeatures} & \mref{mCS}, \mref{mCB}, \mref{mBS}, \mref{mUA}, \mref{mHM} \\
+\mref{acUserDetection} & \mref{mOD}, \mref{mS}, \mref{mDU}, \mref{mHM} \\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -411,15 +424,70 @@ arrows in the diagram typically correspond to the presence of import statement.}
 %\section*{References}
 
 \section{User Interfaces}
+User interface yet to be designed.
 
 \wss{Design of user interface for software and hardware.  Attach an appendix if
 needed. Drawings, Sketches, Figma}
 
-\section{Design of Communication Protocols}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chatbot.png}
+  \caption{Activate Chatbot Page}
+  \label{fig:landing}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{choreSchedule.png}
+  \caption{Chore Schedule Page}
+  \label{fig:landing}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{createBill.png}
+  \caption{Create bill Page}
+  \label{fig:landing}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{outstandingBills.png}
+  \caption{Outstanding Bills Page}
+  \label{fig:landing}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{owedBills.png}
+  \caption{Owed Bills Page}
+  \label{fig:landing}
+\end{figure}
 
-\wss{If appropriate}
 
 \section{Timeline}
+\begin{itemize}
+\item \textbf{Week 1 - 4:} {Jan 15 - Feb 11, 2025}
+\begin{itemize}
+\item Complete modules \mref{mCS}, \mref{mBS}, \mref{mUA}, \mref{mHM}
+\item Begin working on the cleanliness detection system's algorithm (\mref{mIP}, \mref{mOD}, \mref{mS})
+\end{itemize}
+\item \textbf{Week 5 - 8:} {Feb 12 - Mar 10, 2025}
+\begin{itemize}
+\item Begin working on frontend for cleanliness management system (\mref{mDU}, \mref{mHM})
+\item Designing and create system hardware (\mref{mSR}, \mref{mIC}, \mref{mIU})
+\item Create CI/CD and automated testing using GitHub Actions and the appropriate testing libraries for each component. Generate unit and integration tests.
+\item Perform usability testing
+\end{itemize}
+\item \textbf{Week 9 - 10:} {Mar 11 - Mar 24, 2025}
+\begin{itemize}
+\item Apply feedback from usability testing to finalize UI/UX.
+\item Implement \mref{mRL} so the cleanliness management system can receive input from the hardware system.
+\item All 3 systems (user application, cleanliness management system, and hardware system), should be completed by the end of this period.
+\end{itemize}
+\item \textbf{Week 11 - 12:} {Mar 25 - Apr 7, 2025}
+\begin{itemize}
+\item Perform acceptance tests on the system.
+\item Prepare demo examples and showcase.
+\item Patch bugs detected from tests and do refinements based on user and stakeholder feedback.
+\end{itemize}
+\end{itemize}
 
 \wss{Schedule of tasks and who is responsible}
 
