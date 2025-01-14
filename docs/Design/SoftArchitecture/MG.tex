@@ -6,7 +6,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{graphicx}
-\graphicspath{ {./UIMockups/} }
+\graphicspath{ {./images/} }
 \usepackage{float}
 \usepackage{hyperref}
 \hypersetup{
@@ -412,14 +412,18 @@ able to see these services (hence the import statement).  Since the uses
 relation is transitive, there is a use relation without an import, but the
 arrows in the diagram typically correspond to the presence of import statement.}
 
+The diagram denotes uses relationships with a solid arrow. If a component  communicates with another component via some remote protocol like HTTP/HTTPS it is denoted with a dotted arrow. Finally, modules that are not implemented by the team but are utilized in the system like web frameworks or database systems are denoted with a blue square.
+
 \wss{If module A uses module B, the arrow is directed from A to B.}
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
+
+
 
 %\section*{References}
 
