@@ -235,10 +235,13 @@ actually be implemented.
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding Module} & ~ \\
+{Hardware-Hiding Module} & M1\\
+& M2\\
+& M3\\
+& ?\\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & M7\\
 & ?\\
 & ?\\
 & ?\\
@@ -287,14 +290,35 @@ Only the leaf modules in the hierarchy have to be implemented. If a dash
 (\emph{--}) is shown, this means that the module is not a leaf and will not have
 to be implemented.
 
-\subsection{Hardware Hiding Modules (\mref{mHH})}
+\subsection{Hardware Hiding Modules}
 
 \begin{description}
-\item[Secrets:]The data structure and algorithm used to implement the virtual
-  hardware.
-\item[Services:]Serves as a virtual hardware used by the rest of the
-  system. This module provides the interface between the hardware and the
-  software. So, the system can use it to display outputs or to accept inputs.
+\item[Secrets:]The data structure and algorithm used to implement the virtual hardware.
+\item[Services:]Serves as a virtual hardware used by the rest of the system. This module provides the interface between the hardware and the software. So, the system can use it to display outputs or to accept inputs.
+\item[Implemented By:] OS
+\end{description}
+
+\subsubsection{Hardware Hiding Modules (\mref{mSR})}
+
+\begin{description}
+\item[Secrets:]Input data received from sensor for determining presence of users.
+\item[Services:]Uploads encrypted sensor data to prevent data leak ensuring privacy of users in their shared space and use of sensor data to take pictures of environment when not in use.
+\item[Implemented By:] OS
+\end{description}
+
+\subsubsection{Hardware Hiding Modules (\mref{mIC})}
+
+\begin{description}
+\item[Secrets:]Captures image of before state of shared space.
+\item[Services:]Sends pictures captured to system, mainly the machine learning algorithm for analysis of cleanliness.
+\item[Implemented By:] OS
+\end{description}
+
+\subsubsection{Hardware Hiding Modules (\mref{mIU})}
+
+\begin{description}
+\item[Secrets:]Captures image of before state of shared space.
+\item[Services:]Sends pictures captured to system, mainly the machine learning algorithm for analysis of cleanliness.
 \item[Implemented By:] OS
 \end{description}
 
