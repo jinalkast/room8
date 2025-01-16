@@ -298,28 +298,28 @@ to be implemented.
 \item[Implemented By:] OS
 \end{description}
 
-\subsubsection{Hardware Hiding Modules (\mref{mSR})}
+\subsubsection{Sensor Reading Module (\mref{mSR})}
 
 \begin{description}
 \item[Secrets:]Input data received from sensor for determining presence of users.
-\item[Services:]Uploads encrypted sensor data to prevent data leak ensuring privacy of users in their shared space and use of sensor data to take pictures of environment when not in use.
-\item[Implemented By:] OS
+\item[Services:]Uses sensor to detect when user is in shared space and when user is finished using space.
+\item[Implemented By:] Sensor.
 \end{description}
 
-\subsubsection{Hardware Hiding Modules (\mref{mIC})}
+\subsubsection{Image Capture Module (\mref{mIC})}
 
 \begin{description}
 \item[Secrets:]Captures image of before state of shared space.
-\item[Services:]Sends pictures captured to system, mainly the machine learning algorithm for analysis of cleanliness.
-\item[Implemented By:] OS
+\item[Services:]Captures images on camera system to be uploaded and used for cleanliness detection algorithm.
+\item[Implemented By:] Camera.
 \end{description}
 
-\subsubsection{Hardware Hiding Modules (\mref{mIU})}
+\subsubsection{Image Upload Module (\mref{mIU})}
 
 \begin{description}
-\item[Secrets:]Captures image of before state of shared space.
-\item[Services:]Sends pictures captured to system, mainly the machine learning algorithm for analysis of cleanliness.
-\item[Implemented By:] OS
+\item[Secrets:]Uploads image of before and after state of shared space.
+\item[Services:]Uploads image captured from camera system for system to use in cleanliness detection algorithm.
+\item[Implemented By:] Raspberry Pi.
 \end{description}
 
 \subsection{Behaviour-Hiding Module}
@@ -334,15 +334,13 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{Request Listener Module (\mref{mRL})}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type]
-  [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Secrets:]Sending image to cleanliness detector.
+\item[Services:]Converts image and information from camera and sensor to be used in system.
+\item[Implemented By:] cameraToDetectorAPI.
+\item[Type of Module:] Application programming interface.
 \end{description}
 
 \subsubsection{Etc.}
