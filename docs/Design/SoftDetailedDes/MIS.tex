@@ -503,6 +503,78 @@ None
 
 \newpage
 
+\section{MIS of ObjectDetection} \label{Module} 
+
+\subsection{Module}
+
+ObjectDetectionModule
+
+\subsection{Uses}
+To detect objects in an input tensor (preprocessed image) using a pretrained object detector (e.g. Faster R-CNN ResNet-50 FPN model). The output is a list of detected objects, where each object is represented as a HouseObject.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item MODEL{\_}NAME: str = "FasterRCNN{\_}ResNet50{\_}FPN"
+  \item CONFIDENCE{\_}THRESHOLD: float = 0.5 (minimum confidence score for object detection results)
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+detect{\_}objects & input{\_}tensor: Tensor & List[HouseObject] & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+	\item self.model: torchvision.models.detection.FasterRCNN
+\end{itemize}
+
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item The input tensor is correctly preprocessed and normalized according to the requirements of the Faster R-CNN model
+  \item PyTorch and torchvision libraries are installed and functional
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent detect{\_}objects
+\begin{itemize}
+\item transition: Uses the pretrained Faster R-CNN model to detect objects in the input tensor, filters results based on the confidence threshold
+\item output: Returns a list of detected objects, where each object is represented as a HouseObject
+\item exception: 
+\begin{itemize}
+  \item ModelNotLoadedException: Raised if the model fails to load
+  \item DetectionError: Raised if an error occurs during detection process
+\end{itemize}
+
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item load{\_}model() $\rightarrow$ torchvision.models.detection.FasterRCNN: Loads pretrained Faster R-CNN ResNet-50 FPN model
+  \item filter{\_}detections(detections: List[Dict], threshold: float) $\rightarrow$ List[HouseObject]: Filters the raw detections based on the confidence threshold and converts them to HouseObject instances
+\end{itemize}
+
+\newpage
+
 \bibliographystyle {plainnat}
 \bibliography {../../../refs/References}
 
