@@ -229,21 +229,18 @@ The following table is taken directly from the Module Guide document for this pr
 
 \section{MIS of Sensor Reading Module} \label{Start} 
 
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
-
 \subsection{Module}
 
 M1: Sensor Reading Module.
 
 \subsection{Uses}
-Used to gather data on user presence in shared space.
+Used to gather data on user presence in shared space to determine when to take before and after pictures of the shared space.
 
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+motionPresent: boolean
 
 \subsubsection{Exported Access Programs}
 
@@ -263,20 +260,20 @@ insertTime & - & - & - \\
 
 \subsubsection{State Variables}
 
-timesOfMotion.
+timesOfMotion: List[datetime] - List of time when motion was detected by the sensor.
 
 \subsubsection{Environment Variables}
-sensorData.
+sensorData: sensorDataType - Data acquired by the sensor with data type supported by sensor.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent timeMotion(timesOfMotion):
+\noindent timeMotion(timesOfMotion: datetime) -$>$ datetime:
 \begin{itemize}
 \item input: List of time stamps of when motion was detected. 
 \item output: Last timestamp of when motion was detected. 
 \end{itemize}
 
-\noindent detector(sensorData):
+\noindent detector(sensorData: sensorDataType) -$>$ boolean:
 \begin{itemize}
 \item input: Data received from sensor. 
 \item output: True of false value depending on if motion was detected. 
@@ -285,11 +282,6 @@ sensorData.
 \subsubsection{Local Functions}
 
 insertTime() - Inserting time stamp into timesOfMotion variable.
-
-\newpage
-
-\bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
 
 
 \newpage
@@ -301,11 +293,12 @@ insertTime() - Inserting time stamp into timesOfMotion variable.
 M2: Image Capture Module.
 
 \subsection{Uses}
-Used to gather data on user presence in shared space.
+Capture image of shared space using camera system.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+image: png
 
 \subsubsection{Exported Access Programs}
 
@@ -314,7 +307,7 @@ Used to gather data on user presence in shared space.
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-captureImage & motionPresent & image & - \\
+captureImage & - & image & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -323,46 +316,41 @@ captureImage & motionPresent & image & - \\
 
 \subsubsection{Access Routine Semantics}
 
-\noindent captureImage(motionPresent):
+\noindent captureImage() -$>$ 'png':
 \begin{itemize}
-\item input: Boolean value of if motion was detected by sensor. 
 \item output: Image taken.
 \end{itemize}
 
-
-\newpage
-
-\bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
+\subsubsection{Assumptions}
+\begin{itemize}
+\item captureImage will only be called when picture is needed to be taken, that is before user starts using shared space and five minutes after user has left shared space.
+\end{itemize}
 
 
 \newpage
 
 \section{MIS of Image Upload Module} \label{Module} 
 
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
-
 \subsection{Module}
 
 M3: Image Upload Module.
 
 \subsection{Uses}
-Uploads the captured image to system for cleanliness detection.
+Uploads the captured image to Raspberry Pi for the cleanliness detection system to use for analysis.
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+imgUploadErrorMessage : str - Message for cause of upload error.
 
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{3cm} p{2cm} p{2cm} p{5cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-uploadImage & image & status & - \\
+uploadImage & image & - & imgUploadErrorMessage \\
 \hline
 \end{tabular}
 \end{center}
@@ -372,24 +360,29 @@ uploadImage & image & status & - \\
 
 \subsubsection{Access Routine Semantics}
 
-\noindent uploadImage(image):
+\noindent uploadImage(image: png):
 \begin{itemize}
 \item input: Image taken from camera. 
-\item output: Boolean of upload status. 
+\item exception: 
+	\begin{itemize}
+		\item ImageUploadInterrupted: Raised if error occurs during image upload.
+	\end{itemize} 
 \end{itemize}
 
+\subsubsection{Assumptions}
+\begin{itemize}
+	\item Network is stable and never causes error in image upload.
+	\item Power source is stable and never causes error in image upload.
+\end{itemize}
 
 \subsubsection{Local Functions}
 
-captureImage(motionPresent) - Takes picture to upload.
+captureImage() -$>$ png - Takes picture to be uploaded.
 
 \newpage
 
 \section{MIS of Request Listener Module} \label{Module} 
 
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
 
 \subsection{Module}
 
@@ -419,7 +412,7 @@ getImages & - & images & - \\
 
 \subsubsection{Access Routine Semantics}
 
-\noindent getImages():
+\noindent getImages() -$>$ List[png]:
 \begin{itemize}
 \item output: Two most recent images where one is the before and other is the after state of shared space after user is finished.
 \end{itemize}
@@ -441,6 +434,7 @@ The Preprocessing Module is used for preparing raw images (i.e. from the Image U
 
 \begin{itemize}
   \item SUPPORTED{\_}FORMATS: List[str] = ["JPEG", "PNG"]
+  \item DEFAULT{\_}TRANSFORMS: torchvision.transforms.Compose\: A default set of PyTorch transformations, including resizing, normalization, and optional filtering
 \end{itemize}
 
 \subsubsection{Exported Access Programs}
@@ -450,9 +444,7 @@ The Preprocessing Module is used for preparing raw images (i.e. from the Image U
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-process{\_}image & image: Image & Image & - \\
-\hline
-apply{\_}transformations & image: Image & Image & - \\
+process{\_}image & image: Image & Tensor & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -460,6 +452,9 @@ apply{\_}transformations & image: Image & Image & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
+None
+
+
 
 \subsubsection{Environment Variables}
 \begin{itemize}
@@ -468,7 +463,8 @@ apply{\_}transformations & image: Image & Image & - \\
 
 \subsubsection{Assumptions}
 \begin{itemize}
-  \item The input image is in a valid format supported by the module (e.g. JPEG, PNG)
+  \item The input image is in a valid format supported by PyTorch (e.g. JPEG, PNG)
+  \item PyTorch and torchvision libraries are installed and functional
   \item Network connectivity is stable for receiving images through the cloud network
 \end{itemize}
 
@@ -477,8 +473,8 @@ apply{\_}transformations & image: Image & Image & - \\
 
 \noindent process{\_}image(image: Image):
 \begin{itemize}
-\item transition: Applies a sequence of transformations to the input image 
-\item output: Returns the transformed image ready for subsequent object detection
+\item transition: Applies a sequence of PyTorch transformations to the input image 
+\item output: Returns the transformed image as a Pytorch tensor, ready for subsequent object detection
 \item exception: 
 \begin{itemize}
   \item InvalidImageFormatException: Raised if the input image format is unsupported
@@ -501,9 +497,314 @@ apply{\_}transformations & image: Image & Image & - \\
 
 \begin{itemize}
   \item validate{\_}image{\_}format(image: Image) $\rightarrow$ bool: Checks if the input image format is supported
-  \item resize{\_}image(image: Image, dimensions: Tuple[int, int]) $\rightarrow$ Image: Resizes the image to the specified dimensions
-  \item apply{\_}filter(image: Image, filter{\_}type: str) $\rightarrow$ Image: Applies a specified filter (e.g., Gaussian blur, edge detection) to the image
-  \item normalize{\_}image(image: Image) $\rightarrow$ Image: Normalizes pixel values for consistency
+  \item create{\_}transforms() $\rightarrow$ torchvision.transforms.Compose\: Creates a PyTorch Compose object for the default set of transformations
+  \item apply{\_}transforms(image: Image, transforms: torchvision.transforms.Compose) $\rightarrow$ Tensor: Applies the given transformations to the input image
+\end{itemize}
+
+\newpage
+
+\section{MIS of ObjectDetection} \label{Module} 
+
+\subsection{Module}
+
+ObjectDetectionModule
+
+\subsection{Uses}
+To detect objects in an input tensor (preprocessed image) using a pretrained object detector (e.g. Faster R-CNN ResNet-50 FPN model). The output is a list of detected objects, where each object is represented as a HouseObject.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item MODEL{\_}NAME: str = "FasterRCNN{\_}ResNet50{\_}FPN"
+  \item CONFIDENCE{\_}THRESHOLD: float = 0.5 (minimum confidence score for object detection results)
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+detect{\_}objects & input{\_}tensor: Tensor & List[HouseObject] & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+	\item self.model: torchvision.models.detection.FasterRCNN
+\end{itemize}
+
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item The input tensor is correctly preprocessed and normalized according to the requirements of the Faster R-CNN model
+  \item PyTorch and torchvision libraries are installed and functional
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent detect{\_}objects
+\begin{itemize}
+\item transition: Uses the pretrained Faster R-CNN model to detect objects in the input tensor, filters results based on the confidence threshold
+\item output: Returns a list of detected objects, where each object is represented as a HouseObject
+\item exception: 
+\begin{itemize}
+  \item ModelNotLoadedException: Raised if the model fails to load
+  \item DetectionError: Raised if an error occurs during detection process
+\end{itemize}
+
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item load{\_}model() $\rightarrow$ torchvision.models.detection.FasterRCNN: Loads pretrained Faster R-CNN ResNet-50 FPN model
+  \item filter{\_}detections(detections: List[Dict], threshold: float) $\rightarrow$ List[HouseObject]: Filters the raw detections based on the confidence threshold and converts them to HouseObject instances
+\end{itemize}
+
+\newpage
+
+\section{MIS of Scoring} \label{Module} 
+
+\subsection{Module}
+
+ScoringModule
+
+\subsection{Uses}
+To evaluate changes in a room by comparing two sets of detected objects (representing "before" and "after" states) and assign a cleanliness score based on the differences
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item MAX{\_}SCORE: int = 100 (maximum cleanliness score)
+  \item MIN{\_}SCORE: int = 0 (minimum cleanliness score)
+  \item OBJECT{\_}WEIGHTS: dict (Weights for scoring different objects based on their categories)
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+calculate{\_}cleanliness & before: List[HouseObject], after: List[HouseObject] & int & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item Input lists 'before' and 'after' contain valid HouseObject instances
+  \item The HouseObject class provides sufficient information (e.g., label, confidence, bounding box) to compare objects between the two states
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent calculate{\_}cleanliness
+\begin{itemize}
+\item transition: Compares the before and after lists to identify added, removed, or moved objects; computes a cleanliness score based on these changes
+\item output: Returns an integer cleanliness score between MIN{\_}SCORE and MAX{\_}SCORE
+\item exception: 
+\begin{itemize}
+  \item ModelNotLoadedException: Raised if the model fails to load
+  \item DetectionError: ScoringError: Raised if an error occurs during the scoring process
+\end{itemize}
+
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item compare{\_}objects(before: List[HouseObject], after: List[HouseObject]) $\rightarrow$ Dict[str, List[HouseObject]]: Identifies added, removed, and moved objects between the two lists
+  \item compute{\_}score(changes: Dict[str, List[HouseObject]]) $\rightarrow$ int: Computes the cleanliness score based on detected changes
+\end{itemize}
+
+\newpage
+
+\section{MIS of ObjectDetection} \label{Module} 
+
+\subsection{Module}
+
+ObjectDetectionModule
+
+\subsection{Uses}
+To detect objects in an input tensor (preprocessed image) using a pretrained object detector (e.g. Faster R-CNN ResNet-50 FPN model). The output is a list of detected objects, where each object is represented as a HouseObject.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item MODEL{\_}NAME: str = "FasterRCNN{\_}ResNet50{\_}FPN"
+  \item CONFIDENCE{\_}THRESHOLD: float = 0.5 (minimum confidence score for object detection results)
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+detect{\_}objects & input{\_}tensor: Tensor & List[HouseObject] & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+	\item self.model: torchvision.models.detection.FasterRCNN
+\end{itemize}
+
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item The input tensor is correctly preprocessed and normalized according to the requirements of the Faster R-CNN model
+  \item PyTorch and torchvision libraries are installed and functional
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent detect{\_}objects
+\begin{itemize}
+\item transition: Uses the pretrained Faster R-CNN model to detect objects in the input tensor, filters results based on the confidence threshold
+\item output: Returns a list of detected objects, where each object is represented as a HouseObject
+\item exception: 
+\begin{itemize}
+  \item ModelNotLoadedException: Raised if the model fails to load
+  \item DetectionError: Raised if an error occurs during detection process
+\end{itemize}
+
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item load{\_}model() $\rightarrow$ torchvision.models.detection.FasterRCNN: Loads pretrained Faster R-CNN ResNet-50 FPN model
+  \item filter{\_}detections(detections: List[Dict], threshold: float) $\rightarrow$ List[HouseObject]: Filters the raw detections based on the confidence threshold and converts them to HouseObject instances
+\end{itemize}
+
+\newpage
+
+\section{MIS of BackendCommunication} \label{Module} 
+
+\subsection{Module}
+
+BackendCommunicationModule
+
+\subsection{Uses}
+To provide an interface for the app's backend to interact with the Python-based object detection, machine learning, and scoring functionalities. The module packages these functionalities using FastAPI and exposes them as RESTful endpoints.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item API{\_}VERSION: str = "v1"
+  \item BASE{\_}URL: str = "/api/v1"
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+start{\_}server & - & None & - \\
+\hline
+POST /process{\_}images & image{\_}set: JSON & cleanliness{\_}score: JSON & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+
+\subsubsection{Environment Variables}
+\begin{itemize}
+  \item FastAPI: Required for exposing RESTful endpoints
+  \item Backend: The JavaScript backend that interacts with the module
+\end{itemize}
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item FastAPI and its dependencies (e.g., Uvicorn) are installed and properly configured
+  \item The backend sends valid JSON requests with correctly encoded image data
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent start{\_}server
+\begin{itemize}
+\item transition: Initiates the FastAPI application and starts the server to handle incoming requests
+\item output: None
+\item exception: 
+\begin{itemize}
+  \item ServerError: Raised if the server fails to start
+\end{itemize}
+
+\end{itemize}
+
+\noindent Endpoint: POST /process{\_}images
+\begin{itemize}
+\item transition:
+\begin{itemize}
+  \item Decodes the base64-encoded input images
+  \item Passes the images through the ObjectDetection and Scoring modules
+  \item Computes and returns the cleanliness score
+\end{itemize}
+\item output: A JSON object with the following structure: \\ \{ \\"cleanliness{\_}score": int\\ \}
+\item exception: 
+\begin{itemize}
+  \item InvalidInputError: Raised if the input JSON is malformed or invalid
+  \item ProcessingError: Raised if an error occurs during processing
+\end{itemize}
+
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item decode{\_}images(encoded{\_}images: List[str]) $\rightarrow$ List[Tensor]: Decodes base64-encoded images into PyTorch tensors
+  \item process{\_}request(images: List[Tensor]) $\rightarrow$ int: Processes the input images through the ObjectDetection and Scoring modules to compute the cleanliness score
 \end{itemize}
 
 \newpage
