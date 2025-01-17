@@ -575,6 +575,77 @@ None
 
 \newpage
 
+\section{MIS of Scoring} \label{Module} 
+
+\subsection{Module}
+
+ScoringModule
+
+\subsection{Uses}
+To evaluate changes in a room by comparing two sets of detected objects (representing "before" and "after" states) and assign a cleanliness score based on the differences
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item MAX{\_}SCORE: int = 100 (maximum cleanliness score)
+  \item MIN{\_}SCORE: int = 0 (minimum cleanliness score)
+  \item OBJECT{\_}WEIGHTS: dict (Weights for scoring different objects based on their categories)
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+calculate{\_}cleanliness & before: List[HouseObject], after: List[HouseObject] & int & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item Input lists 'before' and 'after' contain valid HouseObject instances
+  \item The HouseObject class provides sufficient information (e.g., label, confidence, bounding box) to compare objects between the two states
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent calculate{\_}cleanliness
+\begin{itemize}
+\item transition: Compares the before and after lists to identify added, removed, or moved objects; computes a cleanliness score based on these changes
+\item output: Returns an integer cleanliness score between MIN{\_}SCORE and MAX{\_}SCORE
+\item exception: 
+\begin{itemize}
+  \item ModelNotLoadedException: Raised if the model fails to load
+  \item DetectionError: ScoringError: Raised if an error occurs during the scoring process
+\end{itemize}
+
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item compare{\_}objects(before: List[HouseObject], after: List[HouseObject]) $\rightarrow$ Dict[str, List[HouseObject]]: Identifies added, removed, and moved objects between the two lists
+  \item compute{\_}score(changes: Dict[str, List[HouseObject]]) $\rightarrow$ int: Computes the cleanliness score based on detected changes
+\end{itemize}
+
+\newpage
+
 \bibliographystyle {plainnat}
 \bibliography {../../../refs/References}
 
