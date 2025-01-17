@@ -50,11 +50,10 @@ urlcolor=cyan          % color of external links
 
 \section{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}p{4cm}X}
+\toprule {\bf Date} & {\bf Version} & {\bf Members} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+2025-01-17 & 1.0 & Team &Initial creation\\
 \bottomrule
 \end{tabularx}
 
@@ -727,7 +726,7 @@ The Chore Scheduling Module is used to assist roommates in scheduling chores. It
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-getHouseSchedule & string: houseID & json: houseScheduleObject & json: errorObject \\
+getHouseSchedule & string: houseID & JSON: houseScheduleObject & JSON: errorObject \\
 \hline
 \end{tabular}
 \end{center}
@@ -737,7 +736,7 @@ getHouseSchedule & string: houseID & json: houseScheduleObject & json: errorObje
 \subsubsection{State Variables}
 
 \begin{itemize}
-  \item houseSchedule: json - A json object containing the current house's schedule
+  \item houseSchedule: JSON - A JSON object containing the current house's schedule
   \item selectedRoommate: string - The roommate selected to view schedule
 \end{itemize}
 
@@ -745,12 +744,12 @@ getHouseSchedule & string: houseID & json: houseScheduleObject & json: errorObje
 \subsubsection{Assumptions}
 
 \begin{itemize}
-  \item The houseScheduleObject is a valid json object that corresponds to the house's schedule
+  \item The houseScheduleObject is a valid JSON object that corresponds to the house's schedule
 \end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent getHouseSchedule(string: houseID) $\rightarrow$ json:
+\noindent getHouseSchedule(string: houseID) $\rightarrow$ JSON:
 \begin{itemize}
 \item output: Returns the house schedule object for the specified houseID containing the schedule for all roommates
 \item exception: Raises an exception if the houseID is invalid or if the house schedule object is not found
@@ -760,10 +759,10 @@ getHouseSchedule & string: houseID & json: houseScheduleObject & json: errorObje
 \subsubsection{Local Functions}
 
 \begin{itemize}
-  \item getRoommateHouseSchedule(json: houseScheduleObject, string: roommateID) $\rightarrow$ json: Returns the schedule for the specified roommate
-  \item updateChore(string: houseID, string: choreID, json: newChore) $\rightarrow$ json: Updates the house schedule with the new chore for the specified previous chore
-  \item createChore(string: houseID, json: newChore): Creates a new house chore object inside of the house schedule
-  \item deleteChore(string: houseID, string: choreID) $\rightarrow$ json: Deletes the specified chore from the house schedule
+  \item getRoommateHouseSchedule(JSON: houseScheduleObject, string: roommateID) $\rightarrow$ JSON: Returns the schedule for the specified roommate
+  \item updateChore(string: houseID, string: choreID, JSON: newChore) $\rightarrow$ JSON: Updates the house schedule with the new chore for the specified previous chore
+  \item createChore(string: houseID, JSON: newChore): Creates a new house chore object inside of the house schedule
+  \item deleteChore(string: houseID, string: choreID) $\rightarrow$ JSON: Deletes the specified chore from the house schedule
 
 \end{itemize}
 
@@ -797,7 +796,7 @@ The User Authentication Module is used to authenticate users and manage user acc
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-getUser & string: jwtCookie & json: userObject & - \\
+getUser & string: jwtCookie & JSON: userObject & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -824,7 +823,7 @@ getUser & string: jwtCookie & json: userObject & - \\
 
 \subsubsection{Access Routine Semantics}
 
-\noindent getUser(jwtCookie: string) $\rightarrow$ json:
+\noindent getUser(jwtCookie: string) $\rightarrow$ JSON:
 \begin{itemize}
 \item transition: Validates the JWT cookie and retrieves the corresponding user data from the UserDatabase.
 \item output: Returns the userObject containing user details.
@@ -841,7 +840,7 @@ getUser & string: jwtCookie & json: userObject & - \\
 \begin{itemize}
   \item validateJWT(jwt: string) $\rightarrow$ bool: Validates the given JWT token and returns true if valid, false otherwise.
   \item generateJWT(userID: string) $\rightarrow$ string: Generates a new JWT token for the given user ID.
-  \item signInWithGAuth(authCode: string) $\rightarrow$ json: Authenticates the user using Google OAuth and returns user details.
+  \item signInWithGAuth(authCode: string) $\rightarrow$ JSON: Authenticates the user using Google OAuth and returns user details.
   \item deleteJWT(jwt: string) $\rightarrow$ bool: Deletes the given JWT token and returns true if successful, false otherwise.
 \end{itemize}
 
@@ -868,9 +867,9 @@ The Home Management Module is used to manage house-related operations such as ad
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-getRoommates & string: houseID & json: roommateList & json: errorObject \\
-getHouseID & string: userID & string: houseID & json: errorObject \\
-getHouseMetadata & string: houseID & json: houseMetadata & json: errorObject \\
+getRoommates & string: houseID & JSON: roommateList & JSON: errorObject \\
+getHouseID & string: userID & string: houseID & JSON: errorObject \\
+getHouseMetadata & string: houseID & JSON: houseMetadata & JSON: errorObject \\
 \hline
 \end{tabular}
 \end{center}
@@ -879,8 +878,8 @@ getHouseMetadata & string: houseID & json: houseMetadata & json: errorObject \\
 
 \subsubsection{State Variables}
 \begin{itemize}
-  \item houseList: List[json] - The list of houses managed by the module
-  \item roommateList: List[json] - The list of roommates for the specified house
+  \item houseList: List[JSON] - The list of houses managed by the module
+  \item roommateList: List[JSON] - The list of roommates for the specified house
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -891,7 +890,7 @@ getHouseMetadata & string: houseID & json: houseMetadata & json: errorObject \\
 
 \subsubsection{Access Routine Semantics}
 
-\noindent getRoommates(houseID: string) $\rightarrow$ json:
+\noindent getRoommates(houseID: string) $\rightarrow$ JSON:
 \begin{itemize}
 \item output: Returns the list of roommates for the specified houseID.
 \item exception: HouseNotFoundError: Raised if the houseID does not exist.
@@ -903,7 +902,7 @@ getHouseMetadata & string: houseID & json: houseMetadata & json: errorObject \\
 \item exception: UserNotFoundError: Raised if the userID does not exist.
 \end{itemize}
 
-\noindent getHouseMetadata(houseID: string) $\rightarrow$ json:
+\noindent getHouseMetadata(houseID: string) $\rightarrow$ JSON:
 \begin{itemize}
 \item output: Returns the metadata for the specified houseID.
 \item exception: HouseNotFoundError: Raised if the houseID does not exist.
@@ -912,11 +911,11 @@ getHouseMetadata & string: houseID & json: houseMetadata & json: errorObject \\
 \subsubsection{Local Functions}
 
 \begin{itemize}
-  \item addHouse(houseData: json) $\rightarrow$ json: Adds a new house to the HouseDatabase and returns the created house object.
-  \item deleteHouse(houseID: string) $\rightarrow$ json: Deletes the specified house from the HouseDatabase and returns a confirmation message.
-  \item editHouse(houseID: string, houseData: json) $\rightarrow$ json: Edits the details of the specified house in the HouseDatabase and returns the updated house object.
-  \item joinHouse(userID: string, houseID: string) $\rightarrow$ json: Adds the user to the specified house and returns a confirmation message.
-  \item leaveHouse(userID: string, houseID: string) $\rightarrow$ json: Removes the user from the specified house and returns a confirmation message.
+  \item addHouse(houseData: JSON) $\rightarrow$ JSON: Adds a new house to the HouseDatabase and returns the created house object.
+  \item deleteHouse(houseID: string) $\rightarrow$ JSON: Deletes the specified house from the HouseDatabase and returns a confirmation message.
+  \item editHouse(houseID: string, houseData: JSON) $\rightarrow$ JSON: Edits the details of the specified house in the HouseDatabase and returns the updated house object.
+  \item joinHouse(userID: string, houseID: string) $\rightarrow$ JSON: Adds the user to the specified house and returns a confirmation message.
+  \item leaveHouse(userID: string, houseID: string) $\rightarrow$ JSON: Removes the user from the specified house and returns a confirmation message.
   \item checkHouseExists(houseID: string) $\rightarrow$ bool: Checks if a house with the specified houseID exists in the HouseDatabase.
   \item checkUserExists(userID: string) $\rightarrow$ bool: Checks if a user with the specified userID exists in the UserDatabase.
   \item updateHouseList(): Updates the houseList state variable with the latest data from the HouseDatabase.
