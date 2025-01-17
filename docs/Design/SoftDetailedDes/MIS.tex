@@ -228,8 +228,7 @@ The following table is taken directly from the Module Guide document for this pr
   have local scope.}
 \newpage
 
-\section{MIS of \wss{Preprocessing Module}} \label{Module} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Sensor Reading Module} \label{Module} 
 
 \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
 
@@ -237,10 +236,10 @@ The following table is taken directly from the Module Guide document for this pr
 
 \subsection{Module}
 
-\wss{Short name for the module}
+M1: Sensor Reading Module.
 
 \subsection{Uses}
-
+Used to gather data on user presence in shared space.
 
 \subsection{Syntax}
 
@@ -253,7 +252,9 @@ The following table is taken directly from the Module Guide document for this pr
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+timeMotion & timesOfMotion & timeMotionDetected & - \\
+detector & sensorData & motionPresent & - \\
+insertTime & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -261,43 +262,166 @@ The following table is taken directly from the Module Guide document for this pr
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+timesOfMotion.
 
 \subsubsection{Environment Variables}
-
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
-
-\subsubsection{Assumptions}
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+sensorData.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent timeMotion(timesOfMotion):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item input: List of time stamps of when motion was detected. 
+\item output: Last timestamp of when motion was detected. 
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
+\noindent detector(sensorData):
+\begin{itemize}
+\item input: Data received from sensor. 
+\item output: True of false value depending on if motion was detected. 
+\end{itemize}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+insertTime() - Inserting time stamp into timesOfMotion variable.
+
+\newpage
+
+\bibliographystyle {plainnat}
+\bibliography {../../../refs/References}
+
+
+\newpage
+
+\section{MIS of Image Capture Module} \label{Module} 
+
+\subsection{Module}
+
+M2: Image Capture Module.
+
+\subsection{Uses}
+Used to gather data on user presence in shared space.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+captureImage & motionPresent & image & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent captureImage(motionPresent):
+\begin{itemize}
+\item input: Boolean value of if motion was detected by sensor. 
+\item output: Image taken.
+\end{itemize}
+
+
+\newpage
+
+\bibliographystyle {plainnat}
+\bibliography {../../../refs/References}
+
+
+\newpage
+
+\section{MIS of Image Upload Module} \label{Module} 
+
+\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
+
+\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+
+\subsection{Module}
+
+M3: Image Upload Module.
+
+\subsection{Uses}
+Uploads the captured image to system for cleanliness detection.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+uploadImage & image & status & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent uploadImage(image):
+\begin{itemize}
+\item input: Image taken from camera. 
+\item output: Boolean of upload status. 
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+captureImage(motionPresent) - Takes picture to upload.
+
+\newpage
+
+\section{MIS of Request Listener Module} \label{Module} 
+
+\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
+
+\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+
+\subsection{Module}
+
+M7: Request Listener Module.
+
+\subsection{Uses}
+Exposes cleanliness detector to camera and image by making it an application programming interface.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getImages & - & images & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getImages():
+\begin{itemize}
+\item output: Two most recent images where one is the before and other is the after state of shared space after user is finished. 
+\end{itemize}
 
 \newpage
 
