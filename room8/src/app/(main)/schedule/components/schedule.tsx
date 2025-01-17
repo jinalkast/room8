@@ -105,6 +105,7 @@ export default function ScheduleViewer() {
                 <Label htmlFor="chore">Chore Name: </Label>
                 <Input
                   id="chore"
+                  autoComplete={'off'}
                   type="text"
                   placeholder="Sweeping..."
                   value={title}
@@ -115,6 +116,7 @@ export default function ScheduleViewer() {
                 <Label htmlFor="description">Description: </Label>
                 <Input
                   id="description"
+                  autoComplete={'off'}
                   type="text"
                   placeholder="Sweep the floor..."
                   value={description}

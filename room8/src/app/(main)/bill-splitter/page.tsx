@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import CreateBillForm from './components/createBillForm';
 import OwesTable from './components/owesTable';
 import BillsTable from './components/billsTable';
+import { Card } from '@/components/ui/card';
 
 type Tab = {
   icon: JSX.Element;
@@ -40,24 +41,27 @@ export default function BillSplitterPage() {
   const [activeTab, setActiveTab] = useState(TABS.create);
   return (
     <div>
-      <nav className={cn('flex justify-center gap-6 ')}>
-        {Object.values(TABS).map((tab) => (
-          <div
-            key={tab.title}
-            onClick={() => setActiveTab(tab)}
-            className={cn(
-              'flex gap-3 cursor-pointer hover:bg-[#955363] p-2 rounded-md transition-all',
-              {
-                'bg-[#490024]': activeTab.title === tab.title
-              }
-            )}>
-            {tab.icon}
-            <div className="hidden lg:block">{tab.title}</div>
-          </div>
-        ))}
-      </nav>
-      <hr />
-      {activeTab.component}
+      <h2 className="text-4xl mb-8">Bill Splitter</h2>
+
+      <Card className="p-8">
+        <nav className={cn('flex justify-center gap-6 ')}>
+          {Object.values(TABS).map((tab) => (
+            <div
+              key={tab.title}
+              onClick={() => setActiveTab(tab)}
+              className={cn(
+                'flex gap-3 cursor-pointer hover:bg-[#955363] p-2 rounded-md transition-all mb-4',
+                {
+                  'bg-[#490024]': activeTab.title === tab.title
+                }
+              )}>
+              {tab.icon}
+              <div className="hidden lg:block">{tab.title}</div>
+            </div>
+          ))}
+        </nav>
+        {activeTab.component}
+      </Card>
     </div>
   );
 }
