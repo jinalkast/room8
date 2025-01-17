@@ -426,7 +426,7 @@ getImages & - & images & - \\
 
 \newpage
 
-\section{MIS of PreprocessingModule} \label{Module} 
+\section{MIS of Preprocessing Module} \label{Module} 
 
 \subsection{Module}
 
@@ -511,6 +511,80 @@ apply{\_}transformations & image: Image & Image & - \\
 \bibliographystyle {plainnat}
 \bibliography {../../../refs/References}
 
+
+\newpage
+
+\section{MIS of Chat Bot Module} \label{Module}
+
+\subsection{Module}
+
+M10: Chat Bot Module
+
+\subsection{Uses}
+
+The Chat Bot Module interfaces with an SMS API to facilitate group messaging functionality. It allows users to view the current group SMS status for the house, create a group, and send messages. The module implements logic for sending relevant notifications.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{5cm} p{3cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+create{\_}group & groupName: str, members: List[str] & GroupID: str & InvalidGroupException \\
+\hline
+send{\_}message & groupID: str, message: str & bool & MessageDeliveryException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item SMS\_API\_KEY: key required to interface with the API which sends the SMS messages to the group.
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item The SMS API is operational and has sufficient credits for sending messages.
+  \item The provided phone numbers of all users in the house/group are valid.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent create{\_}group(groupName: str, members: List[str]):
+\begin{itemize}
+\item transition: Adds a new group to `activeGroups` with the specified members.
+\item output: Returns a unique group ID for the newly created group.
+\item exception: 
+\begin{itemize}
+  \item InvalidGroupException: Raised if the group exceeds the maximum allowed size or has invalid member details.
+\end{itemize}
+\end{itemize}
+
+\noindent send{\_}message(groupID: str, message: str):
+\begin{itemize}
+\item transition: Sends the message to all members of the specified group via the SMS API.
+\item output: Returns `true` if the message is successfully sent, otherwise `false`.
+\item exception: 
+\begin{itemize}
+  \item MessageDeliveryException: Raised if the message fails to deliver due to API issues or invalid group ID.
+\end{itemize}
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item validate{\_}phone{\_}number(phone: str) $\rightarrow$ bool: Ensures the phone number follows the correct format.
+  \item generate{\_}group{\_}id(groupName: str) $\rightarrow$ str: Generates a unique group ID based on the group name and timestamp.
+  \item send{\_}via{\_}sms(phone: str, message: str) $\rightarrow$ bool: Sends a message to a specified phone number using the SMS API.
+\end{itemize}
 
 \newpage
 

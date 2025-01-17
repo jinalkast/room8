@@ -211,49 +211,34 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mBS}:] Bill Splitting Module
 \item [\refstepcounter{mnum} \mthemnum \label{mUA}:] User Authentication Module
 \item [\refstepcounter{mnum} \mthemnum \label{mHM}:] Home Management Module
+\item [\refstepcounter{mnum} \mthemnum \label{mCM}:] Cleanliness Management Module
 \end{description}
 
-\begin{itemize}
-\item Sensor reading - Harsh
-\item Image capture module - Harshi
-\item Image upload module - Harshy
-\item Preprocessing module - Janet
-\item Object detection module - Janel
-\item Scoring module - Janille
-\item Bill splitting - Maged
-\item (Thing that exposes cleanliness detector to camera (makes it an API) - Patel
-\item (cleanliness detector Communicates with backend) module - enaJ
-\item Chore Scheduling Module - Maged
-\item Group chat module - Maged
-\item (FRONTEND Communicates with backend) module - Maged
-
-\end{itemize}
 \begin{table}[h!]
 \centering
 \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
 \toprule
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
-
-{Hardware-Hiding Module} & \mref{mSR}\\
+\multirow{3}{0.3\textwidth}{Hardware-Hiding Module} & \mref{mSR}\\
 & \mref{mIC}\\
 & \mref{mIU}\\
-& ?\\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & \mref{mRL} \\
+\multirow{3}{0.3\textwidth}{Behaviour-Hiding Module} 
+& \mref{mIP} \\
+& \mref{mRL} \\
+& \mref{mDU} \\
+\midrule
+
+\multirow{7}{0.3\textwidth}{Software Decision Module} & \mref{mOD}\\
+& \mref{mS} \\
 & \mref{mCS}\\
-& \mref{mCB} \\
-& \mref{mBS}\\
-& \mref{mUA}\\
-& \mref{mHM}\\
-& ?\\ 
-& ?\\
-\midrule
-
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+& \mref{mCB}\\
+& \mref{mBS} \\
+& \mref{mUA} \\
+& \mref{mHM} \\
+& \mref{mCM} \\
 \bottomrule
 
 \end{tabular}
@@ -293,8 +278,8 @@ to be implemented.
 \subsection{Hardware Hiding Modules}
 
 \begin{description}
-\item[Secrets:]The data structure and algorithm used to implement the virtual hardware.
-\item[Services:]Serves as a virtual hardware used by the rest of the system. This module provides the interface between the hardware and the software. So, the system can use it to display outputs or to accept inputs.
+\item[Secrets:] The data structure and algorithm used to implement the virtual hardware.
+\item[Services:] Serves as a virtual hardware used by the rest of the system. This module provides the interface between the hardware and the software. So, the system can use it to display outputs or to accept inputs.
 \item[Implemented By:] OS
 \end{description}
 
@@ -310,7 +295,7 @@ to be implemented.
 
 \begin{description}
 \item[Secrets:] Image format.
-\item[Services:]Captures images on camera system and forwards them to the image upload module.
+\item[Services:] Captures images on camera system and forwards them to the image upload module.
 \item[Implemented By:] Camera.
 \end{description}
 
@@ -318,7 +303,7 @@ to be implemented.
 
 \begin{description}
 \item[Secrets:] Upload location and image format.
-\item[Services:]Uploads image captured from camera system for system to use in cleanliness detection algorithm.
+\item[Services:] Uploads image captured from camera system for system to use in cleanliness detection algorithm.
 \item[Implemented By:] Raspberry Pi.
 \end{description}
 
@@ -334,56 +319,31 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
+
+\subsubsection{Preprocessing Module (\mref{mIP})}
+
+\begin{description}
+\item[Secrets:]Input image format/behaviour, transformations applied.
+\item[Services:]Converts image to tensor and performs filtering/transformations. 
+\item[Implemented By:]Python, PyTorch, Torchvision
+\end{description}
+
 \subsubsection{Request Listener Module (\mref{mRL})}
 
 \begin{description}
-\item[Secrets:]Sending image to cleanliness detector.
-\item[Services:]Converts image and information from camera and sensor to be used in system.
+\item[Secrets:] Sending image to cleanliness detector.
+\item[Services:] Converts image and information from camera and sensor to be used in system.
 \item[Implemented By:] cameraToDetectorAPI.
 \item[Type of Module:] Application programming interface.
 \end{description}
 
-\subsubsection{Chore Schedule Module(\mref{mCS})}
-\begin{description}
-\item[Secrets:].
-\item[Services:] Allows the user to create, modify, and delete existing chore data from the client-side.
-\item[Implemented By:] JavaScript, Supabase, PostgreSQL.
-\item[Type of Module:] Abstract object.
-\end{description}
+\subsubsection{Data Uploading Module \mref{mDU})}
 
-\subsubsection{Chat Bot Module(\mref{mCB})}
 \begin{description}
-\item[Secrets: Chatbot API Key, SMS platform ].
-\item[Services:] Displays and allows the user to create, modify, and delete existing chore data from the client-side.
-\item[Implemented By:] JavaScript, Supabase, PostgreSQL.
-\item[Type of Module:] Abstract object.
+\item[Secrets:] Details of how/where python modules are hosted for Room8 backend to access.
+\item[Services:] Packages Python modules (i.e. Preprocessing, Object Detecion, Scoring) as a RESTful endpoint so that the backend can interface with the Python machine learning functionality.
+\item[Implemented By:] Python, FastAPI
 \end{description}
-
-\subsubsection{Bill Splitting Module(\mref{mBS})}
-\begin{description}
-\item[Secrets:].
-\item[Services:] Displays and allows the user to create, modify, and delete existing bills data from the client-side.
-\item[Implemented By:] JavaScript, Supabase, PostgreSQL.
-\item[Type of Module:] Abstract object.
-\end{description}
-
-\subsubsection{User Authentication Module(\mref{mUA})}
-\begin{description}
-\item[Secrets:] Cryptographic signing keys, API tokens, password salts.
-\item[Services:] Authenticates user to the client-side application, provides them with a JSON Web Token (JWT) and allows them to perform authorized actions.
-\item[Implemented By:] JavaScript, Supabase, PostgreSQL.
-\item[Type of Module:] Abstract object.
-\end{description}
-
-\subsubsection{Home Management Module(\mref{mHM})}
-\begin{description}
-\item[Secrets:] .
-\item[Services:] Provides the user with the ability to view and modify details of their home such as current room-mates as well as status on the cleanliness of the shared living space. 
-\item[Implemented By:] JavaScript, Supabase, PostgreSQL.
-\item[Type of Module:] Abstract object.
-\end{description}
-
-\subsubsection{Etc.}
 
 
 \subsection{Software Decision Module}
@@ -399,7 +359,69 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Object Detection Module (\mref{mOD})}
+
+\begin{description}
+\item[Secrets:]Object detector, dataset used for training/testing, map of classes. 
+\item[Services:]Identifies common household objects in a scene.
+\item[Implemented By:]Python, PyTorch, Torchvision
+\end{description}
+
+\subsubsection{Scoring Module (\mref{mS})}
+
+\begin{description}
+\item[Secrets:] Logic to calculate cleanliness score/determine which changes have occurred in the shared space.
+\item[Services:] Applies algorithm to set of before/after photos to determine a cleanliness score.
+\item[Implemented By:] Python
+\end{description}
+
+\subsubsection{Chore Schedule Module (\mref{mCS})}
+\begin{description}
+\item[Secrets:] Chore management logic and database implementation.
+\item[Services:] Allows the user to create, modify, and delete existing chore data from the client-side.
+\item[Implemented By:] Room8.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{Chat Bot Module (\mref{mCB})}
+\begin{description}
+\item[Secrets:] Interface with SMS API and logic which supports sending of relevant notifications.
+\item[Services:] Displays the current group SMS status for the house, and allows users to create a group/send a message.
+\item[Implemented By:] Room8.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{Bill Splitting Module (\mref{mBS})}
+\begin{description}
+\item[Secrets:] Calculation of splitting bills and assigning outstanding debts/credits to users.
+\item[Services:] Displays and allows the user to create, modify, and delete existing bills data from the client-side.
+\item[Implemented By:] Room8.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{User Authentication Module (\mref{mUA})}
+\begin{description}
+\item[Secrets:] Authentication process for creation of users on sign up and determining whether or not a user is logging in with valid credentials on sign in.
+\item[Services:] Authenticates user to the client-side application, provides them with a JSON Web Token (JWT) and allows them to perform authorized actions relevant to themselves/their house.
+\item[Implemented By:] Room8.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{Home Management Module (\mref{mHM})}
+\begin{description}
+\item[Secrets:] Logic behind managing a user's profile/house.
+\item[Services:] Provides the user with the ability to view and modify details of their house. This includes, but is not limited to: updating personal information, adding roommates, removing roommates, leaving a house, and joining a house if they are not already a part of one. 
+\item[Implemented By:] Room8.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{Cleanliness Management Module (\mref{mCM})}
+\begin{description}
+\item[Secrets:] Conversion of data received from the camera system and scoring module to the interface that users are able to view.
+\item[Services:] Provides the user with the ability to view the details of messes that exist within their shared space. The view will allow them to see an image of where the mess exists, along with which user it is assigned to, and a toggle for whether or not the mess has been cleaned.
+\item[Implemented By:] Room8.
+\item[Type of Module:] Abstract object.
+\end{description}
 
 \section{Traceability Matrix} \label{SecTM}
 
