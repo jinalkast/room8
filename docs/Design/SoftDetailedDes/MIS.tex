@@ -156,6 +156,8 @@ The following table is taken directly from the Module Guide document for this pr
 \newpage
 ~\newpage
 
+% Template MIS
+
 \section{MIS of \wss{Module Name}} \label{Module} 
 
 \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
@@ -227,6 +229,8 @@ The following table is taken directly from the Module Guide document for this pr
   have local scope.}
 \newpage
 
+% MIS of Sensor Reading Module
+
 \section{MIS of Sensor Reading Module} \label{Start} 
 
 \subsection{Module}
@@ -286,6 +290,8 @@ insertTime() - Inserting time stamp into timesOfMotion variable.
 
 \newpage
 
+% MIS of Image Capture Module
+
 \section{MIS of Image Capture Module} \label{Module} 
 
 \subsection{Module}
@@ -328,6 +334,8 @@ captureImage & - & image & - \\
 
 
 \newpage
+
+% MIS of Image Upload Module
 
 \section{MIS of Image Upload Module} \label{Module} 
 
@@ -381,8 +389,9 @@ captureImage() -$>$ png - Takes picture to be uploaded.
 
 \newpage
 
-\section{MIS of Request Listener Module} \label{Module} 
+% MIS of Cleanliness Detector Module
 
+\section{MIS of Request Listener Module} \label{Module} 
 
 \subsection{Module}
 
@@ -419,7 +428,9 @@ getImages & - & images & - \\
 
 \newpage
 
-\section{MIS of PreprocessingModule} \label{Module} 
+% MIS of Preprocessing Module
+
+\section{MIS of Preprocessing Module} \label{Module} 
 
 \subsection{Module}
 
@@ -808,6 +819,226 @@ None
 \end{itemize}
 
 \newpage
+
+% MIS of Chore Schedule Module
+
+\section{MIS of Chore Scheduling Module} \label{Module} 
+
+\subsection{Module}
+
+ChoreSchedulingModule
+
+\subsection{Uses}
+The Chore Scheduling Module is used to assist roommates in scheduling chores. It provides a list of chores to be done and allows roommates to assign chores to each other. The module is in charge of schedule's database table, management of schedule instances, the application programming interface of the scheduling functions, and the implenentation to the frontend application. 
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{3cm} p{5cm} p{3.5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getHouseSchedule & string: houseID & json: houseScheduleObject & json: errorObject \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item houseSchedule: json - A json object containing the current house's schedule
+  \item selectedRoommate: string - The roommate selected to view schedule
+\end{itemize}
+
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item The houseScheduleObject is a valid json object that corresponds to the house's schedule
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getHouseSchedule(string: houseID) $\rightarrow$ json:
+\begin{itemize}
+\item output: Returns the house schedule object for the specified houseID containing the schedule for all roommates
+\item exception: Raises an exception if the houseID is invalid or if the house schedule object is not found
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item getRoommateHouseSchedule(json: houseScheduleObject, string: roommateID) $\rightarrow$ json: Returns the schedule for the specified roommate
+  \item updateChore(string: houseID, string: choreID, json: newChore) $\rightarrow$ json: Updates the house schedule with the new chore for the specified previous chore
+  \item createChore(string: houseID, json: newChore): Creates a new house chore object inside of the house schedule
+  \item deleteChore(string: houseID, string: choreID) $\rightarrow$ json: Deletes the specified chore from the house schedule
+
+\end{itemize}
+
+\newpage
+
+% MIS of User Authentication Module
+
+\section{MIS of User Authentication} \label{Module} 
+
+\subsection{Module}
+
+UserAuthModule
+
+\subsection{Uses}
+
+The User Authentication Module is used to authenticate users and manage user accounts. It provides a secure way for users to log in and access the application. The module is in charge of the user's database table, management of user instances, the application programming interface of the authentication functions, and the implementation to the frontend application.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item SUPPORTED{\_}AUTHENTICATION{\_}METHODS: List[str] = ["Google"]
+  \item SUPPORTED{\_}AUTHENTICATION{\_}PROVIDERS: List[str] = ["OAuth2"]
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{5cm} p{3.5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getUser & string: jwtCookie & json: userObject & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item activeJWT: datetime - The current accepted web token timing for user authentication
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+  \item UserDatabase: Module from which user data is retrieved
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item Google authentication service is always available and not down.
+  \item The user has a valid Google email account for authentication.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getUser(jwtCookie: string) $\rightarrow$ json:
+\begin{itemize}
+\item transition: Validates the JWT cookie and retrieves the corresponding user data from the UserDatabase.
+\item output: Returns the userObject containing user details.
+\item exception: 
+  \begin{itemize}
+    \item InvalidJWTException: Raised if the JWT cookie is invalid or expired.
+    \item UserNotFoundException: Raised if no user is found for the given JWT cookie.
+  \end{itemize}
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item validateJWT(jwt: string) $\rightarrow$ bool: Validates the given JWT token and returns true if valid, false otherwise.
+  \item generateJWT(userID: string) $\rightarrow$ string: Generates a new JWT token for the given user ID.
+  \item signInWithGAuth(authCode: string) $\rightarrow$ json: Authenticates the user using Google OAuth and returns user details.
+  \item deleteJWT(jwt: string) $\rightarrow$ bool: Deletes the given JWT token and returns true if successful, false otherwise.
+\end{itemize}
+
+\newpage
+
+% MIS of Home Management Module
+
+\section{MIS of Home Management Module} \label{Module} 
+
+\subsection{Module}
+
+HomeManagementModule
+
+\subsection{Uses}
+
+The Home Management Module is used to manage house-related operations such as adding, deleting, editing, joining, and leaving a house. It provides a way for users to manage their house and roommates within the application. The module is in charge of the house's database table, management of house instances, the application programming interface of the house management functions, and the implementation to the frontend application.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{4cm} p{5cm} p{3.5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getRoommates & string: houseID & json: roommateList & json: errorObject \\
+getHouseID & string: userID & string: houseID & json: errorObject \\
+getHouseMetadata & string: houseID & json: houseMetadata & json: errorObject \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item houseList: List[json] - The list of houses managed by the module
+  \item roommateList: List[json] - The list of roommates for the specified house
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+  \item HouseDatabase: Module from which house data is retrieved and stored
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getRoommates(houseID: string) $\rightarrow$ json:
+\begin{itemize}
+\item output: Returns the list of roommates for the specified houseID.
+\item exception: HouseNotFoundError: Raised if the houseID does not exist.
+\end{itemize}
+
+\noindent getHouseID(userID: string) $\rightarrow$ string:
+\begin{itemize}
+\item output: Returns the houseID that the user with the specified userID belongs to.
+\item exception: UserNotFoundError: Raised if the userID does not exist.
+\end{itemize}
+
+\noindent getHouseMetadata(houseID: string) $\rightarrow$ json:
+\begin{itemize}
+\item output: Returns the metadata for the specified houseID.
+\item exception: HouseNotFoundError: Raised if the houseID does not exist.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item addHouse(houseData: json) $\rightarrow$ json: Adds a new house to the HouseDatabase and returns the created house object.
+  \item deleteHouse(houseID: string) $\rightarrow$ json: Deletes the specified house from the HouseDatabase and returns a confirmation message.
+  \item editHouse(houseID: string, houseData: json) $\rightarrow$ json: Edits the details of the specified house in the HouseDatabase and returns the updated house object.
+  \item joinHouse(userID: string, houseID: string) $\rightarrow$ json: Adds the user to the specified house and returns a confirmation message.
+  \item leaveHouse(userID: string, houseID: string) $\rightarrow$ json: Removes the user from the specified house and returns a confirmation message.
+  \item checkHouseExists(houseID: string) $\rightarrow$ bool: Checks if a house with the specified houseID exists in the HouseDatabase.
+  \item checkUserExists(userID: string) $\rightarrow$ bool: Checks if a user with the specified userID exists in the UserDatabase.
+  \item updateHouseList(): Updates the houseList state variable with the latest data from the HouseDatabase.
+\end{itemize}
+
+\newpage
+
+
+% Bibliogrphy
 
 \bibliographystyle {plainnat}
 \bibliography {../../../refs/References}
