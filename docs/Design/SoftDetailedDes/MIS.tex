@@ -227,7 +227,7 @@ captureImage & - & image & - \\
 
 \subsection{Module}
 
-M3: Image Upload Module.
+M3: Image Upload Module
 
 \subsection{Uses}
 Uploads the captured image to Raspberry Pi for the cleanliness detection system to use for analysis.
@@ -316,14 +316,14 @@ getImages & - & images & - \\
 
 % MIS of Preprocessing Module
 
-\section{MIS of Preprocessing Module} \label{Module} 
+\section{MIS of Image Preprocessing Module} \label{Module} 
 
 \subsection{Module}
 
-PreprocessingModule
+M4: ImagePreprocessingModule
 
 \subsection{Uses}
-The Preprocessing Module is used for preparing raw images (i.e. from the Image Upload module) to be submitted to subsequent modules (i.e. Object Detection and Scoring). A series of transformations is applied to the image.
+The ImagePreprocessingModule is used for preparing raw images (i.e. from the ImageUploadModule) to be submitted to subsequent modules (i.e. ObjectDetectionModule and ScoringModule). A series of transformations is applied to the image.
 
 \subsection{Syntax}
 
@@ -341,7 +341,7 @@ The Preprocessing Module is used for preparing raw images (i.e. from the Image U
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-process{\_}image & image: Image & Tensor & - \\
+processImage & image: Image & Tensor & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -354,9 +354,7 @@ None
 
 
 \subsubsection{Environment Variables}
-\begin{itemize}
-  \item ImageUploadModule: Module from which input image is recieved
-\end{itemize}
+None
 
 \subsubsection{Assumptions}
 \begin{itemize}
@@ -368,7 +366,7 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent process{\_}image(image: Image):
+\noindent processImage(image: Image):
 \begin{itemize}
 \item transition: Applies a sequence of PyTorch transformations to the input image 
 \item output: Returns the transformed image as a Pytorch tensor, ready for subsequent object detection
@@ -379,7 +377,7 @@ None
 \end{itemize}
 
 \end{itemize}
-\noindent process{\_}image(image: Image):
+\noindent procesImage(image: Image):
 \begin{itemize}
   \item transition: Applies pixel map transformations (e.g. resizing, cropping, filtering) to the input image
   \item output: Returns the transformed image
@@ -393,18 +391,18 @@ None
 \subsubsection{Local Functions}
 
 \begin{itemize}
-  \item validate{\_}image{\_}format(image: Image) $\rightarrow$ bool: Checks if the input image format is supported
-  \item create{\_}transforms() $\rightarrow$ torchvision.transforms.Compose\: Creates a PyTorch Compose object for the default set of transformations
-  \item apply{\_}transforms(image: Image, transforms: torchvision.transforms.Compose) $\rightarrow$ Tensor: Applies the given transformations to the input image
+  \item validateImageFormat(image: Image) $\rightarrow$ bool: Checks if the input image format is supported
+  \item creatTransforms() $\rightarrow$ torchvision.transforms.Compose\: Creates a PyTorch Compose object for the default set of transformations
+  \item applyTransforms(image: Image, transforms: torchvision.transforms.Compose) $\rightarrow$ Tensor: Applies the given transformations to the input image
 \end{itemize}
 
 \newpage
 
-\section{MIS of ObjectDetection} \label{Module} 
+\section{MIS of Object Detection Module} \label{Module} 
 
 \subsection{Module}
 
-ObjectDetectionModule
+M5: ObjectDetectionModule
 
 \subsection{Uses}
 To detect objects in an input tensor (preprocessed image) using a pretrained object detector (e.g. Faster R-CNN ResNet-50 FPN model). The output is a list of detected objects, where each object is represented as a HouseObject.
@@ -425,7 +423,7 @@ To detect objects in an input tensor (preprocessed image) using a pretrained obj
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-detect{\_}objects & input{\_}tensor: Tensor & List[HouseObject] & - \\
+detectObjects & inputTensor: Tensor & List[HouseObject] & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -450,7 +448,7 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent detect{\_}objects
+\noindent detectObjects
 \begin{itemize}
 \item transition: Uses the pretrained Faster R-CNN model to detect objects in the input tensor, filters results based on the confidence threshold
 \item output: Returns a list of detected objects, where each object is represented as a HouseObject
@@ -466,17 +464,17 @@ None
 \subsubsection{Local Functions}
 
 \begin{itemize}
-  \item load{\_}model() $\rightarrow$ torchvision.models.detection.FasterRCNN: Loads pretrained Faster R-CNN ResNet-50 FPN model
-  \item filter{\_}detections(detections: List[Dict], threshold: float) $\rightarrow$ List[HouseObject]: Filters the raw detections based on the confidence threshold and converts them to HouseObject instances
+  \item loadModel() $\rightarrow$ torchvision.models.detection.FasterRCNN: Loads pretrained Faster R-CNN ResNet-50 FPN model
+  \item filterDetections(detections: List[Dict], threshold: float) $\rightarrow$ List[HouseObject]: Filters the raw detections based on the confidence threshold and converts them to HouseObject instances
 \end{itemize}
 
 \newpage
 
-\section{MIS of Scoring} \label{Module} 
+\section{MIS of Scoring Module} \label{Module} 
 
 \subsection{Module}
 
-ScoringModule
+M6: ScoringModule
 
 \subsection{Uses}
 To evaluate changes in a room by comparing two sets of detected objects (representing "before" and "after" states) and assign a cleanliness score based on the differences
@@ -498,7 +496,7 @@ To evaluate changes in a room by comparing two sets of detected objects (represe
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-calculate{\_}cleanliness & before: List[HouseObject], after: List[HouseObject] & int & - \\
+calculateCleanliness & before: List[HouseObject], after: List[HouseObject] & int & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -521,7 +519,7 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent calculate{\_}cleanliness
+\noindent calculateCleanliness
 \begin{itemize}
 \item transition: Compares the before and after lists to identify added, removed, or moved objects; computes a cleanliness score based on these changes
 \item output: Returns an integer cleanliness score between MIN{\_}SCORE and MAX{\_}SCORE
@@ -537,17 +535,17 @@ None
 \subsubsection{Local Functions}
 
 \begin{itemize}
-  \item compare{\_}objects(before: List[HouseObject], after: List[HouseObject]) $\rightarrow$ Dict[str, List[HouseObject]]: Identifies added, removed, and moved objects between the two lists
-  \item compute{\_}score(changes: Dict[str, List[HouseObject]]) $\rightarrow$ int: Computes the cleanliness score based on detected changes
+  \item compareObjects(before: List[HouseObject], after: List[HouseObject]) $\rightarrow$ Dict[str, List[HouseObject]]: Identifies added, removed, and moved objects between the two lists
+  \item computeScore(changes: Dict[str, List[HouseObject]]) $\rightarrow$ int: Computes the cleanliness score based on detected changes
 \end{itemize}
 
 \newpage
 
-\section{MIS of ObjectDetection} \label{Module} 
+\section{MIS of Object Detection Module} \label{Module} 
 
 \subsection{Module}
 
-ObjectDetectionModule
+M5: ObjectDetectionModule
 
 \subsection{Uses}
 To detect objects in an input tensor (preprocessed image) using a pretrained object detector (e.g. Faster R-CNN ResNet-50 FPN model). The output is a list of detected objects, where each object is represented as a HouseObject.
@@ -568,7 +566,7 @@ To detect objects in an input tensor (preprocessed image) using a pretrained obj
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-detect{\_}objects & input{\_}tensor: Tensor & List[HouseObject] & - \\
+detectObjects & inputTensor: Tensor & List[HouseObject] & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -609,17 +607,17 @@ None
 \subsubsection{Local Functions}
 
 \begin{itemize}
-  \item load{\_}model() $\rightarrow$ torchvision.models.detection.FasterRCNN: Loads pretrained Faster R-CNN ResNet-50 FPN model
-  \item filter{\_}detections(detections: List[Dict], threshold: float) $\rightarrow$ List[HouseObject]: Filters the raw detections based on the confidence threshold and converts them to HouseObject instances
+  \item loadModel() $\rightarrow$ torchvision.models.detection.FasterRCNN: Loads pretrained Faster R-CNN ResNet-50 FPN model
+  \item filterDetections(detections: List[Dict], threshold: float) $\rightarrow$ List[HouseObject]: Filters the raw detections based on the confidence threshold and converts them to HouseObject instances
 \end{itemize}
 
 \newpage
 
-\section{MIS of BackendCommunication} \label{Module} 
+\section{MIS of Data Uploading Module} \label{Module} 
 
 \subsection{Module}
 
-BackendCommunicationModule
+M8: DataUploadingModule
 
 \subsection{Uses}
 To provide an interface for the app's backend to interact with the Python-based object detection, machine learning, and scoring functionalities. The module packages these functionalities using FastAPI and exposes them as RESTful endpoints.
@@ -640,9 +638,9 @@ To provide an interface for the app's backend to interact with the Python-based 
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-start{\_}server & - & None & - \\
+startServer & - & None & - \\
 \hline
-POST /process{\_}images & image{\_}set: JSON & cleanliness{\_}score: JSON & - \\
+POST /processImages & imageSet: JSON & cleanliness{\_}score: JSON & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -668,7 +666,7 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent start{\_}server
+\noindent startServer
 \begin{itemize}
 \item transition: Initiates the FastAPI application and starts the server to handle incoming requests
 \item output: None
@@ -679,12 +677,12 @@ None
 
 \end{itemize}
 
-\noindent Endpoint: POST /process{\_}images
+\noindent Endpoint: POST /processImages
 \begin{itemize}
 \item transition:
 \begin{itemize}
   \item Decodes the base64-encoded input images
-  \item Passes the images through the ObjectDetection and Scoring modules
+  \item Passes the images through the ObjectDetectionModule and ScoringModule
   \item Computes and returns the cleanliness score
 \end{itemize}
 \item output: A JSON object with the following structure: \\ \{ \\"cleanliness{\_}score": int\\ \}
@@ -700,8 +698,8 @@ None
 \subsubsection{Local Functions}
 
 \begin{itemize}
-  \item decode{\_}images(encoded{\_}images: List[str]) $\rightarrow$ List[Tensor]: Decodes base64-encoded images into PyTorch tensors
-  \item process{\_}request(images: List[Tensor]) $\rightarrow$ int: Processes the input images through the ObjectDetection and Scoring modules to compute the cleanliness score
+  \item decodeImages(encoded{\_}images: List[str]) $\rightarrow$ List[Tensor]: Decodes base64-encoded images into PyTorch tensors
+  \item processRequest(images: List[Tensor]) $\rightarrow$ int: Processes the input images through the ObjectDetection and Scoring modules to compute the cleanliness score
 \end{itemize}
 
 \newpage
@@ -712,7 +710,7 @@ None
 
 \subsection{Module}
 
-ChoreSchedulingModule
+M9: ChoreSchedulingModule
 
 \subsection{Uses}
 The Chore Scheduling Module is used to assist roommates in scheduling chores. It provides a list of chores to be done and allows roommates to assign chores to each other. The module is in charge of schedule's database table, management of schedule instances, the application programming interface of the scheduling functions, and the implenentation to the frontend application. 
@@ -770,11 +768,11 @@ getHouseSchedule & string: houseID & JSON: houseScheduleObject & JSON: errorObje
 
 % MIS of User Authentication Module
 
-\section{MIS of User Authentication} \label{Module} 
+\section{MIS of User Authentication Module} \label{Module} 
 
 \subsection{Module}
 
-UserAuthModule
+M12: UserAuthModule
 
 \subsection{Uses}
 
@@ -852,7 +850,7 @@ getUser & string: jwtCookie & JSON: userObject & - \\
 
 \subsection{Module}
 
-HomeManagementModule
+M13: HomeManagementModule
 
 \subsection{Uses}
 
