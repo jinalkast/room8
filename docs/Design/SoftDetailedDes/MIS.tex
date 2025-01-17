@@ -283,11 +283,6 @@ sensorData: sensorDataType - Data acquired by the sensor with data type supporte
 
 insertTime() - Inserting time stamp into timesOfMotion variable.
 
-\newpage
-
-\bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
-
 
 \newpage
 
@@ -330,11 +325,6 @@ captureImage & - & image & - \\
 \begin{itemize}
 \item captureImage will only be called when picture is needed to be taken, that is before user starts using shared space and five minutes after user has left shared space.
 \end{itemize}
-
-\newpage
-
-\bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
 
 
 \newpage
@@ -444,6 +434,7 @@ The Preprocessing Module is used for preparing raw images (i.e. from the Image U
 
 \begin{itemize}
   \item SUPPORTED{\_}FORMATS: List[str] = ["JPEG", "PNG"]
+  \item DEFAULT{\_}TRANSFORMS: torchvision.transforms.Compose\: A default set of PyTorch transformations, including resizing, normalization, and optional filtering
 \end{itemize}
 
 \subsubsection{Exported Access Programs}
@@ -453,9 +444,7 @@ The Preprocessing Module is used for preparing raw images (i.e. from the Image U
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-process{\_}image & image: Image & Image & - \\
-\hline
-apply{\_}transformations & image: Image & Image & - \\
+process{\_}image & image: Image & Tensor & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -463,6 +452,9 @@ apply{\_}transformations & image: Image & Image & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
+None
+
+
 
 \subsubsection{Environment Variables}
 \begin{itemize}
@@ -471,7 +463,8 @@ apply{\_}transformations & image: Image & Image & - \\
 
 \subsubsection{Assumptions}
 \begin{itemize}
-  \item The input image is in a valid format supported by the module (e.g. JPEG, PNG)
+  \item The input image is in a valid format supported by PyTorch (e.g. JPEG, PNG)
+  \item PyTorch and torchvision libraries are installed and functional
   \item Network connectivity is stable for receiving images through the cloud network
 \end{itemize}
 
@@ -480,8 +473,8 @@ apply{\_}transformations & image: Image & Image & - \\
 
 \noindent process{\_}image(image: Image):
 \begin{itemize}
-\item transition: Applies a sequence of transformations to the input image 
-\item output: Returns the transformed image ready for subsequent object detection
+\item transition: Applies a sequence of PyTorch transformations to the input image 
+\item output: Returns the transformed image as a Pytorch tensor, ready for subsequent object detection
 \item exception: 
 \begin{itemize}
   \item InvalidImageFormatException: Raised if the input image format is unsupported
@@ -504,9 +497,8 @@ apply{\_}transformations & image: Image & Image & - \\
 
 \begin{itemize}
   \item validate{\_}image{\_}format(image: Image) $\rightarrow$ bool: Checks if the input image format is supported
-  \item resize{\_}image(image: Image, dimensions: Tuple[int, int]) $\rightarrow$ Image: Resizes the image to the specified dimensions
-  \item apply{\_}filter(image: Image, filter{\_}type: str) $\rightarrow$ Image: Applies a specified filter (e.g., Gaussian blur, edge detection) to the image
-  \item normalize{\_}image(image: Image) $\rightarrow$ Image: Normalizes pixel values for consistency
+  \item create{\_}transforms() $\rightarrow$ torchvision.transforms.Compose\: Creates a PyTorch Compose object for the default set of transformations
+  \item apply{\_}transforms(image: Image, transforms: torchvision.transforms.Compose) $\rightarrow$ Tensor: Applies the given transformations to the input image
 \end{itemize}
 
 \newpage
