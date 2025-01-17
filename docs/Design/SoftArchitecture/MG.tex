@@ -235,18 +235,18 @@ actually be implemented.
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding Module} & M1\\
-& M2\\
-& M3\\
+{Hardware-Hiding Module} & \mref{mSR}\\
+& \mref{mIC}\\
+& \mref{mIU}\\
 & ?\\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & M7\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & \mref{mRL} \\
+& \mref{mCS}\\
+& \mref{mCB} \\
+& \mref{mBS}\\
+& \mref{mUA}\\
+& \mref{mHM}\\
 & ?\\ 
 & ?\\
 \midrule
@@ -367,7 +367,7 @@ to be implemented.
 \item[Type of Module:] Abstract object.
 \end{description}
 
-\subsubsection{User Authentication Module(\mref{mBS})}
+\subsubsection{User Authentication Module(\mref{mUA})}
 \begin{description}
 \item[Secrets:] Cryptographic signing keys, API tokens, password salts.
 \item[Services:] Authenticates user to the client-side application, provides them with a JSON Web Token (JWT) and allows them to perform authorized actions.
@@ -375,7 +375,7 @@ to be implemented.
 \item[Type of Module:] Abstract object.
 \end{description}
 
-\subsubsection{Home Management Module(\mref{mBS})}
+\subsubsection{Home Management Module(\mref{mHM})}
 \begin{description}
 \item[Secrets:] .
 \item[Services:] Provides the user with the ability to view and modify details of their home such as current room-mates as well as status on the cleanliness of the shared living space. 
