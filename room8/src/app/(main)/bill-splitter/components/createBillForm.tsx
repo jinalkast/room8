@@ -81,7 +81,7 @@ export default function CreateBillForm() {
             <FormItem>
               <FormLabel>Bill Name</FormLabel>
               <FormControl>
-                <Input placeholder="Ex: December Internet Bill" {...field} />
+                <Input autoComplete={'off'} placeholder="Ex: December Internet Bill" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,7 +94,14 @@ export default function CreateBillForm() {
             <FormItem>
               <FormLabel>Bill Amount</FormLabel>
               <FormControl>
-                <Input type="number" step={0.01} min={0} placeholder="Ex: 10.24" {...field} />
+                <Input
+                  autoComplete={'off'}
+                  type="number"
+                  step={0.01}
+                  min={0}
+                  placeholder="Ex: 10.24"
+                  {...field}
+                />
               </FormControl>
               <FormDescription>Enter the amount you paid</FormDescription>
               <FormMessage />
@@ -134,13 +141,14 @@ export default function CreateBillForm() {
                     {roommates!.map((roommate, index) =>
                       roommate.id !== user!.id ? (
                         <div className="flex gap-2 items-center justify-between" key={index}>
-                          <div className='flex items-center gap-1'>
+                          <div className="flex items-center gap-1">
                             <Avatar>
                               <AvatarImage src={roommate.image_url} />
                             </Avatar>
                             {roommate.name}:
                           </div>
                           <input
+                            autoComplete={'off'}
                             type="number"
                             min={0}
                             step={0.01}
