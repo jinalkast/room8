@@ -646,6 +646,169 @@ None
 
 \newpage
 
+\section{MIS of ObjectDetection} \label{Module} 
+
+\subsection{Module}
+
+ObjectDetectionModule
+
+\subsection{Uses}
+To detect objects in an input tensor (preprocessed image) using a pretrained object detector (e.g. Faster R-CNN ResNet-50 FPN model). The output is a list of detected objects, where each object is represented as a HouseObject.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item MODEL{\_}NAME: str = "FasterRCNN{\_}ResNet50{\_}FPN"
+  \item CONFIDENCE{\_}THRESHOLD: float = 0.5 (minimum confidence score for object detection results)
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+detect{\_}objects & input{\_}tensor: Tensor & List[HouseObject] & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+	\item self.model: torchvision.models.detection.FasterRCNN
+\end{itemize}
+
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item The input tensor is correctly preprocessed and normalized according to the requirements of the Faster R-CNN model
+  \item PyTorch and torchvision libraries are installed and functional
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent detect{\_}objects
+\begin{itemize}
+\item transition: Uses the pretrained Faster R-CNN model to detect objects in the input tensor, filters results based on the confidence threshold
+\item output: Returns a list of detected objects, where each object is represented as a HouseObject
+\item exception: 
+\begin{itemize}
+  \item ModelNotLoadedException: Raised if the model fails to load
+  \item DetectionError: Raised if an error occurs during detection process
+\end{itemize}
+
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item load{\_}model() $\rightarrow$ torchvision.models.detection.FasterRCNN: Loads pretrained Faster R-CNN ResNet-50 FPN model
+  \item filter{\_}detections(detections: List[Dict], threshold: float) $\rightarrow$ List[HouseObject]: Filters the raw detections based on the confidence threshold and converts them to HouseObject instances
+\end{itemize}
+
+\newpage
+
+\section{MIS of BackendCommunication} \label{Module} 
+
+\subsection{Module}
+
+BackendCommunicationModule
+
+\subsection{Uses}
+To provide an interface for the app's backend to interact with the Python-based object detection, machine learning, and scoring functionalities. The module packages these functionalities using FastAPI and exposes them as RESTful endpoints.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item API{\_}VERSION: str = "v1"
+  \item BASE{\_}URL: str = "/api/v1"
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+start{\_}server & - & None & - \\
+\hline
+POST /process{\_}images & image{\_}set: JSON & cleanliness{\_}score: JSON & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+
+\subsubsection{Environment Variables}
+\begin{itemize}
+  \item FastAPI: Required for exposing RESTful endpoints
+  \item Backend: The JavaScript backend that interacts with the module
+\end{itemize}
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item FastAPI and its dependencies (e.g., Uvicorn) are installed and properly configured
+  \item The backend sends valid JSON requests with correctly encoded image data
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent start{\_}server
+\begin{itemize}
+\item transition: Initiates the FastAPI application and starts the server to handle incoming requests
+\item output: None
+\item exception: 
+\begin{itemize}
+  \item ServerError: Raised if the server fails to start
+\end{itemize}
+
+\end{itemize}
+
+\noindent Endpoint: POST /process{\_}images
+\begin{itemize}
+\item transition:
+\begin{itemize}
+  \item Decodes the base64-encoded input images
+  \item Passes the images through the ObjectDetection and Scoring modules
+  \item Computes and returns the cleanliness score
+\end{itemize}
+\item output: A JSON object with the following structure: \\ \{ \\"cleanliness{\_}score": int\\ \}
+\item exception: 
+\begin{itemize}
+  \item InvalidInputError: Raised if the input JSON is malformed or invalid
+  \item ProcessingError: Raised if an error occurs during processing
+\end{itemize}
+
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item decode{\_}images(encoded{\_}images: List[str]) $\rightarrow$ List[Tensor]: Decodes base64-encoded images into PyTorch tensors
+  \item process{\_}request(images: List[Tensor]) $\rightarrow$ int: Processes the input images through the ObjectDetection and Scoring modules to compute the cleanliness score
+\end{itemize}
+
+\newpage
+
 \bibliographystyle {plainnat}
 \bibliography {../../../refs/References}
 
