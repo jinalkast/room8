@@ -156,8 +156,7 @@ The following table is taken directly from the Module Guide document for this pr
 \newpage
 ~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
+\section{MIS of \wss{Module Name}} \label{Module} 
 
 \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
 
@@ -228,6 +227,7 @@ The following table is taken directly from the Module Guide document for this pr
   have local scope.}
 \newpage
 
+<<<<<<< HEAD
 \section{MIS of Sensor Reading Module} \label{Module} 
 
 \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
@@ -240,21 +240,41 @@ M1: Sensor Reading Module.
 
 \subsection{Uses}
 Used to gather data on user presence in shared space.
+=======
+\section{MIS of PreprocessingModule} \label{Module} 
+
+\subsection{Module}
+
+PreprocessingModule
+
+\subsection{Uses}
+The Preprocessing Module is used for preparing raw images (i.e. from the Image Upload module) to be submitted to subsequent modules (i.e. Object Detection and Scoring). A series of transformations is applied to the image.
+>>>>>>> 79d659ce55cc007da0642fa56fb9ce4851ebfbb6
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
 
+\begin{itemize}
+  \item SUPPORTED{\_}FORMATS: List[str] = ["JPEG", "PNG"]
+\end{itemize}
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
+<<<<<<< HEAD
 timeMotion & timesOfMotion & timeMotionDetected & - \\
 detector & sensorData & motionPresent & - \\
 insertTime & - & - & - \\
+=======
+process{\_}image & image: Image & Image & - \\
+\hline
+apply{\_}transformations & image: Image & Image & - \\
+>>>>>>> 79d659ce55cc007da0642fa56fb9ce4851ebfbb6
 \hline
 \end{tabular}
 \end{center}
@@ -262,6 +282,7 @@ insertTime & - & - & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
+<<<<<<< HEAD
 timesOfMotion.
 
 \subsubsection{Environment Variables}
@@ -421,6 +442,55 @@ getImages & - & images & - \\
 \noindent getImages():
 \begin{itemize}
 \item output: Two most recent images where one is the before and other is the after state of shared space after user is finished. 
+=======
+None
+
+
+
+\subsubsection{Environment Variables}
+\begin{itemize}
+  \item ImageUploadModule: Module from which input image is recieved
+\end{itemize}
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item The input image is in a valid format supported by the module (e.g. JPEG, PNG)
+  \item Network connectivity is stable for receiving images through the cloud network
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent process{\_}image(image: Image):
+\begin{itemize}
+\item transition: Applies a sequence of transformations to the input image 
+\item output: Returns the transformed image ready for subsequent object detection
+\item exception: 
+\begin{itemize}
+  \item InvalidImageFormatException: Raised if the input image format is unsupported
+  \item TransformationError: Raised if an error occurs during transformations
+\end{itemize}
+
+\end{itemize}
+\noindent process{\_}image(image: Image):
+\begin{itemize}
+  \item transition: Applies pixel map transformations (e.g. resizing, cropping, filtering) to the input image
+  \item output: Returns the transformed image
+  \item exception: 
+  \begin{itemize}
+    \item TransformationError: Raised if an error occurs during transformations
+  \end{itemize}
+  
+  \end{itemize}
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item validate{\_}image{\_}format(image: Image) $\rightarrow$ bool: Checks if the input image format is supported
+  \item resize{\_}image(image: Image, dimensions: Tuple[int, int]) $\rightarrow$ Image: Resizes the image to the specified dimensions
+  \item apply{\_}filter(image: Image, filter{\_}type: str) $\rightarrow$ Image: Applies a specified filter (e.g., Gaussian blur, edge detection) to the image
+  \item normalize{\_}image(image: Image) $\rightarrow$ Image: Normalizes pixel values for consistency
+>>>>>>> 79d659ce55cc007da0642fa56fb9ce4851ebfbb6
 \end{itemize}
 
 \newpage
