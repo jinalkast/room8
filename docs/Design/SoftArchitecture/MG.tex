@@ -301,7 +301,7 @@ to be implemented.
 \subsubsection{Sensor Reading Module (\mref{mSR})}
 
 \begin{description}
-\item[Secrets:]Input data received from sensor for determining presence of users.
+\item[Secrets:]Sensor thresholds for detection.
 \item[Services:]Uses sensor to detect when user is in shared space and when user is finished using space.
 \item[Implemented By:] Sensor.
 \end{description}
@@ -309,15 +309,15 @@ to be implemented.
 \subsubsection{Image Capture Module (\mref{mIC})}
 
 \begin{description}
-\item[Secrets:]Captures image of before state of shared space.
-\item[Services:]Captures images on camera system to be uploaded and used for cleanliness detection algorithm.
+\item[Secrets:] Image format.
+\item[Services:]Captures images on camera system and forwards them to the image upload module.
 \item[Implemented By:] Camera.
 \end{description}
 
 \subsubsection{Image Upload Module (\mref{mIU})}
 
 \begin{description}
-\item[Secrets:]Uploads image of before and after state of shared space.
+\item[Secrets:] Upload location and image format.
 \item[Services:]Uploads image captured from camera system for system to use in cleanliness detection algorithm.
 \item[Implemented By:] Raspberry Pi.
 \end{description}
@@ -341,6 +341,46 @@ to be implemented.
 \item[Services:]Converts image and information from camera and sensor to be used in system.
 \item[Implemented By:] cameraToDetectorAPI.
 \item[Type of Module:] Application programming interface.
+\end{description}
+
+\subsubsection{Chore Schedule Module(\mref{mCS})}
+\begin{description}
+\item[Secrets:].
+\item[Services:] Allows the user to create, modify, and delete existing chore data from the client-side.
+\item[Implemented By:] JavaScript, Supabase, PostgreSQL.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{Chat Bot Module(\mref{mCB})}
+\begin{description}
+\item[Secrets: Chatbot API Key, SMS platform ].
+\item[Services:] Displays and allows the user to create, modify, and delete existing chore data from the client-side.
+\item[Implemented By:] JavaScript, Supabase, PostgreSQL.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{Bill Splitting Module(\mref{mBS})}
+\begin{description}
+\item[Secrets:].
+\item[Services:] Displays and allows the user to create, modify, and delete existing bills data from the client-side.
+\item[Implemented By:] JavaScript, Supabase, PostgreSQL.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{User Authentication Module(\mref{mBS})}
+\begin{description}
+\item[Secrets:] Cryptographic signing keys, API tokens, password salts.
+\item[Services:] Authenticates user to the client-side application, provides them with a JSON Web Token (JWT) and allows them to perform authorized actions.
+\item[Implemented By:] JavaScript, Supabase, PostgreSQL.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{Home Management Module(\mref{mBS})}
+\begin{description}
+\item[Secrets:] .
+\item[Services:] Provides the user with the ability to view and modify details of their home such as current room-mates as well as status on the cleanliness of the shared living space. 
+\item[Implemented By:] JavaScript, Supabase, PostgreSQL.
+\item[Type of Module:] Abstract object.
 \end{description}
 
 \subsubsection{Etc.}
