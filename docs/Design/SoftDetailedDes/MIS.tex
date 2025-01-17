@@ -76,12 +76,12 @@ See SRS Documentation at \wss{give url}
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
+The following document details the Module Interface Specifications (MIS) for
+\progname{}, a suite of tools for providing roommates in shared living situations tools to settle common disputes and keep track of shared responsibilities. Beginning from and following \hyperref[Start]{Section 7} the MIS for all modules in the \href{https://github.com/jinalkast/room8/tree/main/docs/Design/SoftArchitecture}{Module Guide} (MG) can be found. Potential readers of this document include new developers, and maintainers looking for clarity on the implementation of modules.\\
 
 Complementary documents include the System Requirement Specifications
 and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+found at \url{https://github.com/jinalkast/room8/tree/main}.  
 
 \section{Notation}
 
@@ -227,7 +227,7 @@ The following table is taken directly from the Module Guide document for this pr
   have local scope.}
 \newpage
 
-\section{MIS of Sensor Reading Module} \label{Module} 
+\section{MIS of Sensor Reading Module} \label{Start} 
 
 \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
 
@@ -530,20 +530,27 @@ graduate attribute of Problem Analysis and Design.
 \input{../../Reflection.tex}
 
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
-  \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-  \item Which of your design decisions stemmed from speaking to your client(s)
+  \item \textbf{What went well while writing this deliverable?}\\
+  When writing this deliverable, the team addressed and resolved questions about our project that we had been putting off for a long time. Decisions such as "how \textit{exactly} will we be implementing this" were answered, and now the team is fully aligned on how each module will interact. Another thing that went well when writing this deliverable was that, unlike previous deliverables, there were no conflicts or issues raised because of past deliverables. This is because the team went back and modified past deliverables to check that all deliverables were in line with each other and wouldn't cause obstacles in the future.
+  \item \textbf{What pain points did you experience during this deliverable, and how
+    did you resolve them?}\\
+    Some pain points when writing this deliverable included a lack of clarity about specific solution details and uncertainty about the granularity of modules. When writing the MG and the MIS, the team was still unclear about the exact outputs of the cleanliness detection algorithm. While working on the document, the team was unsure if we would implement advanced functionality like detecting stains and which user created them or if we would fall back to more basic functionality. Additionally, the team was unclear if we should include modules not implemented by us completely, such as authentication frameworks, databases, web frameworks, and programming languages. The lack of clarity about the cleanliness detection algorithm, while not completely resolved, was handled by specifying our unknowns in the anticipated changes section of our module guide and creating clear pathways for development based on what happens in the future. Additionally, we decided not to pursue one of our ideas due to privacy and other concerns raised by our project supervisor. The clarity issues about the document itself were rectified by communicating with our TA, including more modules, and distinguishing modules that were not implemented but used in the MG.      
+  \item \textbf{Which of your design decisions stemmed from speaking to your client(s)
   or a proxy (e.g. your peers, stakeholders, potential users)? For those that
-  were not, why, and where did they come from?
-  \item While creating the design doc, what parts of your other documents (e.g.
-  requirements, hazard analysis, etc), it any, needed to be changed, and why?
-  \item What are the limitations of your solution?  Put another way, given
-  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
-  \item Give a brief overview of other design solutions you considered.  What
-  are the benefits and tradeoffs of those other designs compared with the chosen
-  design?  From all the potential options, why did you select the documented design?
-  (LO\_Explores)
+  were not, why, and where did they come from?}\\
+  Almost all decisions stemmed from speaking to client(s) or a proxy. Our proxy for design decisions related to the cleanliness management system and all related systems is Dr. Tharmarasa, an expert in computer vision and object detection. Decisions related to the features of the client-facing application come from discussions with students in shared-living situations which are abundant at McMaster University.
+  \item \textbf{While creating the design doc, what parts of your other documents (e.g.
+  requirements, hazard analysis, etc), it any, needed to be changed, and why?}\\
+  No other documents were altered while working on the MG and MIS. Before working on this document, previous documents were modified to align with each other and to resolve issues raised by supervisors and peers. This made it easy to ensure development of the MG, and MIS caused no conflicts with prior documents. 
+  \item \textbf{What are the limitations of your solution?  Put another way, given
+  unlimited resources, what could you do to make the project better?} (LO\_ProbSolutions)\\
+  Current limitations in the solution include limitations in the detection ability of the cleanliness detection algorithm. As of writing, this module is implemented using pre-trained object detection models and focuses on detecting differences in the state, leaving the users to determine whether or not the state of the room has improved or worsened. This is due to a lack of time and expertise in implementing a custom AI model for this use case. Given unlimited time and resources, a dedicated artificial intelligence and object detection model specializing in detecting "messes" would be built to reduce manual effort from the user and improve the system's accuracy.\\\\
+  Another limitation of the system is its inability to enforce accountability amongst roommates. Currently, the solution provides a suite of tools for roommates to use and to keep track of information but does not provide any way of enforcing things like bill payments or chores. Given more time, the team could have implemented some point or merit tracking system that would report the landlord who isn't paying bills and keeping their property in proper order, and the landlord could provide notices to tenants and help with enforcement.
+  \item \textbf{Give a brief overview of other design solutions you considered.  What
+  are the benefits and trade-offs of those other designs compared with the chosen
+  design?  From all the potential options, why did you select the documented design?}
+  (LO\_Explores)\\
+  Some alternative solutions were the creation of a mobile app over a progressive web application (PWA), the creation of our machine learning model over a pre-trained model, and having the camera system track which user modified the shared living space and keeping track of which user contributed the most to issues in shared living spaces. The first two alternatives provide the development team with more flexibility and customizability but increase development time due to the team's lack of experience building AI models and mobile apps. Ultimately, the team decided to use a pre-trained AI model and build a PWA because the deadlines in this project are firm, and being unable to deliver any product is worse than a product with less functionality. Finally, the team decided not to pursue implementing the solution, which involved tracking which users did what in the shared living situations due to concerns raised by our supervisor. These concerns included privacy concerns and accuracy concerns. Since the team is using a pre-trained AI model, we decided it would be best to not associate data with users to prevent frustrations caused by false positives/negatives (defined in the \href{https://github.com/jinalkast/room8/tree/main/docs/HazardAnalysis}{Harzard Analysis}).
 \end{enumerate}
 
 
