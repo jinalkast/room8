@@ -137,7 +137,7 @@ Used to gather data on user presence in shared space to determine when to take b
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{3.5cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -180,7 +180,7 @@ None
 \subsubsection{Local Functions}
 
 \begin{itemize}
-  \item insertTime() - Inserting time stamp into timesOfMotion variable.
+  \item insertTime(): Inserting time stamp into timesOfMotion variable.
 \end{itemize}
 
 
@@ -205,7 +205,7 @@ None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{3.5cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -262,7 +262,7 @@ Uploads the captured image to Raspberry Pi for the cleanliness detection system 
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{3cm} p{2cm} p{2cm} p{5cm}}
+\begin{tabular}{p{4cm} p{3cm} p{3cm} p{5cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -290,10 +290,7 @@ None
 \noindent uploadImage(image: png):
 \begin{itemize}
 \item input: Image taken from camera. 
-\item exception: 
-	\begin{itemize}
-		\item ImageUploadInterrupted: Raised if error occurs during image upload.
-	\end{itemize} 
+\item exception: ImageUploadInterrupted - Raised if error occurs during image upload.
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -321,7 +318,7 @@ None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{3.5cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -376,7 +373,7 @@ The ImagePreprocessingModule is used for preparing raw images (i.e. from the Ima
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{3.5cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -458,7 +455,7 @@ To detect objects in an input tensor (preprocessed image) using a pretrained obj
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{3.5cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -487,7 +484,7 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent detectObjects
+\noindent detectObjects():
 \begin{itemize}
 \item transition: Uses the pretrained Faster R-CNN model to detect objects in the input tensor, filters results based on the confidence threshold
 \item output: Returns a list of detected objects, where each object is represented as a HouseObject
@@ -520,6 +517,9 @@ M10: Chat Bot Module
 The Chat Bot Module interfaces with an SMS API to facilitate group messaging functionality. It allows users to view the current group SMS status for the house, create a group, and send messages. The module implements logic for sending relevant notifications.
 
 \subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
 
 \subsubsection{Exported Access Programs}
 
@@ -556,20 +556,14 @@ sendMessage & groupID: str, message: str & bool & MessageDeliveryException \\
 \begin{itemize}
 \item transition: Adds a new group to `activeGroups` with the specified members.
 \item output: Returns a unique group ID for the newly created group.
-\item exception: 
-\begin{itemize}
-  \item InvalidGroupException: Raised if the group exceeds the maximum allowed size or has invalid member details.
-\end{itemize}
+\item exception: InvalidGroupException - Raised if the group exceeds the maximum allowed size or has invalid member details.
 \end{itemize}
 
 \noindent sendMessage(groupID: str, message: str):
 \begin{itemize}
 \item transition: Sends the message to all members of the specified group via the SMS API.
 \item output: Returns `true` if the message is successfully sent, otherwise `false`.
-\item exception: 
-\begin{itemize}
-  \item MessageDeliveryException: Raised if the message fails to deliver due to API issues or invalid group ID.
-\end{itemize}
+\item exception: MessageDeliveryException - Raised if the message fails to deliver due to API issues or invalid group ID.
 \end{itemize}
 
 
@@ -605,7 +599,7 @@ To evaluate changes in a room by comparing two sets of detected objects (represe
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
+\begin{tabular}{p{4cm} p{5cm} p{3cm} p{3.5cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -630,7 +624,7 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent calculateCleanliness
+\noindent calculateCleanliness():
 \begin{itemize}
 \item transition: Compares the before and after lists to identify added, removed, or moved objects; computes a cleanliness score based on these changes
 \item output: Returns an integer cleanliness score between MIN{\_}SCORE and MAX{\_}SCORE
@@ -705,7 +699,7 @@ None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent startServer
+\noindent startServer():
 \begin{itemize}
 \item transition: Initiates the FastAPI application and starts the server to handle incoming requests
 \item output: None
