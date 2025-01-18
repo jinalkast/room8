@@ -53,7 +53,7 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}p{4cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Members} & {\bf Notes}\\
 \midrule
-2025-01-17 & 1.0 & Team &Initial creation\\
+2025-01-17 & 0.0 & Team & Initial creation\\
 \bottomrule
 \end{tabularx}
 
@@ -1023,7 +1023,7 @@ graduate attribute of Problem Analysis and Design.
   Almost all decisions stemmed from speaking to client(s) or a proxy. Our proxy for design decisions related to the cleanliness management system and all related systems is Dr. Tharmarasa, an expert in computer vision and object detection. Decisions related to the features of the client-facing application come from discussions with students in shared-living situations which are abundant at McMaster University.
   \item \textbf{While creating the design doc, what parts of your other documents (e.g.
   requirements, hazard analysis, etc), it any, needed to be changed, and why?}\\
-  No other documents were altered while working on the MG and MIS. Before working on this document, previous documents were modified to align with each other and to resolve issues raised by supervisors and peers. This made it easy to ensure development of the MG, and MIS caused no conflicts with prior documents. 
+  The SRS was modified to remove requirements that involved recording the individual cleanliness score of a user. 
   \item \textbf{What are the limitations of your solution?  Put another way, given
   unlimited resources, what could you do to make the project better?} (LO\_ProbSolutions)\\
   Current limitations in the solution include limitations in the detection ability of the cleanliness detection algorithm. As of writing, this module is implemented using pre-trained object detection models and focuses on detecting differences in the state, leaving the users to determine whether or not the state of the room has improved or worsened. This is due to a lack of time and expertise in implementing a custom AI model for this use case. Given unlimited time and resources, a dedicated artificial intelligence and object detection model specializing in detecting "messes" would be built to reduce manual effort from the user and improve the system's accuracy.\\\\
