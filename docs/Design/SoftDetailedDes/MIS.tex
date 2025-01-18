@@ -299,56 +299,6 @@ None
 
 \newpage
 
-% MIS of Cleanliness Detector Module
-
-\section{MIS of Request Listener Module} \label{Module} 
-
-\subsection{Module}
-
-M7: Request Listener Module.
-
-\subsection{Uses}
-Exposes cleanliness detector to camera and image by making it an application programming interface.
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-None
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{4cm} p{4cm} p{4cm} p{3.5cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-getImages & - & images & - \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-None
-
-\subsubsection{Environment Variables}
-None
-
-\subsubsection{Assumptions}
-None
-
-\subsubsection{Access Routine Semantics}
-
-\noindent getImages() $\rightarrow$ List[png]:
-\begin{itemize}
-\item output: Two most recent images where one is the before and other is the after state of shared space after user is finished.
-\end{itemize}
-
-\subsubsection{Local Functions}
-None
-
-\newpage
 
 % MIS of Preprocessing Module
 
@@ -506,76 +456,7 @@ None
 
 \newpage
  
-\section{MIS of Chat Bot Module} \label{Module}
 
-\subsection{Module}
-
-M10: Chat Bot Module
-
-\subsection{Uses}
-
-The Chat Bot Module interfaces with an SMS API to facilitate group messaging functionality. It allows users to view the current group SMS status for the house, create a group, and send messages. The module implements logic for sending relevant notifications.
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-None
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{3cm} p{5cm} p{3cm} p{5cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-createGroup & groupName: str, members: List[str] & GroupID: str & InvalidGroupException \\
-\hline
-sendMessage & groupID: str, message: str & bool & MessageDeliveryException \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{Environment Variables}
-
-\begin{itemize}
-\item SMS\_API\_KEY: key required to interface with the API which sends the SMS messages to the group.
-\end{itemize}
-
-\subsubsection{Assumptions}
-
-\begin{itemize}
-  \item The SMS API is operational and has sufficient credits for sending messages.
-  \item The provided phone numbers of all users in the house/group are valid.
-\end{itemize}
-
-\subsubsection{Access Routine Semantics}
-
-\noindent createGroup(groupName: str, members: List[str]):
-\begin{itemize}
-\item transition: Adds a new group to `activeGroups` with the specified members.
-\item output: Returns a unique group ID for the newly created group.
-\item exception: InvalidGroupException - Raised if the group exceeds the maximum allowed size or has invalid member details.
-\end{itemize}
-
-\noindent sendMessage(groupID: str, message: str):
-\begin{itemize}
-\item transition: Sends the message to all members of the specified group via the SMS API.
-\item output: Returns `true` if the message is successfully sent, otherwise `false`.
-\item exception: MessageDeliveryException - Raised if the message fails to deliver due to API issues or invalid group ID.
-\end{itemize}
-
-
-\subsubsection{Local Functions}
-
-\begin{itemize}
-  \item validatePhoneNumber(phone: str) $\rightarrow$ bool: Ensures the phone number follows the correct format.
-  \item generateGroupID(groupName: str) $\rightarrow$ str: Generates a unique group ID based on the group name and timestamp.
-  \item sendViaSms(phone: str, message: str) $\rightarrow$ bool: Sends a message to a specified phone number using the SMS API.
-\end{itemize}
-
-\newpage
 
 \section{MIS of Scoring Module} \label{Module} 
 
@@ -643,6 +524,54 @@ None
   \item compareObjects(before: List[HouseObject], after: List[HouseObject]) $\rightarrow$ Dict[str, List[HouseObject]]: Identifies added, removed, and moved objects between the two lists
   \item computeScore(changes: Dict[str, List[HouseObject]]) $\rightarrow$ int: Computes the cleanliness score based on detected changes
 \end{itemize}
+
+\newpage
+\section{MIS of Request Listener Module} \label{Module} 
+
+\subsection{Module}
+
+M7: Request Listener Module.
+
+\subsection{Uses}
+Exposes cleanliness detector to camera and image by making it an application programming interface.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{3.5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getImages & - & images & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getImages() $\rightarrow$ List[png]:
+\begin{itemize}
+\item output: Two most recent images where one is the before and other is the after state of shared space after user is finished.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
 
 \newpage
 
@@ -803,6 +732,76 @@ None
 \end{itemize}
 
 \newpage
+\section{MIS of Chat Bot Module} \label{Module}
+
+\subsection{Module}
+
+M10: Chat Bot Module
+
+\subsection{Uses}
+
+The Chat Bot Module interfaces with an SMS API to facilitate group messaging functionality. It allows users to view the current group SMS status for the house, create a group, and send messages. The module implements logic for sending relevant notifications.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{5cm} p{3cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+createGroup & groupName: str, members: List[str] & GroupID: str & InvalidGroupException \\
+\hline
+sendMessage & groupID: str, message: str & bool & MessageDeliveryException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item SMS\_API\_KEY: key required to interface with the API which sends the SMS messages to the group.
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item The SMS API is operational and has sufficient credits for sending messages.
+  \item The provided phone numbers of all users in the house/group are valid.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent createGroup(groupName: str, members: List[str]):
+\begin{itemize}
+\item transition: Adds a new group to `activeGroups` with the specified members.
+\item output: Returns a unique group ID for the newly created group.
+\item exception: InvalidGroupException - Raised if the group exceeds the maximum allowed size or has invalid member details.
+\end{itemize}
+
+\noindent sendMessage(groupID: str, message: str):
+\begin{itemize}
+\item transition: Sends the message to all members of the specified group via the SMS API.
+\item output: Returns `true` if the message is successfully sent, otherwise `false`.
+\item exception: MessageDeliveryException - Raised if the message fails to deliver due to API issues or invalid group ID.
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item validatePhoneNumber(phone: str) $\rightarrow$ bool: Ensures the phone number follows the correct format.
+  \item generateGroupID(groupName: str) $\rightarrow$ str: Generates a unique group ID based on the group name and timestamp.
+  \item sendViaSms(phone: str, message: str) $\rightarrow$ bool: Sends a message to a specified phone number using the SMS API.
+\end{itemize}
+
+\newpage
 
 % MIS of User Authentication Module
 
@@ -810,7 +809,7 @@ None
 
 \subsection{Module}
 
-M12: UserAuthModule
+M12: UserAuthenticationModule
 
 \subsection{Uses}
 
