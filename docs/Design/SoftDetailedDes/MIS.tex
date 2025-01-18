@@ -130,7 +130,9 @@ Used to gather data on user presence in shared space to determine when to take b
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-motionPresent: boolean
+\begin{itemize}
+  \item MOTION{\_}PRESENT: boolean
+\end{itemize}
 
 \subsubsection{Exported Access Programs}
 
@@ -141,7 +143,6 @@ motionPresent: boolean
 \hline
 timeMotion & timesOfMotion & timeMotionDetected & - \\
 detector & sensorData & motionPresent & - \\
-insertTime & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -150,28 +151,37 @@ insertTime & - & - & - \\
 
 \subsubsection{State Variables}
 
-timesOfMotion: List[datetime] - List of time when motion was detected by the sensor.
+\begin{itemize}
+  \item timesOfMotion: List[datetime] - List of time when motion was detected by the sensor.
+\end{itemize}
 
 \subsubsection{Environment Variables}
-sensorData: sensorDataType - Data acquired by the sensor with data type supported by sensor.
+\begin{itemize}
+  \item sensorData: sensorDataType - Data acquired by the sensor with data type supported by sensor.
+\end{itemize}
+
+\subsubsection{Assumptions}
+None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent timeMotion(timesOfMotion: datetime) -$>$ datetime:
+\noindent timeMotion(timesOfMotion: datetime) $\rightarrow$ datetime:
 \begin{itemize}
 \item input: List of time stamps of when motion was detected. 
 \item output: Last timestamp of when motion was detected. 
 \end{itemize}
 
-\noindent detector(sensorData: sensorDataType) -$>$ boolean:
+\noindent detector(sensorData: sensorDataType) $\rightarrow$ boolean:
 \begin{itemize}
 \item input: Data received from sensor. 
-\item output: True of false value depending on if motion was detected. 
+\item output: True or false value depending on if motion was detected. 
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-insertTime() - Inserting time stamp into timesOfMotion variable.
+\begin{itemize}
+  \item insertTime() - Inserting time stamp into timesOfMotion variable.
+\end{itemize}
 
 
 \newpage
@@ -190,7 +200,7 @@ Capture image of shared space using camera system.
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-image: png
+None
 
 \subsubsection{Exported Access Programs}
 
@@ -206,18 +216,28 @@ captureImage & - & image & - \\
 
 \subsection{Semantics}
 
-\subsubsection{Access Routine Semantics}
+\subsubsection{State Variables}
+None
 
-\noindent captureImage() -$>$ 'png':
-\begin{itemize}
-\item output: Image taken.
-\end{itemize}
+\subsubsection{Environment Variables}
+None
 
 \subsubsection{Assumptions}
 \begin{itemize}
 \item captureImage will only be called when picture is needed to be taken, that is before user starts using shared space and five minutes after user has left shared space.
 \end{itemize}
 
+
+\subsubsection{Access Routine Semantics}
+
+\noindent captureImage() $\rightarrow$ png:
+\begin{itemize}
+\item output: Image taken.
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+None
 
 \newpage
 
@@ -235,7 +255,9 @@ Uploads the captured image to Raspberry Pi for the cleanliness detection system 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-imgUploadErrorMessage : str - Message for cause of upload error.
+\begin{itemize}
+  \item IMG{\_}UPLOAD{\_}ERROR{\_}MESSAGE: str - Message for cause of upload error.
+\end{itemize}
 
 \subsubsection{Exported Access Programs}
 
@@ -251,6 +273,17 @@ uploadImage & image & - & imgUploadErrorMessage \\
 
 \subsection{Semantics}
 
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+\begin{itemize}
+	\item Network is stable and never causes error in image upload.
+	\item Power source is stable and never causes error in image upload.
+\end{itemize}
 
 \subsubsection{Access Routine Semantics}
 
@@ -263,15 +296,9 @@ uploadImage & image & - & imgUploadErrorMessage \\
 	\end{itemize} 
 \end{itemize}
 
-\subsubsection{Assumptions}
-\begin{itemize}
-	\item Network is stable and never causes error in image upload.
-	\item Power source is stable and never causes error in image upload.
-\end{itemize}
-
 \subsubsection{Local Functions}
 
-captureImage() -$>$ png - Takes picture to be uploaded.
+None
 
 \newpage
 
@@ -289,6 +316,7 @@ Exposes cleanliness detector to camera and image by making it an application pro
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None
 
 \subsubsection{Exported Access Programs}
 
@@ -304,13 +332,24 @@ getImages & - & images & - \\
 
 \subsection{Semantics}
 
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent getImages() -$>$ List[png]:
+\noindent getImages() $\rightarrow$ List[png]:
 \begin{itemize}
 \item output: Two most recent images where one is the before and other is the after state of shared space after user is finished.
 \end{itemize}
+
+\subsubsection{Local Functions}
+None
 
 \newpage
 
@@ -469,6 +508,80 @@ None
 \end{itemize}
 
 \newpage
+ 
+\section{MIS of Chat Bot Module} \label{Module}
+
+\subsection{Module}
+
+M10: Chat Bot Module
+
+\subsection{Uses}
+
+The Chat Bot Module interfaces with an SMS API to facilitate group messaging functionality. It allows users to view the current group SMS status for the house, create a group, and send messages. The module implements logic for sending relevant notifications.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{5cm} p{3cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+create{\_}group & groupName: str, members: List[str] & GroupID: str & InvalidGroupException \\
+\hline
+send{\_}message & groupID: str, message: str & bool & MessageDeliveryException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item SMS\_API\_KEY: key required to interface with the API which sends the SMS messages to the group.
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item The SMS API is operational and has sufficient credits for sending messages.
+  \item The provided phone numbers of all users in the house/group are valid.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent create{\_}group(groupName: str, members: List[str]):
+\begin{itemize}
+\item transition: Adds a new group to `activeGroups` with the specified members.
+\item output: Returns a unique group ID for the newly created group.
+\item exception: 
+\begin{itemize}
+  \item InvalidGroupException: Raised if the group exceeds the maximum allowed size or has invalid member details.
+\end{itemize}
+\end{itemize}
+
+\noindent send{\_}message(groupID: str, message: str):
+\begin{itemize}
+\item transition: Sends the message to all members of the specified group via the SMS API.
+\item output: Returns `true` if the message is successfully sent, otherwise `false`.
+\item exception: 
+\begin{itemize}
+  \item MessageDeliveryException: Raised if the message fails to deliver due to API issues or invalid group ID.
+\end{itemize}
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item validate{\_}phone{\_}number(phone: str) $\rightarrow$ bool: Ensures the phone number follows the correct format.
+  \item generate{\_}group{\_}id(groupName: str) $\rightarrow$ str: Generates a unique group ID based on the group name and timestamp.
+  \item send{\_}via{\_}sms(phone: str, message: str) $\rightarrow$ bool: Sends a message to a specified phone number using the SMS API.
+\end{itemize}
+
+\newpage
 
 \section{MIS of Scoring Module} \label{Module} 
 
@@ -506,7 +619,6 @@ calculateCleanliness & before: List[HouseObject], after: List[HouseObject] & int
 \subsubsection{State Variables}
 None
 
-
 \subsubsection{Environment Variables}
 None
 
@@ -515,7 +627,6 @@ None
   \item Input lists 'before' and 'after' contain valid HouseObject instances
   \item The HouseObject class provides sufficient information (e.g., label, confidence, bounding box) to compare objects between the two states
 \end{itemize}
-
 
 \subsubsection{Access Routine Semantics}
 
@@ -541,78 +652,6 @@ None
 
 \newpage
 
-\section{MIS of Object Detection Module} \label{Module} 
-
-\subsection{Module}
-
-M5: ObjectDetectionModule
-
-\subsection{Uses}
-To detect objects in an input tensor (preprocessed image) using a pretrained object detector (e.g. Faster R-CNN ResNet-50 FPN model). The output is a list of detected objects, where each object is represented as a HouseObject.
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-\begin{itemize}
-  \item MODEL{\_}NAME: str = "FasterRCNN{\_}ResNet50{\_}FPN"
-  \item CONFIDENCE{\_}THRESHOLD: float = 0.5 (minimum confidence score for object detection results)
-\end{itemize}
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-detectObjects & inputTensor: Tensor & List[HouseObject] & - \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-\begin{itemize}
-	\item self.model: torchvision.models.detection.FasterRCNN
-\end{itemize}
-
-
-\subsubsection{Environment Variables}
-None
-
-\subsubsection{Assumptions}
-\begin{itemize}
-  \item The input tensor is correctly preprocessed and normalized according to the requirements of the Faster R-CNN model
-  \item PyTorch and torchvision libraries are installed and functional
-\end{itemize}
-
-
-\subsubsection{Access Routine Semantics}
-
-\noindent detect{\_}objects
-\begin{itemize}
-\item transition: Uses the pretrained Faster R-CNN model to detect objects in the input tensor, filters results based on the confidence threshold
-\item output: Returns a list of detected objects, where each object is represented as a HouseObject
-\item exception: 
-\begin{itemize}
-  \item ModelNotLoadedException: Raised if the model fails to load
-  \item DetectionError: Raised if an error occurs during detection process
-\end{itemize}
-
-\end{itemize}
-
-
-\subsubsection{Local Functions}
-
-\begin{itemize}
-  \item loadModel() $\rightarrow$ torchvision.models.detection.FasterRCNN: Loads pretrained Faster R-CNN ResNet-50 FPN model
-  \item filterDetections(detections: List[Dict], threshold: float) $\rightarrow$ List[HouseObject]: Filters the raw detections based on the confidence threshold and converts them to HouseObject instances
-\end{itemize}
-
-\newpage
-
 \section{MIS of Data Uploading Module} \label{Module} 
 
 \subsection{Module}
@@ -634,7 +673,7 @@ To provide an interface for the app's backend to interact with the Python-based 
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{5cm} p{3cm} p{3cm} p{2cm}}
+\begin{tabular}{p{5cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -717,6 +756,9 @@ The Chore Scheduling Module is used to assist roommates in scheduling chores. It
 
 \subsection{Syntax}
 
+\subsubsection{Exported Constants}
+None
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -738,6 +780,8 @@ getHouseSchedule & string: houseID & JSON: houseScheduleObject & JSON: errorObje
   \item selectedRoommate: string - The roommate selected to view schedule
 \end{itemize}
 
+\subsubsection{Environment Variables}
+None
 
 \subsubsection{Assumptions}
 
@@ -859,6 +903,9 @@ The Home Management Module is used to manage house-related operations such as ad
 \subsection{Syntax}
 
 \subsubsection{Exported Access Programs}
+None
+
+\subsubsection{Exported Access Programs}
 
 \begin{center}
 \begin{tabular}{p{3cm} p{4cm} p{5cm} p{3.5cm}}
@@ -885,6 +932,9 @@ getHouseMetadata & string: houseID & JSON: houseMetadata & JSON: errorObject \\
 \begin{itemize}
   \item HouseDatabase: Module from which house data is retrieved and stored
 \end{itemize}
+
+\subsubsection{Assumptions}
+None
 
 \subsubsection{Access Routine Semantics}
 
@@ -949,7 +999,7 @@ graduate attribute of Problem Analysis and Design.
   are the benefits and trade-offs of those other designs compared with the chosen
   design?  From all the potential options, why did you select the documented design?}
   (LO\_Explores)\\
-  Some alternative solutions were the creation of a mobile app over a progressive web application (PWA), the creation of our machine learning model over a pre-trained model, and having the camera system track which user modified the shared living space and keeping track of which user contributed the most to issues in shared living spaces. The first two alternatives provide the development team with more flexibility and customizability but increase development time due to the team's lack of experience building AI models and mobile apps. Ultimately, the team decided to use a pre-trained AI model and build a PWA because the deadlines in this project are firm, and being unable to deliver any product is worse than a product with less functionality. Finally, the team decided not to pursue implementing the solution, which involved tracking which users did what in the shared living situations due to concerns raised by our supervisor. These concerns included privacy concerns and accuracy concerns. Since the team is using a pre-trained AI model, we decided it would be best to not associate data with users to prevent frustrations caused by false positives/negatives (defined in the \href{https://github.com/jinalkast/room8/tree/main/docs/HazardAnalysis}{Harzard Analysis}).
+  Some alternative solutions were the creation of a mobile app over a progressive web application (PWA), the creation of our machine learning model over a pre-trained model, and having the camera system track which user modified the shared living space and keeping track of which user contributed the most to issues in shared living spaces. The first two alternatives provide the development team with more flexibility and customizability but increase development time due to the team's lack of experience building AI models and mobile apps. Ultimately, the team decided to use a pre-trained AI model and build a PWA because the deadlines in this project are firm, and being unable to deliver any product is worse than a product with less functionality. Finally, the team decided not to pursue implementing the solution, which involved tracking which users did what in the shared living situations due to concerns raised by our supervisor. These concerns included privacy concerns and accuracy concerns. Since the team is using a pre-trained AI model, we decided it would be best to not associate data with users to prevent frustrations caused by false positives/negatives (defined in the \href{https://github.com/jinalkast/room8/tree/main/docs/HazardAnalysis}{Hazard Analysis}).
 \end{enumerate}
 
 
