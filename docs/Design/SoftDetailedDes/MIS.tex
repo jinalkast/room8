@@ -728,11 +728,14 @@ None
 \end{itemize}
 
 \newpage
+
+%MIS of Chat Bot Module
+
 \section{MIS of Chat Bot Module} \label{Module}
  
 \subsection{Module}
 
-M10: ChatBotModule
+M10: Chat Bot Module
 
 \subsection{Uses}
 
@@ -795,6 +798,102 @@ sendMessage & groupID: str, message: str & bool & MessageDeliveryException \\
   \item validatePhoneNumber(phone: str) $\rightarrow$ bool: Ensures the phone number follows the correct format.
   \item generateGroupID(groupName: str) $\rightarrow$ str: Generates a unique group ID based on the group name and timestamp.
   \item sendViaSms(phone: str, message: str) $\rightarrow$ bool: Sends a message to a specified phone number using the SMS API.
+\end{itemize}
+
+\newpage
+
+% MIS of Bill Splitting Module
+
+\section{MIS of Bill Splitting Module} \label{Module}
+
+\subsection{Module}
+
+M11: Bill Splitting Module
+
+\subsection{Uses}
+
+The Bill Splitting Module calculates the division of bills among users and assigns outstanding debts/credits to individual users. It allows users to create, modify, and delete existing bill data from the client-side interface.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{5cm} p{3cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+createBill & billDetails: dict & BillID: str & InvalidBillException \\
+\hline
+modifyBill & billID: str, updatedDetails: dict & bool & BillNotFoundException, InvalidBillUpdateException \\
+\hline
+deleteBill & billID: str & bool & BillNotFoundException \\
+\hline
+calculateSplit & billID: str & SplitDetails: dict & CalculationErrorException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item SUPABASE\_API\_KEY: Key required to interface with the Supabase backend, which stores bill-related data.
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item All user data (e.g., names, amounts owed) is valid and stored in the Supabase backend.
+  \item Users provide accurate and consistent data for creating or modifying bills.
+  \item The Supabase backend is operational and responsive.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent createBill(billDetails: dict):
+\begin{itemize}
+\item transition: Sends the provided bill details to the Supabase backend for storage.
+\item output: Returns a unique Bill ID for the newly created bill.
+\item exception: InvalidBillException - Raised if the provided bill details are incomplete or invalid.
+\end{itemize}
+
+\noindent modifyBill(billID: str, updatedDetails: dict):
+\begin{itemize}
+\item transition: Updates the details of an existing bill in the Supabase backend.
+\item output: Returns `true` if the modification is successful.
+\item exception: 
+  \begin{itemize}
+    \item BillNotFoundException - Raised if the specified Bill ID does not exist.
+    \item InvalidBillUpdateException - Raised if the updated details are invalid or conflict with existing data.
+  \end{itemize}
+\end{itemize}
+
+\noindent deleteBill(billID: str):
+\begin{itemize}
+\item transition: Deletes the specified bill from the Supabase backend.
+\item output: Returns `true` if the deletion is successful.
+\item exception: BillNotFoundException - Raised if the specified Bill ID does not exist.
+\end{itemize}
+
+\noindent calculateSplit(billID: str):
+\begin{itemize}
+\item transition: Retrieves bill details from the Supabase backend and calculates the split among participants.
+\item output: Returns a dictionary containing split details (e.g., each participant's share, amounts owed/credited).
+\item exception: CalculationErrorException - Raised if an error occurs during the calculation (e.g., missing participant data).
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item validateBillDetails(details: dict) $\rightarrow$ bool: Ensures the provided bill details (e.g., amounts, participants) are valid.
+  \item calculateIndividualShare(amount: float, participants: List[str]) $\rightarrow$ float: Divides the bill amount evenly among participants.
+  \item updateDebtCredit(participantID: str, amount: float) $\rightarrow$ bool: Updates the outstanding debt/credit for a participant in the Supabase backend.
+  \item removeBill(billID: str) $\rightarrow$ bool: Deletes the bill record from the Supabase backend.
 \end{itemize}
 
 \newpage
@@ -956,6 +1055,97 @@ None
   \item checkHouseExists(houseID: string) $\rightarrow$ bool: Checks if a house with the specified houseID exists in the HouseDatabase.
   \item checkUserExists(userID: string) $\rightarrow$ bool: Checks if a user with the specified userID exists in the UserDatabase.
   \item updateHouseList(): Updates the houseList state variable with the latest data from the HouseDatabase.
+\end{itemize}
+
+\newpage
+
+% MIS of Cleanliness Management Module
+\section{MIS of Cleanliness Management Module} \label{Module}
+
+\subsection{Module}
+
+M14: Cleanliness Management Module
+
+\subsection{Uses}
+
+The Cleanliness Management Module converts data received from the camera system and scoring module into a user-friendly interface. It provides users with the ability to view the details of messes in their shared space, including an image of the mess, the assigned user responsible for cleaning, and a toggle to mark the mess as cleaned.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{5cm} p{3cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getMessDetails & messID: str & MessDetails: dict & MessNotFoundException \\
+\hline
+markAsCleaned & messID: str, userID: str & bool & AuthorizationException, MessNotFoundException \\
+\hline
+assignMessToUser & messID: str, userID: str & bool & MessNotFoundException, UserNotFoundException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item SUPABASE\_API\_KEY: Key required to interface with the Supabase backend, which stores mess-related data.
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item The camera system and scoring module provide accurate and timely data.
+  \item All users have unique identifiers and are registered in the Supabase backend.
+  \item Users are responsible for marking messes as cleaned only if they are assigned to them.
+  \item The Supabase backend is operational and responsive.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getMessDetails(messID: str):
+\begin{itemize}
+\item transition: Retrieves details of the specified mess from the Supabase backend.
+\item output: Returns a dictionary containing mess details, including the image, assigned user, and cleanup status.
+\item exception: MessNotFoundException - Raised if the specified mess ID does not exist in the backend.
+\end{itemize}
+
+\noindent markAsCleaned(messID: str, userID: str):
+\begin{itemize}
+\item transition: Updates the status of the specified mess to "cleaned" in the Supabase backend.
+\item output: Returns `true` if the operation is successful.
+\item exception: 
+  \begin{itemize}
+    \item AuthorizationException - Raised if the user attempting to mark the mess as cleaned is not assigned to it.
+    \item MessNotFoundException - Raised if the specified mess ID does not exist.
+  \end{itemize}
+\end{itemize}
+
+\noindent assignMessToUser(messID: str, userID: str):
+\begin{itemize}
+\item transition: Updates the assigned user for the specified mess in the Supabase backend.
+\item output: Returns `true` if the operation is successful.
+\item exception: 
+  \begin{itemize}
+    \item MessNotFoundException - Raised if the specified mess ID does not exist.
+    \item UserNotFoundException - Raised if the specified user ID does not exist in the backend.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item fetchCameraData(messID: str) $\rightarrow$ dict: Retrieves image data and metadata for the specified mess from the camera system.
+  \item updateMessStatus(messID: str, status: str) $\rightarrow$ bool: Updates the cleanup status of the mess in the Supabase backend.
+  \item assignUserToMess(messID: str, userID: str) $\rightarrow$ bool: Assigns the specified user to the mess in the Supabase backend.
+  \item validateUserPermission(userID: str, messID: str) $\rightarrow$ bool: Ensures the user is authorized to modify the mess's status.
 \end{itemize}
 
 \newpage{}
