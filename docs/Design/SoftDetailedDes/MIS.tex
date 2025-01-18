@@ -451,7 +451,7 @@ To detect objects in an input tensor (preprocessed image) using a pretrained obj
 \subsubsection{Exported Constants}
 
 \begin{itemize}
-  \item MODEL{\_}NAME: str = "FasterRCNN{\_}ResNet50{\_}FPN"
+  \item MODEL{\_}NAME: str = "FasterRCNNResNet50FPN"
   \item CONFIDENCE{\_}THRESHOLD: float = 0.5 (minimum confidence score for object detection results)
 \end{itemize}
 
@@ -528,9 +528,9 @@ The Chat Bot Module interfaces with an SMS API to facilitate group messaging fun
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-create{\_}group & groupName: str, members: List[str] & GroupID: str & InvalidGroupException \\
+createGroup & groupName: str, members: List[str] & GroupID: str & InvalidGroupException \\
 \hline
-send{\_}message & groupID: str, message: str & bool & MessageDeliveryException \\
+sendMessage & groupID: str, message: str & bool & MessageDeliveryException \\
 \hline
 \end{tabular}
 \end{center}
@@ -552,7 +552,7 @@ send{\_}message & groupID: str, message: str & bool & MessageDeliveryException \
 
 \subsubsection{Access Routine Semantics}
 
-\noindent create{\_}group(groupName: str, members: List[str]):
+\noindent createGroup(groupName: str, members: List[str]):
 \begin{itemize}
 \item transition: Adds a new group to `activeGroups` with the specified members.
 \item output: Returns a unique group ID for the newly created group.
@@ -562,7 +562,7 @@ send{\_}message & groupID: str, message: str & bool & MessageDeliveryException \
 \end{itemize}
 \end{itemize}
 
-\noindent send{\_}message(groupID: str, message: str):
+\noindent sendMessage(groupID: str, message: str):
 \begin{itemize}
 \item transition: Sends the message to all members of the specified group via the SMS API.
 \item output: Returns `true` if the message is successfully sent, otherwise `false`.
@@ -576,9 +576,9 @@ send{\_}message & groupID: str, message: str & bool & MessageDeliveryException \
 \subsubsection{Local Functions}
 
 \begin{itemize}
-  \item validate{\_}phone{\_}number(phone: str) $\rightarrow$ bool: Ensures the phone number follows the correct format.
-  \item generate{\_}group{\_}id(groupName: str) $\rightarrow$ str: Generates a unique group ID based on the group name and timestamp.
-  \item send{\_}via{\_}sms(phone: str, message: str) $\rightarrow$ bool: Sends a message to a specified phone number using the SMS API.
+  \item validatePhoneNumber(phone: str) $\rightarrow$ bool: Ensures the phone number follows the correct format.
+  \item generateGroupID(groupName: str) $\rightarrow$ str: Generates a unique group ID based on the group name and timestamp.
+  \item sendViaSms(phone: str, message: str) $\rightarrow$ bool: Sends a message to a specified phone number using the SMS API.
 \end{itemize}
 
 \newpage
@@ -679,7 +679,7 @@ To provide an interface for the app's backend to interact with the Python-based 
 \hline
 startServer & - & None & - \\
 \hline
-POST /processImages & imageSet: JSON & cleanliness{\_}score: JSON & - \\
+POST /processImages & imageSet: JSON & cleanlinessScore: JSON & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -737,7 +737,7 @@ None
 \subsubsection{Local Functions}
 
 \begin{itemize}
-  \item decodeImages(encoded{\_}images: List[str]) $\rightarrow$ List[Tensor]: Decodes base64-encoded images into PyTorch tensors
+  \item decodeImages(encodedImages: List[str]) $\rightarrow$ List[Tensor]: Decodes base64-encoded images into PyTorch tensors
   \item processRequest(images: List[Tensor]) $\rightarrow$ int: Processes the input images through the ObjectDetection and Scoring modules to compute the cleanliness score
 \end{itemize}
 
