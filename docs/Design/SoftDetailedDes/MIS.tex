@@ -85,33 +85,38 @@ found at \url{https://github.com/jinalkast/room8/tree/main}.
 The following table is taken directly from the Module Guide document for this project.
 
 \begin{table}[h!]
-\centering
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
-\toprule
-\textbf{Level 1} & \textbf{Level 2}\\
-\midrule
-
-{Hardware-Hiding} & ~ \\
-\midrule
-
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
-\midrule
-
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
-\bottomrule
-
-\end{tabular}
-\caption{Module Hierarchy}
-\label{TblMH}
-\end{table}
+  \centering
+  \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+  \toprule
+  \textbf{Level 1} & \textbf{Level 2}\\
+  \midrule
+  \multirow{3}{0.3\textwidth}{Hardware-Hiding Module} 
+  & M1 \\
+  & M2 \\
+  & M3\\
+  \midrule
+  
+  \multirow{3}{0.3\textwidth}{Behaviour-Hiding Module} 
+  & M4 \\
+  & M7 \\
+  & M8 \\
+  \midrule
+  
+  \multirow{7}{0.3\textwidth}{Software Decision Module} 
+  & M5\\
+  & M6 \\
+  & M9\\
+  & M10\\
+  & M11 \\
+  & M12 \\
+  & M13 \\
+  & M14 \\
+  \bottomrule
+  
+  \end{tabular}
+  \caption{Module Hierarchy}
+  \label{TblMH}
+  \end{table}
 
 \newpage
 
@@ -273,7 +278,9 @@ uploadImage & image & - & imgUploadErrorMessage \\
 None
 
 \subsubsection{Environment Variables}
-None
+\begin{itemize}
+  \item uploadURL: str - The URL to which the image will be uploaded.
+\end{itemize}
 
 \subsubsection{Assumptions}
 \begin{itemize}
@@ -359,7 +366,7 @@ None
 \end{itemize}
 
 \end{itemize}
-\noindent procesImage(image: Image):
+\noindent processImage(image: Image):
 \begin{itemize}
   \item transition: Applies pixel map transformations (e.g. resizing, cropping, filtering) to the input image
   \item output: Returns the transformed image
@@ -374,7 +381,7 @@ None
 
 \begin{itemize}
   \item validateImageFormat(image: Image) $\rightarrow$ bool: Checks if the input image format is supported
-  \item creatTransforms() $\rightarrow$ torchvision.transforms.Compose\: Creates a PyTorch Compose object for the default set of transformations
+  \item createTransforms() $\rightarrow$ torchvision.transforms.Compose\: Creates a PyTorch Compose object for the default set of transformations
   \item applyTransforms(image: Image, transforms: torchvision.transforms.Compose) $\rightarrow$ Tensor: Applies the given transformations to the input image
 \end{itemize}
 
@@ -526,7 +533,7 @@ None
 
 \subsection{Module}
 
-M7: Request Listener Module.
+M7: RequestListenerModule
 
 \subsection{Uses}
 Exposes cleanliness detector to camera and image by making it an application programming interface.
@@ -597,7 +604,6 @@ To provide an interface for the app's backend to interact with the Python-based 
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 startServer & - & None & - \\
-\hline
 POST /processImages & imageSet: JSON & cleanlinessScore: JSON & - \\
 \hline
 \end{tabular}
@@ -628,10 +634,7 @@ None
 \begin{itemize}
 \item transition: Initiates the FastAPI application and starts the server to handle incoming requests
 \item output: None
-\item exception: 
-\begin{itemize}
-  \item ServerError: Raised if the server fails to start
-\end{itemize}
+\item exception: ServerError - Raised if the server fails to start
 
 \end{itemize}
 
@@ -739,7 +742,7 @@ M10: Chat Bot Module
 
 \subsection{Uses}
 
-The Chat Bot Module interfaces with an SMS API to facilitate group messaging functionality. It allows users to view the current group SMS status for the house, create a group, and send messages. The module implements logic for sending relevant notifications.
+The ChatBot Module interfaces with an SMS API to facilitate group messaging functionality. It allows users to view the current group SMS status for the house, create a group, and send messages. The module implements logic for sending relevant notifications.
 
 \subsection{Syntax}
 
@@ -754,7 +757,6 @@ None
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 createGroup & groupName: str, members: List[str] & GroupID: str & InvalidGroupException \\
-\hline
 sendMessage & groupID: str, message: str & bool & MessageDeliveryException \\
 \hline
 \end{tabular}
@@ -915,8 +917,8 @@ The User Authentication Module is used to authenticate users and manage user acc
 \subsubsection{Exported Constants}
 
 \begin{itemize}
-  \item SUPPORTED{\_}AUTHENTICATION{\_}METHODS: List[str] = ["Google"]
-  \item SUPPORTED{\_}AUTHENTICATION{\_}PROVIDERS: List[str] = ["OAuth2"]
+  \item SUPPORTED{\_}AUTHENTICATION{\_}METHODS: List[str] = ["OAuth2"]
+  \item SUPPORTED{\_}AUTHENTICATION{\_}PROVIDERS: List[str] = ["Google"]
 \end{itemize}
 
 \subsubsection{Exported Access Programs}
