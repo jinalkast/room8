@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import useRoommates from '@/hooks/use-roommates';
-import UserSkeleton from '@/components/userSkelton';
+import useRoommates from '@/hooks/useRoommates';
+import UserSkeleton from '@/components/userSkeleton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -19,7 +19,7 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/useToast';
 import useUser from '@/app/auth/hooks/useUser';
 
 const formSchema = z.object({

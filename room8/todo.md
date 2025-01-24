@@ -3,7 +3,6 @@ Dashboard
 [ ]
 
 Other
-[ ] Place background card on page
 [ ] Move hooks and components to inside of respective folder
 [ ] Add adapters and better types
 
@@ -17,6 +16,22 @@ Bill Splitter
 House Management Page
 [ ] Hide all options if not in a house
 [ ] Design home invitation page and mechanic
+
+- User has no house
+  - Create and invites section
+  - Create modal window
+    - Address
+    - House name
+    - Invites
+      - User search
+      - Clicking adds user to list of users going to be invited
+  - Join section
+    - list of pending invites
+- User has house
+  - Table showing all users in this house
+  - address and name of house
+  - house notes
+  - Leave button
 
 Schedule
 [ ] Show a nicer schedule

@@ -63,8 +63,8 @@ const MenuLinks = () => {
   };
 
   const USER_PAGES = {
-    houseSettings: { path: '/house-settings', icon: <HousePlus />, title: 'House Settings' },
-    settings: { path: '/settings', icon: <Settings />, title: 'Profile Settings' }
+    houseSettings: { path: '/house-settings', icon: <HousePlus />, title: 'My House' },
+    settings: { path: '/settings', icon: <Settings />, title: 'My Settings' }
   };
 
   return (

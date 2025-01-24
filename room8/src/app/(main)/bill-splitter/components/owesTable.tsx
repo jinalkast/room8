@@ -1,4 +1,4 @@
-import useOwes from '@/app/(main)/bill-splitter/hooks/use-owes';
+import useOwes from '@/app/(main)/bill-splitter/hooks/useOwes';
 import React from 'react';
 import {
   Table,
@@ -10,7 +10,7 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/useToast';
 import { useMutation } from '@tanstack/react-query';
 
 export default function OwesTable() {

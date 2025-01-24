@@ -1,4 +1,4 @@
-import useBills from '@/app/(main)/bill-splitter/hooks/use-bills';
+import useBills from '@/app/(main)/bill-splitter/hooks/useBills';
 import React from 'react';
 import {
   Table,
@@ -10,7 +10,7 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/useToast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
