@@ -17,11 +17,11 @@ export default async function MainLayout({
   }
 
   return (
-    <div className="min-h-screen flex">
-      <div className="basis-[400px]">
+    <div className="min-h-screen flex gap-6">
+      <div className="basis-[280px]">
         <Menu />
       </div>
-      <div className="flex-1 mt-[70px] mr-[60px]">{children}</div>
+      <div className="flex-1 p-6">{children}</div>
     </div>
   );
 }
