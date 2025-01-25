@@ -1,7 +1,6 @@
 'use client';
 
 import { Modal } from '@/components/modal';
-import { TActivity, TRoommate } from '@/lib/types';
 import { CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 import Image from 'next/image';
@@ -9,6 +8,7 @@ import { DialogClose } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import useDeleteChore from '../hooks/useDeleteChore';
 import useRoommates from '@/hooks/useRoommates';
+import { TActivity } from '../types';
 
 type props = {
   item: TActivity;

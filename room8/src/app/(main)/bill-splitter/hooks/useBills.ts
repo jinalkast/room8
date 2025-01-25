@@ -1,5 +1,5 @@
+import { TBill } from '@/lib/types';
 import { useQuery } from '@tanstack/react-query';
-import { TBill } from '@/lib/types/types';
 
 export const fetchBills = async (): Promise<TBill[] | null> => {
   const res = await fetch(`/api/bills`, {

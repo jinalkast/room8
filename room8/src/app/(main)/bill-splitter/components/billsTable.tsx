@@ -14,7 +14,7 @@ import { useToast } from '@/hooks/useToast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
-import { TOwe } from '@/lib/types/types';
+import { TOwe } from '@/lib/types';
 
 export default function BillsTable() {
   const { data: bills, status: billsStatus, refetch: refetchBills } = useBills();

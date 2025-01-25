@@ -1,51 +1,57 @@
 Dashboard
 [ ] Design dashboard
-[ ]
-
-Other
-[ ] Move hooks and components to inside of respective folder
-[ ] Add adapters and better types
+[ ] Display welcome message to current user and current house
+[ ] Show upcoming chores
+[ ] Show active bills
+[ ] Show latest and favourited notes
 
 Bill Splitter
 [ ] Switch table to multi-vew table with overall, outstanding debts, outstanding loans, and history
-[ ] Make clicking each modal window open up all the info
+[ ] Make clicking each modal window open up all the info of the particular entry
 [ ] Add modal window button to add a bill
-[ ] Add selection to choose roommates
-[ ] Add options to split debt
+[ ] Add selection to choose roommates, then after a roommate is selected, you can add their amount
+[ ] Add different options to split debt
 
 House Management Page
-[ ] Hide all options if not in a house
-[ ] Design home invitation page and mechanic
+[ ] Display different pages if user has a house or not
+
+- User has a house page
+  [ ] invite user button modal window and leave house button
+  [ ] Info of house: Nickname and address
+  [ ] Table component that shows all the roommates (able to pass in different props to the component that update the table settings)
+  [ ] Add house notes feature
 
 - User has no house
-  - Create and invites section
-  - Create modal window
-    - Address
-    - House name
-    - Invites
-      - User search
-      - Clicking adds user to list of users going to be invited
-  - Join section
-    - list of pending invites
-- User has house
-  - Table showing all users in this house
-  - address and name of house
-  - house notes
-  - Leave button
+  [ ] create a house button modal window
+  [ ] join house table with active invite requests
 
 Schedule
-[ ] Show a nicer schedule
-[ ] Show the day were on
-[ ] Add a history
+[ ] Update schedule UI
+[ ] Update "create chore" modal window
+[ ] Create a better looking day selection
+[ ] Create a better looking assign to
+[ ] NEED TO DISCUSS HOW TO HANDLE THIS
 
 ChatBot
 [ ] Add ChatBotActive to house table
 [ ] Update UI to match status
+[ ] Use the roommates table component
+
+Settings
+[ ] Update Name
+[ ] Update Phone number
+[ ] Update profile picture?
 
 User Manual
 [ ] Design user manual
 
-Hooks:
+Other
+[ ] Home page?
+[ ] Better login page?
+
+<!--
+IGNORE
+ Hooks:
 [ ] getHouse
 [ ] createHouse
 [ ] inviteUser
@@ -58,4 +64,4 @@ Hooks:
 - create hook to invite user
 - link modal to use the hook
 - display all invites in table
-- add accept invite button
+- add accept invite button -->

@@ -1,5 +1,5 @@
+import { TOwe } from '@/lib/types';
 import { useQuery } from '@tanstack/react-query';
-import { TOwe } from '@/lib/types/types';
 
 export const fetchOwes = async (): Promise<TOwe[] | null> => {
   const res = await fetch(`/api/bills/owes`, {
