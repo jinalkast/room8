@@ -56,6 +56,11 @@ SCORE_WEIGHTS = {
     "toothbrush": [0, 0, 0]
 }
 
+FORMATTED_DATETIME = datetime.now().strftime("%Y-%m-%d %Hh-%Mm-%Ss")
+
+# Path and making folder
+FOLDER_PATH = Path(f"{Path(__file__).parent}/exported_results/{FORMATTED_DATETIME}")
+FOLDER_PATH.mkdir(parents=True, exist_ok=True)
 
 """Define a class to represent a detection"""
 class HouseObject:
@@ -128,7 +133,7 @@ class CleanlinessDetector:
         return tsr
     
     """Given an image, return list of objects detected"""
-    def detect_objects(self, img: Image, display=False) -> list[HouseObject]:
+    def detect_objects(self, img: Image, display=False, before=False) -> list[HouseObject]:
         tsr = self.process_image(img)
         with torch.no_grad():                           # no gradient => something about reducing complexity
             predictions = self.model(tsr)
@@ -141,13 +146,13 @@ class CleanlinessDetector:
             if scores[i].item() > CONF_THRESH:
                 objects.append(HouseObject(labels[i].item(), [b.item() for b in box]))
         if(display):
-            self.display_image(img, objects)
+            self.display_image(img, objects, before)
         return objects
     
     """Find all objects in 2 images and identify what was added, removed, and moved"""
     def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
         added, removed, moved = [], [], []
-        objects_before = self.detect_objects(before_img, display=True)
+        objects_before = self.detect_objects(before_img, display=True, before=True)
         objects_after = self.detect_objects(after_img, display=True)
         centroids_before = np.array([obj.centroid for obj in objects_before])
         centroids_after = np.array([obj.centroid for obj in objects_after])
@@ -206,15 +211,10 @@ class CleanlinessDetector:
     
     """Exporting results to export_results folder"""
     def export_results(self, before_img: Image, after_img: Image, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]):
-        formatted_datetime = datetime.now().strftime("%Y-%m-%d %Hh-%Mm-%Ss")
-
-        # Path and making folder
-        folder_path = Path(f"{Path(__file__).parent}/exported_results/{formatted_datetime}")
-        folder_path.mkdir(parents=True, exist_ok=True)
-
-        csv_path = folder_path / "results.csv"
 
         # Writing to the CSV
+        csv_path = FOLDER_PATH / "results.csv"
+
         with open(csv_path, 'w', newline='') as file:
             writer = csv.writer(file)
             # Headers of CSV
@@ -241,7 +241,7 @@ class CleanlinessDetector:
                 writer.writerow([added_obj, removed_obj, moved_obj, total_score])
 
     """Draw boxes and show classes for objects detected in image"""
-    def display_image(self, img: Image, objects: HouseObject) -> None:
+    def display_image(self, img: Image, objects: HouseObject, before=False) -> None:
         img= cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
         for i, obj in enumerate(objects):
             x1, y1, x2, y2 = obj.bbox
@@ -250,8 +250,15 @@ class CleanlinessDetector:
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
         plt.axis('off')
-        plt.show()
+        # Define the file path for saving
+        if before:
+            file_path = FOLDER_PATH / "before_image.png"
+        else:
+            file_path = FOLDER_PATH / "after_image.png"
+        # Save the figure to the specified path
+        plt.savefig(file_path, bbox_inches='tight', pad_inches=0)
 
+        plt.show()
 
 if __name__=="__main__":
     cd = CleanlinessDetector()
