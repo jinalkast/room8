@@ -21,6 +21,9 @@ export default function HouseSettingsPage() {
               <Button>
                 <Plus /> Create House
               </Button>
+              <Button className="ml-4">
+                <Plus /> Invite Roommate
+              </Button>
             </CardContent>
           </Card>
           <HouseInvites />

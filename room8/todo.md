@@ -44,3 +44,18 @@ ChatBot
 
 User Manual
 [ ] Design user manual
+
+Hooks:
+[ ] getHouse
+[ ] createHouse
+[ ] inviteUser
+[ ] acceptInvite
+[ ] getInvites
+
+- implement get house hook
+- show house info view vs no house depending if house exists
+- create modal to invite user
+- create hook to invite user
+- link modal to use the hook
+- display all invites in table
+- add accept invite button

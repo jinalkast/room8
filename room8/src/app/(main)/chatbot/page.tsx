@@ -10,8 +10,8 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import useRoommates from '@/hooks/useRoommates';
-import useActivateChatbot from '@/app/(main)/chatbot/hooks/useActivateChatbot';
 import Image from 'next/image';
+import useActivateChatbot from './hooks/useActivateChatbot';
 
 export default function ChatBotPage() {
   const activate = useActivateChatbot();
