@@ -132,6 +132,39 @@ class CleanlinessDetector:
         tsr = tsr[:, :3, :, :]                          # only keep RGB channels
         return tsr
     
+    def frame_diff(self, before: np.array, after: np.array):
+        # Convert to grayscale
+        gray1 = cv2.cvtColor(before, cv2.COLOR_BGR2GRAY)
+        gray2 = cv2.cvtColor(after, cv2.COLOR_BGR2GRAY)
+
+        # Compute absolute difference
+        diff = cv2.absdiff(gray1, gray2)
+
+        # Threshold the difference
+        _, thresh = cv2.threshold(diff, 30, 255, cv2.THRESH_BINARY)
+
+        # Morphological operations to remove noise
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+        thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
+
+        # Find contours of the regions of change
+        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        # Draw contours on the original image
+        output = after.copy()
+        for contour in contours:
+            if cv2.contourArea(contour) > 50:  # Ignore small changes
+                x, y, w, h = cv2.boundingRect(contour)
+                cv2.rectangle(output, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+        # Display results
+        cv2.imshow("Difference", diff)
+        cv2.imshow("Threshold", thresh)
+        cv2.imshow("Regions of Change", output)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+    
     """Given an image, return list of objects detected"""
     def detect_objects(self, img: Image, display=False, before=False) -> list[HouseObject]:
         tsr = self.process_image(img)
@@ -263,8 +296,10 @@ class CleanlinessDetector:
 if __name__=="__main__":
     cd = CleanlinessDetector()
     # Process images
-    before_img = Image.open("cleanliness_detection/samples/2/before.png")
-    after_img = Image.open("cleanliness_detection/samples/2/after.png")
+    before_img = Image.open("cleanliness_detection/samples/1/before.png")
+    after_img = Image.open("cleanliness_detection/samples/1/after.png")
+
+    cd.frame_diff(np.array(before_img), np.array(after_img))
 
     added, removed, moved = cd.calculate_difference(before_img, after_img)
     added = [obj.class_name for obj in added]
