@@ -126,7 +126,8 @@ class CleanlinessDetector:
         tsr = tsr[:, :3, :, :]                          # only keep RGB channels
         return tsr
     
-    def frame_diff(self, before: np.array, after: np.array):
+    """Pixel-wise image differencing to return regions of change"""
+    def frame_diff(self, before: np.array, after: np.array, display: bool = False):
         # Convert to grayscale
         gray1 = cv2.cvtColor(before, cv2.COLOR_BGR2GRAY)
         gray2 = cv2.cvtColor(after, cv2.COLOR_BGR2GRAY)
@@ -137,26 +138,33 @@ class CleanlinessDetector:
         # Threshold the difference
         _, thresh = cv2.threshold(diff, 30, 255, cv2.THRESH_BINARY)
 
-        # Morphological operations to remove noise
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
-        thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
+        # # Morphological operations to remove noise
+        # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+        # thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
 
         # Find contours of the regions of change
         contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
+        # init list to store regions of change
+        regions = []
+
         # Draw contours on the original image
-        output = after.copy()
+        annotated_img = after.copy()
         for contour in contours:
             if cv2.contourArea(contour) > 50:  # Ignore small changes
-                x, y, w, h = cv2.boundingRect(contour)
-                cv2.rectangle(output, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                x1, y1, w, h = cv2.boundingRect(contour)
+                regions.append([x1, y1, w, h])
+                cv2.rectangle(annotated_img, (x1, y1), (x1 + w, y1 + h), (0, 255, 0), 2)
 
-        # Display results
-        cv2.imshow("Difference", diff)
-        cv2.imshow("Threshold", thresh)
-        cv2.imshow("Regions of Change", output)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # display frame differencing results
+        if(display):
+            cv2.imshow("Difference", diff)
+            cv2.imshow("Threshold", thresh)
+            cv2.imshow("Regions of Change", annotated_img)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+        
+        return regions
 
     
     """Given an image, return list of objects detected"""
@@ -227,7 +235,7 @@ class CleanlinessDetector:
 
         return added, removed, moved
 
-    """"""
+    """Scoring algorithm"""
     def calculate_cleanliness_score(self, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> float:
         score = 0
         for i in added:
@@ -252,7 +260,7 @@ class CleanlinessDetector:
         axarr.axis('off')                           # Hide axis
         return f
 
-    """Exporting results to export_results folder"""
+    """Exporting annotated before/after images and csv file to export_results folder"""
     def export_results(self, before_fig: plt.figure, after_fig: plt.figure, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]):
         FORMATTED_DATETIME = datetime.now().strftime("%Y-%m-%d %Hh-%Mm-%Ss")
 
@@ -297,7 +305,7 @@ if __name__=="__main__":
     before_img = Image.open("cleanliness_detection/samples/1/before.png")
     after_img = Image.open("cleanliness_detection/samples/1/after.png")
 
-    #cd.frame_diff(np.array(before_img), np.array(after_img))
+    regions = cd.frame_diff(np.array(before_img), np.array(after_img))
 
     added, removed, moved = cd.calculate_difference(before_img, after_img)
     added = [obj.class_name for obj in added]
