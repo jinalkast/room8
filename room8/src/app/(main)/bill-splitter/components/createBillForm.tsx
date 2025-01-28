@@ -24,11 +24,9 @@ import { useToast } from '@/hooks/useToast';
 import useUser from '@/app/auth/hooks/useUser';
 import usePostBill from '../hooks/postBill';
 import { useQueryClient } from '@tanstack/react-query';
+import { XIcon } from 'lucide-react';
 
-
-export default function CreateBillForm({ closeBillModal }: {
-  closeBillModal: () => void
-}) {
+export default function CreateBillForm({ closeBillModal }: { closeBillModal: () => void }) {
   // const [isLoading, setIsLoading] = useState<boolean>(false);
   const { data: user, status: userStatus } = useUser();
   const { data: roommates, status: roommatesStatus } = useRoommates();
@@ -40,7 +38,7 @@ export default function CreateBillForm({ closeBillModal }: {
         title: 'Success!',
         description: "You're bill has been created"
       });
-      queryClient.invalidateQueries({queryKey: ['bills']});
+      queryClient.invalidateQueries({ queryKey: ['bills'] });
       closeBillModal();
     },
     onErrorCallback: () => {
@@ -60,33 +58,24 @@ export default function CreateBillForm({ closeBillModal }: {
       owes: new Map()
     }
   });
-  // async function onSubmit(values: z.infer<typeof postBillSchema>) {
-  //   setIsLoading(true);
-  //   try {
-  //     console.log('values', values);
-  //     console.log('Object.fromEntries(values.owes)', { ...values, owes: Object.fromEntries(values.owes)});
 
-  //     // const res = await fetch(`/api/bills`, {
-  //     //   method: 'POST',
-  //     //   headers: { 'Content-Type': 'application/json' },
-  //     //   body: JSON.stringify({
-  //     //     ...values,
-  //     //     owes: Object.fromEntries(values.owes)
-  //     //   })
-  //     // });
-   
-  //   } catch (error) {
-  //     console.log(error);
-
-  //   } finally {
-  //     setIsLoading(false);
-  //     form.reset();
-  //   }
-  // }
+  const splitBillEqually = () => {
+    const newOwes = new Map();
+    const billAmount = form.getValues('amount');
+    for (const roommate of roommates!) {
+      if (roommate.id !== user!.id) {
+        newOwes.set(roommate.id, parseFloat((billAmount / roommates!.length).toFixed(2)));
+      }
+    }
+    console.log(newOwes);
+    form.setValue('owes', newOwes);
+  };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit((values) => postBillMutation.mutate(values))} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit((values) => postBillMutation.mutate(values))}
+        className="space-y-4">
         <FormField
           control={form.control}
           name="name"
@@ -137,12 +126,26 @@ export default function CreateBillForm({ closeBillModal }: {
             </FormItem>
           )}
         /> */}
+        <div className="mb-0">
+          <p>Divide up the bill...</p>
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              splitBillEqually();
+            }}
+            disabled={roommatesStatus !== 'success'}>
+            Equally
+          </Button>
+        </div>
 
         <FormField
           control={form.control}
           name="owes"
           render={({ field }) => (
             <FormItem>
+              <p>
+                <b>or manually</b>
+              </p>
               <FormLabel>Debtors</FormLabel>
               {roommatesStatus === 'pending' && <UserSkeleton />}
               {roommatesStatus === 'error' && (
@@ -158,22 +161,38 @@ export default function CreateBillForm({ closeBillModal }: {
                             <Avatar>
                               <AvatarImage src={roommate.image_url} />
                             </Avatar>
-                            {roommate.name}:
+                            <p className="max-w-[120px] truncate">{roommate.name}:</p>
                           </div>
                           <input
+                            className="ml-auto"
                             autoComplete={'off'}
                             type="number"
                             min={0}
                             step={0.01}
                             placeholder={'0'}
+                            value={field.value.get(roommate.id) || ''}
                             onChange={(e) => {
-                              let value: number = parseFloat(e.target.value);
-                              if (value <= 0) {
-                                field.value.delete(roommate.id);
+                              const value = parseFloat(e.target.value);
+                              const updatedOwes = new Map(field.value);
+
+                              // Update the Map with the new value
+                              if (value > 0) {
+                                updatedOwes.set(roommate.id, value);
                               } else {
-                                field.value.set(roommate.id, parseFloat(e.target.value));
+                                updatedOwes.delete(roommate.id);
                               }
+
+                              // Sync the updated Map with the form state
+                              form.setValue('owes', updatedOwes);
                               console.log(field.value);
+                            }}
+                          />
+                          <XIcon
+                            className="cursor-pointer"
+                            onClick={() => {
+                              const updatedOwes = new Map(field.value);
+                              updatedOwes.delete(roommate.id);
+                              form.setValue('owes', updatedOwes);
                             }}
                           />
                         </div>
@@ -190,7 +209,10 @@ export default function CreateBillForm({ closeBillModal }: {
           )}
         />
 
-        <Button className='w-full mb-5' disabled={postBillMutation.isPending || roommatesStatus !== 'success'} type="submit">
+        <Button
+          className="w-full mb-5"
+          disabled={postBillMutation.isPending || roommatesStatus !== 'success'}
+          type="submit">
           Create Bill
         </Button>
       </form>
