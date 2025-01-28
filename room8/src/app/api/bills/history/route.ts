@@ -1,12 +1,14 @@
 import { supabaseServer } from '@/lib/supabase/server';
+import { TAmountOwedDB, TApiResponse, TBillDB } from '@/lib/types';
 import { NextResponse, NextRequest } from 'next/server';
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<NextResponse<TApiResponse<TAmountOwedDB[]>>> {
   try {
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get('page') || '1');
 
     const supabase = await supabaseServer();
+
     const {
       data: { user },
       error: authError
@@ -16,27 +18,26 @@ export async function GET(req: NextRequest) {
       throw new Error('User not authenticated');
     }
 
-    const { data: owes, error: owesError } = await supabase
+    const { data: historyData, error: historyError } = await supabase
       .from('amounts_owed')
       .select('*')
-      .eq('debtor_id', user.id)
-      .eq('paid', false);
+      .or(`debtor_id.eq.${user.id},loaner_id.eq.${user.id}`)
+      .order('updated_at', { ascending: false });
       // .range((page - 1) * 10, page * 10);
-
-    if (owesError) {
-      console.log('billError:', owesError);
-      throw new Error('Error fetching owes');
+    if (historyError) {
+      console.log('historyError:', historyError);
+      throw new Error('Error fetching history');
     }
 
     return NextResponse.json(
       {
-        data: owes,
-        message: 'Successfully Fetched owes'
+        data: historyData,
+        message: 'Successfully Fetched history'
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error in GET /bills/owes:', error);
+    console.error('Error in GET bills/history:', error);
     return NextResponse.json(
       {
         data: null,

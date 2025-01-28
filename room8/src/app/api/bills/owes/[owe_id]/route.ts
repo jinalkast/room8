@@ -1,9 +1,14 @@
 import { supabaseServer } from '@/lib/supabase/server';
+import { TApiResponse, TOweDB } from '@/lib/types';
 import { NextResponse, NextRequest } from 'next/server';
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { 
+  params: { 
+    id: string, owe_id: string 
+  } 
+}): Promise<NextResponse<TApiResponse<TOweDB>>> {
   try {
-    const { id } = await params;
+    const { id: bill_id, owe_id } = await params;
 
     const { paid } = await req.json();
     if (typeof paid !== 'boolean') {
@@ -11,11 +16,15 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     }
 
     const supabase = await supabaseServer();
-    await supabase.from('owes').update({ paid: paid }).eq('id', id);
+    console.log('bill_id:', bill_id, 'owe_id:', owe_id, 'paid:', paid);
+    const { data: oweData, error } = await supabase.from('owes').update({ paid: paid }).eq('id', owe_id).select().single();
+    if (error) {
+      throw new Error(error.message);
+    }
 
     return NextResponse.json(
       {
-        data: {},
+        data: oweData,
         message: 'Successfully Fetched Owes'
       },
       { status: 200 }

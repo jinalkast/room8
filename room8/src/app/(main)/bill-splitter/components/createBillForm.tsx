@@ -6,6 +6,7 @@ import UserSkeleton from '@/components/userSkeleton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { postBillSchema } from '@/app/(main)/bill-splitter/types';
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -21,22 +22,37 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/useToast';
 import useUser from '@/app/auth/hooks/useUser';
+import usePostBill from '../hooks/postBill';
+import { useQueryClient } from '@tanstack/react-query';
 
-const formSchema = z.object({
-  name: z.string(),
-  amount: z.coerce.number(),
-  equally: z.boolean(),
-  owes: z.map(z.string(), z.number())
-});
 
-export default function CreateBillForm() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+export default function CreateBillForm({ closeBillModal }: {
+  closeBillModal: () => void
+}) {
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
   const { data: user, status: userStatus } = useUser();
   const { data: roommates, status: roommatesStatus } = useRoommates();
+  const queryClient = useQueryClient();
   const { toast } = useToast();
+  const postBillMutation = usePostBill({
+    onSuccessCallback: () => {
+      toast({
+        title: 'Success!',
+        description: "You're bill has been created"
+      });
+      queryClient.invalidateQueries({queryKey: ['bills']});
+      closeBillModal();
+    },
+    onErrorCallback: () => {
+      toast({
+        title: 'Error',
+        description: "So, something went wrong when creating you're bill"
+      });
+    }
+  });
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof postBillSchema>>({
+    resolver: zodResolver(postBillSchema),
     defaultValues: {
       name: '',
       amount: 0,
@@ -44,36 +60,33 @@ export default function CreateBillForm() {
       owes: new Map()
     }
   });
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    try {
-      const res = await fetch(`/api/bills`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...values,
-          owes: Object.fromEntries(values.owes)
-        })
-      });
-      toast({
-        title: 'Success!',
-        description: "You're bill has been created"
-      });
-    } catch (error) {
-      console.log(error);
-      toast({
-        title: 'Error',
-        description: "So, something went wrong when creating you're bill"
-      });
-    } finally {
-      setIsLoading(false);
-      form.reset();
-    }
-  }
+  // async function onSubmit(values: z.infer<typeof postBillSchema>) {
+  //   setIsLoading(true);
+  //   try {
+  //     console.log('values', values);
+  //     console.log('Object.fromEntries(values.owes)', { ...values, owes: Object.fromEntries(values.owes)});
+
+  //     // const res = await fetch(`/api/bills`, {
+  //     //   method: 'POST',
+  //     //   headers: { 'Content-Type': 'application/json' },
+  //     //   body: JSON.stringify({
+  //     //     ...values,
+  //     //     owes: Object.fromEntries(values.owes)
+  //     //   })
+  //     // });
+   
+  //   } catch (error) {
+  //     console.log(error);
+
+  //   } finally {
+  //     setIsLoading(false);
+  //     form.reset();
+  //   }
+  // }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit((values) => postBillMutation.mutate(values))} className="space-y-8">
         <FormField
           control={form.control}
           name="name"
@@ -177,8 +190,8 @@ export default function CreateBillForm() {
           )}
         />
 
-        <Button disabled={isLoading || roommatesStatus !== 'success'} type="submit">
-          Submit
+        <Button className='w-full mb-5' disabled={postBillMutation.isPending || roommatesStatus !== 'success'} type="submit">
+          Create Bill
         </Button>
       </form>
     </Form>

@@ -6,8 +6,12 @@ export const fetchBills = async (): Promise<TBill[] | null> => {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
   });
-  const json = await res.json();
 
+  if (!res.ok) {
+    throw new Error('Error fetching bills - Response was not ok');
+  }
+
+  const json = await res.json();
   return json.data ?? null;
 };
 

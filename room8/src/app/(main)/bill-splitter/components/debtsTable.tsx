@@ -11,32 +11,26 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/useToast';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import usePatchOwe from '../hooks/patchOwe';
 
-export default function OwesTable() {
-  const { data: owes, status: owesStatus, refetch: refetchOwes } = useOwes();
+export default function DebtsTable() {
+  const { data: owes, status: owesStatus } = useOwes();
   const { toast } = useToast();
-  const mutation = useMutation({
-    mutationFn: async ({ debtId, isPaid }: { debtId: string; isPaid: boolean }) => {
-      const res = await fetch(`/api/bills/owes/${debtId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ paid: !isPaid })
-      });
-      const json = await res.json();
-      return json.data;
-    },
-    onSuccess: () => {
+  const queryClient = useQueryClient();
+  const patchOweMutation = usePatchOwe({
+    onSuccessCallback: () => {
       toast({
         title: 'Success!',
         description: 'Bill status updated'
       });
-      refetchOwes();
+      queryClient.invalidateQueries({ queryKey: ['owes'] });
+      queryClient.invalidateQueries({ queryKey: ['bills', 'history'] });
     },
-    onError: () => {
+    onErrorCallback: () => {
       toast({
         title: 'Error',
-        description: 'We coud not update the bill status'
+        description: 'We could not update the bill status'
       });
     }
   });
@@ -75,11 +69,11 @@ export default function OwesTable() {
                 <TableCell>{owe.amount_owed}</TableCell>
                 <TableCell className="text-right">
                   <Button
-                    disabled={mutation.isPending}
+                    disabled={patchOweMutation.isPending}
                     onClick={(e) => {
-                      mutation.mutate({ debtId: owe.owe_id, isPaid: owe.paid });
+                      patchOweMutation.mutate({ oweID: owe.owe_id, isPaid: owe.paid });
                     }}>
-                    {owe.paid ? 'Unpay' : 'Pay Off'}
+                    {owe.paid ? 'UnPay' : 'Pay Off'}
                   </Button>
                 </TableCell>
               </TableRow>

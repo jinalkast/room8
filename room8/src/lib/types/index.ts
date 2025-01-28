@@ -1,6 +1,9 @@
-import { Database } from './supabase';
+import { Database, Tables } from './supabase';
 
-export type THabitDB = Database['public']['Tables']['activities']['Row'];
+export type THabitDB = Tables<'activities'>;
+export type TBillDB = Tables<'bills'>;
+export type TOweDB = Tables<'owes'>;
+export type TAmountOwedDB = Tables<'amounts_owed'>;
 
 export type TApiResponse<T> = {
   data: T | null;
