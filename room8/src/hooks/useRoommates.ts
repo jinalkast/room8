@@ -1,5 +1,5 @@
+import { TRoommate } from '@/lib/types';
 import { useQuery } from '@tanstack/react-query';
-import { TRoommate } from '@/lib/types/types';
 
 export const fetchRoommates = async (): Promise<TRoommate[] | null> => {
   const res = await fetch(`/api/house/roommates`, {
