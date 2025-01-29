@@ -4,6 +4,7 @@ export type THabitDB = Tables<'activities'>;
 export type TBillDB = Tables<'bills'>;
 export type TOweDB = Tables<'owes'>;
 export type TAmountOwedDB = Tables<'amounts_owed'>;
+export type TRoommateDB = Tables<'profiles'>;
 
 export type TApiResponse<T> = {
   data: T | null;
@@ -13,8 +14,10 @@ export type TApiResponse<T> = {
 export type TRoommate = {
   id: string;
   name: string;
-  image_url: string;
-  phone: string;
+  imageUrl: string;
+  email: string;
+  houseId?: string;
+  phone?: string;
 };
 
 export type TOwe = {

@@ -25,13 +25,14 @@ export async function GET() {
 
     const house_id = user_profile[0].house_id;
 
-    const { data: responseData, error: roommates_error } =
-      house_id !== null
-        ? await supabase
-            .from('profiles')
-            .select('id, name, image_url, phone')
-            .eq('house_id', house_id)
-        : { data: [], error: null };
+    if (house_id === null) {
+      throw new Error('User does not have a house');
+    }
+
+    const { data: responseData, error: roommates_error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('house_id', house_id);
 
     if (roommates_error || responseData === null) {
       throw new Error('Error getting roomates');

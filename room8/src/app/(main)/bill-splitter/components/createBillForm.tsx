@@ -159,7 +159,7 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                         <div className="flex gap-2 items-center justify-between" key={index}>
                           <div className="flex items-center gap-1">
                             <Avatar>
-                              <AvatarImage src={roommate.image_url} />
+                              <AvatarImage src={roommate.imageUrl} />
                             </Avatar>
                             <p className="max-w-[120px] truncate">{roommate.name}:</p>
                           </div>

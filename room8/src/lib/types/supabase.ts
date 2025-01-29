@@ -172,23 +172,29 @@ export type Database = {
       }
       houses: {
         Row: {
-          address: string | null
+          address: string
+          chatbot_active: boolean
           created_at: string
           id: string
+          name: string
           owner: string
           updated_at: string
         }
         Insert: {
-          address?: string | null
+          address: string
+          chatbot_active?: boolean
           created_at?: string
           id?: string
+          name?: string
           owner: string
           updated_at?: string
         }
         Update: {
-          address?: string | null
+          address?: string
+          chatbot_active?: boolean
           created_at?: string
           id?: string
+          name?: string
           owner?: string
           updated_at?: string
         }

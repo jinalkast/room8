@@ -1,0 +1,27 @@
+import { TRoommate, TRoommateDB } from '@/lib/types';
+import { Tables, TablesInsert } from '@/lib/types/supabase';
+
+export type THouseDB = Tables<'houses'>;
+export type THouseInsertDB = TablesInsert<'houses'>;
+export type TInviteDB = Tables<'house_invites'> & { inviter: TRoommateDB } & { house: THouseDB };
+
+export type THouse = {
+  id: string;
+  owner: string;
+  name: string;
+  address: string;
+  chatbotActive: boolean;
+};
+
+export type TInviteBody = {
+  userEmail: string;
+  inviterId: string;
+  houseId: string;
+};
+
+export type TInvite = {
+  house: THouse;
+  id: number;
+  inviter: TRoommate;
+  userId: string;
+};

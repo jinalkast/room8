@@ -1,10 +1,9 @@
 import { Json } from '@/lib/types/supabase';
 import { useMutation } from '@tanstack/react-query';
 import useRoommates from '../../../../hooks/useRoommates';
+import { TRoommate } from '@/lib/types';
 
-export const activateChatbot = async (
-  roommates: Array<{ phone: string }> | null
-): Promise<Json | null> => {
+export const activateChatbot = async (roommates: TRoommate[] | null): Promise<Json | null> => {
   const phoneList = roommates
     ? roommates.map((roommate) => roommate.phone).filter((phone) => phone != 'NULL')
     : [];
@@ -19,11 +18,11 @@ export const activateChatbot = async (
 };
 
 export default function useActivateChatbot() {
-  const { data: roommates, status: roommatesStatus } = useRoommates();
+  const { data: roommates } = useRoommates();
 
   return useMutation({
     mutationFn: () => {
-      if (roommatesStatus !== 'success') {
+      if (!roommates) {
         throw new Error('Error getting roommates');
       }
       return activateChatbot(roommates);
