@@ -280,3 +280,7 @@ TSWLatexianTemp*
 
 #ignore results
 cleanliness_detection/exported_results
+
+node_modules/
+.next/
+.env.local
