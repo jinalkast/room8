@@ -11,30 +11,32 @@ from sklearn.neighbors import NearestNeighbors
 from pathlib import Path
 from datetime import datetime
 import csv
+import detectron2
+from detectron2.engine import DefaultPredictor
+from detectron2.config import get_cfg
+from detectron2 import model_zoo
+from detectron2.structures import Instances
+from detectron2.utils.visualizer import Visualizer
+from detectron2.data import MetadataCatalog
+
 
 CONF_THRESH = 0.5                                                                           # min confidence for object detector
 DIST_THRESH = 15                                                                            # max number of pixels for object that moved slightly to still be considered in same spot                                                                     #
 IOU_THRESH = 0.8                                                                            # min IOU threshold for object to be considered in same spot
 # Faster R-CNN is trained on COCO dataset
-COCO_LABELS = {                                                                             # COCO class label mapping
-    1: "person", 2: "bicycle", 3: "car", 4: "motorcycle", 5: "airplane",
-    6: "bus", 7: "train", 8: "truck", 9: "boat", 10: "traffic light",
-    11: "fire hydrant", 13: "stop sign", 14: "parking meter", 15: "bench",
-    16: "bird", 17: "cat", 18: "dog", 19: "horse", 20: "sheep",
-    21: "cow", 22: "elephant", 23: "bear", 24: "zebra", 25: "giraffe",
-    27: "backpack", 28: "umbrella", 31: "handbag", 32: "tie", 33: "suitcase",
-    34: "frisbee", 35: "skis", 36: "snowboard", 37: "sports ball", 38: "kite",
-    39: "baseball bat", 40: "baseball glove", 41: "skateboard", 42: "surfboard", 43: "tennis racket",
-    44: "bottle", 46: "wine glass", 47: "cup", 48: "fork", 49: "knife",
-    50: "spoon", 51: "bowl", 52: "banana", 53: "apple", 54: "sandwich",
-    55: "orange", 56: "broccoli", 57: "carrot", 58: "hot dog", 59: "pizza",
-    60: "donut", 61: "cake", 62: "chair", 63: "couch", 64: "potted plant",
-    65: "bed", 67: "dining table", 70: "toilet", 72: "TV", 73: "laptop",
-    74: "mouse", 75: "remote", 76: "keyboard", 77: "cell phone", 78: "microwave",
-    79: "oven", 80: "toaster", 81: "sink", 82: "refrigerator", 84: "book",
-    85: "clock", 86: "vase", 87: "scissors", 88: "teddy bear", 89: "hair drier",
-    90: "toothbrush"
+COCO_LABELS = {
+    0: "person", 1: "bicycle", 2: "car", 3: "motorcycle", 4: "airplane", 5: "bus", 6: "train", 7: "truck", 8: "boat",
+    9: "traffic light", 10: "fire hydrant", 11: "stop sign", 12: "parking meter", 13: "bench", 14: "bird", 15: "cat", 
+    16: "dog", 17: "horse", 18: "sheep", 19: "cow", 20: "elephant", 21: "bear", 22: "zebra", 23: "giraffe", 24: "backpack", 
+    25: "umbrella", 26: "handbag", 27: "tie", 28: "suitcase", 29: "frisbee", 30: "skis", 31: "snowboard", 32: "sports ball", 
+    33: "kite", 34: "baseball bat", 35: "baseball glove", 36: "skateboard", 37: "surfboard", 38: "tennis racket", 39: "bottle", 
+    40: "wine glass", 41: "cup", 42: "fork", 43: "knife", 44: "spoon", 45: "bowl", 46: "banana", 47: "apple", 48: "sandwich", 
+    49: "orange", 50: "broccoli", 51: "carrot", 52: "hot dog", 53: "pizza", 54: "donut", 55: "cake", 56: "chair", 57: "couch", 
+    58: "potted plant", 59: "bed", 60: "dining table", 61: "toilet", 62: "TV", 63: "laptop", 64: "mouse", 65: "remote", 
+    66: "keyboard", 67: "cell phone", 68: "microwave", 69: "oven", 70: "toaster", 71: "sink", 72: "refrigerator", 73: "book", 
+    74: "clock", 75: "vase", 76: "scissors", 77: "teddy bear", 78: "hair drier", 79: "toothbrush"
 }
+
 
 SCORE_WEIGHTS = {
     "person": [0, 0, 0], "bicycle": [0, 0, 0], "car": [0, 0, 0], "motorcycle": [0, 0, 0], "airplane": [0, 0, 0],
@@ -117,8 +119,15 @@ class HouseObject:
 
 class CleanlinessDetector:
     def __init__(self) -> 'CleanlinessDetector':
-        self.model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)   # load Faster R-CNN model
-        self.model.eval()                                                                    # set to evaluation mode
+        # Load a Detectron2 model (Mask R-CNN)
+        self.cfg = get_cfg()
+        self.cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
+        self.cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+        self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # Set a confidence threshold
+        self.cfg.MODEL.DEVICE = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
+
+        # Create predictor
+        self.model = DefaultPredictor(self.cfg)                                                               # set to evaluation mode
         self.transform = T.Compose([T.ToTensor()])                                           # function to convert to tensor
 
     """Convert image to tensor"""
@@ -166,22 +175,34 @@ class CleanlinessDetector:
     
     """Given an image, return list of objects detected"""
     def detect_objects(self, img: Image, display=False) -> list[HouseObject]:
-        tsr = self.process_image(img)
-        with torch.no_grad():                           # no gradient => something about reducing complexity
-            predictions = self.model(tsr)
-        bboxes = predictions[0]['boxes']                # (x1, y1, x2, y2) for each detection
-        labels = predictions[0]['labels']               # COCO class #
-        scores = predictions[0]['scores']               # confidence score
-        masks = predictions[0]['masks']                 # segmentation masks
-        objects = []
-        # only consider predictions for objects over the confidence threshold
-        for i, box in enumerate(bboxes):
-            if scores[i].item() > CONF_THRESH:
-                mask = masks[i].squeeze().cpu().numpy() > 0.5 # convert mask to binary
-                objects.append(HouseObject(labels[i].item(), [b.item() for b in box], mask))
-        if(display):
-            self.annotate_image(img, objects, True)
-        return objects
+        # Load image
+        img_rgb = cv2.cvtColor(np.array(img), cv2.COLOR_BGR2RGB)
+
+        # Run detection
+        outputs = self.model(img_rgb)
+
+        # Extract instances
+        instances = outputs["instances"]
+        boxes = instances.pred_boxes.tensor.cpu().numpy()  # Bounding boxes
+        masks = instances.pred_masks.cpu().numpy() if instances.has("pred_masks") else None
+        classes = instances.pred_classes.cpu().numpy()  # Class indices
+        scores = instances.scores.cpu().numpy()  # Confidence scores
+
+        # Metadata for COCO classes
+        metadata = MetadataCatalog.get(self.cfg.DATASETS.TRAIN[0])
+        class_names = metadata.get("thing_classes", None)
+
+        extracted_objects = []
+        house_objects = []
+        
+        for i, (box, class_id) in enumerate(zip(boxes, classes)):
+            x1, y1, x2, y2 = map(int, box)
+            mask = masks[i] if masks is not None else None
+
+            house_objects.append(HouseObject(label=class_id, bbox=[x1, y1, x2, y2], mask=mask))
+
+        return house_objects
+
     
     """Find all objects in 2 images and identify what was added, removed, and moved"""
     def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
@@ -384,22 +405,22 @@ if __name__=="__main__":
 
     #regions = cd.frame_diff(np.array(before_img), np.array(after_img))
 
-    added, removed, moved = cd.calculate_difference2(before_img, after_img)
-    added = [obj.class_name for obj in added]
-    removed = [obj.class_name for obj in removed]
-    moved = [obj[0][0].class_name for obj in moved]
+    # added, removed, moved = cd.calculate_difference(before_img, after_img)
+    # added = [obj.class_name for obj in added]
+    # removed = [obj.class_name for obj in removed]
+    # moved = [obj[0][0].class_name for obj in moved]
 
-    cleanliness_score = cd.calculate_cleanliness_score(added, removed, moved)
+    # cleanliness_score = cd.calculate_cleanliness_score(added, removed, moved)
 
-    print("Objects added: " + ", ".join(added))
-    print("Objects removed: " + ", ".join(removed))
-    print("Objects moved: " + ", ".join(moved))
+    # print("Objects added: " + ", ".join(added))
+    # print("Objects removed: " + ", ".join(removed))
+    # print("Objects moved: " + ", ".join(moved))
 
-    print(f"Cleanliness score for this iteration is: {cleanliness_score}")
+    # print(f"Cleanliness score for this iteration is: {cleanliness_score}")
 
     objects_before = cd.detect_objects(before_img)
     before_img = cd.annotate_image(before_img, objects_before, True)
     objects_after = cd.detect_objects(after_img)
     after_img = cd.annotate_image(after_img, objects_after, True)
-
+    added,removed,moved=[],[],[]
     cd.export_results(before_img, after_img, added, removed, moved)
