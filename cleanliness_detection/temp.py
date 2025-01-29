@@ -58,9 +58,10 @@ SCORE_WEIGHTS = {
 
 """Define a class to represent a detection"""
 class HouseObject:
-    def __init__(self, label: int, bbox: list) -> 'HouseObject':
+    def __init__(self, label: int, bbox: list, mask: np.array = None) -> 'HouseObject':
         self.label = label
         self.x1, self.y1, self.x2, self.y2 = [int(b) for b in bbox]
+        self.mask = mask
 
     """x1, y1, x2, y2"""
     @property
@@ -116,7 +117,7 @@ class HouseObject:
 
 class CleanlinessDetector:
     def __init__(self) -> 'CleanlinessDetector':
-        self.model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)   # load Faster R-CNN model
+        self.model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)   # load Faster R-CNN model
         self.model.eval()                                                                    # set to evaluation mode
         self.transform = T.Compose([T.ToTensor()])                                           # function to convert to tensor
 
@@ -175,11 +176,13 @@ class CleanlinessDetector:
         bboxes = predictions[0]['boxes']                # (x1, y1, x2, y2) for each detection
         labels = predictions[0]['labels']               # COCO class #
         scores = predictions[0]['scores']               # confidence score
+        masks = predictions[0]['masks']                 # segmentation masks
         objects = []
         # only consider predictions for objects over the confidence threshold
         for i, box in enumerate(bboxes):
             if scores[i].item() > CONF_THRESH:
-                objects.append(HouseObject(labels[i].item(), [b.item() for b in box]))
+                mask = masks[i].squeeze().cpu().numpy() > 0.5 # convert mask to binary
+                objects.append(HouseObject(labels[i].item(), [b.item() for b in box], mask))
         if(display):
             self.annotate_image(img, objects, True)
         return objects
@@ -245,19 +248,38 @@ class CleanlinessDetector:
         return score
 
     """Draw boxes and show classes for objects detected in image"""
-    def annotate_image(self, img: Image, objects: HouseObject, display=False) -> plt.figure:
-        img= cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
-        for i, obj in enumerate(objects):
+    def annotate_image(self, img: Image, objects: list[HouseObject], display=False) -> plt.figure:
+        """Draw boxes, show classes, and overlay masks for objects detected in image"""
+        img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+        overlay = img.copy()
+
+        for obj in objects:
             x1, y1, x2, y2 = obj.bbox
+            
+            # Draw instance mask if available
+            if obj.mask is not None:
+                mask = obj.mask.astype(np.uint8) * 255  # Convert to uint8 (0-255)
+                color = np.random.randint(0, 255, (3,), dtype=int).tolist()  # Random color
+                
+                for c in range(3):
+                    overlay[:, :, c] = np.where(mask > 0, 
+                                                overlay[:, :, c] * 0.5 + color[c] * 0.5, 
+                                                overlay[:, :, c])
+            
+            # Draw bounding box
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cv2.putText(img, obj.class_name, (x1, y1 - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        
+        # Blend overlay with original image
+        img = cv2.addWeighted(overlay, 0.6, img, 0.4, 0)
+        
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         f = plt.figure()
         axarr = f.add_subplot(1,1,1)
         if display:
             axarr.imshow(img_rgb)
-        axarr.axis('off')                           # Hide axis
+        axarr.axis('off')  # Hide axis
         return f
 
     """Exporting annotated before/after images and csv file to export_results folder"""
@@ -268,8 +290,8 @@ class CleanlinessDetector:
         FOLDER_PATH = Path(f"{Path(__file__).parent}/exported_results/{FORMATTED_DATETIME}")
         FOLDER_PATH.mkdir(parents=True, exist_ok=True)
 
-        before_fig.savefig(FOLDER_PATH / 'before.png')
-        after_fig.savefig(FOLDER_PATH / 'after.png')
+        before_fig.savefig(FOLDER_PATH / 'before.svg', format='svg', dpi=1200)
+        after_fig.savefig(FOLDER_PATH / 'after.svg', format='svg', dpi=1200)
 
         # Writing to the CSV
         csv_path = FOLDER_PATH / "results.csv"
