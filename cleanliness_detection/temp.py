@@ -127,7 +127,7 @@ class CleanlinessDetector:
         return tsr
     
     """Pixel-wise image differencing to return regions of change"""
-    def frame_diff(self, before: np.array, after: np.array, display: bool = False):
+    def frame_diff(self, before: np.array, after: np.array, display: bool = False) -> list[list[int]]:
         # Convert to grayscale
         gray1 = cv2.cvtColor(before, cv2.COLOR_BGR2GRAY)
         gray2 = cv2.cvtColor(after, cv2.COLOR_BGR2GRAY)
@@ -137,10 +137,6 @@ class CleanlinessDetector:
 
         # Threshold the difference
         _, thresh = cv2.threshold(diff, 30, 255, cv2.THRESH_BINARY)
-
-        # # Morphological operations to remove noise
-        # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
-        # thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
 
         # Find contours of the regions of change
         contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -152,9 +148,9 @@ class CleanlinessDetector:
         annotated_img = after.copy()
         for contour in contours:
             if cv2.contourArea(contour) > 50:  # Ignore small changes
-                x1, y1, w, h = cv2.boundingRect(contour)
-                regions.append([x1, y1, w, h])
-                cv2.rectangle(annotated_img, (x1, y1), (x1 + w, y1 + h), (0, 255, 0), 2)
+                x1, y1, w, h = cv2.boundingRect(contour)                                    # extract coordinates
+                regions.append([x1, y1, w, h])                                              # save coordinates
+                cv2.rectangle(annotated_img, (x1, y1), (x1 + w, y1 + h), (0, 255, 0), 2)    # draw annotation on image
 
         # display frame differencing results
         if(display):
@@ -187,10 +183,69 @@ class CleanlinessDetector:
     """Find all objects in 2 images and identify what was added, removed, and moved"""
     def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
         added, removed, moved = [], [], []
-        objects_before = self.detect_objects(before_img, display=True)
-        objects_after = self.detect_objects(after_img, display=True)
+        objects_before = self.detect_objects(before_img)
+        objects_after = self.detect_objects(after_img)
         centroids_before = np.array([obj.centroid for obj in objects_before])
         centroids_after = np.array([obj.centroid for obj in objects_after])
+
+        nbrs = NearestNeighbors(n_neighbors=1).fit(centroids_before)
+        dists, inds = nbrs.kneighbors(centroids_after)
+
+        objects_before_cp = objects_before.copy()
+        objects_after_cp = objects_after.copy()
+
+        # case 1: object didn't move (disregard these objects)
+        for obj2, dist, idx in zip(objects_after_cp, dists, inds):
+            obj1 = objects_before_cp[idx[0]]
+            if dist <= DIST_THRESH and obj1.iou(obj2) > IOU_THRESH and obj1.class_num == obj2.class_num:
+                objects_before.remove(obj1)
+                objects_after.remove(obj2)
+
+        # case 2: object was added to scene
+        objects_after_cp = objects_after.copy()
+        objects_before_classes = [obj.class_num for obj in objects_before]
+
+        for obj in objects_after_cp:
+            if obj.class_num not in objects_before_classes:
+                added.append(obj)
+                objects_after.remove(obj)
+
+        # case 3: object removed from scene
+        objects_before_cp = objects_before.copy()
+        objects_after_classes = [obj.class_num for obj in objects_after]
+
+        for obj in objects_before_cp:
+            if obj.class_num not in objects_after_classes:
+                removed.append(obj)
+                objects_before.remove(obj)
+
+        # case 4: object moved
+        objects_before_classes = [obj.class_num for obj in objects_before]
+        objects_after_classes = [obj.class_num for obj in objects_after]
+        
+        moved_class_nums = list(set(objects_before_classes) & set(objects_after_classes))
+        for n in moved_class_nums:
+            before_matches = [obj for obj in objects_before if obj.class_num == n]
+            after_matches = [obj for obj in objects_after if obj.class_num == n]
+            moved.append([before_matches, after_matches])
+
+        return added, removed, moved
+    
+    def calculate_difference2(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
+        objects_before, objects_after, centroids_before, centroids_after, added, removed, moved = [], [], [], [], [], [], []
+        changed_regions = self.frame_diff(np.array(before_img), np.array(after_img))
+        before_img_arr = np.array(before_img)
+        after_img_arr = np.array(after_img)
+        for rect in changed_regions:
+            before_crop = Image.fromarray(before_img_arr[rect[1]:rect[1]+rect[3], rect[0]:rect[0]+rect[2]])
+            after_crop = Image.fromarray(after_img_arr[rect[1]:rect[1]+rect[3], rect[0]:rect[0]+rect[2]])
+            objects_before_subset = self.detect_objects(before_crop)
+            objects_after_subset = self.detect_objects(after_crop)
+            #for obj in objects_before_subset: objects_before.append[obj]
+            [objects_before.append(obj) for obj in objects_before_subset]
+            [objects_after.append(obj) for obj in objects_after_subset]
+            [centroids_before.append([obj.centroid[0]+rect[0], obj.centroid[1] + rect[1]]) for obj in objects_before]
+            [centroids_after.append([obj.centroid[0]+rect[0], obj.centroid[1] + rect[1]]) for obj in objects_after]
 
         nbrs = NearestNeighbors(n_neighbors=1).fit(centroids_before)
         dists, inds = nbrs.kneighbors(centroids_after)
@@ -268,8 +323,8 @@ class CleanlinessDetector:
         FOLDER_PATH = Path(f"{Path(__file__).parent}/exported_results/{FORMATTED_DATETIME}")
         FOLDER_PATH.mkdir(parents=True, exist_ok=True)
 
-        before_fig.savefig(FOLDER_PATH / 'before.png')
-        after_fig.savefig(FOLDER_PATH / 'after.png')
+        before_fig.savefig(FOLDER_PATH / 'before.svg', format='svg', dpi=1200)
+        after_fig.savefig(FOLDER_PATH / 'after.svg', format='svg', dpi=1200)
 
         # Writing to the CSV
         csv_path = FOLDER_PATH / "results.csv"
@@ -305,9 +360,9 @@ if __name__=="__main__":
     before_img = Image.open("cleanliness_detection/samples/1/before.png")
     after_img = Image.open("cleanliness_detection/samples/1/after.png")
 
-    regions = cd.frame_diff(np.array(before_img), np.array(after_img))
+    #regions = cd.frame_diff(np.array(before_img), np.array(after_img))
 
-    added, removed, moved = cd.calculate_difference(before_img, after_img)
+    added, removed, moved = cd.calculate_difference2(before_img, after_img)
     added = [obj.class_name for obj in added]
     removed = [obj.class_name for obj in removed]
     moved = [obj[0][0].class_name for obj in moved]
