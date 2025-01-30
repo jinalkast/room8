@@ -397,11 +397,10 @@ class CleanlinessDetector:
                 # Write row
                 writer.writerow([added_obj, removed_obj, moved_obj, total_score])
 
-if __name__=="__main__":
+# Type of before_image and after_image is an Image object from the PIL library
+def main(before_img, after_img, export_results_to_file = False):
     cd = CleanlinessDetector()
     # Process images
-    before_img = Image.open("cleanliness_detection/samples/1/before.png")
-    after_img = Image.open("cleanliness_detection/samples/1/after.png")
 
     #regions = cd.frame_diff(np.array(before_img), np.array(after_img))
 
@@ -423,4 +422,13 @@ if __name__=="__main__":
     objects_after = cd.detect_objects(after_img)
     after_img = cd.annotate_image(after_img, objects_after, True)
     added,removed,moved=[],[],[]
-    cd.export_results(before_img, after_img, added, removed, moved)
+    res = cd.export_results(before_img, after_img, added, removed, moved)
+
+    # TODO: EXPORT RESULTS AS A JSON OF FORMAT [{object: "object_name", action: "added/removed/moved"}]
+
+if __name__=="__main__":
+    before_img = Image.open("cleanliness_detection/samples/1/before.png")
+    after_img = Image.open("cleanliness_detection/samples/1/after.png")
+
+    main(before_img, after_img, export_results_to_file=True)
+    

@@ -1,0 +1,29 @@
+FROM python:3.9-slim
+
+# Accept build-time arguments
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+ARG NEXT_PUBLIC_SUPABASE_URL
+
+# Set environment variables
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
+ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
+
+WORKDIR /code  # Ensure the working directory matches the copied files
+
+# Copy requirements and install dependencies
+COPY ./requirements.txt ./requirements.txt
+
+RUN apt-get -y update
+RUN apt-get -y install git
+RUN apt-get -y install build-essential
+
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
+RUN pip install 'git+https://github.com/facebookresearch/detectron2.git'
+
+# Copy application files
+COPY ./app ./app
+
+EXPOSE 80
+
+# Start FastAPI server
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
