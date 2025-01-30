@@ -57,8 +57,34 @@ export async function POST(req: NextRequest) {
       .eq('email', userEmail)
       .single();
 
+    if (userError) {
+      throw new Error('Failed to fetch user');
+    }
+
     if (!userData) {
       throw new Error('User not found');
+    }
+
+    // Check if the user is already in a house
+    if (userData.house_id === houseId) {
+      throw new Error('User is already in the house');
+    }
+
+    // Check if the user has already been invited by this user
+    const { data: existingInvite, error: existingInviteError } = await supabase
+      .from('house_invites')
+      .select()
+      .eq('user_id', userData.id)
+      .eq('inviter_id', inviterId)
+      .eq('house_id', houseId)
+      .single();
+
+    if (existingInviteError) {
+      throw new Error('Failed to check for existing invite');
+    }
+
+    if (existingInvite) {
+      throw new Error('User has already been invited by this user');
     }
 
     const { data: invite, error: inviteError } = await supabase

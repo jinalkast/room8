@@ -37,6 +37,7 @@ export const fetchInvites = async (): Promise<TInvite[] | null> => {
 export default function useGetInvites() {
   return useQuery({
     queryKey: ['invites'],
-    queryFn: async () => fetchInvites()
+    queryFn: async () => fetchInvites(),
+    staleTime: 0
   });
 }

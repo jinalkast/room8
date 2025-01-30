@@ -2,12 +2,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Plus } from 'lucide-react';
 import HouseInvites from './house-invites';
+import CreateHouseModal from './create-house-modal';
 
 type props = {};
 
 function CreateHouse({}: props) {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="max-w-[70%] flex flex-col gap-6">
       <Card>
         <CardHeader>
           <CardTitle>House Information</CardTitle>
@@ -17,9 +18,7 @@ function CreateHouse({}: props) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Button>
-            <Plus /> Create House
-          </Button>
+          <CreateHouseModal />
         </CardContent>
       </Card>
       <HouseInvites />

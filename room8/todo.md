@@ -13,17 +13,18 @@ Bill Splitter
 [ ] Add different options to split debt
 
 House Management Page
-[ ] Display different pages if user has a house or not
+[X] Display different pages if user has a house or not
 
 - User has a house page
-  [ ] invite user button modal window and leave house button
-  [ ] Info of house: Nickname and address
-  [ ] Table component that shows all the roommates (able to pass in different props to the component that update the table settings)
+  [X] invite user button modal window and leave house button
+  [X] Info of house: Nickname and address
+  [X] Table component that shows all the roommates (able to pass in different props to the component that update the table settings)
   [ ] Add house notes feature
 
 - User has no house
   [ ] create a house button modal window
-  [ ] join house table with active invite requests
+  [X] join house table with active invite requests
+  [ ] fix multiple house invites and cleaning invites once joined
 
 Schedule
 [ ] Update schedule UI

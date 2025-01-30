@@ -5,6 +5,11 @@ export type THouseDB = Tables<'houses'>;
 export type THouseInsertDB = TablesInsert<'houses'>;
 export type TInviteDB = Tables<'house_invites'> & { inviter: TRoommateDB } & { house: THouseDB };
 
+export type THouseBody = {
+  address: string;
+  name: string;
+};
+
 export type THouse = {
   id: string;
   owner: string;

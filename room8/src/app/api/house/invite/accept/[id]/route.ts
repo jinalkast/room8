@@ -43,6 +43,17 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       throw new Error('Failed to delete invite');
     }
 
+    // delete all invites to this house for this user
+    const { error: deleteAllInvitesError } = await supabase
+      .from('house_invites')
+      .delete()
+      .eq('user_id', invite.user_id)
+      .eq('house_id', invite.house_id);
+
+    if (deleteAllInvitesError) {
+      throw new Error('Failed to delete all invites');
+    }
+
     return NextResponse.json(
       {
         data: null,
