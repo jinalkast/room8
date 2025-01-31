@@ -20,8 +20,8 @@ function NoteItem({ note }: props) {
   const { data: roommates, isLoading: roommatesLoading } = useRoommates();
   const { data: user, isLoading: userLoading } = useUser();
   const [favourited, setFavourited] = useState(note.favourited);
-  const { mutate: editNote } = useEditNote();
-  const { mutate: deleteNote } = useDeleteNote();
+  const { mutate: editNote, isPending: editNotePending } = useEditNote();
+  const { mutate: deleteNote, isPending: deleteNotePending } = useDeleteNote();
 
   if (roommatesLoading) {
     return <LoadingSpinner />;
@@ -74,6 +74,7 @@ function NoteItem({ note }: props) {
           size="icon"
           variant="ghost"
           className="p-1 !h-6 !w-6"
+          disabled={editNotePending}
           onClick={() => {
             setFavourited((prev) => {
               editNote({ noteId: note.id, favourited: !prev });
@@ -99,6 +100,7 @@ function NoteItem({ note }: props) {
               <DialogClose asChild className="w-full">
                 <Button
                   variant="destructive"
+                  disabled={deleteNotePending}
                   onClick={() => {
                     deleteNote(note.id);
                   }}>

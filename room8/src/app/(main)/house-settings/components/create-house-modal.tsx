@@ -11,7 +11,7 @@ export default function CreateHouseModal() {
   const [houseName, setHouseName] = useState('');
   const [houseAddress, setHouseAddress] = useState('');
 
-  const { mutate: createHouse } = useCreateHouse();
+  const { mutate: createHouse, isPending: createHousePending } = useCreateHouse();
 
   return (
     <Modal
@@ -28,7 +28,8 @@ export default function CreateHouseModal() {
             <Button
               onClick={() => {
                 createHouse({ name: houseName, address: houseAddress });
-              }}>
+              }}
+              disabled={createHousePending}>
               Create House
             </Button>
           </DialogClose>
