@@ -64,7 +64,7 @@ export default function ScheduleItem({ item }: props) {
               {responsibleRoommates.map((roommate) => (
                 <li key={roommate.id} className="flex items-center gap-2">
                   <Image
-                    src={roommate.image_url}
+                    src={roommate.imageUrl}
                     alt={roommate.name}
                     className="w-8 h-8 rounded-full"
                     width={32}

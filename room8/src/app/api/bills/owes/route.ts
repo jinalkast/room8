@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
       .select('*')
       .eq('debtor_id', user.id)
       .eq('paid', false);
-      // .range((page - 1) * 10, page * 10);
+    // .range((page - 1) * 10, page * 10);
 
     if (owesError) {
       console.log('billError:', owesError);

@@ -172,23 +172,29 @@ export type Database = {
       }
       houses: {
         Row: {
-          address: string | null
+          address: string
+          chatbot_active: boolean
           created_at: string
           id: string
+          name: string
           owner: string
           updated_at: string
         }
         Insert: {
-          address?: string | null
+          address: string
+          chatbot_active?: boolean
           created_at?: string
           id?: string
+          name?: string
           owner: string
           updated_at?: string
         }
         Update: {
-          address?: string | null
+          address?: string
+          chatbot_active?: boolean
           created_at?: string
           id?: string
+          name?: string
           owner?: string
           updated_at?: string
         }
@@ -210,6 +216,62 @@ export type Database = {
           {
             foreignKeyName: "houses_owner_fkey"
             columns: ["owner"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notes: {
+        Row: {
+          created_at: string
+          favourited: boolean
+          house_id: string
+          id: number
+          poster_id: string
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          favourited?: boolean
+          house_id: string
+          id?: number
+          poster_id: string
+          text: string
+        }
+        Update: {
+          created_at?: string
+          favourited?: boolean
+          house_id?: string
+          id?: number
+          poster_id?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notes_house_id_fkey"
+            columns: ["house_id"]
+            isOneToOne: false
+            referencedRelation: "houses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notes_poster_id_fkey"
+            columns: ["poster_id"]
+            isOneToOne: false
+            referencedRelation: "amounts_owed"
+            referencedColumns: ["loaner_id"]
+          },
+          {
+            foreignKeyName: "notes_poster_id_fkey"
+            columns: ["poster_id"]
+            isOneToOne: false
+            referencedRelation: "amounts_owed"
+            referencedColumns: ["debtor_id"]
+          },
+          {
+            foreignKeyName: "notes_poster_id_fkey"
+            columns: ["poster_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]

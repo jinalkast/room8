@@ -1,31 +1,39 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { THouseBody } from '../types';
 
-export const fetchCreateHouse = async (house: THouseBody) => {
-  const res = await fetch(`/api/house`, {
-    method: 'POST',
+export const fetchEditHouse = async ({
+  house,
+  houseId
+}: {
+  house: THouseBody;
+  houseId: string;
+}) => {
+  const res = await fetch(`/api/house/${houseId}`, {
+    method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(house)
   });
 
   if (!res.ok) {
     const errorData = await res.json();
-    throw new Error(errorData.message || 'Failed to create house');
+    throw new Error(errorData.message || 'Failed to edit house');
   }
 
   return res.json();
 };
 
-export default function useCreateHouse() {
+export default function useEditHouse() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (house: THouseBody) => {
-      return fetchCreateHouse(house);
+    mutationFn: ({ house, houseId }: { house: THouseBody; houseId: string }) => {
+      return fetchEditHouse({
+        house,
+        houseId
+      });
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['house'] });
-      queryClient.invalidateQueries({ queryKey: ['roommates'] });
     },
     onError: (err) => {}
   });

@@ -1,4 +1,4 @@
-import { TRoommate } from '@/lib/types';
+import { TApiResponse, TRoommate, TRoommateDB } from '@/lib/types';
 import { useQuery } from '@tanstack/react-query';
 
 export const fetchRoommates = async (): Promise<TRoommate[] | null> => {
@@ -6,9 +6,20 @@ export const fetchRoommates = async (): Promise<TRoommate[] | null> => {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
   });
-  const json = await res.json();
+  const json: TApiResponse<TRoommateDB[]> = await res.json();
 
-  return json.data ?? null;
+  return (
+    json.data?.map((roommate: TRoommateDB): TRoommate => {
+      return {
+        id: roommate.id,
+        houseId: roommate.house_id ?? undefined,
+        name: roommate.name,
+        imageUrl: roommate.image_url,
+        email: roommate.email,
+        phone: roommate.phone ?? undefined
+      };
+    }) ?? null
+  );
 };
 
 export default function useRoommates() {
