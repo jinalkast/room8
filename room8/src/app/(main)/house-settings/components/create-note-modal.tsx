@@ -14,7 +14,7 @@ type props = {};
 function CreateNoteModal({}: props) {
   const [noteText, setNoteText] = useState('');
   const [favorite, setFavorite] = useState(false);
-  const { mutate: createNote } = useCreateNote();
+  const { mutate: createNote, isPending: createNotePending } = useCreateNote();
 
   return (
     <Modal
@@ -29,6 +29,7 @@ function CreateNoteModal({}: props) {
         <>
           <DialogClose asChild className="w-full">
             <Button
+              disabled={createNotePending}
               onClick={() => {
                 createNote({ text: noteText, favourited: favorite });
                 setNoteText('');

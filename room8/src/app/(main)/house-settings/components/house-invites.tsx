@@ -8,8 +8,8 @@ import Image from 'next/image';
 
 export default function HouseInvites() {
   const { data: invites, isLoading } = useGetInvites();
-  const { mutate: acceptInvite } = useAcceptInvite();
-  const { mutate: declineInvite } = useDeclineInvite();
+  const { mutate: acceptInvite, isPending: acceptInvitePending } = useAcceptInvite();
+  const { mutate: declineInvite, isPending: declineInvitePending } = useDeclineInvite();
 
   return (
     <Card className="mb-6">
@@ -43,8 +43,13 @@ export default function HouseInvites() {
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <Button onClick={() => acceptInvite(invite.id)}>Accept</Button>
-                    <Button variant="destructive" onClick={() => declineInvite(invite.id)}>
+                    <Button disabled={acceptInvitePending} onClick={() => acceptInvite(invite.id)}>
+                      Accept
+                    </Button>
+                    <Button
+                      disabled={declineInvitePending}
+                      variant="destructive"
+                      onClick={() => declineInvite(invite.id)}>
                       Decline
                     </Button>
                   </div>
