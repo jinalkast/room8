@@ -1,3 +1,4 @@
+import { toast } from '@/hooks/useToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const fetchRemoveRoommate = async (roommateId: string) => {
@@ -23,7 +24,16 @@ export default function useRemoveRoommate() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['roommates'] });
       queryClient.invalidateQueries({ queryKey: ['house'] });
+      toast({
+        title: 'Success!',
+        description: 'Roommate removed successfully'
+      });
     },
-    onError: (err) => {}
+    onError: (err) => {
+      toast({
+        title: 'Error!',
+        description: err.message
+      });
+    }
   });
 }

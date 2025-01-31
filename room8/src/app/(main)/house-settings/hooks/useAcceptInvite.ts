@@ -1,3 +1,4 @@
+import { toast } from '@/hooks/useToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const fetchAcceptInvite = async (inviteId: number) => {
@@ -25,7 +26,16 @@ export default function useAcceptInvite() {
       queryClient.invalidateQueries({ queryKey: ['roommates'] });
       queryClient.invalidateQueries({ queryKey: ['invites'] });
       queryClient.invalidateQueries({ queryKey: ['house'] });
+      toast({
+        title: 'Success!',
+        description: "You've successfully joined the house"
+      });
     },
-    onError: (err) => {}
+    onError: (err) => {
+      toast({
+        title: 'Error!',
+        description: err.message
+      });
+    }
   });
 }
