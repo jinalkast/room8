@@ -1,3 +1,4 @@
+import { toast } from '@/hooks/useToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const fetchDeleteNote = async (noteID: number) => {
@@ -23,7 +24,16 @@ export default function useDeleteNote() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notes'] });
+      toast({
+        title: 'Success!',
+        description: 'Note deleted successfully'
+      });
     },
-    onError: (err) => {}
+    onError: (err) => {
+      toast({
+        title: 'Error!',
+        description: err.message
+      });
+    }
   });
 }

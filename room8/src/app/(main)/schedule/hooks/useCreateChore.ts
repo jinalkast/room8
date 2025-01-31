@@ -1,3 +1,4 @@
+import { toast } from '@/hooks/useToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const fetchCreateChore = async (chore: any) => {
@@ -24,7 +25,16 @@ export default function useCreateChore() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['activities'] });
+      toast({
+        title: 'Success!',
+        description: 'Chore successfully created'
+      });
     },
-    onError: (err) => {}
+    onError: (err) => {
+      toast({
+        title: 'Error!',
+        description: err.message
+      });
+    }
   });
 }

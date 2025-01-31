@@ -1,3 +1,4 @@
+import { toast } from '@/hooks/useToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const fetchEditNote = async ({
@@ -33,7 +34,16 @@ export default function useEditNote() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['notes'] });
+      toast({
+        title: 'Success!',
+        description: 'Note edited successfully'
+      });
     },
-    onError: (err) => {}
+    onError: (err) => {
+      toast({
+        title: 'Error!',
+        description: err.message
+      });
+    }
   });
 }

@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TInviteBody } from '../types';
+import { toast } from '@/hooks/useToast';
 
 export const fetchInviteUser = async (invite: TInviteBody) => {
   const res = await fetch(`/api/house/invite`, {
@@ -25,7 +26,16 @@ export default function useInviteUser() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['invites'] });
+      toast({
+        title: 'Success!',
+        description: 'User invited successfully'
+      });
     },
-    onError: (err) => {}
+    onError: (err) => {
+      toast({
+        title: 'Error!',
+        description: err.message
+      });
+    }
   });
 }

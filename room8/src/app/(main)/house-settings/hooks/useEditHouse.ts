@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { THouseBody } from '../types';
+import { toast } from '@/hooks/useToast';
 
 export const fetchEditHouse = async ({
   house,
@@ -34,7 +35,16 @@ export default function useEditHouse() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['house'] });
+      toast({
+        title: 'Success!',
+        description: 'House edited successfully'
+      });
     },
-    onError: (err) => {}
+    onError: (err) => {
+      toast({
+        title: 'Error!',
+        description: err.message
+      });
+    }
   });
 }
