@@ -1,3 +1,4 @@
+import { toast } from '@/hooks/useToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const fetchDeleteChore = async (choreID: any) => {
@@ -23,7 +24,16 @@ export default function useDeleteChore() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['activities'] });
+      toast({
+        title: 'Success!',
+        description: 'Chore successfully deleted'
+      });
     },
-    onError: (err) => {}
+    onError: (err) => {
+      toast({
+        title: 'Error!',
+        description: err.message
+      });
+    }
   });
 }

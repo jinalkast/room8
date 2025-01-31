@@ -1,3 +1,4 @@
+import { toast } from '@/hooks/useToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const fetchDeclineInvite = async (inviteId: number) => {
@@ -23,7 +24,16 @@ export default function useDeclineInvite() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['invites'] });
+      toast({
+        title: 'Success!',
+        description: 'Invite declined successfully'
+      });
     },
-    onError: (err) => {}
+    onError: (err) => {
+      toast({
+        title: 'Error!',
+        description: err.message
+      });
+    }
   });
 }

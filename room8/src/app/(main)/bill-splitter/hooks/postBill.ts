@@ -6,15 +6,15 @@ import z from 'zod';
 const postBill = async (billInfo: z.infer<typeof postBillSchema>): Promise<TBillDB> => {
   const validatedData = postBillSchema.parse(billInfo);
   const res = await fetch(`/api/bills`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...validatedData,
-        owes: Object.fromEntries(validatedData.owes)
-      })
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      ...validatedData,
+      owes: Object.fromEntries(validatedData.owes)
+    })
   });
   if (!res.ok) {
-      throw new Error('Failed to post bill');
+    throw new Error('Failed to post bill');
   }
 
   const json: TApiResponse<TBillDB> = await res.json();

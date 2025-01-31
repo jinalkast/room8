@@ -16,7 +16,7 @@ type props = {
 
 function InviteUserModal({ house }: props) {
   const [email, setEmail] = useState('');
-  const { mutate: inviteUser } = useInviteUser();
+  const { mutate: inviteUser, isPending: inviteUserPending } = useInviteUser();
   const { data: user, isLoading } = useUser();
 
   if (!user) return <LoadingSpinner />;
@@ -34,6 +34,7 @@ function InviteUserModal({ house }: props) {
         <>
           <DialogClose asChild className="w-full">
             <Button
+              disabled={inviteUserPending}
               onClick={() => {
                 inviteUser({ houseId: house.id, inviterId: user.id, userEmail: email });
                 setEmail('');

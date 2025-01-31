@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { THouseBody } from '../types';
+import { toast } from '@/hooks/useToast';
 
 export const fetchCreateHouse = async (house: THouseBody) => {
   const res = await fetch(`/api/house`, {
@@ -26,7 +27,16 @@ export default function useCreateHouse() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['house'] });
       queryClient.invalidateQueries({ queryKey: ['roommates'] });
+      toast({
+        title: 'Success!',
+        description: 'House created successfully'
+      });
     },
-    onError: (err) => {}
+    onError: (err) => {
+      toast({
+        title: 'Error!',
+        description: err.message
+      });
+    }
   });
 }

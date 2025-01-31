@@ -16,7 +16,7 @@ function EditHouseModal({ house }: props) {
   const [houseName, setHouseName] = useState(house.name);
   const [houseAddress, setHouseAddress] = useState(house.address);
 
-  const { mutate: editHouse } = useEditHouse();
+  const { mutate: editHouse, isPending: editHousePending } = useEditHouse();
 
   return (
     <Modal
@@ -31,6 +31,7 @@ function EditHouseModal({ house }: props) {
         <>
           <DialogClose asChild className="w-full">
             <Button
+              disabled={editHousePending}
               onClick={() => {
                 editHouse({ house: { name: houseName, address: houseAddress }, houseId: house.id });
               }}>
