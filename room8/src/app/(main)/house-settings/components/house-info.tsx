@@ -5,6 +5,8 @@ import { Edit, Plus } from 'lucide-react';
 import RoommatesTable from '@/components/roommates-table';
 import { Modal } from '@/components/modal';
 import InviteUserModal from './invite-user-modal';
+import EditHouseModal from './edit-house-modal';
+import HouseNotes from './house-notes';
 
 type props = {
   house: THouse;
@@ -38,16 +40,7 @@ function HouseInfo({ house }: props) {
                 )}
               </div>
             </div>
-            <Modal
-              title="Edit House Info"
-              description={`Edit name and address of your house`}
-              trigger={
-                <Button>
-                  <Edit /> Edit Info
-                </Button>
-              }>
-              <p>update me</p>
-            </Modal>
+            <EditHouseModal house={house} />
             <InviteUserModal house={house} />
           </CardContent>
         </Card>
@@ -62,12 +55,7 @@ function HouseInfo({ house }: props) {
         </Card>
       </div>
 
-      <Card className="basis-1/3 h-[85vh]">
-        <CardHeader>
-          <CardTitle>House Notes</CardTitle>
-          <CardDescription>See what your roommates are saying!</CardDescription>
-        </CardHeader>
-      </Card>
+      <HouseNotes house={house} />
     </div>
   );
 }

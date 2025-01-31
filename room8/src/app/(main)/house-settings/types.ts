@@ -4,6 +4,7 @@ import { Tables, TablesInsert } from '@/lib/types/supabase';
 export type THouseDB = Tables<'houses'>;
 export type THouseInsertDB = TablesInsert<'houses'>;
 export type TInviteDB = Tables<'house_invites'> & { inviter: TRoommateDB } & { house: THouseDB };
+export type TNoteDB = Tables<'notes'>;
 
 export type THouseBody = {
   address: string;
@@ -16,6 +17,20 @@ export type THouse = {
   name: string;
   address: string;
   chatbotActive: boolean;
+};
+
+export type TNote = {
+  createdAt: string;
+  favourited: boolean;
+  houseId: string;
+  id: number;
+  posterId: string;
+  text: string;
+};
+
+export type TNoteBody = {
+  favourited: boolean;
+  text: string;
 };
 
 export type TInviteBody = {

@@ -222,6 +222,62 @@ export type Database = {
           },
         ]
       }
+      notes: {
+        Row: {
+          created_at: string
+          favourited: boolean
+          house_id: string
+          id: number
+          poster_id: string
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          favourited?: boolean
+          house_id: string
+          id?: number
+          poster_id: string
+          text: string
+        }
+        Update: {
+          created_at?: string
+          favourited?: boolean
+          house_id?: string
+          id?: number
+          poster_id?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notes_house_id_fkey"
+            columns: ["house_id"]
+            isOneToOne: false
+            referencedRelation: "houses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notes_poster_id_fkey"
+            columns: ["poster_id"]
+            isOneToOne: false
+            referencedRelation: "amounts_owed"
+            referencedColumns: ["loaner_id"]
+          },
+          {
+            foreignKeyName: "notes_poster_id_fkey"
+            columns: ["poster_id"]
+            isOneToOne: false
+            referencedRelation: "amounts_owed"
+            referencedColumns: ["debtor_id"]
+          },
+          {
+            foreignKeyName: "notes_poster_id_fkey"
+            columns: ["poster_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       owes: {
         Row: {
           amount: number

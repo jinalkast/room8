@@ -60,26 +60,21 @@ function RoommatesTable({ remove }: props) {
                 <TableCell>
                   <Modal
                     title="Confirm Remove"
-                    description="Are you sure you want to remove this roommate?"
+                    description={`Are you sure you want to remove ${roommate.name}?`}
                     trigger={
                       <Button variant={'ghost'} size={'icon'} className="p-0">
                         <DoorOpen className="!h-6 !w-6" />
                       </Button>
-                    }
-                    footer={
-                      <>
-                        <DialogClose asChild className="w-full">
-                          <Button variant="destructive" onClick={() => removeRoommate(roommate.id)}>
-                            Remove User
-                          </Button>
-                        </DialogClose>
-                        <DialogClose asChild className="w-full">
-                          <Button variant="secondary">Cancel</Button>
-                        </DialogClose>
-                      </>
                     }>
-                    <div className="text-center mt-4 mb-2">
-                      <p>{roommate.name}</p>
+                    <div className="flex gap-2">
+                      <DialogClose asChild className="w-full">
+                        <Button variant="destructive" onClick={() => removeRoommate(roommate.id)}>
+                          Remove User
+                        </Button>
+                      </DialogClose>
+                      <DialogClose asChild className="w-full">
+                        <Button variant="secondary">Cancel</Button>
+                      </DialogClose>
                     </div>
                   </Modal>
                 </TableCell>
