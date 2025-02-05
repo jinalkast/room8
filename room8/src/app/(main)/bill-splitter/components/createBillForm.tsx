@@ -152,13 +152,13 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
           const totalAmount = values.amount;
           const owes = values.owes;
           let sum = 0;
-
+          
           owes.forEach((amount) => {
             sum += amount;
           });
-
+          
           const roundingError = Math.abs(totalAmount - sum);
-
+          
           if (roundingError > 1) {
             toast({
               title: 'Error',
@@ -166,7 +166,8 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
             });
             return;
           }
-
+          
+          owes.delete(user?.id || 'XXX'); // DELETE owe for self
           postBillMutation.mutate(values);
         })}
         className="space-y-6 pb-4">
