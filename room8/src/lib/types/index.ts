@@ -1,6 +1,6 @@
-import { Database, Tables } from './supabase';
+import { Database, Json, Tables } from './supabase';
 
-export type THabitDB = Tables<'activities'>;
+// export type THabitDB = Tables<'activities'>;
 export type TBillDB = Tables<'bills'>;
 export type TOweDB = Tables<'owes'>;
 export type TAmountOwedDB = Tables<'amounts_owed'>;
@@ -33,6 +33,14 @@ export type TOwe = {
   owed_by: string;
   paid: boolean;
 };
+
+export type TCleanlinessLog = {
+  id: string;
+  before_image_url: string;
+  after_image_url: string;
+  algorithm_output: Json;
+  created_at: string;
+}
 
 export type TBill = {
   bill_id: string;
