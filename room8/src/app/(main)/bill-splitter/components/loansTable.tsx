@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import usePatchOwe from '../hooks/patchOwe';
 import LoadingSpinner from '@/components/loading';
 import { Info } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
 
 export default function LoansTable() {
   const { data: bills, status: billsStatus, refetch: refetchBills } = useBills();
@@ -47,7 +48,8 @@ export default function LoansTable() {
               <TableCell>${bill.total_owed.toFixed(2)}</TableCell>
               <Modal
                 key={bill.bill_id}
-                title={`Details for bill - "${bill.bill_name}"`}
+                title={`Bill Details`}
+                description={`${bill.bill_name && `Bill details for ${bill.bill_name}, `}total owed: $${bill.total_owed.toFixed(2)}, total paid back: $${bill.sum_paid_back.toFixed(2)}`}
                 trigger={
                   <TableCell className="text-right">
                     <Button variant={'ghost'} size={'icon'} className="p-0">
@@ -88,36 +90,45 @@ function BillDetailsContent({ billId, queryClient }: { billId: string; queryClie
     }
   });
 
-  if (isLoading) return <div>Loading details...</div>;
-  if (error) return <div>Failed to load details.</div>;
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[300px]">Debtor</TableHead>
+          <TableHead>Loaned To</TableHead>
           <TableHead>Amount</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead className="text-right"> </TableHead>
+
+          <TableHead className="text-right">Status</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data!.map((owe) => (
-          <TableRow key={owe.owe_id}>
-            <TableCell>{owe.debtor_name}</TableCell>
-            <TableCell>{owe.amount_owed}</TableCell>
-            <TableCell>{owe.paid === true ? 'Paid' : 'Unpaid'}</TableCell>
-            <TableCell className="text-right">
-              <Button
-                disabled={patchOweMutation.isPending}
-                onClick={(e) => {
-                  patchOweMutation.mutate({ oweID: owe.owe_id, isPaid: owe.paid });
-                }}>
-                {owe.paid ? 'UnPay' : 'Pay Off'}
-              </Button>
-            </TableCell>
-          </TableRow>
-        ))}
+        {data!
+          .sort((a, b) => a.debtor_name.localeCompare(b.debtor_name))
+          .map((owe) => (
+            <TableRow key={owe.owe_id}>
+              <TableCell>{owe.debtor_name}</TableCell>
+              <TableCell>${owe.amount_owed}</TableCell>
+              <TableCell className="text-right">
+                <div className="flex items-center gap-2 justify-end">
+                  {owe.paid ? (
+                    <span className="text-green-500">Paid</span>
+                  ) : (
+                    <span className="text-red-500">Unpaid</span>
+                  )}
+                  <Switch
+                    id="airplane-mode"
+                    checked={owe.paid}
+                    onCheckedChange={() => {
+                      patchOweMutation.mutate({ oweID: owe.owe_id, isPaid: owe.paid });
+                    }}
+                  />
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
       </TableBody>
     </Table>
   );
