@@ -9,9 +9,9 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import useActivateChatbot from '@/hooks/useActivateChatbot';
 import useRoommates from '@/hooks/useRoommates';
 import Image from 'next/image';
+import useActivateChatbot from './hooks/useActivateChatbot';
 
 export default function ChatBotPage() {
   const activate = useActivateChatbot();
@@ -35,7 +35,7 @@ export default function ChatBotPage() {
               {roommates.map((roommate) => (
                 <li key={roommate.id} className="flex gap-4 items-center">
                   <Image
-                    src={roommate.image_url}
+                    src={roommate.imageUrl}
                     alt={roommate.name}
                     width={48}
                     height={48}

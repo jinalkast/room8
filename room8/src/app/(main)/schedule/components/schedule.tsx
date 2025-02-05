@@ -6,14 +6,14 @@ import { Switch } from '@/components/ui/switch';
 import { act, useState } from 'react';
 import ScheduleItem from './schedule-item';
 import { daysOfWeek } from '@/lib/constants';
-import useAllActivities from '../../../../../hooks/useGetAllActivities';
+import useAllActivities from '../hooks/useGetAllActivities';
 import useUser from '@/app/auth/hooks/useUser';
 import { Modal } from '@/components/modal';
 import { DialogClose } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import useRoommates from '../../../../../hooks/useRoomates';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import useCreateChore from '../../../../../hooks/useCreateChore';
+import useCreateChore from '../hooks/useCreateChore';
+import useRoommates from '@/hooks/useRoommates';
 
 export default function ScheduleViewer() {
   const [open, setOpen] = useState(false);

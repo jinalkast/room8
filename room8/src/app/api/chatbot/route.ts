@@ -15,23 +15,20 @@ export async function POST(req: NextRequest) {
     const participants = response.participants;
 
     if (!Array.isArray(participants) || participants.length === 0) {
-      return NextResponse.json(
-        { message: 'Participants array is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: 'Participants array is required' }, { status: 400 });
     }
 
     // Step 1: Check if the conversation already exists
     const friendlyName = 'Group Chat';
     let conversation = null;
     const allConversations = await client.conversations.v1.conversations.list();
-    conversation = allConversations.find(conv => conv.friendlyName === friendlyName);
+    conversation = allConversations.find((conv) => conv.friendlyName === friendlyName);
 
     if (!conversation) {
       // Create a new conversation if it doesn't exist
       conversation = await client.conversations.v1.conversations.create({
         messagingServiceSid: messagingServiceSid,
-        friendlyName,
+        friendlyName
       });
     }
 
@@ -48,20 +45,23 @@ export async function POST(req: NextRequest) {
       participants
         .filter((participant: string) => !existingParticipantAddresses.includes(participant))
         .map((participant: string) =>
-          client.conversations.v1.conversations(conversation.sid)
+          client.conversations.v1
+            .conversations(conversation.sid)
             .participants.create({ 'messagingBinding.address': participant })
         )
     );
 
     // Check if the chatbot identity already exists
     const chatbotExists = existingParticipants.some(
-        (participant) => participant.identity === 'Chatbot'
+      (participant) => participant.identity === 'Chatbot'
     );
-  
+
     // Step 3: Add Chatbot (Twilio Phone Number) as a participant if not already present
     if (!chatbotExists) {
-      await client.conversations.v1.conversations(conversation.sid)
-        .participants.create({ identity: 'Chatbot', 'messagingBinding.projectedAddress': senderPhoneNumber });
+      await client.conversations.v1.conversations(conversation.sid).participants.create({
+        identity: 'Chatbot',
+        'messagingBinding.projectedAddress': senderPhoneNumber
+      });
     }
 
     // Step 4: Send the message in the conversation
@@ -69,14 +69,14 @@ export async function POST(req: NextRequest) {
       .conversations(conversation.sid)
       .messages.create({
         author: 'Chatbot',
-        body: "Hey everyone! 👋 I’m RoomBot, your friendly digital helper here in the Room8 app! 🎉\n\nI’m here to make roommate life a little easier, whether it’s keeping track of chores, reminding everyone about bills, or just helping keep things organized.",
+        body: 'Hey everyone! 👋 I’m RoomBot, your friendly digital helper here in the Room8 app! 🎉\n\nI’m here to make roommate life a little easier, whether it’s keeping track of chores, reminding everyone about bills, or just helping keep things organized.'
       });
 
     return NextResponse.json(
       {
         message: 'Message sent successfully to the group conversation',
         conversationSid: conversation.sid,
-        messageSid: messageResponse.sid,
+        messageSid: messageResponse.sid
       },
       { status: 200 }
     );
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         reply: null,
-        message: (error as Error).message,
+        message: (error as Error).message
       },
       { status: 500 }
     );
