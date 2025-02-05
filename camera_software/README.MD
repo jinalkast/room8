@@ -6,7 +6,7 @@ Create a virtual environment and launch it with
 python -m venv venv
 venv/scripts/activate
 ```
-Optional: Configure your VSCode interpreter to `cleanliness_detection\venv\Scripts\python.exe` if VSCode didn't do it for you
+Optional: Configure your VSCode interpreter to `camera_software\venv\Scripts\python.exe` if VSCode didn't do it for you
 
 Install the requirements from the requirements.txt 
 ```
@@ -19,5 +19,5 @@ If you're getting issues installing the requirements try the following:
 3. If the `python -m ensurepip --user` failed, go to your pyvenv.cfg file in the venv folder and change `include-system-site-packages` to `true`
 4. Reinstall pip and other installation dependencies with `python -m pip install --upgrade pip setuptools wheel` and `pip install cmake wheel setuptools`
 
-Run the FastAPI in dev with `fastapi dev main.py`
+Run the script with `py main.py`
 
