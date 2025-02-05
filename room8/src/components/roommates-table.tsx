@@ -37,7 +37,7 @@ function RoommatesTable({ remove }: props) {
           <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Phone</TableHead>
-          {remove && <TableHead>Remove</TableHead>}
+          {remove && <TableHead className="text-right">Remove</TableHead>}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -57,7 +57,7 @@ function RoommatesTable({ remove }: props) {
               <TableCell>{roommate.email}</TableCell>
               <TableCell>{roommate.phone}</TableCell>
               {remove && (
-                <TableCell>
+                <TableCell className="text-right">
                   <Modal
                     title="Confirm Remove"
                     description={`Are you sure you want to remove ${roommate.name}?`}
