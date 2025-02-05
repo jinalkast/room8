@@ -64,7 +64,7 @@ async def upload_images(house_id: str, before: UploadFile = File(...), after: Up
     # INSERT INTO THE DATABASE
     print('Inserting into the db')
     response = (
-        supabase.table("cleanliness_log")
+        supabase.table("cleanliness_logs")
         .insert({"id": str(instance_id), "before_image_url": before_image_path, "after_image_url": after_image_path, "house_id": house_id, "algorithm_output": {}})
         .execute()
     )
