@@ -278,6 +278,9 @@ TSWLatexianTemp*
 # DS_Store file from Mac computers
 .DS_Store
 
+node_modules/
+.next/
+
 #ignore results
 cleanliness_detection/exported_results
 
