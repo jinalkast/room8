@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -20,8 +19,8 @@ type props = {
   footer?: ReactNode;
   children: ReactNode;
   className?: string;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 export function Modal({
@@ -34,6 +33,8 @@ export function Modal({
   open,
   onOpenChange
 }: props) {
+
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>

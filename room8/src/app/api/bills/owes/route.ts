@@ -3,6 +3,9 @@ import { NextResponse, NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
+    const searchParams = req.nextUrl.searchParams;
+    const page = parseInt(searchParams.get('page') || '1');
+
     const supabase = await supabaseServer();
     const {
       data: { user },
@@ -15,8 +18,10 @@ export async function GET(req: NextRequest) {
 
     const { data: owes, error: owesError } = await supabase
       .from('amounts_owed')
-      .select()
-      .eq('debtor_id', user.id);
+      .select('*')
+      .eq('debtor_id', user.id)
+      .eq('paid', false);
+    // .range((page - 1) * 10, page * 10);
 
     if (owesError) {
       console.log('billError:', owesError);
