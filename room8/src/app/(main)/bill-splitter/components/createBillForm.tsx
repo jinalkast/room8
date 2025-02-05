@@ -29,6 +29,7 @@ import LoadingSpinner from '@/components/loading';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
+import { DatePicker } from '@/components/datepicker';
 
 export default function CreateBillForm({ closeBillModal }: { closeBillModal: () => void }) {
   const queryClient = useQueryClient();
@@ -61,6 +62,7 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
     defaultValues: {
       name: '',
       amount: undefined,
+      owed_by: undefined,
       equally: false,
       owes: new Map()
     }
@@ -176,6 +178,31 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
               <FormLabel>Bill Name</FormLabel>
               <FormControl>
                 <Input autoComplete={'off'} placeholder="December Internet Bill" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="owed_by"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Owed By (optional)</FormLabel>
+              <FormControl>
+                <div className='flex items-center gap-2 w-full justify-between'>
+                  <DatePicker
+                    classname='w-full'
+                    selected={field.value}
+                    onChange={(date) => field.onChange(date)}
+                    onBlur={field.onBlur}
+                    ref={field.ref}
+                  />
+                  <Button disabled={!field.value} onClick={(event)=>{
+                    event.preventDefault();
+                    field.onChange(undefined);
+                  }} variant={'destructive'}>Clear</Button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

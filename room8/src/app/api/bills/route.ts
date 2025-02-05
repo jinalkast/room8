@@ -63,7 +63,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<TApiResponse<
 
     const { data: billData, error: billError } = await supabase
       .from('bills')
-      .insert({ name: data.name, total: data.amount, loaner_id: user.id })
+      .insert({ name: data.name, total: data.amount, loaner_id: user.id, owed_by: data.owed_by })
       .select().single();
 
     if (!billData || billError) {
