@@ -185,6 +185,9 @@ class CleanlinessDetector:
         after_img = cv2.cvtColor(after_img, cv2.COLOR_RGB2BGR)
         mask = cv2.cvtColor(mask, cv2.COLOR_RGB2BGR)  
 
+        kernel = np.ones((5,5), np.uint8)
+        mask = cv2.dilate(mask, kernel, iterations=2)
+
         # Apply the mask
         before_img = cv2.bitwise_and(before_img, mask)
         after_img = cv2.bitwise_and(after_img, mask)
