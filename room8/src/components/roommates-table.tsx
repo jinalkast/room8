@@ -19,10 +19,11 @@ import { Button } from './ui/button';
 import useRemoveRoommate from '@/app/(main)/house-settings/hooks/useRemoveRoomate';
 
 type props = {
-  remove: boolean;
+  remove?: boolean;
+  hideFooter?: boolean;
 };
 
-function RoommatesTable({ remove }: props) {
+function RoommatesTable({ remove, hideFooter }: props) {
   const { data: roommates, isLoading, isError } = useRoommates();
   const { data: house, isLoading: houseLoading, isError: houseError } = useGetHouse();
   const { mutate: removeRoommate } = useRemoveRoommate();
@@ -31,7 +32,7 @@ function RoommatesTable({ remove }: props) {
 
   return (
     <Table>
-      <TableCaption>Your roommates at {house?.address}</TableCaption>
+      {!hideFooter && <TableCaption>Your roommates at {house?.address}</TableCaption>}
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
