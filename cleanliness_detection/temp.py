@@ -138,7 +138,7 @@ class CleanlinessDetector:
     
 
     """Pixel-wise image differencing to return a binary mask of change regions"""
-    def frame_diff(self, before: np.array, after: np.array, display: bool = False) -> np.array:
+    def frame_diff(self, before: np.array, after: np.array, min_area:int = 100, display: bool = False) -> np.array:
         # Convert to grayscale
         gray1 = cv2.cvtColor(before, cv2.COLOR_BGR2GRAY)
         gray2 = cv2.cvtColor(after, cv2.COLOR_BGR2GRAY)
@@ -146,23 +146,34 @@ class CleanlinessDetector:
         # Compute absolute difference
         diff = cv2.absdiff(gray1, gray2)
 
-        # Threshold the difference to create a binary mask (255 for change, 0 for no change)
-        _, mask = cv2.threshold(diff, 30, 255, cv2.THRESH_BINARY)
+        # Threshold the difference to create a binary mask
+        _, binary_mask = cv2.threshold(diff, 30, 255, cv2.THRESH_BINARY)
 
-        # Convert grayscale mask to 3-channel (for direct use in bitwise_and)
-        mask = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
+        # Find contours in the binary mask
+        contours, _ = cv2.findContours(binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        # Create a blank mask of the same size as the input image, with 3 channels
+        mask = np.zeros_like(before, dtype=np.uint8)
+
+        # Draw filled rectangles based on contours
+        for contour in contours:
+            x, y, w, h = cv2.boundingRect(contour)
+            area = w * h
+            if area >= min_area:  # Ignore small changes based on area threshold
+                cv2.rectangle(mask, (x, y), (x + w, y + h), (255, 255, 255), thickness=cv2.FILLED)
 
         # Display frame differencing results
         if display:
-            cv2.imshow("Binary Mask", mask)
+            cv2.imshow("Rectangular Mask", mask)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 
-        return mask 
+        return mask
     
 
     def combine_image_mask(self, before_img: Image, after_img: Image, display: bool = False) -> [Image, Image]:
-        mask = self.frame_diff(before_img, after_img)
+        mask = self.frame_diff(before_img, after_img, min_area=200)
+        mask = mask[:, :, :3] 
         before_img = before_img[:, :, :3]  
         after_img = after_img[:, :, :3]  
         before_img = cv2.bitwise_and(before_img, mask)
@@ -261,65 +272,7 @@ class CleanlinessDetector:
             moved.append([before_matches, after_matches])
 
         return added, removed, moved
-    
-    def calculate_difference2(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
-        objects_before, objects_after, centroids_before, centroids_after, added, removed, moved = [], [], [], [], [], [], []
-        changed_regions = self.frame_diff(np.array(before_img), np.array(after_img))
-        before_img_arr = np.array(before_img)
-        after_img_arr = np.array(after_img)
-        for rect in changed_regions:
-            before_crop = Image.fromarray(before_img_arr[rect[1]:rect[1]+rect[3], rect[0]:rect[0]+rect[2]])
-            after_crop = Image.fromarray(after_img_arr[rect[1]:rect[1]+rect[3], rect[0]:rect[0]+rect[2]])
-            objects_before_subset = self.detect_objects(before_crop)
-            objects_after_subset = self.detect_objects(after_crop)
-            #for obj in objects_before_subset: objects_before.append[obj]
-            [objects_before.append(obj) for obj in objects_before_subset]
-            [objects_after.append(obj) for obj in objects_after_subset]
-            [centroids_before.append([obj.centroid[0]+rect[0], obj.centroid[1] + rect[1]]) for obj in objects_before]
-            [centroids_after.append([obj.centroid[0]+rect[0], obj.centroid[1] + rect[1]]) for obj in objects_after]
 
-        nbrs = NearestNeighbors(n_neighbors=1).fit(centroids_before)
-        dists, inds = nbrs.kneighbors(centroids_after)
-
-        objects_before_cp = objects_before.copy()
-        objects_after_cp = objects_after.copy()
-
-        # case 1: object didn't move (disregard these objects)
-        for obj2, dist, idx in zip(objects_after_cp, dists, inds):
-            obj1 = objects_before_cp[idx[0]]
-            if dist <= DIST_THRESH and obj1.iou(obj2) > IOU_THRESH and obj1.class_num == obj2.class_num:
-                objects_before.remove(obj1)
-                objects_after.remove(obj2)
-
-        # case 2: object was added to scene
-        objects_after_cp = objects_after.copy()
-        objects_before_classes = [obj.class_num for obj in objects_before]
-
-        for obj in objects_after_cp:
-            if obj.class_num not in objects_before_classes:
-                added.append(obj)
-                objects_after.remove(obj)
-
-        # case 3: object removed from scene
-        objects_before_cp = objects_before.copy()
-        objects_after_classes = [obj.class_num for obj in objects_after]
-
-        for obj in objects_before_cp:
-            if obj.class_num not in objects_after_classes:
-                removed.append(obj)
-                objects_before.remove(obj)
-
-        # case 4: object moved
-        objects_before_classes = [obj.class_num for obj in objects_before]
-        objects_after_classes = [obj.class_num for obj in objects_after]
-        
-        moved_class_nums = list(set(objects_before_classes) & set(objects_after_classes))
-        for n in moved_class_nums:
-            before_matches = [obj for obj in objects_before if obj.class_num == n]
-            after_matches = [obj for obj in objects_after if obj.class_num == n]
-            moved.append([before_matches, after_matches])
-
-        return added, removed, moved
 
     """Scoring algorithm"""
     def calculate_cleanliness_score(self, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> float:
