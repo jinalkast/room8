@@ -13,7 +13,7 @@ export default function HouseSettingsPage() {
 
   return (
     <div>
-      <h2 className="text-4xl mb-6">My House</h2>
+      <h2 className="text-4xl mb-8">My House</h2>
       {house ? <HouseInfo house={house} /> : <CreateHouse />}
     </div>
   );
