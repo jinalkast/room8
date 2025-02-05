@@ -10,53 +10,53 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { QueryClient, useQuery, useQueryClient } from '@tanstack/react-query';
-import { TOwe } from '@/lib/types';
+import { TBill, TOwe } from '@/lib/types';
 import { Modal } from '@/components/modal';
 import { Button } from '@/components/ui/button';
 import usePatchOwe from '../hooks/patchOwe';
+import LoadingSpinner from '@/components/loading';
+import { Info } from 'lucide-react';
 
 export default function LoansTable() {
   const { data: bills, status: billsStatus, refetch: refetchBills } = useBills();
   const queryClient = useQueryClient();
 
+  if (billsStatus === 'pending') {
+    return <LoadingSpinner />;
+  }
+
   return (
-    <Table>
-      <TableCaption>What You&apos;re Owed.</TableCaption>
+    <Table className="mt-4">
+      <TableCaption>What your roommates owe you!</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Name</TableHead>
+          <TableHead className="w-[300px]">Name</TableHead>
           <TableHead>Total Paid Back</TableHead>
-          <TableHead className="text-right">Total Owed</TableHead>
-          {/* <TableHead> </TableHead> */}
+          <TableHead>Total Owed</TableHead>
+          <TableHead className="text-right">Details</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {billsStatus === 'pending' ? (
-          <TableRow>
-            <TableCell>Loading...</TableCell>
-          </TableRow>
-        ) : null}
-        {billsStatus === 'error' ? (
-          <TableRow>
-            <TableCell>Failed to get bills</TableCell>
-          </TableRow>
-        ) : null}
-        {billsStatus === 'success'
-          ? bills?.map((bill) => (
-              <Modal 
+        {bills &&
+          bills.map((bill: TBill) => (
+            <TableRow key={bill.bill_id}>
+              <TableCell className="font-medium">{bill.bill_name}</TableCell>
+              <TableCell>${bill.sum_paid_back.toFixed(2)}</TableCell>
+              <TableCell>${bill.total_owed.toFixed(2)}</TableCell>
+              <Modal
                 key={bill.bill_id}
                 title={`Details for bill - "${bill.bill_name}"`}
                 trigger={
-                  <TableRow >
-                    <TableCell className="font-medium">{bill.bill_name}</TableCell>
-                    <TableCell>{bill.sum_paid_back.toFixed(2)}</TableCell>
-                    <TableCell className="text-right">{bill.total_owed.toFixed(2)}</TableCell>
-                  </TableRow>
+                  <TableCell className="text-right">
+                    <Button variant={'ghost'} size={'icon'} className="p-0">
+                      <Info className="!h-6 !w-6" />
+                    </Button>
+                  </TableCell>
                 }>
                 <BillDetailsContent queryClient={queryClient} billId={bill.bill_id} />
               </Modal>
-            ))
-          : null}
+            </TableRow>
+          ))}
       </TableBody>
     </Table>
   );
@@ -71,7 +71,7 @@ async function fetchBillDetails(billId: string): Promise<TOwe[]> {
   return json.data;
 }
 
-function BillDetailsContent({ billId, queryClient }: { billId: string, queryClient: QueryClient }) {
+function BillDetailsContent({ billId, queryClient }: { billId: string; queryClient: QueryClient }) {
   const { data, isLoading, error } = useQuery({
     queryKey: ['billDetails', billId],
     queryFn: () => fetchBillDetails(billId)
@@ -96,7 +96,7 @@ function BillDetailsContent({ billId, queryClient }: { billId: string, queryClie
           <TableHead className="w-[300px]">Debtor</TableHead>
           <TableHead>Amount</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead className="text-right">{" "}</TableHead>
+          <TableHead className="text-right"> </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -106,14 +106,14 @@ function BillDetailsContent({ billId, queryClient }: { billId: string, queryClie
             <TableCell>{owe.amount_owed}</TableCell>
             <TableCell>{owe.paid === true ? 'Paid' : 'Unpaid'}</TableCell>
             <TableCell className="text-right">
-                  <Button
-                    disabled={patchOweMutation.isPending}
-                    onClick={(e) => {
-                      patchOweMutation.mutate({ oweID: owe.owe_id, isPaid: owe.paid });
-                    }}>
-                    {owe.paid ? 'UnPay' : 'Pay Off'}
-                  </Button>
-                </TableCell>
+              <Button
+                disabled={patchOweMutation.isPending}
+                onClick={(e) => {
+                  patchOweMutation.mutate({ oweID: owe.owe_id, isPaid: owe.paid });
+                }}>
+                {owe.paid ? 'UnPay' : 'Pay Off'}
+              </Button>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
