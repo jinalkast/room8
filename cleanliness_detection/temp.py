@@ -136,8 +136,9 @@ class CleanlinessDetector:
         tsr = tsr[:, :3, :, :]                          # only keep RGB channels
         return tsr
     
-    """Pixel-wise image differencing to return regions of change"""
-    def frame_diff(self, before: np.array, after: np.array, display: bool = False) -> list[list[int]]:
+
+    """Pixel-wise image differencing to return a binary mask of change regions"""
+    def frame_diff(self, before: np.array, after: np.array, display: bool = False) -> np.array:
         # Convert to grayscale
         gray1 = cv2.cvtColor(before, cv2.COLOR_BGR2GRAY)
         gray2 = cv2.cvtColor(after, cv2.COLOR_BGR2GRAY)
@@ -145,32 +146,38 @@ class CleanlinessDetector:
         # Compute absolute difference
         diff = cv2.absdiff(gray1, gray2)
 
-        # Threshold the difference
-        _, thresh = cv2.threshold(diff, 30, 255, cv2.THRESH_BINARY)
+        # Threshold the difference to create a binary mask (255 for change, 0 for no change)
+        _, mask = cv2.threshold(diff, 30, 255, cv2.THRESH_BINARY)
 
-        # Find contours of the regions of change
-        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        # Convert grayscale mask to 3-channel (for direct use in bitwise_and)
+        mask = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
 
-        # init list to store regions of change
-        regions = []
-
-        # Draw contours on the original image
-        annotated_img = after.copy()
-        for contour in contours:
-            if cv2.contourArea(contour) > 50:  # Ignore small changes
-                x1, y1, w, h = cv2.boundingRect(contour)                                    # extract coordinates
-                regions.append([x1, y1, w, h])                                              # save coordinates
-                cv2.rectangle(annotated_img, (x1, y1), (x1 + w, y1 + h), (0, 255, 0), 2)    # draw annotation on image
-
-        # display frame differencing results
-        if(display):
-            cv2.imshow("Difference", diff)
-            cv2.imshow("Threshold", thresh)
-            cv2.imshow("Regions of Change", annotated_img)
+        # Display frame differencing results
+        if display:
+            cv2.imshow("Binary Mask", mask)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
-        
-        return regions
+
+        return mask 
+    
+
+    def combine_image_mask(self, before_img: Image, after_img: Image, display: bool = False) -> [Image, Image]:
+        mask = self.frame_diff(before_img, after_img)
+        before_img = before_img[:, :, :3]  
+        after_img = after_img[:, :, :3]  
+        before_img = cv2.bitwise_and(before_img, mask)
+        after_img = cv2.bitwise_and(after_img, mask)
+        if display:
+            cv2.imshow("before_mask", before_img)
+            cv2.setWindowTitle('before_mask', 'Before') 
+            cv2.waitKey(0)
+
+            cv2.imshow("after_mask", after_img)
+            cv2.setWindowTitle('after_mask', 'After') 
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+
+        return [before_img, after_img]
 
     
     """Given an image, return list of objects detected"""
@@ -403,7 +410,7 @@ if __name__=="__main__":
     before_img = Image.open("cleanliness_detection/samples/1/before.png")
     after_img = Image.open("cleanliness_detection/samples/1/after.png")
 
-    #regions = cd.frame_diff(np.array(before_img), np.array(after_img))
+    [before_mask, after_mask] = cd.combine_image_mask(np.array(before_img), np.array(after_img), display=True)
 
     # added, removed, moved = cd.calculate_difference(before_img, after_img)
     # added = [obj.class_name for obj in added]
@@ -418,9 +425,9 @@ if __name__=="__main__":
 
     # print(f"Cleanliness score for this iteration is: {cleanliness_score}")
 
-    objects_before = cd.detect_objects(before_img)
+    objects_before = cd.detect_objects(before_mask)
     before_img = cd.annotate_image(before_img, objects_before, True)
-    objects_after = cd.detect_objects(after_img)
+    objects_after = cd.detect_objects(after_mask)
     after_img = cd.annotate_image(after_img, objects_after, True)
     added,removed,moved=[],[],[]
     cd.export_results(before_img, after_img, added, removed, moved)
