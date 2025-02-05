@@ -50,11 +50,10 @@ urlcolor=cyan          % color of external links
 
 \section{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}p{4cm}X}
+\toprule {\bf Date} & {\bf Version} & {\bf Members} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+2025-01-17 & 0.0 & Team & Initial creation\\
 \bottomrule
 \end{tabularx}
 
@@ -62,9 +61,7 @@ Date 2 & 1.1 & Notes\\
 
 \section{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
-
-\wss{Also add any additional symbols, abbreviations or acronyms}
+See SRS Documentation at \url{https://github.com/jinalkast/room8/blob/main/docs/SRS/SRS.pdf}
 
 \newpage
 
@@ -76,112 +73,79 @@ See SRS Documentation at \wss{give url}
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
+The following document details the Module Interface Specifications (MIS) for
+\progname{}, a suite of tools for providing roommates in shared living situations tools to settle common disputes and keep track of shared responsibilities. Beginning from and following \hyperref[Start]{Section 7} the MIS for all modules in the \href{https://github.com/jinalkast/room8/tree/main/docs/Design/SoftArchitecture}{Module Guide} (MG) can be found. Potential readers of this document include new developers, and maintainers looking for clarity on the implementation of modules.\\
 
 Complementary documents include the System Requirement Specifications
 and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
-
-\section{Notation}
-
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
-
-The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
-with the addition that template modules have been adapted from
-\cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
-\citet{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
-multiple assignment statement and conditional rules follow the form $(c_1
-\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
-
-The following table summarizes the primitive data types used by \progname. 
-
-\begin{center}
-\renewcommand{\arraystretch}{1.2}
-\noindent 
-\begin{tabular}{l l p{7.5cm}} 
-\toprule 
-\textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
-\midrule
-character & char & a single symbol or digit\\
-integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
-natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
-real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
-\bottomrule
-\end{tabular} 
-\end{center}
-
-\noindent
-The specification of \progname \ uses some derived data types: sequences, strings, and
-tuples. Sequences are lists filled with elements of the same data type. Strings
-are sequences of characters. Tuples contain a list of values, potentially of
-different types. In addition, \progname \ uses functions, which
-are defined by the data types of their inputs and outputs. Local functions are
-described by giving their type signature followed by their specification.
+found at \url{https://github.com/jinalkast/room8/tree/main}.  
 
 \section{Module Decomposition}
 
 The following table is taken directly from the Module Guide document for this project.
 
 \begin{table}[h!]
-\centering
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
-\toprule
-\textbf{Level 1} & \textbf{Level 2}\\
-\midrule
-
-{Hardware-Hiding} & ~ \\
-\midrule
-
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
-\midrule
-
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
-\bottomrule
-
-\end{tabular}
-\caption{Module Hierarchy}
-\label{TblMH}
-\end{table}
+  \centering
+  \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+  \toprule
+  \textbf{Level 1} & \textbf{Level 2}\\
+  \midrule
+  \multirow{3}{0.3\textwidth}{Hardware-Hiding Module} 
+  & M1 \\
+  & M2 \\
+  & M3\\
+  \midrule
+  
+  \multirow{3}{0.3\textwidth}{Behaviour-Hiding Module} 
+  & M4 \\
+  & M7 \\
+  & M8 \\
+  \midrule
+  
+  \multirow{7}{0.3\textwidth}{Software Decision Module} 
+  & M5\\
+  & M6 \\
+  & M9\\
+  & M10\\
+  & M11 \\
+  & M12 \\
+  & M13 \\
+  & M14 \\
+  \bottomrule
+  
+  \end{tabular}
+  \caption{Module Hierarchy}
+  \label{TblMH}
+  \end{table}
 
 \newpage
-~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
+% MIS of Sensor Reading Module
 
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\section{MIS of Sensor Reading Module} \label{Start} 
 
 \subsection{Module}
 
-\wss{Short name for the module}
+M1: SensorReadingModule
 
 \subsection{Uses}
+Used to gather data on user presence in shared space to determine when to take before and after pictures of the shared space.
 
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None
 
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{3.5cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+timeMotion & timesOfMotion & timeMotionDetected & - \\
+detector & sensorData & motionPresent & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -190,59 +154,1012 @@ The following table is taken directly from the Module Guide document for this pr
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+\begin{itemize}
+  \item timesOfMotion: List[datetime] - List of time when motion was detected by the sensor.
+\end{itemize}
 
 \subsubsection{Environment Variables}
-
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+\begin{itemize}
+  \item sensorData: sensorDataType - Data acquired by the sensor with data type supported by sensor.
+\end{itemize}
 
 \subsubsection{Assumptions}
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+None
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent timeMotion(timesOfMotion: datetime) $\rightarrow$ datetime:
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item input: List of time stamps of when motion was detected. 
+\item output: Last timestamp of when motion was detected. 
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
+\noindent detector(sensorData: sensorDataType) $\rightarrow$ boolean:
+\begin{itemize}
+\item input: Data received from sensor. 
+\item output: True or false value depending on if motion was detected. 
+\end{itemize}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+\begin{itemize}
+  \item insertTime(): Inserting time stamp into timesOfMotion variable.
+\end{itemize}
+
 
 \newpage
 
-\bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
+% MIS of Image Capture Module
+
+\section{MIS of Image Capture Module} \label{Module} 
+
+\subsection{Module}
+
+M2: ImageCaptureModule
+
+\subsection{Uses}
+Capture image of shared space using camera system.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{3.5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+captureImage & - & image & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+\begin{itemize}
+\item captureImage will only be called when picture is needed to be taken, that is before user starts using shared space and five minutes after user has left shared space.
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent captureImage() $\rightarrow$ png:
+\begin{itemize}
+\item output: Image taken.
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+None
 
 \newpage
 
-\section{Appendix} \label{Appendix}
+% MIS of Image Upload Module
 
-\wss{Extra information if required}
+\section{MIS of Image Upload Module} \label{Module} 
+
+\subsection{Module}
+
+M3: ImageUploadModule
+
+\subsection{Uses}
+Uploads the captured image to Raspberry Pi for the cleanliness detection system to use for analysis.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{3cm} p{3cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+uploadImage & image & - & imgUploadErrorMessage \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+\begin{itemize}
+  \item uploadURL: str - The URL to which the image will be uploaded.
+\end{itemize}
+
+\subsubsection{Assumptions}
+\begin{itemize}
+	\item Network is stable and never causes error in image upload.
+	\item Power source is stable and never causes error in image upload.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent uploadImage(image: png):
+\begin{itemize}
+\item input: Image taken from camera. 
+\item exception: ImageUploadInterrupted - Raised if error occurs during image upload.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+
+% MIS of Preprocessing Module
+
+\section{MIS of Image Preprocessing Module} \label{Module} 
+
+\subsection{Module}
+
+M4: ImagePreprocessingModule
+
+\subsection{Uses}
+The ImagePreprocessingModule is used for preparing raw images (i.e. from the ImageUploadModule) to be submitted to subsequent modules (i.e. ObjectDetectionModule and ScoringModule). A series of transformations is applied to the image.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item SUPPORTED{\_}FORMATS: List[str] = ["JPEG", "PNG"]
+  \item DEFAULT{\_}TRANSFORMS: torchvision.transforms.Compose\: A default set of PyTorch transformations, including resizing, normalization, and optional filtering
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{3.5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+processImage & image: Image & Tensor & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item The input image is in a valid format supported by PyTorch (e.g. JPEG, PNG)
+  \item PyTorch and torchvision libraries are installed and functional
+  \item Network connectivity is stable for receiving images through the cloud network
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent processImage(image: Image):
+\begin{itemize}
+\item transition: Applies a sequence of PyTorch transformations to the input image 
+\item output: Returns the transformed image as a Pytorch tensor, ready for subsequent object detection
+\item exception: 
+\begin{itemize}
+  \item InvalidImageFormatException: Raised if the input image format is unsupported
+  \item TransformationError: Raised if an error occurs during transformations
+\end{itemize}
+
+\end{itemize}
+\noindent processImage(image: Image):
+\begin{itemize}
+  \item transition: Applies pixel map transformations (e.g. resizing, cropping, filtering) to the input image
+  \item output: Returns the transformed image
+  \item exception: 
+  \begin{itemize}
+    \item TransformationError: Raised if an error occurs during transformations
+  \end{itemize}
+  
+  \end{itemize}
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item validateImageFormat(image: Image) $\rightarrow$ bool: Checks if the input image format is supported
+  \item createTransforms() $\rightarrow$ torchvision.transforms.Compose\: Creates a PyTorch Compose object for the default set of transformations
+  \item applyTransforms(image: Image, transforms: torchvision.transforms.Compose) $\rightarrow$ Tensor: Applies the given transformations to the input image
+\end{itemize}
+
+\newpage
+
+\section{MIS of Object Detection Module} \label{Module} 
+
+\subsection{Module}
+
+M5: ObjectDetectionModule
+
+\subsection{Uses}
+To detect objects in an input tensor (preprocessed image) using a pretrained object detector (e.g. Faster R-CNN ResNet-50 FPN model). The output is a list of detected objects, where each object is represented as a HouseObject.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item MODEL{\_}NAME: str = "FasterRCNNResNet50FPN"
+  \item CONFIDENCE{\_}THRESHOLD: float = 0.5 (minimum confidence score for object detection results)
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{3.5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+detectObjects & inputTensor: Tensor & List[HouseObject] & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+	\item self.model: torchvision.models.detection.FasterRCNN
+\end{itemize}
+
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item The input tensor is correctly preprocessed and normalized according to the requirements of the Faster R-CNN model
+  \item PyTorch and torchvision libraries are installed and functional
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent detectObjects():
+\begin{itemize}
+\item transition: Uses the pretrained Faster R-CNN model to detect objects in the input tensor, filters results based on the confidence threshold
+\item output: Returns a list of detected objects, where each object is represented as a HouseObject
+\item exception: 
+\begin{itemize}
+  \item ModelNotLoadedException: Raised if the model fails to load
+  \item DetectionError: Raised if an error occurs during detection process
+\end{itemize}
+
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item loadModel() $\rightarrow$ torchvision.models.detection.FasterRCNN: Loads pretrained Faster R-CNN ResNet-50 FPN model
+  \item filterDetections(detections: List[Dict], threshold: float) $\rightarrow$ List[HouseObject]: Filters the raw detections based on the confidence threshold and converts them to HouseObject instances
+\end{itemize}
+
+\newpage
+ 
+
+
+\section{MIS of Scoring Module} \label{Module} 
+
+\subsection{Module}
+
+M6: ScoringModule
+
+\subsection{Uses}
+To evaluate changes in a room by comparing two sets of detected objects (representing "before" and "after" states) and assign a cleanliness score based on the differences
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item MAX{\_}SCORE: int = 100 (maximum cleanliness score)
+  \item MIN{\_}SCORE: int = 0 (minimum cleanliness score)
+  \item OBJECT{\_}WEIGHTS: dict (Weights for scoring different objects based on their categories)
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{5cm} p{3cm} p{3.5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+calculateCleanliness & before: List[HouseObject], after: List[HouseObject] & int & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item Input lists 'before' and 'after' contain valid HouseObject instances
+  \item The HouseObject class provides sufficient information (e.g., label, confidence, bounding box) to compare objects between the two states
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent calculateCleanliness():
+\begin{itemize}
+\item transition: Compares the before and after lists to identify added, removed, or moved objects; computes a cleanliness score based on these changes
+\item output: Returns an integer cleanliness score between MIN{\_}SCORE and MAX{\_}SCORE
+\item exception: 
+\begin{itemize}
+  \item ModelNotLoadedException: Raised if the model fails to load
+  \item DetectionError: ScoringError: Raised if an error occurs during the scoring process
+\end{itemize}
+
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item compareObjects(before: List[HouseObject], after: List[HouseObject]) $\rightarrow$ Dict[str, List[HouseObject]]: Identifies added, removed, and moved objects between the two lists
+  \item computeScore(changes: Dict[str, List[HouseObject]]) $\rightarrow$ int: Computes the cleanliness score based on detected changes
+\end{itemize}
+
+\newpage
+\section{MIS of Request Listener Module} \label{Module} 
+
+\subsection{Module}
+
+M7: RequestListenerModule
+
+\subsection{Uses}
+Exposes cleanliness detector to camera and image by making it an application programming interface.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{3.5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getImages & - & images & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getImages() $\rightarrow$ List[png]:
+\begin{itemize}
+\item output: Two most recent images where one is the before and other is the after state of shared space after user is finished.
+\end{itemize}
+
+\subsubsection{Local Functions}
+None
+
+\newpage
+
+\section{MIS of Data Uploading Module} \label{Module} 
+
+\subsection{Module}
+
+M8: DataUploadingModule
+
+\subsection{Uses}
+To provide an interface for the app's backend to interact with the Python-based object detection, machine learning, and scoring functionalities. The module packages these functionalities using FastAPI and exposes them as RESTful endpoints.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item API{\_}VERSION: str = "v1"
+  \item BASE{\_}URL: str = "/api/v1"
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{5cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+startServer & - & None & - \\
+POST /processImages & imageSet: JSON & cleanlinessScore: JSON & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+None
+
+
+\subsubsection{Environment Variables}
+\begin{itemize}
+  \item FastAPI: Required for exposing RESTful endpoints
+  \item Backend: The JavaScript backend that interacts with the module
+\end{itemize}
+
+\subsubsection{Assumptions}
+\begin{itemize}
+  \item FastAPI and its dependencies (e.g., Uvicorn) are installed and properly configured
+  \item The backend sends valid JSON requests with correctly encoded image data
+\end{itemize}
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent startServer():
+\begin{itemize}
+\item transition: Initiates the FastAPI application and starts the server to handle incoming requests
+\item output: None
+\item exception: ServerError - Raised if the server fails to start
+
+\end{itemize}
+
+\noindent Endpoint: POST /processImages
+\begin{itemize}
+\item transition:
+\begin{itemize}
+  \item Decodes the base64-encoded input images
+  \item Passes the images through the ObjectDetectionModule and ScoringModule
+  \item Computes and returns the cleanliness score
+\end{itemize}
+\item output: A JSON object with the following structure: \\ \{ \\"cleanliness{\_}score": int\\ \}
+\item exception: 
+\begin{itemize}
+  \item InvalidInputError: Raised if the input JSON is malformed or invalid
+  \item ProcessingError: Raised if an error occurs during processing
+\end{itemize}
+
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item decodeImages(encodedImages: List[str]) $\rightarrow$ List[Tensor]: Decodes base64-encoded images into PyTorch tensors
+  \item processRequest(images: List[Tensor]) $\rightarrow$ int: Processes the input images through the ObjectDetection and Scoring modules to compute the cleanliness score
+\end{itemize}
+
+\newpage
+
+% MIS of Chore Schedule Module
+
+\section{MIS of Chore Scheduling Module} \label{Module} 
+
+\subsection{Module}
+
+M9: ChoreSchedulingModule
+
+\subsection{Uses}
+The Chore Scheduling Module is used to assist roommates in scheduling chores. It provides a list of chores to be done and allows roommates to assign chores to each other. The module is in charge of schedule's database table, management of schedule instances, the application programming interface of the scheduling functions, and the implenentation to the frontend application. 
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{3cm} p{5cm} p{3.5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getHouseSchedule & string: houseID & JSON: houseScheduleObject & JSON: errorObject \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item houseSchedule: JSON - A JSON object containing the current house's schedule
+  \item selectedRoommate: string - The roommate selected to view schedule
+\end{itemize}
+
+\subsubsection{Environment Variables}
+\begin{itemize}
+  \item SUPABASE{\_}API{\_}KEY: Key required to interface with the Supabase backend, which stores bill-related data.
+  \end{itemize}
+  
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item The houseScheduleObject is a valid JSON object that corresponds to the house's schedule
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getHouseSchedule(string: houseID) $\rightarrow$ JSON:
+\begin{itemize}
+\item output: Returns the house schedule object for the specified houseID containing the schedule for all roommates
+\item exception: Raises an exception if the houseID is invalid or if the house schedule object is not found
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item getRoommateHouseSchedule(JSON: houseScheduleObject, string: roommateID) $\rightarrow$ JSON: Returns the schedule for the specified roommate
+  \item updateChore(string: houseID, string: choreID, JSON: newChore) $\rightarrow$ JSON: Updates the house schedule with the new chore for the specified previous chore
+  \item createChore(string: houseID, JSON: newChore): Creates a new house chore object inside of the house schedule
+  \item deleteChore(string: houseID, string: choreID) $\rightarrow$ JSON: Deletes the specified chore from the house schedule
+
+\end{itemize}
+
+\newpage
+
+%MIS of Chat Bot Module
+
+\section{MIS of Chat Bot Module} \label{Module}
+ 
+\subsection{Module}
+
+M10: ChatBotModule
+
+\subsection{Uses}
+
+The ChatBot Module interfaces with an SMS API to facilitate group messaging functionality. It allows users to view the current group SMS status for the house, create a group, and send messages. The module implements logic for sending relevant notifications.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{5cm} p{3cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+createGroup & groupName: str, members: List[str] & GroupID: str & InvalidGroupException \\
+sendMessage & groupID: str, message: str & bool & MessageDeliveryException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item SMS{\_}API{\_}KEY: key required to interface with the API which sends the SMS messages to the group.
+\item SUPABASE{\_}API{\_}KEY: Key required to interface with the Supabase backend, which stores bill-related data.
+\end{itemize}
+  
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item The SMS API is operational and has sufficient credits for sending messages.
+  \item The provided phone numbers of all users in the house/group are valid.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent createGroup(groupName: str, members: List[str]):
+\begin{itemize}
+\item transition: Adds a new group to `activeGroups` with the specified members.
+\item output: Returns a unique group ID for the newly created group.
+\item exception: InvalidGroupException - Raised if the group exceeds the maximum allowed size or has invalid member details.
+\end{itemize}
+
+\noindent sendMessage(groupID: str, message: str):
+\begin{itemize}
+\item transition: Sends the message to all members of the specified group via the SMS API.
+\item output: Returns `true` if the message is successfully sent, otherwise `false`.
+\item exception: MessageDeliveryException - Raised if the message fails to deliver due to API issues or invalid group ID.
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item validatePhoneNumber(phone: str) $\rightarrow$ bool: Ensures the phone number follows the correct format.
+  \item generateGroupID(groupName: str) $\rightarrow$ str: Generates a unique group ID based on the group name and timestamp.
+  \item sendViaSms(phone: str, message: str) $\rightarrow$ bool: Sends a message to a specified phone number using the SMS API.
+\end{itemize}
+
+\newpage
+
+% MIS of Bill Splitting Module
+
+\section{MIS of Bill Splitting Module} \label{Module}
+
+\subsection{Module}
+
+M11: BillSplittingModule
+
+\subsection{Uses}
+
+The Bill Splitting Module calculates the division of bills among users and assigns outstanding debts/credits to individual users. It allows users to create, modify, and delete existing bill data from the client-side interface.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{5cm} p{3cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+createBill & billDetails: dict & BillID: str & InvalidBillException \\
+
+modifyBill & billID: str, updatedDetails: dict & bool & BillNotFoundException, InvalidBillUpdateException \\
+
+deleteBill & billID: str & bool & BillNotFoundException \\
+
+calculateSplit & billID: str & SplitDetails: dict & CalculationErrorException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+\item SUPABASE{\_}API{\_}KEY: Key required to interface with the Supabase backend, which stores bill-related data.
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item All user data (e.g., names, amounts owed) is valid and stored in the Supabase backend.
+  \item Users provide accurate and consistent data for creating or modifying bills.
+  \item The Supabase backend is operational and responsive.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent createBill(billDetails: dict):
+\begin{itemize}
+\item transition: Sends the provided bill details to the Supabase backend for storage.
+\item output: Returns a unique Bill ID for the newly created bill.
+\item exception: InvalidBillException - Raised if the provided bill details are incomplete or invalid.
+\end{itemize}
+
+\noindent modifyBill(billID: str, updatedDetails: dict):
+\begin{itemize}
+\item transition: Updates the details of an existing bill in the Supabase backend.
+\item output: Returns `true` if the modification is successful.
+\item exception: 
+  \begin{itemize}
+    \item BillNotFoundException - Raised if the specified Bill ID does not exist.
+    \item InvalidBillUpdateException - Raised if the updated details are invalid or conflict with existing data.
+  \end{itemize}
+\end{itemize}
+
+\noindent deleteBill(billID: str):
+\begin{itemize}
+\item transition: Deletes the specified bill from the Supabase backend.
+\item output: Returns `true` if the deletion is successful.
+\item exception: BillNotFoundException - Raised if the specified Bill ID does not exist.
+\end{itemize}
+
+\noindent calculateSplit(billID: str):
+\begin{itemize}
+\item transition: Retrieves bill details from the Supabase backend and calculates the split among participants.
+\item output: Returns a dictionary containing split details (e.g., each participant's share, amounts owed/credited).
+\item exception: CalculationErrorException - Raised if an error occurs during the calculation (e.g., missing participant data).
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item validateBillDetails(details: dict) $\rightarrow$ bool: Ensures the provided bill details (e.g., amounts, participants) are valid.
+  \item calculateIndividualShare(amount: float, participants: List[str]) $\rightarrow$ float: Divides the bill amount evenly among participants.
+  \item updateDebtCredit(participantID: str, amount: float) $\rightarrow$ bool: Updates the outstanding debt/credit for a participant in the Supabase backend.
+  \item removeBill(billID: str) $\rightarrow$ bool: Deletes the bill record from the Supabase backend.
+\end{itemize}
+
+\newpage
+
+% MIS of User Authentication Module
+
+\section{MIS of User Authentication Module} \label{Module} 
+
+\subsection{Module}
+
+M12: UserAuthenticationModule
+
+\subsection{Uses}
+
+The User Authentication Module is used to authenticate users and manage user accounts. It provides a secure way for users to log in and access the application. The module is in charge of the user's database table, management of user instances, the application programming interface of the authentication functions, and the implementation to the frontend application.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item SUPPORTED{\_}AUTHENTICATION{\_}METHODS: List[str] = ["OAuth2"]
+  \item SUPPORTED{\_}AUTHENTICATION{\_}PROVIDERS: List[str] = ["Google"]
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{5cm} p{3.5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getUser & string: jwtCookie & JSON: userObject & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item activeJWT: datetime - The current accepted web token timing for user authentication
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+
+    \item SUPABASE{\_}API{\_}KEY: Key required to interface with the Supabase backend, which stores bill-related data.
+    
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item Google authentication service is always available and not down.
+  \item The user has a valid Google email account for authentication.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getUser(jwtCookie: string) $\rightarrow$ JSON:
+\begin{itemize}
+\item transition: Validates the JWT cookie and retrieves the corresponding user data from the UserDatabase.
+\item output: Returns the userObject containing user details.
+\item exception: 
+  \begin{itemize}
+    \item InvalidJWTException: Raised if the JWT cookie is invalid or expired.
+    \item UserNotFoundException: Raised if no user is found for the given JWT cookie.
+  \end{itemize}
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item validateJWT(jwt: string) $\rightarrow$ bool: Validates the given JWT token and returns true if valid, false otherwise.
+  \item generateJWT(userID: string) $\rightarrow$ string: Generates a new JWT token for the given user ID.
+  \item signInWithGAuth(authCode: string) $\rightarrow$ JSON: Authenticates the user using Google OAuth and returns user details.
+  \item deleteJWT(jwt: string) $\rightarrow$ bool: Deletes the given JWT token and returns true if successful, false otherwise.
+\end{itemize}
+
+\newpage
+
+% MIS of Home Management Module
+
+\section{MIS of Home Management Module} \label{Module} 
+
+\subsection{Module}
+
+M13: HomeManagementModule
+
+\subsection{Uses}
+
+The Home Management Module is used to manage house-related operations such as adding, deleting, editing, joining, and leaving a house. It provides a way for users to manage their house and roommates within the application. The module is in charge of the house's database table, management of house instances, the application programming interface of the house management functions, and the implementation to the frontend application.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Access Programs}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{4cm} p{5cm} p{3.5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getRoommates & string: houseID & JSON: roommateList & JSON: errorObject \\
+getHouseID & string: userID & string: houseID & JSON: errorObject \\
+getHouseMetadata & string: houseID & JSON: houseMetadata & JSON: errorObject \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item houseList: List[JSON] - The list of houses managed by the module
+  \item roommateList: List[JSON] - The list of roommates for the specified house
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+  \item SUPABASE{\_}API{\_}KEY: Key required to interface with the Supabase backend, which stores bill-related data.
+  \end{itemize}
+  
+
+\subsubsection{Assumptions}
+None
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getRoommates(houseID: string) $\rightarrow$ JSON:
+\begin{itemize}
+\item output: Returns the list of roommates for the specified houseID.
+\item exception: HouseNotFoundError: Raised if the houseID does not exist.
+\end{itemize}
+
+\noindent getHouseID(userID: string) $\rightarrow$ string:
+\begin{itemize}
+\item output: Returns the houseID that the user with the specified userID belongs to.
+\item exception: UserNotFoundError: Raised if the userID does not exist.
+\end{itemize}
+
+\noindent getHouseMetadata(houseID: string) $\rightarrow$ JSON:
+\begin{itemize}
+\item output: Returns the metadata for the specified houseID.
+\item exception: HouseNotFoundError: Raised if the houseID does not exist.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item addHouse(houseData: JSON) $\rightarrow$ JSON: Adds a new house to the HouseDatabase and returns the created house object.
+  \item deleteHouse(houseID: string) $\rightarrow$ JSON: Deletes the specified house from the HouseDatabase and returns a confirmation message.
+  \item editHouse(houseID: string, houseData: JSON) $\rightarrow$ JSON: Edits the details of the specified house in the HouseDatabase and returns the updated house object.
+  \item joinHouse(userID: string, houseID: string) $\rightarrow$ JSON: Adds the user to the specified house and returns a confirmation message.
+  \item leaveHouse(userID: string, houseID: string) $\rightarrow$ JSON: Removes the user from the specified house and returns a confirmation message.
+  \item checkHouseExists(houseID: string) $\rightarrow$ bool: Checks if a house with the specified houseID exists in the HouseDatabase.
+  \item checkUserExists(userID: string) $\rightarrow$ bool: Checks if a user with the specified userID exists in the UserDatabase.
+  \item updateHouseList(): Updates the houseList state variable with the latest data from the HouseDatabase.
+\end{itemize}
+
+\newpage
+
+% MIS of Cleanliness Management Module
+\section{MIS of Cleanliness Management Module} \label{Module}
+
+\subsection{Module}
+
+M14: CleanlinessManagementModule
+
+\subsection{Uses}
+
+The Cleanliness Management Module converts data received from the camera system and scoring module into a user-friendly interface. It provides users with the ability to view the details of messes in their shared space, including an image of the mess, the assigned user responsible for cleaning, and a toggle to mark the mess as cleaned.
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{5cm} p{3cm} p{5cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+getMessDetails & messID: str & MessDetails: dict & MessNotFoundException \\
+
+markAsCleaned & messID: str, userID: str & bool & AuthorizationException, MessNotFoundException \\
+
+assignMessToUser & messID: str, userID: str & bool & MessNotFoundException, UserNotFoundException \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+  \item SUPABASE{\_}API{\_}KEY: Key required to interface with the Supabase backend, which stores bill-related data.
+  \end{itemize}
+  
+
+\subsubsection{Assumptions}
+
+\begin{itemize}
+  \item The camera system and scoring module provide accurate and timely data.
+  \item All users have unique identifiers and are registered in the Supabase backend.
+  \item Users are responsible for marking messes as cleaned only if they are assigned to them.
+  \item The Supabase backend is operational and responsive.
+\end{itemize}
+
+\subsubsection{Access Routine Semantics}
+
+\noindent getMessDetails(messID: str):
+\begin{itemize}
+\item transition: Retrieves details of the specified mess from the Supabase backend.
+\item output: Returns a dictionary containing mess details, including the image, assigned user, and cleanup status.
+\item exception: MessNotFoundException - Raised if the specified mess ID does not exist in the backend.
+\end{itemize}
+
+\noindent markAsCleaned(messID: str, userID: str):
+\begin{itemize}
+\item transition: Updates the status of the specified mess to "cleaned" in the Supabase backend.
+\item output: Returns `true` if the operation is successful.
+\item exception: 
+  \begin{itemize}
+    \item AuthorizationException - Raised if the user attempting to mark the mess as cleaned is not assigned to it.
+    \item MessNotFoundException - Raised if the specified mess ID does not exist.
+  \end{itemize}
+\end{itemize}
+
+\noindent assignMessToUser(messID: str, userID: str):
+\begin{itemize}
+\item transition: Updates the assigned user for the specified mess in the Supabase backend.
+\item output: Returns `true` if the operation is successful.
+\item exception: 
+  \begin{itemize}
+    \item MessNotFoundException - Raised if the specified mess ID does not exist.
+    \item UserNotFoundException - Raised if the specified user ID does not exist in the backend.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\begin{itemize}
+  \item fetchCameraData(messID: str) $\rightarrow$ dict: Retrieves image data and metadata for the specified mess from the camera system.
+  \item updateMessStatus(messID: str, status: str) $\rightarrow$ bool: Updates the cleanup status of the mess in the Supabase backend.
+  \item assignUserToMess(messID: str, userID: str) $\rightarrow$ bool: Assigns the specified user to the mess in the Supabase backend.
+  \item validateUserPermission(userID: str, messID: str) $\rightarrow$ bool: Ensures the user is authorized to modify the mess's status.
+\end{itemize}
 
 \newpage{}
 
 \section*{Appendix --- Reflection}
-
-\wss{Not required for CAS 741 projects}
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Problem Analysis and Design.
@@ -250,20 +1167,27 @@ graduate attribute of Problem Analysis and Design.
 \input{../../Reflection.tex}
 
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
-  \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-  \item Which of your design decisions stemmed from speaking to your client(s)
+  \item \textbf{What went well while writing this deliverable?}\\
+  When writing this deliverable, the team addressed and resolved questions about our project that we had been putting off for a long time. Decisions such as "how \textit{exactly} will we be implementing this" were answered, and now the team is fully aligned on how each module will interact. Another thing that went well when writing this deliverable was that, unlike previous deliverables, there were no conflicts or issues raised because of past deliverables. This is because the team went back and modified past deliverables to check that all deliverables were in line with each other and wouldn't cause obstacles in the future.
+  \item \textbf{What pain points did you experience during this deliverable, and how
+    did you resolve them?}\\
+    Some pain points when writing this deliverable included a lack of clarity about specific solution details and uncertainty about the granularity of modules. When writing the MG and the MIS, the team was still unclear about the exact outputs of the cleanliness detection algorithm. While working on the document, the team was unsure if we would implement advanced functionality like detecting stains and which user created them or if we would fall back to more basic functionality. Additionally, the team was unclear if we should include modules not implemented by us completely, such as authentication frameworks, databases, web frameworks, and programming languages. The lack of clarity about the cleanliness detection algorithm, while not completely resolved, was handled by specifying our unknowns in the anticipated changes section of our module guide and creating clear pathways for development based on what happens in the future. Additionally, we decided not to pursue one of our ideas due to privacy and other concerns raised by our project supervisor. The clarity issues about the document itself were rectified by communicating with our TA, including more modules, and distinguishing modules that were not implemented but used in the MG.      
+  \item \textbf{Which of your design decisions stemmed from speaking to your client(s)
   or a proxy (e.g. your peers, stakeholders, potential users)? For those that
-  were not, why, and where did they come from?
-  \item While creating the design doc, what parts of your other documents (e.g.
-  requirements, hazard analysis, etc), it any, needed to be changed, and why?
-  \item What are the limitations of your solution?  Put another way, given
-  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
-  \item Give a brief overview of other design solutions you considered.  What
-  are the benefits and tradeoffs of those other designs compared with the chosen
-  design?  From all the potential options, why did you select the documented design?
-  (LO\_Explores)
+  were not, why, and where did they come from?}\\
+  Almost all decisions stemmed from speaking to client(s) or a proxy. Our proxy for design decisions related to the cleanliness management system and all related systems is Dr. Tharmarasa, an expert in computer vision and object detection. Decisions related to the features of the client-facing application come from discussions with students in shared-living situations which are abundant at McMaster University.
+  \item \textbf{While creating the design doc, what parts of your other documents (e.g.
+  requirements, hazard analysis, etc), it any, needed to be changed, and why?}\\
+  The SRS was modified to remove requirements that involved recording the individual cleanliness score of a user. 
+  \item \textbf{What are the limitations of your solution?  Put another way, given
+  unlimited resources, what could you do to make the project better?} (LO\_ProbSolutions)\\
+  Current limitations in the solution include limitations in the detection ability of the cleanliness detection algorithm. As of writing, this module is implemented using pre-trained object detection models and focuses on detecting differences in the state, leaving the users to determine whether or not the state of the room has improved or worsened. This is due to a lack of time and expertise in implementing a custom AI model for this use case. Given unlimited time and resources, a dedicated artificial intelligence and object detection model specializing in detecting "messes" would be built to reduce manual effort from the user and improve the system's accuracy.\\\\
+  Another limitation of the system is its inability to enforce accountability amongst roommates. Currently, the solution provides a suite of tools for roommates to use and to keep track of information but does not provide any way of enforcing things like bill payments or chores. Given more time, the team could have implemented some point or merit tracking system that would report the landlord who isn't paying bills and keeping their property in proper order, and the landlord could provide notices to tenants and help with enforcement.
+  \item \textbf{Give a brief overview of other design solutions you considered.  What
+  are the benefits and trade-offs of those other designs compared with the chosen
+  design?  From all the potential options, why did you select the documented design?}
+  (LO\_Explores)\\
+  Some alternative solutions were the creation of a mobile app over a progressive web application (PWA), the creation of our machine learning model over a pre-trained model, and having the camera system track which user modified the shared living space and keeping track of which user contributed the most to issues in shared living spaces. The first two alternatives provide the development team with more flexibility and customizability but increase development time due to the team's lack of experience building AI models and mobile apps. Ultimately, the team decided to use a pre-trained AI model and build a PWA because the deadlines in this project are firm, and being unable to deliver any product is worse than a product with less functionality. Finally, the team decided not to pursue implementing the solution, which involved tracking which users did what in the shared living situations due to concerns raised by our supervisor. These concerns included privacy concerns and accuracy concerns. Since the team is using a pre-trained AI model, we decided it would be best to not associate data with users to prevent frustrations caused by false positives/negatives (defined in the \href{https://github.com/jinalkast/room8/tree/main/docs/HazardAnalysis}{Hazard Analysis}).
 \end{enumerate}
 
 

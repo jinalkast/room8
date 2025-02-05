@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{graphicx}
+\graphicspath{ {./images/} }
 \usepackage{float}
 \usepackage{hyperref}
 \hypersetup{
@@ -43,11 +44,10 @@
 
 \section{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}p{4cm}X}
+\toprule {\bf Date} & {\bf Version} & {\bf Members} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+2025-01-17 & 0.0 & Team & Initial creation\\
 \bottomrule
 \end{tabularx}
 
@@ -72,9 +72,10 @@ This section records information for easy reference.
   R & Requirement\\
   SC & Scientific Computing \\
   SRS & Software Requirements Specification\\
-  \progname & Explanation of program name\\
+  \progname & Name of the system\\
   UC & Unlikely Change \\
-  \wss{etc.} & \wss{...}\\
+  UI & User Interface \\
+  UX & User Experience \\
   \bottomrule
 \end{tabular}\\
 
@@ -157,16 +158,14 @@ adapted here is called design for
 change.
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+\item[\refstepcounter{acnum} \actheacnum \label{acML}:] The implementation details of the detection algorithm. Including data preprocessing techniques and machine learning techniques.
+\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific hardware in which the camera and sensor system is running.
+\item[\refstepcounter{acnum} \actheacnum \label{acSensor}:] The kind of sensor used to detect activity.
+\item[\refstepcounter{acnum} \actheacnum \label{acCaptureCriteria}:] The criteria for signalling the camera to capture.
+\item[\refstepcounter{acnum} \actheacnum \label{acAlgoOutput}:] The output of the cleanliness detection algorithm whether it be an image outlining changes or a number quantifying the change in a room.
+\item[\refstepcounter{acnum} \actheacnum \label{acWebFrameworks}:] The frontend technologies used to create the user interface for the web platform (ex: React, NextJs).
+\item[\refstepcounter{acnum} \actheacnum \label{acAppFeatures}:] Specific flows of frontend features such as the bill splitting feature and chore scheduling. Changes are dependant on usability test results.
 \end{description}
-
-\wss{Anticipated changes relate to changes that would be made in requirements,
-design or implementation choices.  They are not related to changes that are made
-at run-time, like the values of parameters.}
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
@@ -178,9 +177,10 @@ will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucPython}:] The use of Python for the implementation of the cleanliness detection algorithm. This is due to the plethora of machine learning libraries such as PyTorch available.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucWeb}:] The user facing application being implemented as a web application.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucSql}:] The data persistence for the application being implemented with a relational database, specially PostgreSQL.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucAuth}:]Utilizing a third-party service to implement OAuth for user login.
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -191,10 +191,21 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mSR}:] Sensor Reading Module
+\item [\refstepcounter{mnum} \mthemnum \label{mIC}:] Image Capture Module
+\item [\refstepcounter{mnum} \mthemnum \label{mIU}:] Image Upload Module
+\item [\refstepcounter{mnum} \mthemnum \label{mIP}:] Image Preprocessing Module
+\item [\refstepcounter{mnum} \mthemnum \label{mOD}:] Object Detection Module
+\item [\refstepcounter{mnum} \mthemnum \label{mS}:] Scoring Module 
+\item [\refstepcounter{mnum} \mthemnum \label{mRL}:] Request Listener Module (Cleanliness Detection System)
+\item [\refstepcounter{mnum} \mthemnum \label{mDU}:] Data Uploading Module (Cleanliness Detection System)
+\item [\refstepcounter{mnum} \mthemnum \label{mCS}:] Chore Schedule Module
+\item [\refstepcounter{mnum} \mthemnum \label{mCB}:] Chat Bot Module
+\item [\refstepcounter{mnum} \mthemnum \label{mBS}:] Bill Splitting Module
+\item [\refstepcounter{mnum} \mthemnum \label{mUA}:] User Authentication Module
+\item [\refstepcounter{mnum} \mthemnum \label{mHM}:] Home Management Module
+\item [\refstepcounter{mnum} \mthemnum \label{mCM}:] Cleanliness Management Module
 \end{description}
-
 
 \begin{table}[h!]
 \centering
@@ -202,23 +213,25 @@ actually be implemented.
 \toprule
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
-
-{Hardware-Hiding Module} & ~ \\
+\multirow{3}{0.3\textwidth}{Hardware-Hiding Module} & \mref{mSR}\\
+& \mref{mIC}\\
+& \mref{mIU}\\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+\multirow{3}{0.3\textwidth}{Behaviour-Hiding Module} 
+& \mref{mIP} \\
+& \mref{mRL} \\
+& \mref{mDU} \\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+\multirow{7}{0.3\textwidth}{Software Decision Module} & \mref{mOD}\\
+& \mref{mS} \\
+& \mref{mCS}\\
+& \mref{mCB}\\
+& \mref{mBS} \\
+& \mref{mUA} \\
+& \mref{mHM} \\
+& \mref{mCM} \\
 \bottomrule
 
 \end{tabular}
@@ -231,13 +244,6 @@ actually be implemented.
 The design of the system is intended to satisfy the requirements developed in
 the SRS. In this stage, the system is decomposed into modules. The connection
 between requirements and modules is listed in Table~\ref{TblRT}.
-
-\wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.}
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -255,15 +261,36 @@ Only the leaf modules in the hierarchy have to be implemented. If a dash
 (\emph{--}) is shown, this means that the module is not a leaf and will not have
 to be implemented.
 
-\subsection{Hardware Hiding Modules (\mref{mHH})}
+\subsection{Hardware Hiding Modules}
 
 \begin{description}
-\item[Secrets:]The data structure and algorithm used to implement the virtual
-  hardware.
-\item[Services:]Serves as a virtual hardware used by the rest of the
-  system. This module provides the interface between the hardware and the
-  software. So, the system can use it to display outputs or to accept inputs.
+\item[Secrets:] The data structure and algorithm used to implement the virtual hardware.
+\item[Services:] Serves as a virtual hardware used by the rest of the system. This module provides the interface between the hardware and the software. So, the system can use it to display outputs or to accept inputs.
 \item[Implemented By:] OS
+\end{description}
+
+\subsubsection{Sensor Reading Module (\mref{mSR})}
+
+\begin{description}
+\item[Secrets:]Sensor thresholds for detection.
+\item[Services:]Uses sensor to detect when user is in shared space and when user is finished using space.
+\item[Implemented By:] Sensor.
+\end{description}
+
+\subsubsection{Image Capture Module (\mref{mIC})}
+
+\begin{description}
+\item[Secrets:] Image format.
+\item[Services:] Captures images on camera system and forwards them to the image upload module.
+\item[Implemented By:] Camera.
+\end{description}
+
+\subsubsection{Image Upload Module (\mref{mIU})}
+
+\begin{description}
+\item[Secrets:] Upload location and image format.
+\item[Services:] Uploads image captured from camera system for system to use in cleanliness detection algorithm.
+\item[Implemented By:] Raspberry Pi.
 \end{description}
 
 \subsection{Behaviour-Hiding Module}
@@ -278,18 +305,31 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+
+\subsubsection{Preprocessing Module (\mref{mIP})}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type]
-  [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Secrets:]Input image format/behaviour, transformations applied.
+\item[Services:]Converts image to tensor and performs filtering/transformations. 
+\item[Implemented By:]Python, PyTorch, Torchvision
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Request Listener Module (\mref{mRL})}
+
+\begin{description}
+\item[Secrets:] Sending image to cleanliness detector.
+\item[Services:] Converts image and information from camera and sensor to be used in system.
+\item[Implemented By:] cameraToDetectorAPI.
+\item[Type of Module:] Application programming interface.
+\end{description}
+
+\subsubsection{Data Uploading Module (\mref{mDU})}
+
+\begin{description}
+\item[Secrets:] Details of how/where python modules are hosted for Room8 backend to access.
+\item[Services:] Packages Python modules (i.e. Preprocessing, Object Detecion, Scoring) as a RESTful endpoint so that the backend can interface with the Python machine learning functionality.
+\item[Implemented By:] Python, FastAPI
+\end{description}
 
 
 \subsection{Software Decision Module}
@@ -305,7 +345,69 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Object Detection Module (\mref{mOD})}
+
+\begin{description}
+\item[Secrets:]Object detector, dataset used for training/testing, map of classes. 
+\item[Services:]Identifies common household objects in a scene.
+\item[Implemented By:]Python, PyTorch, Torchvision
+\end{description}
+
+\subsubsection{Scoring Module (\mref{mS})}
+
+\begin{description}
+\item[Secrets:] Logic to calculate cleanliness score/determine which changes have occurred in the shared space.
+\item[Services:] Applies algorithm to set of before/after photos to determine a cleanliness score.
+\item[Implemented By:] Python
+\end{description}
+
+\subsubsection{Chore Schedule Module (\mref{mCS})}
+\begin{description}
+\item[Secrets:] Chore management logic and database implementation.
+\item[Services:] Allows the user to create, modify, and delete existing chore data from the client-side.
+\item[Implemented By:] Room8.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{Chat Bot Module (\mref{mCB})}
+\begin{description}
+\item[Secrets:] Interface with SMS API and logic which supports sending of relevant notifications.
+\item[Services:] Displays the current group SMS status for the house, and allows users to create a group/send a message.
+\item[Implemented By:] Room8.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{Bill Splitting Module (\mref{mBS})}
+\begin{description}
+\item[Secrets:] Calculation of splitting bills and assigning outstanding debts/credits to users.
+\item[Services:] Displays and allows the user to create, modify, and delete existing bills data from the client-side.
+\item[Implemented By:] Room8.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{User Authentication Module (\mref{mUA})}
+\begin{description}
+\item[Secrets:] Authentication process for creation of users on sign up and determining whether or not a user is logging in with valid credentials on sign in.
+\item[Services:] Authenticates user to the client-side application, provides them with a JSON Web Token (JWT) and allows them to perform authorized actions relevant to themselves/their house.
+\item[Implemented By:] Room8.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{Home Management Module (\mref{mHM})}
+\begin{description}
+\item[Secrets:] Logic behind managing a user's profile/house.
+\item[Services:] Provides the user with the ability to view and modify details of their house. This includes, but is not limited to: updating personal information, adding roommates, removing roommates, leaving a house, and joining a house if they are not already a part of one. 
+\item[Implemented By:] Room8.
+\item[Type of Module:] Abstract object.
+\end{description}
+
+\subsubsection{Cleanliness Management Module (\mref{mCM})}
+\begin{description}
+\item[Secrets:] Conversion of data received from the camera system and scoring module to the interface that users are able to view.
+\item[Services:] Provides the user with the ability to view the details of messes that exist within their shared space. The view will allow them to see an image of where the mess exists, along with which user it is assigned to, and a toggle for whether or not the mess has been cleaned.
+\item[Implemented By:] Room8.
+\item[Type of Module:] Abstract object.
+\end{description}
 
 \section{Traceability Matrix} \label{SecTM}
 
@@ -318,19 +420,23 @@ requirements and between the modules and the anticipated changes.
 \centering
 \begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
 \toprule
-\textbf{Req.} & \textbf{Modules}\\
+\textbf{Module} & \textbf{Reqs.}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+\mref{mSR} & NFR237\\
+\mref{mIC} & NFR231-232, NFR234\\
+\mref{mIU} & NFR233\\
+\mref{mIP} & NFR235\\
+\mref{mOD} & FR233, NFR235-236\\
+\mref{mS} & FR231\\
+\mref{mRL} & NFR235\\
+\mref{mDU} & NFR233\\
+\mref{mCS} & FR241-245, NFR241-244\\
+\mref{mCB} & FR221-224, NFR221-222\\
+\mref{mBS} & FR251-255, NFR251-252\\
+\mref{mUA} & FR211-213, NFR211-212, NFR214 \\
+\mref{mHM} & FR214-218, NFR213 \\
+\mref{mCM} & FR234 \\
+
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -343,18 +449,14 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \toprule
 \textbf{AC} & \textbf{Modules}\\
 \midrule
-\acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acML} & \mref{mIP}, \mref{mOD}, \mref{mS} \\
+\acref{acHardware} & \mref{mSR}, \mref{mIC}, \mref{mIU} \\
+\acref{acSensor} & \mref{mSR} \\
+\acref{acCaptureCriteria} & \mref{mIC} \\
+\acref{acAlgoOutput} & \mref{mS}, \mref{mIU}, \mref{mHM}, \mref{mCM} \\
+\acref{acWebFrameworks} & \mref{mCS}, \mref{mCB}, \mref{mBS}, \mref{mUA}, \mref{mHM}, \mref{mCM} \\
+\acref{acAppFeatures} & \mref{mCS}, \mref{mCB}, \mref{mBS}, \mref{mUA}, \mref{mHM}, \mref{mCM} \\
+
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -374,42 +476,88 @@ the modules. It can be seen that the graph is a directed acyclic graph
 system, and modules in the higher level of the hierarchy are essentially simpler
 because they use modules from the lower levels.
 
-\wss{The uses relation is not a data flow diagram.  In the code there will often
-be an import statement in module A when it directly uses module B.  Module B
-provides the services that module A needs.  The code for module A needs to be
-able to see these services (hence the import statement).  Since the uses
-relation is transitive, there is a use relation without an import, but the
-arrows in the diagram typically correspond to the presence of import statement.}
+The diagram denotes uses relationships with a solid arrow. If a component  communicates with another component via some remote protocol like HTTP/HTTPS it is denoted with a dotted arrow. Finally, modules that are not implemented by the team but are utilized in the system like web frameworks or database systems are denoted with a blue square.
 
-\wss{If module A uses module B, the arrow is directed from A to B.}
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
 
+
+
 %\section*{References}
 
 \section{User Interfaces}
+User interface of the home management, authentication, splash, and dashboard page yet to be designed. They will be included in future revisions of this document in addition to the UI of the hardware system.
 
-\wss{Design of user interface for software and hardware.  Attach an appendix if
-needed. Drawings, Sketches, Figma}
 
-\section{Design of Communication Protocols}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chatbot.png}
+  \caption{Activate Chatbot Page}
+  \label{fig:landing}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{choreSchedule.png}
+  \caption{Chore Schedule Page}
+  \label{fig:landing}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{createBill.png}
+  \caption{Create bill Page}
+  \label{fig:landing}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{outstandingBills.png}
+  \caption{Outstanding Bills Page}
+  \label{fig:landing}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{owedBills.png}
+  \caption{Owed Bills Page}
+  \label{fig:landing}
+\end{figure}
 
-\wss{If appropriate}
 
 \section{Timeline}
+\begin{itemize}
+\item \textbf{Week 1 - 4:} {Jan 15 - Feb 11, 2025}
+\begin{itemize}
+\item Complete modules \mref{mCS}, \mref{mBS}, \mref{mUA}, \mref{mHM} - [Maged, Mohammed, Jinal]
+\item Begin working on the cleanliness detection system's algorithm (\mref{mIP}, \mref{mOD}, \mref{mS}) - [Jane, Harshil]
+\end{itemize}
+\item \textbf{Week 5 - 8:} {Feb 12 - Mar 10, 2025}
+\begin{itemize}
+\item Begin working on frontend for cleanliness management system (\mref{mDU}, \mref{mHM}) - [Maged, Mohammed, Jinal]
+\item Designing and create system hardware (\mref{mSR}, \mref{mIC}, \mref{mIU}) - [Team]
+\item Create CI/CD and automated testing using GitHub Actions and the appropriate testing libraries for each component. Generate unit and integration tests. - [Mohammed]
+\item Perform usability testing - [Team]
+\end{itemize}
+\item \textbf{Week 9 - 10:} {Mar 11 - Mar 24, 2025}
+\begin{itemize}
+\item Apply feedback from usability testing to finalize UI/UX. - [Team]
+\item Implement \mref{mRL} so the cleanliness management system can receive input from the hardware system. - [Maged, Mohammed, Jinal]
+\item All 3 systems (user application, cleanliness management system, and hardware system), should be completed by the end of this period.
+\end{itemize}
+\item \textbf{Week 11 - 12:} {Mar 25 - Apr 7, 2025}
+\begin{itemize}
+\item Perform acceptance tests on the system. - [Team]
+\item Prepare demo examples and showcase. - [Team]
+\item Patch bugs detected from tests and do refinements based on user and stakeholder feedback. - [Team]
+\end{itemize}
+\end{itemize}
 
-\wss{Schedule of tasks and who is responsible}
-
-\wss{You can point to GitHub if this information is included there}
+\newpage{}
 
 \bibliographystyle {plainnat}
 \bibliography{../../../refs/References}
 
-\newpage{}
 
 \end{document}
