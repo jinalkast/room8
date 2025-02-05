@@ -40,7 +40,9 @@ export default function LoansTable() {
         {bills &&
           bills.map((bill: TBill) => (
             <TableRow key={bill.bill_id}>
-              <TableCell className="font-medium">{bill.bill_name}</TableCell>
+              <TableCell>
+                {bill.bill_name || <span className="text-muted-foreground">Untitled Debt</span>}
+              </TableCell>
               <TableCell>${bill.sum_paid_back.toFixed(2)}</TableCell>
               <TableCell>${bill.total_owed.toFixed(2)}</TableCell>
               <Modal

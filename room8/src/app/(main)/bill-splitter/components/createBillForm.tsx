@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useRoommates from '@/hooks/useRoommates';
 import UserSkeleton from '@/components/userSkeleton';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -28,12 +28,17 @@ import { Currency, DollarSign, XIcon } from 'lucide-react';
 import LoadingSpinner from '@/components/loading';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import { cn } from '@/lib/utils';
 
 export default function CreateBillForm({ closeBillModal }: { closeBillModal: () => void }) {
-  const { data: user, status: userStatus } = useUser();
-  const { data: roommates, status: roommatesStatus } = useRoommates();
   const queryClient = useQueryClient();
   const { toast } = useToast();
+
+  const [roommatesSelected, setRoommatesSelected] = useState<string[]>([]);
+
+  const { data: user, status: userStatus } = useUser();
+  const { data: roommates, status: roommatesStatus } = useRoommates();
+
   const postBillMutation = usePostBill({
     onSuccessCallback: () => {
       toast({
@@ -61,15 +66,76 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
     }
   });
 
+  useEffect(() => {
+    if (roommates && user) {
+      setRoommatesSelected(roommates.map((roommate) => roommate.id));
+    }
+  }, [roommates, user]);
+
   const splitBillEqually = () => {
     const newOwes = new Map();
     const billAmount = form.getValues('amount');
-    for (const roommate of roommates!) {
-      if (roommate.id !== user!.id) {
-        newOwes.set(roommate.id, parseFloat((billAmount / roommates!.length).toFixed(2)));
+    const selectedRoommates = roommatesSelected.length;
+    const splitAmount = parseFloat((billAmount / selectedRoommates).toFixed(2));
+
+    for (const roommateId of roommatesSelected) {
+      newOwes.set(roommateId, splitAmount);
+    }
+
+    console.log(newOwes);
+    form.setValue('owes', newOwes);
+  };
+
+  const splitBillEquallyExcludeMe = () => {
+    const newOwes = new Map();
+    const billAmount = form.getValues('amount');
+    const allRoommates = roommates?.map((roommate) => roommate.id) || [];
+    const selectedRoommates = allRoommates.filter((id) => id !== user?.id);
+    const splitAmount = parseFloat((billAmount / selectedRoommates.length).toFixed(2));
+
+    for (const roommateId of selectedRoommates) {
+      newOwes.set(roommateId, splitAmount);
+    }
+
+    console.log(newOwes);
+    form.setValue('owes', newOwes);
+    setRoommatesSelected(selectedRoommates);
+  };
+
+  const splitBillHalfAndHalf = () => {
+    const newOwes = new Map();
+    const billAmount = form.getValues('amount');
+    const halfAmount = parseFloat((billAmount / 2).toFixed(2));
+    const remainingAmount = billAmount - halfAmount;
+    const selectedRoommates = roommatesSelected.filter((id) => id !== user?.id).length;
+    const splitAmount = parseFloat((remainingAmount / selectedRoommates).toFixed(2));
+
+    if (user?.id) {
+      newOwes.set(user.id, halfAmount);
+    }
+
+    for (const roommateId of roommatesSelected) {
+      if (roommateId !== user?.id) {
+        newOwes.set(roommateId, splitAmount);
       }
     }
+
     console.log(newOwes);
+    form.setValue('owes', newOwes);
+    if (user?.id && !roommatesSelected.includes(user.id)) {
+      setRoommatesSelected([...roommatesSelected, user.id]);
+    }
+  };
+
+  const clearAll = () => {
+    const newOwes = new Map();
+    if (roommates) {
+      const allRoommates = roommates.map((roommate) => roommate.id);
+      setRoommatesSelected(allRoommates);
+      for (const roommateId of allRoommates) {
+        newOwes.set(roommateId, 0);
+      }
+    }
     form.setValue('owes', newOwes);
   };
 
@@ -80,7 +146,27 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((values) => postBillMutation.mutate(values))}
+        onSubmit={form.handleSubmit((values) => {
+          const totalAmount = values.amount;
+          const owes = values.owes;
+          let sum = 0;
+
+          owes.forEach((amount) => {
+            sum += amount;
+          });
+
+          const roundingError = Math.abs(totalAmount - sum);
+
+          if (roundingError > 1) {
+            toast({
+              title: 'Error',
+              description: 'The amounts do not add up to the total value. Please check the values.'
+            });
+            return;
+          }
+
+          postBillMutation.mutate(values);
+        })}
         className="space-y-6 pb-4">
         <FormField
           control={form.control}
@@ -128,18 +214,26 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
               {roommates && user && (
                 <FormControl>
                   <div className="space-y-4">
-                    {roommates!.map((roommate, index) =>
-                      roommate.id !== user!.id ? (
+                    {roommates!.map((roommate, index) => {
+                      const thisRoommateSelected = roommatesSelected.includes(roommate.id);
+
+                      return (
                         <div className="flex gap-2 items-center justify-between" key={index}>
                           <Avatar className="h-8 w-8">
-                            <AvatarImage src={roommate.imageUrl} />
+                            <AvatarImage
+                              className={cn(!thisRoommateSelected && 'opacity-30')}
+                              src={roommate.imageUrl}
+                            />
                           </Avatar>
-                          <p>{roommate.name}</p>
+                          <p className={cn(!thisRoommateSelected && 'opacity-30')}>
+                            {roommate.name}
+                          </p>
                           <div className="flex gap-2 items-center ml-auto">
-                            <DollarSign />
+                            <DollarSign className={cn(!thisRoommateSelected && 'opacity-30')} />
                             <Input
                               className="w-24"
                               autoComplete={'off'}
+                              disabled={!thisRoommateSelected}
                               type="number"
                               min={0}
                               step={0.01}
@@ -162,10 +256,25 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                               }}
                             />
                           </div>
-                          <Checkbox checked={true} onCheckedChange={() => {}} className="h-8 w-8" />
+                          <Checkbox
+                            checked={thisRoommateSelected}
+                            onCheckedChange={() => {
+                              if (thisRoommateSelected) {
+                                setRoommatesSelected(
+                                  roommatesSelected.filter((id) => id !== roommate.id)
+                                );
+                                const updatedOwes = new Map(field.value);
+                                updatedOwes.delete(roommate.id);
+                                form.setValue('owes', updatedOwes);
+                              } else {
+                                setRoommatesSelected([...roommatesSelected, roommate.id]);
+                              }
+                            }}
+                            className="h-8 w-8"
+                          />
                         </div>
-                      ) : null
-                    )}
+                      );
+                    })}
                   </div>
                 </FormControl>
               )}
@@ -182,7 +291,7 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                   <Button
                     onClick={(e) => {
                       e.preventDefault();
-                      splitBillEqually();
+                      splitBillEquallyExcludeMe();
                     }}
                     className="flex-1">
                     Exclude Me
@@ -190,10 +299,18 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                   <Button
                     onClick={(e) => {
                       e.preventDefault();
-                      splitBillEqually();
+                      splitBillHalfAndHalf();
                     }}
                     className="flex-1">
                     Half & Half
+                  </Button>
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      clearAll();
+                    }}
+                    className="flex-1">
+                    Clear
                   </Button>
                 </div>
               </div>

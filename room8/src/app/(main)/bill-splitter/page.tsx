@@ -50,6 +50,7 @@ export default function BillSplitterPage() {
                 </TabsList>
                 <Modal
                   open={isModelOpen}
+                  className="min-w-[600px]"
                   onOpenChange={setIsModelOpen}
                   title={'Create Bill'}
                   trigger={
