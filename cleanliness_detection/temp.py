@@ -140,8 +140,8 @@ class CleanlinessDetector:
     """Pixel-wise image differencing to return a binary mask of change regions"""
     def frame_diff(self, before: np.array, after: np.array, min_area:int = 100, display: bool = False) -> np.array:
         # Convert to grayscale
-        gray1 = cv2.cvtColor(before, cv2.COLOR_BGR2GRAY)
-        gray2 = cv2.cvtColor(after, cv2.COLOR_BGR2GRAY)
+        gray1 = cv2.cvtColor(np.array(before), cv2.COLOR_BGR2GRAY)
+        gray2 = cv2.cvtColor(np.array(after), cv2.COLOR_BGR2GRAY)
 
         # Compute absolute difference
         diff = cv2.absdiff(gray1, gray2)
@@ -170,23 +170,37 @@ class CleanlinessDetector:
 
         return mask
     
-
+    """ok"""
     def combine_image_mask(self, before_img: Image, after_img: Image, display: bool = False) -> [Image, Image]:
         mask = self.frame_diff(before_img, after_img, min_area=200)
-        mask = mask[:, :, :3] 
-        before_img = before_img[:, :, :3]  
-        after_img = after_img[:, :, :3]  
+        mask = Image.fromarray(np.uint8(mask)).convert('RGB')
+
+        # Convert PIL images to NumPy arrays
+        before_img = np.array(before_img.convert("RGB"))
+        after_img = np.array(after_img.convert("RGB"))
+        mask = np.array(mask)
+
+        # Convert RGB to BGR for OpenCV processing
+        before_img = cv2.cvtColor(before_img, cv2.COLOR_RGB2BGR)
+        after_img = cv2.cvtColor(after_img, cv2.COLOR_RGB2BGR)
+        mask = cv2.cvtColor(mask, cv2.COLOR_RGB2BGR)  
+
+        # Apply the mask
         before_img = cv2.bitwise_and(before_img, mask)
         after_img = cv2.bitwise_and(after_img, mask)
-        if display:
-            cv2.imshow("before_mask", before_img)
-            cv2.setWindowTitle('before_mask', 'Before') 
-            cv2.waitKey(0)
 
-            cv2.imshow("after_mask", after_img)
-            cv2.setWindowTitle('after_mask', 'After') 
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+        # Convert BGR back to RGB
+        before_img = cv2.cvtColor(before_img, cv2.COLOR_BGR2RGB)
+        after_img = cv2.cvtColor(after_img, cv2.COLOR_BGR2RGB)
+
+        # Convert back to PIL
+        before_img = Image.fromarray(before_img)
+        after_img = Image.fromarray(after_img)
+
+        # Display if required
+        if display:
+            before_img.show(title="Before Mask")
+            after_img.show(title="After Mask")
 
         return [before_img, after_img]
 
@@ -363,7 +377,7 @@ if __name__=="__main__":
     before_img = Image.open("cleanliness_detection/samples/1/before.png")
     after_img = Image.open("cleanliness_detection/samples/1/after.png")
 
-    [before_mask, after_mask] = cd.combine_image_mask(np.array(before_img), np.array(after_img), display=True)
+    [before_mask, after_mask] = cd.combine_image_mask(before_img, after_img, display=True)
 
     # added, removed, moved = cd.calculate_difference(before_img, after_img)
     # added = [obj.class_name for obj in added]
