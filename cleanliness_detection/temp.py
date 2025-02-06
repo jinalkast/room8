@@ -11,32 +11,38 @@ from sklearn.neighbors import NearestNeighbors
 from pathlib import Path
 from datetime import datetime
 import csv
-import detectron2
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
 from detectron2 import model_zoo
 from detectron2.structures import Instances
 from detectron2.utils.visualizer import Visualizer
 from detectron2.data import MetadataCatalog
+from torchvision.models.detection import fasterrcnn_resnet50_fpn
 
 
-CONF_THRESH = 0.5                                                                           # min confidence for object detector
+CONF_THRESH = 0.3                                                                           # min confidence for object detector
 DIST_THRESH = 15                                                                            # max number of pixels for object that moved slightly to still be considered in same spot                                                                     #
 IOU_THRESH = 0.8                                                                            # min IOU threshold for object to be considered in same spot
 # Faster R-CNN is trained on COCO dataset
-COCO_LABELS = {
-    0: "person", 1: "bicycle", 2: "car", 3: "motorcycle", 4: "airplane", 5: "bus", 6: "train", 7: "truck", 8: "boat",
-    9: "traffic light", 10: "fire hydrant", 11: "stop sign", 12: "parking meter", 13: "bench", 14: "bird", 15: "cat", 
-    16: "dog", 17: "horse", 18: "sheep", 19: "cow", 20: "elephant", 21: "bear", 22: "zebra", 23: "giraffe", 24: "backpack", 
-    25: "umbrella", 26: "handbag", 27: "tie", 28: "suitcase", 29: "frisbee", 30: "skis", 31: "snowboard", 32: "sports ball", 
-    33: "kite", 34: "baseball bat", 35: "baseball glove", 36: "skateboard", 37: "surfboard", 38: "tennis racket", 39: "bottle", 
-    40: "wine glass", 41: "cup", 42: "fork", 43: "knife", 44: "spoon", 45: "bowl", 46: "banana", 47: "apple", 48: "sandwich", 
-    49: "orange", 50: "broccoli", 51: "carrot", 52: "hot dog", 53: "pizza", 54: "donut", 55: "cake", 56: "chair", 57: "couch", 
-    58: "potted plant", 59: "bed", 60: "dining table", 61: "toilet", 62: "TV", 63: "laptop", 64: "mouse", 65: "remote", 
-    66: "keyboard", 67: "cell phone", 68: "microwave", 69: "oven", 70: "toaster", 71: "sink", 72: "refrigerator", 73: "book", 
-    74: "clock", 75: "vase", 76: "scissors", 77: "teddy bear", 78: "hair drier", 79: "toothbrush"
+COCO_LABELS = {                                                                             # COCO class label mapping
+    1: "person", 2: "bicycle", 3: "car", 4: "motorcycle", 5: "airplane",
+    6: "bus", 7: "train", 8: "truck", 9: "boat", 10: "traffic light",
+    11: "fire hydrant", 13: "stop sign", 14: "parking meter", 15: "bench",
+    16: "bird", 17: "cat", 18: "dog", 19: "horse", 20: "sheep",
+    21: "cow", 22: "elephant", 23: "bear", 24: "zebra", 25: "giraffe",
+    27: "backpack", 28: "umbrella", 31: "handbag", 32: "tie", 33: "suitcase",
+    34: "frisbee", 35: "skis", 36: "snowboard", 37: "sports ball", 38: "kite",
+    39: "baseball bat", 40: "baseball glove", 41: "skateboard", 42: "surfboard", 43: "tennis racket",
+    44: "bottle", 46: "wine glass", 47: "cup", 48: "fork", 49: "knife",
+    50: "spoon", 51: "bowl", 52: "banana", 53: "apple", 54: "sandwich",
+    55: "orange", 56: "broccoli", 57: "carrot", 58: "hot dog", 59: "pizza",
+    60: "donut", 61: "cake", 62: "chair", 63: "couch", 64: "potted plant",
+    65: "bed", 67: "dining table", 70: "toilet", 72: "TV", 73: "laptop",
+    74: "mouse", 75: "remote", 76: "keyboard", 77: "cell phone", 78: "microwave",
+    79: "oven", 80: "toaster", 81: "sink", 82: "refrigerator", 84: "book",
+    85: "clock", 86: "vase", 87: "scissors", 88: "teddy bear", 89: "hair drier",
+    90: "toothbrush"
 }
-
 
 SCORE_WEIGHTS = {
     "person": [0, 0, 0], "bicycle": [0, 0, 0], "car": [0, 0, 0], "motorcycle": [0, 0, 0], "airplane": [0, 0, 0],
@@ -128,6 +134,8 @@ class CleanlinessDetector:
 
         # Create predictor
         self.model = DefaultPredictor(self.cfg)                                                               # set to evaluation mode
+        self.model = fasterrcnn_resnet50_fpn(pretrained=True)
+        self.model.eval()
         self.transform = T.Compose([T.ToTensor()])                                           # function to convert to tensor
 
     """Convert image to tensor"""
@@ -136,54 +144,74 @@ class CleanlinessDetector:
         tsr = tsr[:, :3, :, :]                          # only keep RGB channels
         return tsr
     
-    # """Handles click event to remove detected objects."""    
-    # def onclick(self, event, objects):
-    #     for obj in objects:
-    #         x1, y1, x2, y2 = obj.bbox
-    #         if x1 <= event.xdata <= x2 and y1 <= event.ydata <= y2:
-    #             self.removed_objects.add(tuple(obj.bbox))  # Track by bounding box
-    #             print(f"Removed: {obj.class_name} at {obj.bbox}")
-    #             break  # Stop after the first match
 
     """Pixel-wise image differencing to return a binary mask of change regions"""
-    def frame_diff(self, before: np.array, after: np.array, display: bool = False) -> np.array:
+    def frame_diff(self, before: np.array, after: np.array, min_area:int = 100, display: bool = False) -> np.array:
         # Convert to grayscale
-        gray1 = cv2.cvtColor(before, cv2.COLOR_BGR2GRAY)
-        gray2 = cv2.cvtColor(after, cv2.COLOR_BGR2GRAY)
+        gray1 = cv2.cvtColor(np.array(before), cv2.COLOR_BGR2GRAY)
+        gray2 = cv2.cvtColor(np.array(after), cv2.COLOR_BGR2GRAY)
 
         # Compute absolute difference
         diff = cv2.absdiff(gray1, gray2)
 
-        # Threshold the difference to create a binary mask (255 for change, 0 for no change)
-        _, mask = cv2.threshold(diff, 30, 255, cv2.THRESH_BINARY)
+        # Threshold the difference to create a binary mask
+        _, binary_mask = cv2.threshold(diff, 30, 255, cv2.THRESH_BINARY)
 
-        # Convert grayscale mask to 3-channel (for direct use in bitwise_and)
-        mask = cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
+        # Find contours in the binary mask
+        contours, _ = cv2.findContours(binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        # Create a blank mask of the same size as the input image, with 3 channels
+        mask = np.zeros_like(before, dtype=np.uint8)
+
+        # Draw filled rectangles based on contours
+        for contour in contours:
+            x, y, w, h = cv2.boundingRect(contour)
+            area = w * h
+            if area >= min_area:  # Ignore small changes based on area threshold
+                cv2.rectangle(mask, (x, y), (x + w, y + h), (255, 255, 255), thickness=cv2.FILLED)
 
         # Display frame differencing results
         if display:
-            cv2.imshow("Binary Mask", mask)
+            cv2.imshow("Rectangular Mask", mask)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 
-        return mask 
+        return mask
     
+    """ok"""
+    def combine_image_mask(self, before_img: Image, after_img: Image, display: bool = False) -> [Image, Image]:
+        mask = self.frame_diff(before_img, after_img, min_area=200)
+        mask = Image.fromarray(np.uint8(mask)).convert('RGB')
 
-    def combine_image_mask(self, before_img: Image, after_img: Image, display: bool = False) -> list:
-        mask = self.frame_diff(before_img, after_img)
-        before_img = before_img[:, :, :3]  
-        after_img = after_img[:, :, :3]  
+        # Convert PIL images to NumPy arrays
+        before_img = np.array(before_img.convert("RGB"))
+        after_img = np.array(after_img.convert("RGB"))
+        mask = np.array(mask)
+
+        # Convert RGB to BGR for OpenCV processing
+        before_img = cv2.cvtColor(before_img, cv2.COLOR_RGB2BGR)
+        after_img = cv2.cvtColor(after_img, cv2.COLOR_RGB2BGR)
+        mask = cv2.cvtColor(mask, cv2.COLOR_RGB2BGR)  
+
+        kernel = np.ones((5,5), np.uint8)
+        mask = cv2.dilate(mask, kernel, iterations=2)
+
+        # Apply the mask
         before_img = cv2.bitwise_and(before_img, mask)
         after_img = cv2.bitwise_and(after_img, mask)
-        if display:
-            cv2.imshow("before_mask", before_img)
-            cv2.setWindowTitle('before_mask', 'Before') 
-            cv2.waitKey(0)
 
-            cv2.imshow("after_mask", after_img)
-            cv2.setWindowTitle('after_mask', 'After') 
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+        # Convert BGR back to RGB
+        before_img = cv2.cvtColor(before_img, cv2.COLOR_BGR2RGB)
+        after_img = cv2.cvtColor(after_img, cv2.COLOR_BGR2RGB)
+
+        # Convert back to PIL
+        before_img = Image.fromarray(before_img)
+        after_img = Image.fromarray(after_img)
+
+        # Display if required
+        if display:
+            before_img.show(title="Before Mask")
+            after_img.show(title="After Mask")
 
         return [before_img, after_img]
 
@@ -207,7 +235,6 @@ class CleanlinessDetector:
         metadata = MetadataCatalog.get(self.cfg.DATASETS.TRAIN[0])
         class_names = metadata.get("thing_classes", None)
 
-        extracted_objects = []
         house_objects = []
         
         for i, (box, class_id) in enumerate(zip(boxes, classes)):
@@ -217,6 +244,24 @@ class CleanlinessDetector:
             house_objects.append(HouseObject(label=class_id, bbox=[x1, y1, x2, y2], mask=mask))
 
         return house_objects
+    
+    def detect_objects2(self, img: Image, display=False) -> list[HouseObject]:
+        img = self.process_image(img)   #convert to tensor
+        with torch.no_grad():
+            predictions = self.model(img)
+
+        bboxes = predictions[0]['boxes']                # (x1, y1, x2, y2) for each detection
+        labels = predictions[0]['labels']               # COCO class #
+        scores = predictions[0]['scores']               # confidence score
+        objects = []
+        # only consider predictions for objects over the confidence threshold
+        for i, box in enumerate(bboxes):
+            if scores[i].item() > CONF_THRESH:
+                objects.append(HouseObject(labels[i].item(), [b.item() for b in box]))
+        if(display):
+            self.display_image(img, objects)
+        return objects
+
 
     
     """Find all objects in 2 images and identify what was added, removed, and moved"""
@@ -269,65 +314,7 @@ class CleanlinessDetector:
             moved.append([before_matches, after_matches])
 
         return added, removed, moved
-    
-    def calculate_difference2(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
-        objects_before, objects_after, centroids_before, centroids_after, added, removed, moved = [], [], [], [], [], [], []
-        changed_regions = self.frame_diff(np.array(before_img), np.array(after_img))
-        before_img_arr = np.array(before_img)
-        after_img_arr = np.array(after_img)
-        for rect in changed_regions:
-            before_crop = Image.fromarray(before_img_arr[rect[1]:rect[1]+rect[3], rect[0]:rect[0]+rect[2]])
-            after_crop = Image.fromarray(after_img_arr[rect[1]:rect[1]+rect[3], rect[0]:rect[0]+rect[2]])
-            objects_before_subset = self.detect_objects(before_crop)
-            objects_after_subset = self.detect_objects(after_crop)
-            #for obj in objects_before_subset: objects_before.append[obj]
-            [objects_before.append(obj) for obj in objects_before_subset]
-            [objects_after.append(obj) for obj in objects_after_subset]
-            [centroids_before.append([obj.centroid[0]+rect[0], obj.centroid[1] + rect[1]]) for obj in objects_before]
-            [centroids_after.append([obj.centroid[0]+rect[0], obj.centroid[1] + rect[1]]) for obj in objects_after]
 
-        nbrs = NearestNeighbors(n_neighbors=1).fit(centroids_before)
-        dists, inds = nbrs.kneighbors(centroids_after)
-
-        objects_before_cp = objects_before.copy()
-        objects_after_cp = objects_after.copy()
-
-        # case 1: object didn't move (disregard these objects)
-        for obj2, dist, idx in zip(objects_after_cp, dists, inds):
-            obj1 = objects_before_cp[idx[0]]
-            if dist <= DIST_THRESH and obj1.iou(obj2) > IOU_THRESH and obj1.class_num == obj2.class_num:
-                objects_before.remove(obj1)
-                objects_after.remove(obj2)
-
-        # case 2: object was added to scene
-        objects_after_cp = objects_after.copy()
-        objects_before_classes = [obj.class_num for obj in objects_before]
-
-        for obj in objects_after_cp:
-            if obj.class_num not in objects_before_classes:
-                added.append(obj)
-                objects_after.remove(obj)
-
-        # case 3: object removed from scene
-        objects_before_cp = objects_before.copy()
-        objects_after_classes = [obj.class_num for obj in objects_after]
-
-        for obj in objects_before_cp:
-            if obj.class_num not in objects_after_classes:
-                removed.append(obj)
-                objects_before.remove(obj)
-
-        # case 4: object moved
-        objects_before_classes = [obj.class_num for obj in objects_before]
-        objects_after_classes = [obj.class_num for obj in objects_after]
-        
-        moved_class_nums = list(set(objects_before_classes) & set(objects_after_classes))
-        for n in moved_class_nums:
-            before_matches = [obj for obj in objects_before if obj.class_num == n]
-            after_matches = [obj for obj in objects_after if obj.class_num == n]
-            moved.append([before_matches, after_matches])
-
-        return added, removed, moved
 
     """Scoring algorithm"""
     def calculate_cleanliness_score(self, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> float:
@@ -462,7 +449,7 @@ if __name__ == "__main__":
     before_img = Image.open("cleanliness_detection/samples/1/before.png")
     after_img = Image.open("cleanliness_detection/samples/1/after.png")
 
-    [before_mask, after_mask] = cd.combine_image_mask(np.array(before_img), np.array(after_img), display=False)
+    [before_mask, after_mask] = cd.combine_image_mask(before_img, after_img, display=True)
 
     # Detect objects in the before and after images
     objects_before = cd.detect_objects(before_mask)
@@ -483,22 +470,17 @@ if __name__ == "__main__":
     removed_names = [obj.class_name for obj in removed]
     moved_names = [obj[0][0].class_name for obj in moved]
 
-    # Convert object IDs to class names
-    before_names = [before_id_to_name[obj] for obj in objects_before]
-    after_names = [after_id_to_name[obj] for obj in objects_after]
+    # cleanliness_score = cd.calculate_cleanliness_score(added, removed, moved)
 
-    # Calculate the objects_changed list using class names
-    objects_changed_names = [x for x in after_names if x not in before_names]
+    # print("Objects added: " + ", ".join(added))
+    # print("Objects removed: " + ", ".join(removed))
+    # print("Objects moved: " + ", ".join(moved))
 
-    # Convert the class names back to object IDs using the after_name_to_id dictionary
-    objects_changed_ids = [after_name_to_id[name] for name in objects_changed_names]
+    # print(f"Cleanliness score for this iteration is: {cleanliness_score}")
 
-    # Annotate the before and after images
-    before_fig = cd.annotate_image(before_img, objects_before, True)
-    after_fig = cd.annotate_image(after_img, objects_after, True)
-
-    # Annotate the changes in the after image using the object IDs
-    changes_fig = cd.annotate_changes(after_img, objects_changed_ids, moved, True)
-
-    # Export the results
-    cd.export_results(before_fig, after_fig, changes_fig, added_names, removed_names, moved_names)
+    objects_before = cd.detect_objects2(before_mask)
+    before_img = cd.annotate_image(before_img, objects_before, True)
+    objects_after = cd.detect_objects2(after_mask)
+    after_img = cd.annotate_image(after_img, objects_after, True)
+    added,removed,moved=[],[],[]
+    cd.export_results(before_img, after_img, added, removed, moved)
