@@ -1,8 +1,12 @@
+import { getUserHouseId } from '@/lib/services';
 import { supabaseServer } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
+    const houseId = await getUserHouseId();
+    if (!houseId) throw new Error('User does not have a house');
+
     const supabase = await supabaseServer();
 
     const { data: completedChores, error } = await supabase
@@ -25,11 +29,13 @@ export async function GET(req: NextRequest) {
             id,
             title,
             description,
-            time
+            time,
+            house_id
           )
         )
       `
       )
+      .eq('chore.chores.house_id', houseId)
       .order('created_at', { ascending: false });
 
     if (error) {
