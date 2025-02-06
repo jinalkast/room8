@@ -23,7 +23,7 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { TCleanlinessLog } from '@/lib/types';
-import CleanlinessDetailsModal from '@/app/(main)/cleanlinessManager/components/cleanlinessDetailsModal';
+import CleanlinessDetailsModal from './components/cleanlinessDetailsModal';
 
 export default function CleanlinessManagerPage() {
   const { data: houseData, error: getHouseError } = useGetHouse();
@@ -37,21 +37,26 @@ export default function CleanlinessManagerPage() {
       <div className="w-[40vw] flex flex-col">
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Most Recent Event {(cleanlinessLogs && cleanlinessLogs.length > 0) ? `- ${new Date(cleanlinessLogs[0].created_at).toLocaleString('en-US', {
-                            weekday: 'long',
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            hour: 'numeric',
-                            minute: '2-digit'
-                          })}` : ''}</CardTitle>
-            <CardDescription>Here's what just happened at home!</CardDescription>
+            <CardTitle>
+              Most Recent Event{' '}
+              {cleanlinessLogs && cleanlinessLogs.length > 0
+                ? `- ${new Date(cleanlinessLogs[0].created_at).toLocaleString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit'
+                  })}`
+                : ''}
+            </CardTitle>
+            <CardDescription>Here&apos;s what just happened at home!</CardDescription>
           </CardHeader>
           <CardContent>
             {!cleanlinessLogs ? (
               <LoadingSpinner />
             ) : cleanlinessLogs.length > 0 ? (
-              <div className='flex gap-4'>
+              <div className="flex gap-4">
                 <Image
                   alt="before image of your shared space"
                   width={200}
@@ -80,7 +85,9 @@ export default function CleanlinessManagerPage() {
               <LoadingSpinner />
             ) : (
               <Table className="mt-4 overflow-y-auto">
-                <TableCaption>Past events in your shared living space. Does not include most recent event</TableCaption>
+                <TableCaption>
+                  Past events in your shared living space. Does not include most recent event
+                </TableCaption>
                 <TableHeader>
                   <TableRow>
                     <TableHead>Date</TableHead>

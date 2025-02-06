@@ -7,7 +7,6 @@ export const fetchCleanlinessLogs = async (houseID: string): Promise<TCleanlines
   const res = await fetch(`/api/cleanliness?` + searchParams.toString(), {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
-    
   });
 
   if (!res.ok) {

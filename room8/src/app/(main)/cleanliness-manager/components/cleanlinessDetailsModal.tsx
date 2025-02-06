@@ -29,19 +29,19 @@ function CleanlinessDetailsModal({ cleanlinessLog }: props) {
         </DialogClose>
       }>
       <div>
-          <Image
-            alt="before image of your shared space"
-            width={200}
-            height={200}
-            src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/cleanliness_images/${cleanlinessLog.before_image_url}`}
-          />
-          <Image
-            alt="after image of your shared space"
-            width={200}
-            height={200}
-            src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/cleanliness_images/${cleanlinessLog.after_image_url}`}
-          />
-          Algo output: {cleanlinessLog.algorithm_output?.toString()}
+        <Image
+          alt="before image of your shared space"
+          width={200}
+          height={200}
+          src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/cleanliness_images/${cleanlinessLog.before_image_url}`}
+        />
+        <Image
+          alt="after image of your shared space"
+          width={200}
+          height={200}
+          src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/cleanliness_images/${cleanlinessLog.after_image_url}`}
+        />
+        Algo output: {cleanlinessLog.algorithm_output?.toString()}
       </div>
     </Modal>
   );
