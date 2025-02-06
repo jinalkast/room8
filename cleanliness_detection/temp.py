@@ -20,7 +20,7 @@ from detectron2.data import MetadataCatalog
 from torchvision.models.detection import fasterrcnn_resnet50_fpn
 
 
-CONF_THRESH = 0.5                                                                           # min confidence for object detector
+CONF_THRESH = 0.3                                                                           # min confidence for object detector
 DIST_THRESH = 15                                                                            # max number of pixels for object that moved slightly to still be considered in same spot                                                                     #
 IOU_THRESH = 0.8                                                                            # min IOU threshold for object to be considered in same spot
 # Faster R-CNN is trained on COCO dataset
