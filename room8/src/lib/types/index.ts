@@ -1,6 +1,6 @@
 import { Database, Tables } from './supabase';
 
-export type THabitDB = Tables<'activities'>;
+export type THabitDB = Tables<'chores'>;
 export type TBillDB = Tables<'bills'>;
 export type TOweDB = Tables<'owes'>;
 export type TAmountOwedDB = Tables<'amounts_owed'>;
