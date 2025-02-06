@@ -31,6 +31,7 @@ export default function useUpdateCompletedChore() {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['activities'] });
+      queryClient.invalidateQueries({ queryKey: ['all-completed-chores'] });
       queryClient.invalidateQueries({ queryKey: ['completed-chores', variables.id] });
       toast({
         title: 'Success!',
