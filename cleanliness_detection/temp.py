@@ -136,6 +136,14 @@ class CleanlinessDetector:
         tsr = tsr[:, :3, :, :]                          # only keep RGB channels
         return tsr
     
+    # """Handles click event to remove detected objects."""    
+    # def onclick(self, event, objects):
+    #     for obj in objects:
+    #         x1, y1, x2, y2 = obj.bbox
+    #         if x1 <= event.xdata <= x2 and y1 <= event.ydata <= y2:
+    #             self.removed_objects.add(tuple(obj.bbox))  # Track by bounding box
+    #             print(f"Removed: {obj.class_name} at {obj.bbox}")
+    #             break  # Stop after the first match
 
     """Pixel-wise image differencing to return a binary mask of change regions"""
     def frame_diff(self, before: np.array, after: np.array, display: bool = False) -> np.array:
@@ -161,7 +169,7 @@ class CleanlinessDetector:
         return mask 
     
 
-    def combine_image_mask(self, before_img: Image, after_img: Image, display: bool = False) -> [Image, Image]:
+    def combine_image_mask(self, before_img: Image, after_img: Image, display: bool = False) -> list:
         mask = self.frame_diff(before_img, after_img)
         before_img = before_img[:, :, :3]  
         after_img = after_img[:, :, :3]  
@@ -362,11 +370,54 @@ class CleanlinessDetector:
         axarr = f.add_subplot(1,1,1)
         if display:
             axarr.imshow(img_rgb)
+            cv2.imshow("Annotated Image", img_rgb)
+            cv2.waitKey(0)
+        axarr.axis('off')  # Hide axis
+        return f
+    
+    def annotate_changes(self, img: Image, added: list[HouseObject], moved: list[HouseObject], display=False) -> plt.figure:
+        """Draw boxes around the changes (added, moved objects)"""
+        # Convert PIL.Image to a NumPy array with dtype=uint8
+        img_np = np.array(img)
+        if img_np.dtype != np.uint8:
+            img_np = img_np.astype(np.uint8)
+        
+        # Convert RGB to BGR for OpenCV
+        img = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
+        overlay = img.copy()
+
+        # Combine all changes into one list
+        changes = added.copy()  # Start with added objects
+        for move in moved:
+            changes.extend(move[1])  # Add the after objects from moved pairs
+
+        # Ensure all objects in changes are HouseObject instances
+        for obj in changes:
+            if not isinstance(obj, HouseObject):
+                raise ValueError(f"Expected HouseObject, got {type(obj)}: {obj}")
+
+            x1, y1, x2, y2 = obj.bbox
+            
+            # Draw bounding box
+            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(img, obj.class_name, (x1, y1 - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        
+        # Blend overlay with original image
+        img = cv2.addWeighted(overlay, 0.6, img, 0.4, 0)
+        
+        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        f = plt.figure()
+        axarr = f.add_subplot(1,1,1)
+        if display:
+            axarr.imshow(img_rgb)
+            cv2.imshow("Changes Annotated Image", img_rgb)
+            cv2.waitKey(0)
         axarr.axis('off')  # Hide axis
         return f
 
     """Exporting annotated before/after images and csv file to export_results folder"""
-    def export_results(self, before_fig: plt.figure, after_fig: plt.figure, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]):
+    def export_results(self, before_fig: plt.figure, after_fig: plt.figure, changes_fig: plt.figure, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]):
         FORMATTED_DATETIME = datetime.now().strftime("%Y-%m-%d %Hh-%Mm-%Ss")
 
         # Path and making folder
@@ -375,6 +426,7 @@ class CleanlinessDetector:
 
         before_fig.savefig(FOLDER_PATH / 'before.svg', format='svg', dpi=1200)
         after_fig.savefig(FOLDER_PATH / 'after.svg', format='svg', dpi=1200)
+        changes_fig.savefig(FOLDER_PATH / 'changes.svg', format='svg', dpi=1200)
 
         # Writing to the CSV
         csv_path = FOLDER_PATH / "results.csv"
@@ -404,30 +456,49 @@ class CleanlinessDetector:
                 # Write row
                 writer.writerow([added_obj, removed_obj, moved_obj, total_score])
 
-if __name__=="__main__":
+if __name__ == "__main__":
     cd = CleanlinessDetector()
     # Process images
     before_img = Image.open("cleanliness_detection/samples/1/before.png")
     after_img = Image.open("cleanliness_detection/samples/1/after.png")
 
-    [before_mask, after_mask] = cd.combine_image_mask(np.array(before_img), np.array(after_img), display=True)
+    [before_mask, after_mask] = cd.combine_image_mask(np.array(before_img), np.array(after_img), display=False)
 
-    # added, removed, moved = cd.calculate_difference(before_img, after_img)
-    # added = [obj.class_name for obj in added]
-    # removed = [obj.class_name for obj in removed]
-    # moved = [obj[0][0].class_name for obj in moved]
-
-    # cleanliness_score = cd.calculate_cleanliness_score(added, removed, moved)
-
-    # print("Objects added: " + ", ".join(added))
-    # print("Objects removed: " + ", ".join(removed))
-    # print("Objects moved: " + ", ".join(moved))
-
-    # print(f"Cleanliness score for this iteration is: {cleanliness_score}")
-
+    # Detect objects in the before and after images
     objects_before = cd.detect_objects(before_mask)
-    before_img = cd.annotate_image(before_img, objects_before, True)
     objects_after = cd.detect_objects(after_mask)
-    after_img = cd.annotate_image(after_img, objects_after, True)
-    added,removed,moved=[],[],[]
-    cd.export_results(before_img, after_img, added, removed, moved)
+
+    # Create dictionaries to map object IDs to class names and vice versa
+    before_id_to_name = {obj: obj.class_name for obj in objects_before}
+    after_id_to_name = {obj: obj.class_name for obj in objects_after}
+
+    before_name_to_id = {obj.class_name: obj for obj in objects_before}
+    after_name_to_id = {obj.class_name: obj for obj in objects_after}
+
+    # Calculate the differences
+    added, removed, moved = cd.calculate_difference(before_img, after_img)
+
+    # Extract class names for printing
+    added_names = [obj.class_name for obj in added]
+    removed_names = [obj.class_name for obj in removed]
+    moved_names = [obj[0][0].class_name for obj in moved]
+
+    # Convert object IDs to class names
+    before_names = [before_id_to_name[obj] for obj in objects_before]
+    after_names = [after_id_to_name[obj] for obj in objects_after]
+
+    # Calculate the objects_changed list using class names
+    objects_changed_names = [x for x in after_names if x not in before_names]
+
+    # Convert the class names back to object IDs using the after_name_to_id dictionary
+    objects_changed_ids = [after_name_to_id[name] for name in objects_changed_names]
+
+    # Annotate the before and after images
+    before_fig = cd.annotate_image(before_img, objects_before, True)
+    after_fig = cd.annotate_image(after_img, objects_after, True)
+
+    # Annotate the changes in the after image using the object IDs
+    changes_fig = cd.annotate_changes(after_img, objects_changed_ids, moved, True)
+
+    # Export the results
+    cd.export_results(before_fig, after_fig, changes_fig, added_names, removed_names, moved_names)
