@@ -18,7 +18,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 
   const supabase = await supabaseServer();
 
-  const { error } = await supabase.from('activities').delete().eq('id', id);
+  const { error } = await supabase.from('chores').delete().eq('id', id);
 
   console.log(error);
 

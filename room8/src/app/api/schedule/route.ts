@@ -9,7 +9,7 @@ export async function GET() {
     if (!houseId) throw new Error('User does not have a house');
 
     const supabase = await supabaseServer();
-    const { data, error } = await supabase.from('activities').select('*').eq('house_id', houseId);
+    const { data, error } = await supabase.from('chores').select('*').eq('house_id', houseId);
 
     if (error) throw new Error('Failed to retrieve activities data');
 
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
   console.log(title, date, description, responsible, houseId);
 
   const { data, error } = await supabase
-    .from('activities')
+    .from('chores')
     .insert([
       {
         title,

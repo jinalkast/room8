@@ -9,41 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      activities: {
-        Row: {
-          created_at: string
-          description: string | null
-          house_id: string
-          id: number
-          time: string
-          title: string
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          house_id: string
-          id?: number
-          time: string
-          title: string
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          house_id?: string
-          id?: number
-          time?: string
-          title?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "activities_house_id_fkey"
-            columns: ["house_id"]
-            isOneToOne: false
-            referencedRelation: "houses"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       bills: {
         Row: {
           created_at: string
@@ -92,6 +57,102 @@ export type Database = {
             columns: ["loaner_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chores: {
+        Row: {
+          created_at: string
+          description: string | null
+          house_id: string
+          id: number
+          time: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          house_id: string
+          id?: number
+          time: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          house_id?: string
+          id?: number
+          time?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activities_house_id_fkey"
+            columns: ["house_id"]
+            isOneToOne: false
+            referencedRelation: "houses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chores_completed: {
+        Row: {
+          created_at: string
+          id: number
+          responsible_id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          responsible_id: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          responsible_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chores_completed_responsible_id_fkey"
+            columns: ["responsible_id"]
+            isOneToOne: false
+            referencedRelation: "responsible"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cleanliness_logs: {
+        Row: {
+          after_image_url: string
+          algorithm_output: Json
+          before_image_url: string
+          created_at: string
+          house_id: string
+          id: string
+        }
+        Insert: {
+          after_image_url: string
+          algorithm_output: Json
+          before_image_url: string
+          created_at?: string
+          house_id: string
+          id: string
+        }
+        Update: {
+          after_image_url?: string
+          algorithm_output?: Json
+          before_image_url?: string
+          created_at?: string
+          house_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cleanliness_log_house_id_fkey"
+            columns: ["house_id"]
+            isOneToOne: false
+            referencedRelation: "houses"
             referencedColumns: ["id"]
           },
         ]
@@ -409,7 +470,7 @@ export type Database = {
             foreignKeyName: "responsible_activity_id_fkey"
             columns: ["activity_id"]
             isOneToOne: false
-            referencedRelation: "activities"
+            referencedRelation: "chores"
             referencedColumns: ["id"]
           },
           {

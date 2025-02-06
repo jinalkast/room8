@@ -152,13 +152,13 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
           const totalAmount = values.amount;
           const owes = values.owes;
           let sum = 0;
-          
+
           owes.forEach((amount) => {
             sum += amount;
           });
-          
+
           const roundingError = Math.abs(totalAmount - sum);
-          
+
           if (roundingError > 1) {
             toast({
               title: 'Error',
@@ -166,7 +166,7 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
             });
             return;
           }
-          
+
           owes.delete(user?.id || 'XXX'); // DELETE owe for self
           postBillMutation.mutate(values);
         })}
@@ -191,18 +191,23 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
             <FormItem>
               <FormLabel>Owed By (optional)</FormLabel>
               <FormControl>
-                <div className='flex items-center gap-2 w-full justify-between'>
+                <div className="flex items-center gap-2 w-full justify-between">
                   <DatePicker
-                    classname='w-full'
+                    classname="w-full"
                     selected={field.value}
                     onChange={(date) => field.onChange(date)}
                     onBlur={field.onBlur}
                     ref={field.ref}
                   />
-                  <Button disabled={!field.value} onClick={(event)=>{
-                    event.preventDefault();
-                    field.onChange(undefined);
-                  }} variant={'destructive'}>Clear</Button>
+                  <Button
+                    disabled={!field.value}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      field.onChange(undefined);
+                    }}
+                    variant={'destructive'}>
+                    Clear
+                  </Button>
                 </div>
               </FormControl>
               <FormMessage />

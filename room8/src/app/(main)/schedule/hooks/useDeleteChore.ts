@@ -24,6 +24,8 @@ export default function useDeleteChore() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['activities'] });
+      queryClient.invalidateQueries({ queryKey: ['all-completed-chores'] });
+      queryClient.invalidateQueries({ queryKey: ['completed-chores'] });
       toast({
         title: 'Success!',
         description: 'Chore successfully deleted'
