@@ -11,32 +11,38 @@ from sklearn.neighbors import NearestNeighbors
 from pathlib import Path
 from datetime import datetime
 import csv
-import detectron2
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
 from detectron2 import model_zoo
 from detectron2.structures import Instances
 from detectron2.utils.visualizer import Visualizer
 from detectron2.data import MetadataCatalog
+from torchvision.models.detection import fasterrcnn_resnet50_fpn
 
 
 CONF_THRESH = 0.5                                                                           # min confidence for object detector
 DIST_THRESH = 15                                                                            # max number of pixels for object that moved slightly to still be considered in same spot                                                                     #
 IOU_THRESH = 0.8                                                                            # min IOU threshold for object to be considered in same spot
 # Faster R-CNN is trained on COCO dataset
-COCO_LABELS = {
-    0: "person", 1: "bicycle", 2: "car", 3: "motorcycle", 4: "airplane", 5: "bus", 6: "train", 7: "truck", 8: "boat",
-    9: "traffic light", 10: "fire hydrant", 11: "stop sign", 12: "parking meter", 13: "bench", 14: "bird", 15: "cat", 
-    16: "dog", 17: "horse", 18: "sheep", 19: "cow", 20: "elephant", 21: "bear", 22: "zebra", 23: "giraffe", 24: "backpack", 
-    25: "umbrella", 26: "handbag", 27: "tie", 28: "suitcase", 29: "frisbee", 30: "skis", 31: "snowboard", 32: "sports ball", 
-    33: "kite", 34: "baseball bat", 35: "baseball glove", 36: "skateboard", 37: "surfboard", 38: "tennis racket", 39: "bottle", 
-    40: "wine glass", 41: "cup", 42: "fork", 43: "knife", 44: "spoon", 45: "bowl", 46: "banana", 47: "apple", 48: "sandwich", 
-    49: "orange", 50: "broccoli", 51: "carrot", 52: "hot dog", 53: "pizza", 54: "donut", 55: "cake", 56: "chair", 57: "couch", 
-    58: "potted plant", 59: "bed", 60: "dining table", 61: "toilet", 62: "TV", 63: "laptop", 64: "mouse", 65: "remote", 
-    66: "keyboard", 67: "cell phone", 68: "microwave", 69: "oven", 70: "toaster", 71: "sink", 72: "refrigerator", 73: "book", 
-    74: "clock", 75: "vase", 76: "scissors", 77: "teddy bear", 78: "hair drier", 79: "toothbrush"
+COCO_LABELS = {                                                                             # COCO class label mapping
+    1: "person", 2: "bicycle", 3: "car", 4: "motorcycle", 5: "airplane",
+    6: "bus", 7: "train", 8: "truck", 9: "boat", 10: "traffic light",
+    11: "fire hydrant", 13: "stop sign", 14: "parking meter", 15: "bench",
+    16: "bird", 17: "cat", 18: "dog", 19: "horse", 20: "sheep",
+    21: "cow", 22: "elephant", 23: "bear", 24: "zebra", 25: "giraffe",
+    27: "backpack", 28: "umbrella", 31: "handbag", 32: "tie", 33: "suitcase",
+    34: "frisbee", 35: "skis", 36: "snowboard", 37: "sports ball", 38: "kite",
+    39: "baseball bat", 40: "baseball glove", 41: "skateboard", 42: "surfboard", 43: "tennis racket",
+    44: "bottle", 46: "wine glass", 47: "cup", 48: "fork", 49: "knife",
+    50: "spoon", 51: "bowl", 52: "banana", 53: "apple", 54: "sandwich",
+    55: "orange", 56: "broccoli", 57: "carrot", 58: "hot dog", 59: "pizza",
+    60: "donut", 61: "cake", 62: "chair", 63: "couch", 64: "potted plant",
+    65: "bed", 67: "dining table", 70: "toilet", 72: "TV", 73: "laptop",
+    74: "mouse", 75: "remote", 76: "keyboard", 77: "cell phone", 78: "microwave",
+    79: "oven", 80: "toaster", 81: "sink", 82: "refrigerator", 84: "book",
+    85: "clock", 86: "vase", 87: "scissors", 88: "teddy bear", 89: "hair drier",
+    90: "toothbrush"
 }
-
 
 SCORE_WEIGHTS = {
     "person": [0, 0, 0], "bicycle": [0, 0, 0], "car": [0, 0, 0], "motorcycle": [0, 0, 0], "airplane": [0, 0, 0],
@@ -128,6 +134,8 @@ class CleanlinessDetector:
 
         # Create predictor
         self.model = DefaultPredictor(self.cfg)                                                               # set to evaluation mode
+        self.model = fasterrcnn_resnet50_fpn(pretrained=True)
+        self.model.eval()
         self.transform = T.Compose([T.ToTensor()])                                           # function to convert to tensor
 
     """Convert image to tensor"""
@@ -227,7 +235,6 @@ class CleanlinessDetector:
         metadata = MetadataCatalog.get(self.cfg.DATASETS.TRAIN[0])
         class_names = metadata.get("thing_classes", None)
 
-        extracted_objects = []
         house_objects = []
         
         for i, (box, class_id) in enumerate(zip(boxes, classes)):
@@ -237,6 +244,24 @@ class CleanlinessDetector:
             house_objects.append(HouseObject(label=class_id, bbox=[x1, y1, x2, y2], mask=mask))
 
         return house_objects
+    
+    def detect_objects2(self, img: Image, display=False) -> list[HouseObject]:
+        img = self.process_image(img)   #convert to tensor
+        with torch.no_grad():
+            predictions = self.model(img)
+
+        bboxes = predictions[0]['boxes']                # (x1, y1, x2, y2) for each detection
+        labels = predictions[0]['labels']               # COCO class #
+        scores = predictions[0]['scores']               # confidence score
+        objects = []
+        # only consider predictions for objects over the confidence threshold
+        for i, box in enumerate(bboxes):
+            if scores[i].item() > CONF_THRESH:
+                objects.append(HouseObject(labels[i].item(), [b.item() for b in box]))
+        if(display):
+            self.display_image(img, objects)
+        return objects
+
 
     
     """Find all objects in 2 images and identify what was added, removed, and moved"""
@@ -395,9 +420,9 @@ if __name__=="__main__":
 
     # print(f"Cleanliness score for this iteration is: {cleanliness_score}")
 
-    objects_before = cd.detect_objects(before_mask)
+    objects_before = cd.detect_objects2(before_mask)
     before_img = cd.annotate_image(before_img, objects_before, True)
-    objects_after = cd.detect_objects(after_mask)
+    objects_after = cd.detect_objects2(after_mask)
     after_img = cd.annotate_image(after_img, objects_after, True)
     added,removed,moved=[],[],[]
     cd.export_results(before_img, after_img, added, removed, moved)
