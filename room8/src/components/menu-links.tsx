@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { BotMessageSquare, CalendarCheck, House, HousePlus, Receipt, Settings } from 'lucide-react';
+import { BotMessageSquare, CalendarCheck, House, HousePlus, Receipt, Settings, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -64,7 +64,7 @@ const MenuLinks = () => {
 
   const USER_PAGES = {
     houseSettings: { path: '/house-settings', icon: <HousePlus />, title: 'My House' },
-    settings: { path: '/settings', icon: <Settings />, title: 'My Settings' }
+    profile: { path: '/profile', icon: <User />, title: 'My Profile' }
   };
 
   return (
