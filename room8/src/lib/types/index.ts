@@ -40,7 +40,7 @@ export type TCleanlinessLog = {
   after_image_url: string;
   algorithm_output: Json;
   created_at: string;
-}
+};
 
 export type TBill = {
   bill_id: string;

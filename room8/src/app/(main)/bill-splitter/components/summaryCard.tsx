@@ -7,7 +7,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import LoadingSpinner from '@/components/loading';
 import SummaryCardStub from './summaryCardStub';
 
-export default function SummaryCard() {
+type props = {};
+
+export default function SummaryCard({}: props) {
   const {
     data: loans,
     isSuccess: loansSuccess,
@@ -28,15 +30,24 @@ export default function SummaryCard() {
     0
   );
 
-  const debtDeadlines = debts
+  const deadlineCards = debts
     ?.filter((debt) => debt.owed_by !== null)
-    .map((debt) => {
-      return (
-        <li key={debt.bill_id}>
-          {debt.owed_by} - {debt.bill_name}
-        </li>
-      );
-    });
+    .map((debt) => (
+      <div
+        key={debt.owe_id}
+        className="flex items-center justify-between py-2 px-4 mb-2 rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div className="flex flex-col">
+          <span className="font-medium">
+            {debt.bill_name || <span className="text-muted-foreground">Untitled Debt</span>}
+          </span>
+          <span className="text-sm text-muted-foreground">Due: {debt.owed_by}</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-sm">To: {debt.loaner_name}</span>
+          <span className="font-semibold">${debt.amount_owed}</span>
+        </div>
+      </div>
+    ));
 
   return (
     <Card className="mb-6">
@@ -49,21 +60,25 @@ export default function SummaryCard() {
           <LoadingSpinner />
         ) : (
           <>
-            <div className="flex gap-6 mb-6">
+            <div className="flex gap-6">
               <SummaryCardStub title="You Owe" number={debtsTotal?.toFixed(2)} />
               <SummaryCardStub title="Gave Out" number={loanedTotal?.toFixed(2)} />
               <SummaryCardStub title="Still Owed" number={loanedTotalOwed?.toFixed(2)} />
             </div>
-            <div>
-              <CardTitle>Upcoming Debt Deadlines</CardTitle>
-              {debtsSuccess && debtDeadlines!.length > 0 ? (
-                <ul>{debtDeadlines}</ul>
-              ) : (
-                <CardDescription className="mt-2">
-                  You have no current debts with deadlines
-                </CardDescription>
-              )}
-            </div>
+            {
+              <div className="mt-6">
+                <CardTitle>Upcoming Debt Deadlines</CardTitle>
+                {debtsSuccess && deadlineCards!.length > 0 ? (
+                  <div>
+                    <ul className="mt-4">{deadlineCards}</ul>
+                  </div>
+                ) : (
+                  <CardDescription className="mt-2">
+                    You have no current debts with deadlines
+                  </CardDescription>
+                )}
+              </div>
+            }
           </>
         )}
       </CardContent>
