@@ -76,19 +76,19 @@ export default function PendingItem({ item, thisWeek, index }: props) {
     return (
       <div className="rounded-lg px-4 py-4 border items-center cursor-pointer hover:bg-primary/10 transition">
         <div className="flex items-center justify-between">
-          <div className="flex flex-col gap-2 basis-1/2">
+          <div className="flex-shrink flex flex-col gap-2 basis-1/2">
             <p>
               <span className="font-bold text-macAccent">Name: </span>
               <span>{item.title}</span>
             </p>
-            <p>
+            <p className="w-[400px]">
               <span className="font-bold text-macAccent">Description: </span> {item.description}
             </p>
             <p className="capitalize">
               <span className="font-bold text-macAccent">Time: </span> {item.time}
             </p>
           </div>
-          <ul className="ml-auto flex flex-col gap-2">
+          <ul className="flex flex-col gap-2">
             {responsibleRoommates.map((roommate) => (
               <li key={roommate.id} className="flex items-center gap-2">
                 <p className="flex-1 text-end">{roommate.name}</p>
