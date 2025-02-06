@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const postBillSchema = z.object({
   name: z.string().nonempty('Name is required'),
   amount: z.coerce.number().min(0, 'Amount must be a positive number'),
+  owed_by: z.date().optional(),
   equally: z.boolean(),
   owes: z.map(z.string(), z.number())
 });

@@ -63,7 +63,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<TApiResponse<
 
     const { data: billData, error: billError } = await supabase
       .from('bills')
-      .insert({ name: data.name, total: data.amount, loaner_id: user.id })
+      .insert({ name: data.name, total: data.amount, loaner_id: user.id, owed_by: data.owed_by })
       .select().single();
 
     if (!billData || billError) {
@@ -72,14 +72,16 @@ export async function POST(req: NextRequest): Promise<NextResponse<TApiResponse<
     }
 
     for (const [debtorId, debtValue] of Object.entries(data.owes)) {
-      const { data: debtData, error: debtError } = await supabase
-        .from('owes')
-        .insert({ bill_id: billData.id, debtor_id: debtorId, amount: debtValue as number })
-        .select();
-
-      if (debtError) {
-        await supabase.from('bills').delete().eq('id', billData.id); // Cascading deletes delete all owes for this bill
-        throw new Error('Error creating debt');
+      if (debtorId !== user.id) { // Don't let some1 insert an owe to themselves
+        const { data: debtData, error: debtError } = await supabase
+          .from('owes')
+          .insert({ bill_id: billData.id, debtor_id: debtorId, amount: debtValue as number })
+          .select();
+  
+        if (debtError) {
+          await supabase.from('bills').delete().eq('id', billData.id); // Cascading deletes delete all owes for this bill
+          throw new Error('Error creating debt');
+        }
       }
     }
 
