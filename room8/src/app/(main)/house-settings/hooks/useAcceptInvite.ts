@@ -26,6 +26,8 @@ export default function useAcceptInvite() {
       queryClient.invalidateQueries({ queryKey: ['roommates'] });
       queryClient.invalidateQueries({ queryKey: ['invites'] });
       queryClient.invalidateQueries({ queryKey: ['house'] });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+
       toast({
         title: 'Success!',
         description: "You've successfully joined the house"
