@@ -1,8 +1,6 @@
 import math
 import torch
-import torchvision
 from PIL import Image
-import torchvision.transforms as T
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
@@ -14,12 +12,9 @@ import csv
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
 from detectron2 import model_zoo
-from detectron2.structures import Instances
-from detectron2.utils.visualizer import Visualizer
 from detectron2.data import MetadataCatalog
-from torchvision.models.detection import fasterrcnn_resnet50_fpn
 
-CONF_THRESH = 0.3                                                                           # min confidence for object detector
+CONF_THRESH = 0.5                                                                           # min confidence for object detector
 DIST_THRESH = 15                                                                            # max number of pixels for object that moved slightly to still be considered in same spot                                                                     #
 IOU_THRESH = 0.8                                                                            # min IOU threshold for object to be considered in same spot
 # Faster R-CNN is trained on COCO dataset
@@ -38,26 +33,6 @@ COCO_LABELS = {
     80: "toaster", 81: "sink", 82: "refrigerator", 83: "blender", 84: "book", 85: "clock", 86: "vase", 87: "scissors",
     88: "teddy bear", 89: "hair drier", 90: "toothbrush"
 }
-
-# SCORE_WEIGHTS = {
-#     "person": [0, 0, 0], "bicycle": [0, 0, 0], "car": [0, 0, 0], "motorcycle": [0, 0, 0], "airplane": [0, 0, 0],
-#     "bus": [0, 0, 0], "train": [0, 0, 0], "truck": [0, 0, 0], "boat": [0, 0, 0], "traffic light": [0, 0, 0],
-#     "fire hydrant": [0, 0, 0], "stop sign": [0, 0, 0], "parking meter": [0, 0, 0], "bench": [0, 0, 0],
-#     "bird": [0, 0, 0], "cat": [0, 0, 0], "dog": [0, 0, 0], "horse": [0, 0, 0], "sheep": [0, 0, 0],
-#     "cow": [0, 0, 0], "elephant": [0, 0, 0], "bear": [0, 0, 0], "zebra": [0, 0, 0], "giraffe": [0, 0, 0],
-#     "backpack": [-2, 2, 0], "umbrella": [-1, 1, 0], "handbag": [-1, 1, 0], "tie": [-1, 1, 0], "suitcase": [-2, 2, 0],
-#     "frisbee": [-1, 1, 0], "skis": [-3, 3, 0], "snowboard": [-3, 3, 0], "sports ball": [-1, 1, 0], "kite": [-1, 1, 0],
-#     "baseball bat": [-2, 2, 0], "baseball glove": [-1, 1, 0], "skateboard": [-2, 2, 0], "surfboard": [-3, 3, 0], "tennis racket": [-2, 2, 0],
-#     "bottle": [-1.5, 1.5, 0], "wine glass": [-1, 1, 0], "cup": [-1, 1, 0], "fork": [-0.5, 0.5, 0], "knife": [-0.5, 0.5, 0],
-#     "spoon": [-0.5, 0.5, 0], "bowl": [-1, 1, 0], "banana": [-1, 1, 0], "apple": [-1, 1, 0], "sandwich": [-1, 1, 0],
-#     "orange": [0, 0, 0], "broccoli": [-1, 1, 0], "carrot": [-1, 1, 0], "hot dog": [-1, 1, 0], "pizza": [-2, 2, 0],
-#     "donut": [0, 0, 0], "cake": [0, 0, 0], "chair": [0, 0, 0], "couch": [0, 0, 0], "potted plant": [0, 0, 0],
-#     "bed": [0, 0, 0], "dining table": [0, 0, 0], "toilet": [0, 0, 0], "TV": [0, 0, 0], "laptop": [0, 0, 0],
-#     "mouse": [0, 0, 0], "remote": [0, 0, 0], "keyboard": [-2, 2, 0], "cell phone": [0, 0, 0], "microwave": [0, 0, 0],
-#     "oven": [0, 0, 0], "toaster": [0, 0, 0], "sink": [0, 0, 0], "refrigerator": [0, 0, 0], "book": [0, 0, 0],
-#     "clock": [0, 0, 0], "vase": [0, 0, 0], "scissors": [0, 0, 0], "teddy bear": [0, 0, 0], "hair drier": [0, 0, 0],
-#     "toothbrush": [0, 0, 0]
-# }
 
 """Define a class to represent a detection"""
 class HouseObject:
@@ -123,20 +98,11 @@ class CleanlinessDetector:
         self.cfg = get_cfg()
         self.cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
         self.cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
-        self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # Set a confidence threshold
+        self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = CONF_THRESH                # Set a confidence threshold
         self.cfg.MODEL.DEVICE = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
 
         # Create predictor
-        self.model = DefaultPredictor(self.cfg)                                                               # set to evaluation mode
-        #self.model = fasterrcnn_resnet50_fpn(pretrained=True)
-        #self.model.eval()
-        self.transform = T.Compose([T.ToTensor()])                                           # function to convert to tensor
-
-    """Convert image to tensor"""
-    def process_image(self, img: Image) -> torch.Tensor:
-        tsr = self.transform(img).unsqueeze(0)
-        tsr = tsr[:, :3, :, :]                          # only keep RGB channels
-        return tsr
+        self.model = DefaultPredictor(self.cfg)                                                  
     
 
     """Pixel-wise image differencing to return a binary mask of change regions"""
@@ -172,7 +138,7 @@ class CleanlinessDetector:
 
         return mask
     
-    """ok"""
+    """Intersect raw image with mask"""
     def combine_image_mask(self, before_img: Image, after_img: Image, display: bool = False) -> [Image, Image]:
         mask = self.frame_diff(before_img, after_img, min_area=200)
         mask = Image.fromarray(np.uint8(mask)).convert('RGB')
@@ -213,22 +179,21 @@ class CleanlinessDetector:
     """Given an image, return list of objects detected"""
     def detect_objects(self, img: Image, display=False) -> list[HouseObject]:
         # Load image
-        img_rgb = cv2.cvtColor(np.array(img), cv2.COLOR_BGR2RGB)
-        #img_rgb = np.array(img.convert("RGB"))
+        img_rgb = np.array(img.convert("RGB"))
 
         # Run detection
-        outputs = self.model(np.array(img_rgb))
+        outputs = self.model(img_rgb)
 
         # Extract instances
         instances = outputs["instances"]
         boxes = instances.pred_boxes.tensor.cpu().numpy()  # Bounding boxes
         masks = instances.pred_masks.cpu().numpy() if instances.has("pred_masks") else None
         classes = instances.pred_classes.cpu().numpy()  # Class indices
-        scores = instances.scores.cpu().numpy()  # Confidence scores
+        # scores = instances.scores.cpu().numpy()  # Confidence scores
 
         # Metadata for COCO classes
-        metadata = MetadataCatalog.get(self.cfg.DATASETS.TRAIN[0])
-        class_names = metadata.get("thing_classes", None)
+        # metadata = MetadataCatalog.get(self.cfg.DATASETS.TRAIN[0])
+        # class_names = metadata.get("thing_classes", None)
 
         house_objects = []
         
@@ -240,24 +205,7 @@ class CleanlinessDetector:
 
         return house_objects
     
-    def detect_objects2(self, img: Image, display=False) -> list[HouseObject]:
-        img = self.process_image(img)   #convert to tensor
-        with torch.no_grad():
-            predictions = self.model(img)
 
-        bboxes = predictions[0]['boxes']                # (x1, y1, x2, y2) for each detection
-        labels = predictions[0]['labels']               # COCO class #
-        scores = predictions[0]['scores']               # confidence score
-        objects = []
-        # only consider predictions for objects over the confidence threshold
-        for i, box in enumerate(bboxes):
-            if scores[i].item() > CONF_THRESH:
-                objects.append(HouseObject(labels[i].item(), [b.item() for b in box]))
-        if(display):
-            self.annotate_image(img, objects, True)
-        return objects
-
-    
     """Find all objects in 2 images and identify what was added, removed, and moved"""
     def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
         added, removed, moved = [], [], []
@@ -309,15 +257,6 @@ class CleanlinessDetector:
 
         return added, removed, moved
 
-    # """Scoring algorithm"""
-    # def calculate_cleanliness_score(self, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> float:
-    #     score = 0
-    #     for i in added:
-    #         score += SCORE_WEIGHTS.get(i)[0]
-    #     for j in removed:
-    #         score += SCORE_WEIGHTS.get(j)[1]
-    #     return score
-
     """Draw boxes and show classes for objects detected in image"""
     def annotate_image(self, img: Image, objects: list[HouseObject], display=False) -> plt.figure:
         """Draw boxes, show classes, and overlay masks for objects detected in image"""
@@ -365,7 +304,6 @@ class CleanlinessDetector:
             img_np = img_np.astype(np.uint8)
         
         # Convert RGB to BGR for OpenCV
-        #img = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
         img = np.array(img.convert("RGB"))
         overlay = img.copy()
 
@@ -427,14 +365,6 @@ class CleanlinessDetector:
                 added_obj = added[i] if i < len(added) else ""
                 removed_obj = removed[i] if i < len(removed) else ""
                 moved_obj = moved[i] if i < len(moved) else ""
-
-                # # Calculate scores for added, removed, and moved objects
-                # added_score = SCORE_WEIGHTS.get(added_obj, [0, 0, 0])[0] if added_obj else 0
-                # removed_score = SCORE_WEIGHTS.get(removed_obj, [0, 0, 0])[1] if removed_obj else 0
-                # moved_score = SCORE_WEIGHTS.get(moved_obj, [0, 0, 0])[2] if moved_obj else 0
-
-                # # Calculate total score for the row
-                # total_score = added_score + removed_score + moved_score
 
                 # Write row
                 writer.writerow([added_obj, removed_obj, moved_obj])
