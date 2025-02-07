@@ -5,15 +5,15 @@ import { Tables } from '@/lib/types/supabase';
 import { useQuery } from '@tanstack/react-query';
 
 const initUser: Tables<'profiles'> = {
-    created_at: '',
-    email: '',
-    house_id: '',
-    id: '',
-    image_url: '',
-    name: '',
-    phone: '',
-    updated_at: '',
-}
+  created_at: '',
+  email: '',
+  house_id: '',
+  id: '',
+  image_url: '',
+  name: '',
+  phone: '',
+  updated_at: ''
+};
 
 export default function useUser() {
   return useQuery({
