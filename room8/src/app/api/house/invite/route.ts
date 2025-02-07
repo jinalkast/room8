@@ -92,8 +92,6 @@ export async function POST(req: NextRequest) {
       .insert({ house_id: houseId, user_id: userData.id, inviter_id: inviterId })
       .select();
 
-    console.log('invite:', invite);
-
     return NextResponse.json(
       {
         data: null,

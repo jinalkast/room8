@@ -49,9 +49,6 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
       throw new Error('Failed to fetch house roommates');
     }
 
-    console.log('houseRoommates', houseRoommates);
-    console.log('house id', userHouse.house_id);
-
     if (houseRoommates.length === 0) {
       const { error: deleteHouseError } = await supabase
         .from('houses')

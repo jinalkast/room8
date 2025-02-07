@@ -1,7 +1,15 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { BotMessageSquare, CalendarCheck, House, HousePlus, Receipt, Settings, User } from 'lucide-react';
+import {
+  BotMessageSquare,
+  CalendarCheck,
+  Cctv,
+  House,
+  HousePlus,
+  Receipt,
+  Settings
+} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -57,6 +65,11 @@ const MenuLinks = () => {
 
   const HOUSE_PAGES = {
     dashboard: { path: '/dashboard', icon: <House />, title: 'Dashboard' },
+    cleanlinessManager: {
+      path: '/cleanliness-manager',
+      icon: <Cctv />,
+      title: 'Cleanliness Manager'
+    },
     billSplitter: { path: '/bill-splitter', icon: <Receipt />, title: 'Bill Splitter' },
     choreSchedule: { path: '/schedule', icon: <CalendarCheck />, title: 'Chore Schedule' },
     chatBot: { path: '/chatbot', icon: <BotMessageSquare />, title: 'ChatBot' }
