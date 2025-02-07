@@ -16,8 +16,8 @@ app = FastAPI()
 # Reads from system env in a case insensitive way
 class Settings(BaseSettings):
     app_name: str = "Room8 Cleanliness Detection System"
-    next_public_supabase_url: str
-    next_secret_supabase_service_role_key: str
+    next_public_supabase_url: str = "https://widrqfeliprozqqknues.supabase.co/"
+    next_secret_supabase_service_role_key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpZHJxZmVsaXByb3pxcWtudWVzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczMTE3MjIzNiwiZXhwIjoyMDQ2NzQ4MjM2fQ.25M89rVLSdmP0WFMyEYCzwzQGkA_W0z9cNJUe1LK46c"
     port: int = 8000
 
 settings = Settings()
@@ -56,12 +56,15 @@ async def upload_images(house_id: str, before: UploadFile = File(...), after: Up
 
     # DO THE PROCESSING HERE
     cd = CleanlinessDetector()
+    # Process images
+    before_img = Image.open("cleanliness_detection/samples/1/before.png")
+    after_img = Image.open("cleanliness_detection/samples/1/after.png")
 
-    [before_mask, after_mask] = cd.combine_image_mask(before_img, after_img, display=False)
+    [before_mask, after_mask] = cd.combine_image_mask(before_img, after_img, display=True)
 
     # Detect objects in the before and after images
-    objects_before = cd.detect_objects2(before_mask)
-    objects_after = cd.detect_objects2(after_mask)
+    objects_before = cd.detect_objects(before_mask, True)
+    objects_after = cd.detect_objects(after_mask, True)
 
     # Create dictionaries to map object IDs to class names and vice versa
     before_id_to_name = {obj: obj.class_name for obj in objects_before}
@@ -71,7 +74,7 @@ async def upload_images(house_id: str, before: UploadFile = File(...), after: Up
     after_name_to_id = {obj.class_name: obj for obj in objects_after}
 
     # Calculate the differences
-    added, removed, moved = cd.calculate_difference(before_img, after_img)
+    added, removed, moved = cd.calculate_difference(before_mask, after_mask)
 
     # Extract class names for printing
     added_names = [obj.class_name for obj in added]
@@ -89,11 +92,11 @@ async def upload_images(house_id: str, before: UploadFile = File(...), after: Up
     objects_changed_ids = [after_name_to_id[name] for name in objects_changed_names]
 
     # Annotate the before and after images
-    before_fig = cd.annotate_image(before_img, objects_before)
-    after_fig = cd.annotate_image(after_img, objects_after)
+    before_fig = cd.annotate_image(before_img, objects_before, True)
+    after_fig = cd.annotate_image(after_img, objects_after, True)
 
     # Annotate the changes in the after image using the object IDs
-    changes_fig = cd.annotate_changes(after_img, objects_changed_ids, moved)
+    changes_fig = cd.annotate_changes(after_img, objects_changed_ids, moved, True)
 
     tasklist = cd.export_results(before_fig, after_fig, changes_fig, added_names, removed_names, moved_names)
 
@@ -102,13 +105,10 @@ async def upload_images(house_id: str, before: UploadFile = File(...), after: Up
     before_image_path = f"images/{house_id}/before-{instance_id}.{before.content_type.split('/')[1]}"
     after_image_path = f"images/{house_id}/after-{instance_id}.svg"
 
-    changes_path = save_changes_fig(changes_fig)
-
-    with open(changes_path, "rb") as file:
-        changes_image_bytes = file.read()
+    changes_image_bytes = save_changes_fig(changes_fig)
 
     upload_image(before_image_path, before_image_bytes, before.content_type)
-    upload_image(after_image_path, changes_image_bytes, "image/svg+xml")
+    upload_image(after_image_path, changes_image_bytes, 'image/png')
 
     # INSERT INTO THE DATABASE
     print('Inserting into the cleanliness_logs table of the db')
@@ -119,14 +119,14 @@ async def upload_images(house_id: str, before: UploadFile = File(...), after: Up
     )
     print(logs_response)
 
-    print('Inserting tasks into the cleanliness_tasks table of the db')
-    for task in tasklist:
-        tasks_response = (
-            supabase.table("cleanliness_tasks")
-            .insert({"cl_log_id": str(instance_id), "name": task})
-            .execute()
-        )
-        print(tasks_response)
+    # print('Inserting tasks into the cleanliness_tasks table of the db')
+    # for task in tasklist:
+    #     tasks_response = (
+    #         supabase.table("cleanliness_tasks")
+    #         .insert({"cl_log_id": str(instance_id), "name": task})
+    #         .execute()
+    #     )
+    #     print(tasks_response)
 
     return {
         "house_id": house_id,
@@ -151,13 +151,7 @@ def upload_image(destination_path: str, image_bytes: bytes, content_type: str) -
         return False
 
 def save_changes_fig(fig) -> str:
-    FORMATTED_DATETIME = datetime.now().strftime("%Y-%m-%d %Hh-%Mm-%Ss")
-
-    # Path and making folder
-    FOLDER_PATH = Path(f"{Path(__file__).parent}/exported_results/{FORMATTED_DATETIME}")
-    FOLDER_PATH.mkdir(parents=True, exist_ok=True)
-
-    changes_path = str(FOLDER_PATH / "changes.svg")
-    fig.savefig(FOLDER_PATH / 'changes.svg', format='svg', dpi=1200)
-
-    return changes_path
+    img_buffer = io.BytesIO()
+    fig.savefig(img_buffer, format='png', dpi=1200, bbox_inches='tight')
+    img_buffer.seek(0)
+    return img_buffer.getvalue()
