@@ -44,25 +44,25 @@ COCO_LABELS = {                                                                 
     90: "toothbrush"
 }
 
-SCORE_WEIGHTS = {
-    "person": [0, 0, 0], "bicycle": [0, 0, 0], "car": [0, 0, 0], "motorcycle": [0, 0, 0], "airplane": [0, 0, 0],
-    "bus": [0, 0, 0], "train": [0, 0, 0], "truck": [0, 0, 0], "boat": [0, 0, 0], "traffic light": [0, 0, 0],
-    "fire hydrant": [0, 0, 0], "stop sign": [0, 0, 0], "parking meter": [0, 0, 0], "bench": [0, 0, 0],
-    "bird": [0, 0, 0], "cat": [0, 0, 0], "dog": [0, 0, 0], "horse": [0, 0, 0], "sheep": [0, 0, 0],
-    "cow": [0, 0, 0], "elephant": [0, 0, 0], "bear": [0, 0, 0], "zebra": [0, 0, 0], "giraffe": [0, 0, 0],
-    "backpack": [-2, 2, 0], "umbrella": [-1, 1, 0], "handbag": [-1, 1, 0], "tie": [-1, 1, 0], "suitcase": [-2, 2, 0],
-    "frisbee": [-1, 1, 0], "skis": [-3, 3, 0], "snowboard": [-3, 3, 0], "sports ball": [-1, 1, 0], "kite": [-1, 1, 0],
-    "baseball bat": [-2, 2, 0], "baseball glove": [-1, 1, 0], "skateboard": [-2, 2, 0], "surfboard": [-3, 3, 0], "tennis racket": [-2, 2, 0],
-    "bottle": [-1.5, 1.5, 0], "wine glass": [-1, 1, 0], "cup": [-1, 1, 0], "fork": [-0.5, 0.5, 0], "knife": [-0.5, 0.5, 0],
-    "spoon": [-0.5, 0.5, 0], "bowl": [-1, 1, 0], "banana": [-1, 1, 0], "apple": [-1, 1, 0], "sandwich": [-1, 1, 0],
-    "orange": [0, 0, 0], "broccoli": [-1, 1, 0], "carrot": [-1, 1, 0], "hot dog": [-1, 1, 0], "pizza": [-2, 2, 0],
-    "donut": [0, 0, 0], "cake": [0, 0, 0], "chair": [0, 0, 0], "couch": [0, 0, 0], "potted plant": [0, 0, 0],
-    "bed": [0, 0, 0], "dining table": [0, 0, 0], "toilet": [0, 0, 0], "TV": [0, 0, 0], "laptop": [0, 0, 0],
-    "mouse": [0, 0, 0], "remote": [0, 0, 0], "keyboard": [-2, 2, 0], "cell phone": [0, 0, 0], "microwave": [0, 0, 0],
-    "oven": [0, 0, 0], "toaster": [0, 0, 0], "sink": [0, 0, 0], "refrigerator": [0, 0, 0], "book": [0, 0, 0],
-    "clock": [0, 0, 0], "vase": [0, 0, 0], "scissors": [0, 0, 0], "teddy bear": [0, 0, 0], "hair drier": [0, 0, 0],
-    "toothbrush": [0, 0, 0]
-}
+# SCORE_WEIGHTS = {
+#     "person": [0, 0, 0], "bicycle": [0, 0, 0], "car": [0, 0, 0], "motorcycle": [0, 0, 0], "airplane": [0, 0, 0],
+#     "bus": [0, 0, 0], "train": [0, 0, 0], "truck": [0, 0, 0], "boat": [0, 0, 0], "traffic light": [0, 0, 0],
+#     "fire hydrant": [0, 0, 0], "stop sign": [0, 0, 0], "parking meter": [0, 0, 0], "bench": [0, 0, 0],
+#     "bird": [0, 0, 0], "cat": [0, 0, 0], "dog": [0, 0, 0], "horse": [0, 0, 0], "sheep": [0, 0, 0],
+#     "cow": [0, 0, 0], "elephant": [0, 0, 0], "bear": [0, 0, 0], "zebra": [0, 0, 0], "giraffe": [0, 0, 0],
+#     "backpack": [-2, 2, 0], "umbrella": [-1, 1, 0], "handbag": [-1, 1, 0], "tie": [-1, 1, 0], "suitcase": [-2, 2, 0],
+#     "frisbee": [-1, 1, 0], "skis": [-3, 3, 0], "snowboard": [-3, 3, 0], "sports ball": [-1, 1, 0], "kite": [-1, 1, 0],
+#     "baseball bat": [-2, 2, 0], "baseball glove": [-1, 1, 0], "skateboard": [-2, 2, 0], "surfboard": [-3, 3, 0], "tennis racket": [-2, 2, 0],
+#     "bottle": [-1.5, 1.5, 0], "wine glass": [-1, 1, 0], "cup": [-1, 1, 0], "fork": [-0.5, 0.5, 0], "knife": [-0.5, 0.5, 0],
+#     "spoon": [-0.5, 0.5, 0], "bowl": [-1, 1, 0], "banana": [-1, 1, 0], "apple": [-1, 1, 0], "sandwich": [-1, 1, 0],
+#     "orange": [0, 0, 0], "broccoli": [-1, 1, 0], "carrot": [-1, 1, 0], "hot dog": [-1, 1, 0], "pizza": [-2, 2, 0],
+#     "donut": [0, 0, 0], "cake": [0, 0, 0], "chair": [0, 0, 0], "couch": [0, 0, 0], "potted plant": [0, 0, 0],
+#     "bed": [0, 0, 0], "dining table": [0, 0, 0], "toilet": [0, 0, 0], "TV": [0, 0, 0], "laptop": [0, 0, 0],
+#     "mouse": [0, 0, 0], "remote": [0, 0, 0], "keyboard": [-2, 2, 0], "cell phone": [0, 0, 0], "microwave": [0, 0, 0],
+#     "oven": [0, 0, 0], "toaster": [0, 0, 0], "sink": [0, 0, 0], "refrigerator": [0, 0, 0], "book": [0, 0, 0],
+#     "clock": [0, 0, 0], "vase": [0, 0, 0], "scissors": [0, 0, 0], "teddy bear": [0, 0, 0], "hair drier": [0, 0, 0],
+#     "toothbrush": [0, 0, 0]
+# }
 
 """Define a class to represent a detection"""
 class HouseObject:
@@ -222,7 +222,7 @@ class CleanlinessDetector:
         img_rgb = cv2.cvtColor(np.array(img), cv2.COLOR_BGR2RGB)
 
         # Run detection
-        outputs = self.model(img_rgb)
+        outputs = self.model([img_rgb])
 
         # Extract instances
         instances = outputs["instances"]
@@ -267,8 +267,8 @@ class CleanlinessDetector:
     """Find all objects in 2 images and identify what was added, removed, and moved"""
     def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
         added, removed, moved = [], [], []
-        objects_before = self.detect_objects(before_img)
-        objects_after = self.detect_objects(after_img)
+        objects_before = self.detect_objects2(before_img)
+        objects_after = self.detect_objects2(after_img)
         centroids_before = np.array([obj.centroid for obj in objects_before])
         centroids_after = np.array([obj.centroid for obj in objects_after])
 
@@ -316,14 +316,14 @@ class CleanlinessDetector:
         return added, removed, moved
 
 
-    """Scoring algorithm"""
-    def calculate_cleanliness_score(self, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> float:
-        score = 0
-        for i in added:
-            score += SCORE_WEIGHTS.get(i)[0]
-        for j in removed:
-            score += SCORE_WEIGHTS.get(j)[1]
-        return score
+    # """Scoring algorithm"""
+    # def calculate_cleanliness_score(self, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> float:
+    #     score = 0
+    #     for i in added:
+    #         score += SCORE_WEIGHTS.get(i)[0]
+    #     for j in removed:
+    #         score += SCORE_WEIGHTS.get(j)[1]
+    #     return score
 
     """Draw boxes and show classes for objects detected in image"""
     def annotate_image(self, img: Image, objects: list[HouseObject], display=False) -> plt.figure:
@@ -421,7 +421,7 @@ class CleanlinessDetector:
         with open(csv_path, 'w', newline='') as file:
             writer = csv.writer(file)
             # Headers of CSV
-            fields = ["Added", "Removed", "Moved", "Score"]
+            fields = ["Added", "Removed", "Moved"]
 
             max_length = max(len(added), len(removed), len(moved))
 
@@ -432,28 +432,28 @@ class CleanlinessDetector:
                 removed_obj = removed[i] if i < len(removed) else ""
                 moved_obj = moved[i] if i < len(moved) else ""
 
-                # Calculate scores for added, removed, and moved objects
-                added_score = SCORE_WEIGHTS.get(added_obj, [0, 0, 0])[0] if added_obj else 0
-                removed_score = SCORE_WEIGHTS.get(removed_obj, [0, 0, 0])[1] if removed_obj else 0
-                moved_score = SCORE_WEIGHTS.get(moved_obj, [0, 0, 0])[2] if moved_obj else 0
+                # # Calculate scores for added, removed, and moved objects
+                # added_score = SCORE_WEIGHTS.get(added_obj, [0, 0, 0])[0] if added_obj else 0
+                # removed_score = SCORE_WEIGHTS.get(removed_obj, [0, 0, 0])[1] if removed_obj else 0
+                # moved_score = SCORE_WEIGHTS.get(moved_obj, [0, 0, 0])[2] if moved_obj else 0
 
-                # Calculate total score for the row
-                total_score = added_score + removed_score + moved_score
+                # # Calculate total score for the row
+                # total_score = added_score + removed_score + moved_score
 
                 # Write row
-                writer.writerow([added_obj, removed_obj, moved_obj, total_score])
+                writer.writerow([added_obj, removed_obj, moved_obj])
 
 if __name__ == "__main__":
     cd = CleanlinessDetector()
     # Process images
-    before_img = Image.open("cleanliness_detection/samples/1/before.png")
-    after_img = Image.open("cleanliness_detection/samples/1/after.png")
+    before_img = Image.open("cleanliness_detection/samples/5/before.jpeg")
+    after_img = Image.open("cleanliness_detection/samples/5/after.jpeg")
 
     [before_mask, after_mask] = cd.combine_image_mask(before_img, after_img, display=True)
 
     # Detect objects in the before and after images
-    objects_before = cd.detect_objects(before_mask)
-    objects_after = cd.detect_objects(after_mask)
+    objects_before = cd.detect_objects2(before_mask)
+    objects_after = cd.detect_objects2(after_mask)
 
     # Create dictionaries to map object IDs to class names and vice versa
     before_id_to_name = {obj: obj.class_name for obj in objects_before}
@@ -470,17 +470,21 @@ if __name__ == "__main__":
     removed_names = [obj.class_name for obj in removed]
     moved_names = [obj[0][0].class_name for obj in moved]
 
-    # cleanliness_score = cd.calculate_cleanliness_score(added, removed, moved)
+    # Convert object IDs to class names
+    before_names = [before_id_to_name[obj] for obj in objects_before]
+    after_names = [after_id_to_name[obj] for obj in objects_after]
 
-    # print("Objects added: " + ", ".join(added))
-    # print("Objects removed: " + ", ".join(removed))
-    # print("Objects moved: " + ", ".join(moved))
+    # Calculate the objects_changed list using class names
+    objects_changed_names = [x for x in after_names if x not in before_names]
 
-    # print(f"Cleanliness score for this iteration is: {cleanliness_score}")
+    # Convert the class names back to object IDs using the after_name_to_id dictionary
+    objects_changed_ids = [after_name_to_id[name] for name in objects_changed_names]
 
-    objects_before = cd.detect_objects2(before_mask)
-    before_img = cd.annotate_image(before_img, objects_before, True)
-    objects_after = cd.detect_objects2(after_mask)
-    after_img = cd.annotate_image(after_img, objects_after, True)
-    added,removed,moved=[],[],[]
-    cd.export_results(before_img, after_img, added, removed, moved)
+    # Annotate the before and after images
+    before_fig = cd.annotate_image(before_img, objects_before, True)
+    after_fig = cd.annotate_image(after_img, objects_after, True)
+
+    # Annotate the changes in the after image using the object IDs
+    changes_fig = cd.annotate_changes(after_img, objects_changed_ids, moved, True)
+
+    cd.export_results(before_fig, after_fig, changes_fig,added_names, removed_names, moved_names)
