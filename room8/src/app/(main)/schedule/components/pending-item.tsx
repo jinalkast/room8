@@ -19,9 +19,10 @@ import MutateLoadingSpinner from '@/components/mutate-loading';
 type props = {
   item: TActivity;
   thisWeek: Date;
+  index: number;
 };
 
-export default function ScheduleItem({ item, thisWeek }: props) {
+export default function PendingItem({ item, thisWeek, index }: props) {
   const [open, setOpen] = useState(false);
 
   const { data: roommates, isLoading: roommatesLoading } = useRoommates();
@@ -51,6 +52,18 @@ export default function ScheduleItem({ item, thisWeek }: props) {
     return thisWeekChores?.length === item.responsible.length;
   };
 
+  if (isChoreCompleted() && index === 0) {
+    return (
+      <p className="text-muted-foreground p-4 block text-center">
+        You have no more chores this week!
+      </p>
+    );
+  }
+
+  if (isChoreCompleted()) {
+    return null;
+  }
+
   const responsibleRoommates = roommates?.filter((roommate) =>
     item.responsible.includes(roommate.id)
   );
@@ -60,41 +73,39 @@ export default function ScheduleItem({ item, thisWeek }: props) {
   }
 
   const CardStub = () => {
-    if (responsibleRoommates.length === 0) {
-      return (
-        <div className="rounded-lg px-2 py-2 bg-primary/60 items-center cursor-pointer hover:bg-primary/90 transition">
-          <p className="text-sm">{item.title}</p>
-        </div>
-      );
-    }
-
     return (
-      <div className="rounded-lg px-2 py-2 bg-primary/60 items-center cursor-pointer hover:bg-primary/90 transition">
+      <div className="rounded-lg px-4 py-4 border items-center cursor-pointer hover:bg-primary/10 transition">
         <div className="flex items-center justify-between">
-          <p className="text-sm">{item.title}</p>
-          {isChoreCompleted() ? (
-            <CircleCheck className="text-green-600" />
-          ) : (
-            <Circle className="text-primary-foreground/50" />
-          )}
+          <div className="flex-shrink flex flex-col gap-2 basis-1/2">
+            <p>
+              <span className="font-bold text-macAccent">Name: </span>
+              <span>{item.title}</span>
+            </p>
+            <p className="w-[400px]">
+              <span className="font-bold text-macAccent">Description: </span> {item.description}
+            </p>
+            <p className="capitalize">
+              <span className="font-bold text-macAccent">Time: </span> {item.time}
+            </p>
+          </div>
+          <ul className="flex flex-col gap-2">
+            {responsibleRoommates.map((roommate) => (
+              <li key={roommate.id} className="flex items-center gap-2">
+                <p className="flex-1 text-end">{roommate.name}</p>
+                <Image
+                  src={roommate.imageUrl}
+                  alt={roommate.name}
+                  className={cn(
+                    'w-8 h-8 rounded-full ml-auto border-2 border-red-600',
+                    isRoommateCompleted(roommate.id) && 'border-green-600'
+                  )}
+                  width={28}
+                  height={28}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
-
-        <ul className="flex mt-2 ml-2">
-          {responsibleRoommates.map((roommate) => (
-            <li key={roommate.id} className="rounded-full flex items-center gap-2 -ml-2">
-              <Image
-                src={roommate.imageUrl}
-                alt={roommate.name}
-                className={cn(
-                  'w-8 h-8 rounded-full ml-auto border-2 border-red-600',
-                  isRoommateCompleted(roommate.id) && 'border-green-600'
-                )}
-                width={28}
-                height={28}
-              />
-            </li>
-          ))}
-        </ul>
       </div>
     );
   };

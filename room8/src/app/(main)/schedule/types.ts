@@ -1,6 +1,6 @@
 import { Database } from '@/lib/types/supabase';
 
-export type TActivityDB = Database['public']['Tables']['activities']['Row'];
+export type TActivityDB = Database['public']['Tables']['chores']['Row'];
 export type TActivityAndResponsibleDB = TActivityDB & {
   responsible: string[];
 };

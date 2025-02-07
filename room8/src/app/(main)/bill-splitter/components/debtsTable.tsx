@@ -11,8 +11,11 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/useToast';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import usePatchOwe from '../hooks/patchOwe';
+import LoadingSpinner from '@/components/loading';
+import { TOwe } from '@/lib/types';
+import { ClipboardCheck } from 'lucide-react';
 
 export default function DebtsTable() {
   const { data: owes, status: owesStatus } = useOwes();
@@ -35,50 +38,48 @@ export default function DebtsTable() {
     }
   });
 
+  if (owesStatus === 'pending') {
+    return <LoadingSpinner />;
+  }
+
   return (
-    <Table>
-      <TableCaption>Your outstanding debts.</TableCaption>
+    <Table className="mt-4">
+      <TableCaption>Your outstanding debts to roommates, pay them off asap!</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Name</TableHead>
-          <TableHead>Status</TableHead>
+          <TableHead>Name</TableHead>
           <TableHead>Owed To</TableHead>
-          <TableHead>Owed By</TableHead>
+          <TableHead>Deadline</TableHead>
           <TableHead>Amount</TableHead>
-          <TableHead className="text-right"> </TableHead>
+          <TableHead className="text-right">Pay Off</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {owesStatus === 'pending' ? (
-          <TableRow>
-            <TableCell>Loading...</TableCell>
-          </TableRow>
-        ) : null}
-        {owesStatus === 'error' ? (
-          <TableRow>
-            <TableCell>Failed to get debts</TableCell>
-          </TableRow>
-        ) : null}
-        {owesStatus === 'success'
-          ? owes!.map((owe) => (
-              <TableRow key={owe.owe_id}>
-                <TableCell className="font-medium">{owe.bill_name}</TableCell>
-                <TableCell>{owe.paid === true ? 'Paid' : 'Unpaid'}</TableCell>
-                <TableCell>{owe.loaner_name}</TableCell>
-                <TableCell>{owe.owed_by}</TableCell>
-                <TableCell>{owe.amount_owed}</TableCell>
-                <TableCell className="text-right">
-                  <Button
-                    disabled={patchOweMutation.isPending}
-                    onClick={(e) => {
-                      patchOweMutation.mutate({ oweID: owe.owe_id, isPaid: owe.paid });
-                    }}>
-                    {owe.paid ? 'UnPay' : 'Pay Off'}
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))
-          : null}
+        {owes &&
+          owes.map((owe: TOwe) => (
+            <TableRow key={owe.owe_id}>
+              <TableCell className="font-medium">
+                {owe.bill_name || <span className="text-muted-foreground">Untitled Debt</span>}
+              </TableCell>
+              <TableCell>{owe.loaner_name}</TableCell>
+              <TableCell>
+                {owe.owed_by || <span className="text-muted-foreground">No Deadline</span>}
+              </TableCell>
+              <TableCell>${owe.amount_owed}</TableCell>
+              <TableCell className="text-right">
+                <Button
+                  disabled={patchOweMutation.isPending}
+                  variant={'ghost'}
+                  size={'icon'}
+                  className="p-0"
+                  onClick={(e) => {
+                    patchOweMutation.mutate({ oweID: owe.owe_id, isPaid: owe.paid });
+                  }}>
+                  <ClipboardCheck className="!h-6 !w-6" />
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
       </TableBody>
     </Table>
   );

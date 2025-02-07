@@ -9,47 +9,55 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-
+import LoadingSpinner from '@/components/loading';
 
 export default function HistoryTable() {
   const [pageNumber, setPageNumber] = React.useState(1);
-  const { data: billsHistory, status: billsHistoryStatus, refetch: refetchBillsHistory } = useBillsHistory(pageNumber);
+  const {
+    data: billsHistory,
+    status: billsHistoryStatus,
+    refetch: refetchBillsHistory
+  } = useBillsHistory(pageNumber);
+
+  const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
+  };
+
+  if (billsHistoryStatus === 'pending') {
+    return <LoadingSpinner />;
+  }
 
   return (
     <Table>
-      <TableCaption>Your outstanding debts.</TableCaption>
+      <TableCaption>History of all debt payments</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Bill</TableHead>
-          <TableHead>Debtor</TableHead>
-          <TableHead>Loaner</TableHead>
-          <TableHead>Paid at</TableHead>
-          <TableHead className='text-right'>Paid</TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead>Loaned From</TableHead>
+          <TableHead>Loaned To</TableHead>
+          <TableHead>Paid On</TableHead>
+          <TableHead className="text-right">Amount</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {billsHistoryStatus === 'pending' ? (
-          <TableRow>
-            <TableCell>Loading...</TableCell>
-          </TableRow>
-        ) : null}
-        {billsHistoryStatus === 'error' ? (
-          <TableRow>
-            <TableCell>Failed to get debts</TableCell>
-          </TableRow>
-        ) : null}
-        {billsHistoryStatus === 'success'
-          ? billsHistory!.map((billHistory) => (
-              <TableRow key={billHistory.owe_id}>
-                <TableCell className="font-medium">{billHistory.bill_name}</TableCell>
-                <TableCell>{billHistory.debtor}</TableCell>
-                <TableCell>{billHistory.loaner}</TableCell>
-                <TableCell>{billHistory.date_paid}</TableCell>
-                <TableCell className='text-right'>{billHistory.amount_paid}</TableCell>
-              </TableRow>
-            ))
-          : null}
+        {billsHistory &&
+          billsHistory.map((billHistory) => (
+            <TableRow key={billHistory.owe_id}>
+              <TableCell className="font-medium">
+                {billHistory.bill_name || (
+                  <span className="text-muted-foreground">Untitled Debt</span>
+                )}
+              </TableCell>
+              <TableCell>{billHistory.loaner}</TableCell>
+              <TableCell>{billHistory.debtor}</TableCell>
+              <TableCell>{formatDate(billHistory.date_paid)}</TableCell>
+              <TableCell className="text-right">${billHistory.amount_paid}</TableCell>
+            </TableRow>
+          ))}
       </TableBody>
     </Table>
   );
