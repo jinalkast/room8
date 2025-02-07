@@ -16,8 +16,8 @@ app = FastAPI()
 # Reads from system env in a case insensitive way
 class Settings(BaseSettings):
     app_name: str = "Room8 Cleanliness Detection System"
-    next_public_supabase_url: str = "https://widrqfeliprozqqknues.supabase.co/"
-    next_secret_supabase_service_role_key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpZHJxZmVsaXByb3pxcWtudWVzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczMTE3MjIzNiwiZXhwIjoyMDQ2NzQ4MjM2fQ.25M89rVLSdmP0WFMyEYCzwzQGkA_W0z9cNJUe1LK46c"
+    next_public_supabase_url: str
+    next_secret_supabase_service_role_key: str
     port: int = 8000
 
 settings = Settings()
