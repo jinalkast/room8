@@ -51,15 +51,20 @@ class HouseObject:
     def centroid(self) -> list[int]:
         return [int((self.x2 - self.x1)/2), int((self.y2 - self.y1)/2)] 
     
-    """Class label"""
+    """Class number key"""
     @property
     def class_num(self) -> str:
         return self.label
 
-    """Class label"""
+    """Class label/ name"""
     @property
     def class_name(self) -> str:
         return COCO_LABELS[self.label]
+    
+    """Mask of object silhouette"""
+    @property
+    def object_mask(self) -> np.array:
+        return self.mask
     
     """Distance between 2 house objects"""
     def distance(self, other: 'HouseObject') -> float:
@@ -177,7 +182,7 @@ class CleanlinessDetector:
 
     
     """Given an image, return list of objects detected"""
-    def detect_objects(self, img: Image, display=False) -> list[HouseObject]:
+    def detect_objects(self, img: Image, display: bool = False) -> list[HouseObject]:
         # Load image
         img_rgb = np.array(img.convert("RGB"))
 
@@ -202,6 +207,9 @@ class CleanlinessDetector:
             mask = masks[i] if masks is not None else None
 
             house_objects.append(HouseObject(label=class_id, bbox=[x1, y1, x2, y2], mask=mask))
+
+        if display:
+            self.annotate_image(img, house_objects)
 
         return house_objects
     
@@ -260,8 +268,6 @@ class CleanlinessDetector:
     """Draw boxes and show classes for objects detected in image"""
     def annotate_image(self, img: Image, objects: list[HouseObject], display=False) -> plt.figure:
         """Draw boxes, show classes, and overlay masks for objects detected in image"""
-        
-        #img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
         img = np.array(img.convert("RGB"))
         overlay = img.copy()
 
@@ -338,7 +344,7 @@ class CleanlinessDetector:
         return f
 
     """Exporting annotated before/after images and csv file to export_results folder"""
-    def export_results(self, before_fig: plt.figure, after_fig: plt.figure, changes_fig: plt.figure, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]):
+    def export_results(self, before_fig: plt.figure, after_fig: plt.figure, changes_fig: plt.figure, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> None:
         FORMATTED_DATETIME = datetime.now().strftime("%Y-%m-%d %Hh-%Mm-%Ss")
 
         # Path and making folder
