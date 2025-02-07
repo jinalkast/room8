@@ -32,7 +32,7 @@ export default function DashboardCards() {
     {
       name: 'Settings',
       icon: <Settings size={54} strokeWidth={1} />,
-      link: '/settings'
+      link: '/profile'
     }
   ];
 

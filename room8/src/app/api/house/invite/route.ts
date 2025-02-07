@@ -76,14 +76,15 @@ export async function POST(req: NextRequest) {
       .select()
       .eq('user_id', userData.id)
       .eq('inviter_id', inviterId)
-      .eq('house_id', houseId)
-      .single();
+      .eq('house_id', houseId);
+
+    console.log(existingInvite, existingInviteError);
 
     if (existingInviteError) {
       throw new Error('Failed to check for existing invite');
     }
 
-    if (existingInvite) {
+    if (existingInvite.length > 0) {
       throw new Error('User has already been invited by this user');
     }
 

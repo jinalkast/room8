@@ -17,7 +17,7 @@ const MenuProfileStub = () => {
           src={user.image_url}
           width={32}
           height={32}
-          className="rounded-full"
+          className="rounded-full w-10 h-10"
         />
         <div>
           <h2 className="text-sm">{user.name}</h2>
