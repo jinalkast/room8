@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { updateProfilePayload } from './types';
 import useEditProfile from './hooks/useEditProfile';
 import MutateLoadingSpinner from '@/components/mutate-loading';
+import Image from 'next/image';
 
 export default function ProfilePage() {
   const { data: user, status: userFetchStatus } = useUser();
@@ -34,8 +35,7 @@ export default function ProfilePage() {
     field: K,
     value: updateProfilePayload[K] | Blob | null
   ) {
-
-    if (field === "profilePicture" && value instanceof Blob) {
+    if (field === 'profilePicture' && value instanceof Blob) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setUpdatePayload((old) => ({ ...old, [field]: reader.result as string }));
@@ -67,7 +67,7 @@ export default function ProfilePage() {
         phoneNumber: user.phone,
         name: user.name,
         profilePicture: null
-      })
+      });
     }
   }, [user]);
 
@@ -81,35 +81,49 @@ export default function ProfilePage() {
 
   return (
     <div>
-
-      <h2 className="text-4xl mb-2">My Profile</h2>
-      <h3 className="text-2xl text-muted-foreground mb-4">Edit everything about yourself</h3>
-      <Card className="h-[85vh] w-1/2 rounded-3xl brightness-150 mr-20">
+      <h2 className="text-4xl mb-8">My Profile</h2>
+      <Card className="w-1/2">
+        <CardHeader>
+          <CardTitle>Profile Settings</CardTitle>
+          <CardDescription>View and edit your profile information</CardDescription>
+        </CardHeader>
         <CardContent className="h-full flex flex-col overflow-auto">
           <div className="w-full flex flex-col items-center justify-center mt-6">
-            <Avatar className="w-48 h-48 mb-2">
+            <div className="relative w-48 h-48 rounded-full overflow-hidden">
               {isEditing && updatePayload.profilePicture !== null ? (
-                <AvatarImage alt="your profile picture" src={updatePayload.profilePicture} />)
-                :
-                <AvatarImage alt="your profile picture" src={user!.image_url} />
-              }
-              <AvatarFallback>Your PFP</AvatarFallback>
-            </Avatar>
-            <h2 className="text-2xl">{user!.name}</h2>
-            <h3 className="text-muted text-xl mb-5">{user!.email}</h3>
-            <h3 className="text-muted text-xl mb-5 border-b-2 w-full text-center pb-2">
-              Joined: {new Date(user!.created_at).toLocaleDateString()}
-            </h3>
-          </div>
-          {!isEditing ? (
-            <div className="flex flex-col items-center">
-              <span>
+                <Image
+                  fill
+                  alt="your profile picture"
+                  src={updatePayload.profilePicture}
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 192px"
+                />
+              ) : (
+                <Image
+                  fill
+                  alt="your profile picture"
+                  src={user!.image_url}
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 192px"
+                />
+              )}
+            </div>
+
+            <p className="text-2xl mt-4">{user!.name}</p>
+            <p className="text-muted-foreground text-lg mb-2">{user!.email}</p>
+            <p className="text-muted-foreground text-lg mb-2 text-center">
+              Joined {new Date(user!.created_at).toLocaleDateString()}
+            </p>
+            {user?.phone && (
+              <span className="text-muted-foreground">
                 <Phone className="inline" />
                 {user!.phone}
               </span>
-              <Button
-                onClick={() => setIsEditing(!isEditing)}
-                className="m-auto px-4 py-2 bg-primary h-[50px] w-full text-white rounded-md">
+            )}
+          </div>
+          {!isEditing ? (
+            <div className="flex flex-col items-center mt-6">
+              <Button onClick={() => setIsEditing(!isEditing)} className="w-full">
                 Edit Profile
               </Button>
             </div>
@@ -143,28 +157,24 @@ export default function ProfilePage() {
                   value={''}
                   onChange={(e) => {
                     const file = e.target?.files ? e.target.files[0] : null;
-                    handleChange("profilePicture", file);
+                    handleChange('profilePicture', file);
                   }}
                   className="p-2 border rounded-md"
                 />
-
               </div>
-              <Button
-                onClick={handleSaveChanges}
-                className="px-4 py-2 bg-primary h-[50px] w-full text-white rounded-md">
-                Save Changes
-              </Button>
-              <Button
-                onClick={handleCancelChanges}
-                className="px-4 py-2 bg-primary h-[50px] w-full text-white rounded-md">
-                Cancel
-              </Button>
+              <div className="flex gap-2">
+                <Button onClick={handleSaveChanges} className="flex-1">
+                  Save Changes
+                </Button>
+                <Button variant="secondary" onClick={handleCancelChanges} className="flex-1">
+                  Cancel
+                </Button>
+              </div>
             </div>
           )}
         </CardContent>
       </Card>
       <MutateLoadingSpinner condition={pendingUserUpdate} />
-
     </div>
   );
 }
