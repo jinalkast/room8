@@ -84,7 +84,6 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
       newOwes.set(roommateId, splitAmount);
     }
 
-    console.log(newOwes);
     form.setValue('owes', newOwes);
   };
 
@@ -99,7 +98,6 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
       newOwes.set(roommateId, splitAmount);
     }
 
-    console.log(newOwes);
     form.setValue('owes', newOwes);
     setRoommatesSelected(selectedRoommates);
   };
@@ -122,7 +120,6 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
       }
     }
 
-    console.log(newOwes);
     form.setValue('owes', newOwes);
     if (user?.id && !roommatesSelected.includes(user.id)) {
       setRoommatesSelected([...roommatesSelected, user.id]);
@@ -285,7 +282,6 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
 
                                 // Sync the updated Map with the form state
                                 form.setValue('owes', updatedOwes);
-                                console.log(field.value);
                               }}
                             />
                           </div>

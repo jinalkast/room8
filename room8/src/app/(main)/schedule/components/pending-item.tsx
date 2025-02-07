@@ -52,14 +52,6 @@ export default function PendingItem({ item, thisWeek, index }: props) {
     return thisWeekChores?.length === item.responsible.length;
   };
 
-  if (isChoreCompleted() && index === 0) {
-    return (
-      <p className="text-muted-foreground p-4 block text-center">
-        You have no more chores this week!
-      </p>
-    );
-  }
-
   if (isChoreCompleted()) {
     return null;
   }

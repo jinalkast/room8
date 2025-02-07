@@ -8,13 +8,15 @@ export async function GET(
 ): Promise<NextResponse<TApiResponse<Tables<'cleanliness_logs'>[]>>> {
   try {
     const searchParams = req.nextUrl.searchParams;
-    const houseID = searchParams.get('houseID')
+    const houseID = searchParams.get('houseID');
     if (!houseID) {
-      return NextResponse.json({
-        data: null,
-        message: "Bad Request: houseID is required"
-      },
-      { status: 400 });
+      return NextResponse.json(
+        {
+          data: null,
+          message: 'Bad Request: houseID is required'
+        },
+        { status: 400 }
+      );
     }
 
     const supabase = await supabaseServer();
@@ -27,8 +29,12 @@ export async function GET(
       throw new Error('User not authenticated');
     }
 
-    const { data: cleanlinessLogs, error } = await supabase.from('cleanliness_logs').select('*').eq('house_id', houseID).order('created_at', { ascending: false });
-    console.log(cleanlinessLogs)
+    const { data: cleanlinessLogs, error } = await supabase
+      .from('cleanliness_logs')
+      .select('*')
+      .eq('house_id', houseID)
+      .order('created_at', { ascending: false });
+
     if (error) {
       console.log('cleanliness logs error:', error);
       throw new Error('Error fetching cleanliness logs');

@@ -20,7 +20,6 @@ export const fetchCleanlinessLogs = async (houseID: string): Promise<TCleanlines
         id: log.id,
         before_image_url: log.before_image_url,
         after_image_url: log.after_image_url,
-        algorithm_output: log.algorithm_output,
         created_at: log.created_at
       };
     }) ?? null
@@ -35,7 +34,7 @@ export default function useCleanlinessLogs({
   enabled?: boolean;
 }) {
   return useQuery({
-    queryKey: ['cleanlinessLogs'],
+    queryKey: ['cleanliness-logs'],
     enabled: enabled,
     queryFn: async () => fetchCleanlinessLogs(params.houseID)
   });

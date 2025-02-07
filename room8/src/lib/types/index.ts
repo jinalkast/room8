@@ -38,7 +38,6 @@ export type TCleanlinessLog = {
   id: string;
   before_image_url: string;
   after_image_url: string;
-  algorithm_output: Json;
   created_at: string;
 };
 
