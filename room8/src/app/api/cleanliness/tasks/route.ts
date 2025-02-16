@@ -14,6 +14,22 @@ export async function GET(req: NextRequest) {
       throw new Error('User is not in a house');
     }
 
+    const { data: houseData, error: houseError } = await supabase.from('houses').select('camera_id').eq('id', houseId).single();
+    if (houseError || !houseData) {
+      console.log('house data error:', houseError);
+      throw new Error('Error fetching house data');
+    }
+
+    if (houseData.camera_id === null) {
+      return NextResponse.json(
+        {
+          data: [],
+          message: 'House does not have a camera'
+        },
+        { status: 200 }
+      );
+    }
+
     let query = supabase
       .from('cleanliness_tasks')
       .select(
@@ -25,7 +41,7 @@ export async function GET(req: NextRequest) {
         cleanliness_log:cl_log_id(*)
         `
       )
-      .eq('cleanliness_log.house_id', houseId);
+      .eq('cleanliness_log.camera_id', houseData.camera_id);
 
     // If logId is provided, filter by that specific log
     if (logId) {

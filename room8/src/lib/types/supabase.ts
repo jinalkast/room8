@@ -126,31 +126,31 @@ export type Database = {
         Row: {
           after_image_url: string
           before_image_url: string
+          camera_id: string
           created_at: string
-          house_id: string
           id: string
         }
         Insert: {
           after_image_url: string
           before_image_url: string
+          camera_id: string
           created_at?: string
-          house_id: string
           id?: string
         }
         Update: {
           after_image_url?: string
           before_image_url?: string
+          camera_id?: string
           created_at?: string
-          house_id?: string
           id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "cleanliness_log_house_id_fkey"
-            columns: ["house_id"]
+            foreignKeyName: "cleanliness_logs_camera_id_fkey"
+            columns: ["camera_id"]
             isOneToOne: false
             referencedRelation: "houses"
-            referencedColumns: ["id"]
+            referencedColumns: ["camera_id"]
           },
         ]
       }
@@ -335,6 +335,7 @@ export type Database = {
       houses: {
         Row: {
           address: string
+          camera_id: string | null
           chatbot_active: boolean
           created_at: string
           id: string
@@ -344,6 +345,7 @@ export type Database = {
         }
         Insert: {
           address: string
+          camera_id?: string | null
           chatbot_active?: boolean
           created_at?: string
           id?: string
@@ -353,6 +355,7 @@ export type Database = {
         }
         Update: {
           address?: string
+          camera_id?: string | null
           chatbot_active?: boolean
           created_at?: string
           id?: string

@@ -7,7 +7,7 @@ import io
 
 INACTIVITY_TIME_REQUIRED = 60*0.1  # 20 SECS minute
 MIN_COUNTER_AREA = 500  # Define your minimum area threshold
-HOUSE_ID = 'd49c90ae-7b59-47e3-b5e6-604f16026185'
+CAMERA_ID = 'd49c90ae-7b59-47e3-b5e6-604f16026185'
 ALGO_MICROSERVICE_URL = 'http://127.0.0.1:8000'
 
 def upload_frames_to_server(beforeFrame, afterFrame):
@@ -31,7 +31,7 @@ def upload_frames_to_server(beforeFrame, afterFrame):
     }
 
     # Send the POST request
-    response = requests.post(f'{ALGO_MICROSERVICE_URL}/upload/{HOUSE_ID}', files=files)
+    response = requests.post(f'{ALGO_MICROSERVICE_URL}/upload/{CAMERA_ID}', files=files)
 
     # Check the response status
     if response.status_code == 200:

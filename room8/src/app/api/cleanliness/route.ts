@@ -29,10 +29,26 @@ export async function GET(
       throw new Error('User not authenticated');
     }
 
+    const { data: houseData, error: houseError } = await supabase.from('houses').select('camera_id').eq('id', houseID).single();
+    if (houseError || !houseData) {
+      console.log('house data error:', houseError);
+      throw new Error('Error fetching house data');
+    }
+
+    if (houseData.camera_id === null) {
+      return NextResponse.json(
+        {
+          data: [],
+          message: 'House does not have a camera'
+        },
+        { status: 200 }
+      );
+    }
+
     const { data: cleanlinessLogs, error } = await supabase
       .from('cleanliness_logs')
       .select('*')
-      .eq('house_id', houseID)
+      .eq('camera_id', houseData.camera_id)
       .order('created_at', { ascending: false });
 
     if (error) {
