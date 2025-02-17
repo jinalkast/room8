@@ -73,7 +73,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
     return NextResponse.json(
       {
         data: null,
-        message: 'Removed roommate successfuly'
+        message: 'Removed roommate successfully'
       },
       { status: 200 }
     );

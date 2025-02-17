@@ -85,7 +85,10 @@ def main():
             if (last_motion_time_detected is not None):
                 time_since_last_motion = time.time() - last_motion_time_detected
                 if time_since_last_motion > INACTIVITY_TIME_REQUIRED and not triggered:
-                    upload_frames_to_server(beforeFrame, frame)
+                    try:
+                        upload_frames_to_server(beforeFrame, frame)
+                    except Exception as e:
+                        print(f"Failed to upload frames: {e}")
                     # Update beforeFrame to the current frame
                     beforeFrame = frame
                     # Set triggered to True to prevent multiple uploads

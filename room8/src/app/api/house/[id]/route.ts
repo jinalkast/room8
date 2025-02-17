@@ -34,7 +34,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     return NextResponse.json(
       {
         data: null,
-        message: 'Updated house successfuly'
+        message: 'Updated house successfully'
       },
       { status: 200 }
     );
