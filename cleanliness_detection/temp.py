@@ -267,7 +267,8 @@ class CleanlinessDetector:
     def annotate_image(self, img: Image, objects: list[HouseObject], display=False) -> plt.figure:
         """Draw boxes, show classes, and overlay masks for objects detected in image"""
         img = np.array(img.convert("RGB"))
-        overlay = img.copy()
+        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        overlay = img_rgb.copy()
 
         for obj in objects:
             x1, y1, x2, y2 = obj.bbox
@@ -283,14 +284,14 @@ class CleanlinessDetector:
                                                 overlay[:, :, c])
             
             # Draw bounding box
-            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            cv2.putText(img, obj.class_name, (x1, y1 - 10),
+            cv2.rectangle(img_rgb, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(img_rgb, obj.class_name, (x1, y1 - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         
         # Blend overlay with original image
-        img = cv2.addWeighted(overlay, 0.6, img, 0.4, 0)
+        img_rgb = cv2.addWeighted(overlay, 0.6, img_rgb, 0.4, 0)
         
-        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        #img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         f = plt.figure()
         axarr = f.add_subplot(1,1,1)
         if display:
@@ -304,12 +305,15 @@ class CleanlinessDetector:
         """Draw boxes around the changes (added, moved objects)"""
         # Convert PIL.Image to a NumPy array with dtype=uint8
         img_np = np.array(img)
+        #img_np = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
         if img_np.dtype != np.uint8:
             img_np = img_np.astype(np.uint8)
         
         # Convert RGB to BGR for OpenCV
-        img = np.array(img.convert("RGB"))
-        overlay = img.copy()
+        #img = np.array(img.convert("RGB"))
+        #img = np.array(img)
+        overlay = img_np.copy()
+
 
         # Combine all changes into one list
         changes = added.copy()  # Start with added objects
@@ -324,19 +328,19 @@ class CleanlinessDetector:
             x1, y1, x2, y2 = obj.bbox
             
             # Draw bounding box
-            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            cv2.putText(img, obj.class_name, (x1, y1 - 10),
+            cv2.rectangle(img_np, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(img_np, obj.class_name, (x1, y1 - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         
         # Blend overlay with original image
-        img = cv2.addWeighted(overlay, 0.6, img, 0.4, 0)
+        img = cv2.addWeighted(overlay, 0.6, img_np, 0.4, 0)
         
-        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         f = plt.figure()
         axarr = f.add_subplot(1,1,1)
         if display:
-            axarr.imshow(img_rgb)
-            cv2.imshow("Changes Annotated Image", img_rgb)
+            axarr.imshow(img)
+            cv2.imshow("Changes Annotated Image", img)
             cv2.waitKey(0)
         axarr.axis('off')  # Hide axis
         return f
