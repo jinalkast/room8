@@ -265,40 +265,45 @@ class CleanlinessDetector:
 
     """Draw boxes and show classes for objects detected in image"""
     def annotate_image(self, img: Image, objects: list[HouseObject], display=False) -> plt.figure:
-        """Draw boxes, show classes, and overlay masks for objects detected in image"""
-        img = np.array(img.convert("RGB"))
-        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        overlay = img_rgb.copy()
+        # Convert PIL.Image to NumPy array (RGB)
+        img_np = np.array(img.convert("RGB"))
+        
+        # Copy image for overlay
+        overlay = img_np.copy()
 
         for obj in objects:
             x1, y1, x2, y2 = obj.bbox
-            
+
             # Draw instance mask if available
             if obj.mask is not None:
-                mask = obj.mask.astype(np.uint8) * 255  # Convert to uint8 (0-255)
+                mask = obj.mask.astype(np.uint8) * 255  # Convert mask to 0-255 range
                 color = np.random.randint(0, 255, (3,), dtype=int).tolist()  # Random color
                 
                 for c in range(3):
                     overlay[:, :, c] = np.where(mask > 0, 
                                                 overlay[:, :, c] * 0.5 + color[c] * 0.5, 
                                                 overlay[:, :, c])
-            
-            # Draw bounding box
-            cv2.rectangle(img_rgb, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            cv2.putText(img_rgb, obj.class_name, (x1, y1 - 10),
+
+            # Draw bounding box on overlay
+            cv2.rectangle(overlay, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(overlay, obj.class_name, (x1, y1 - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-        
+
         # Blend overlay with original image
-        img_rgb = cv2.addWeighted(overlay, 0.6, img_rgb, 0.4, 0)
-        
-        #img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        annotated_img = cv2.addWeighted(overlay, 0.6, img_np, 0.4, 0)
+
+        # Display using Matplotlib
         f = plt.figure()
-        axarr = f.add_subplot(1,1,1)
-        if display:
-            axarr.imshow(img_rgb)
-            cv2.imshow("Annotated Image", img_rgb)
-            cv2.waitKey(0)
+        axarr = f.add_subplot(1, 1, 1)
+        axarr.imshow(annotated_img)  # Matplotlib expects RGB
         axarr.axis('off')  # Hide axis
+
+        # Display using OpenCV
+        if display:
+            cv2.imshow("Annotated Image", cv2.cvtColor(annotated_img, cv2.COLOR_RGB2BGR))  # Convert to BGR for OpenCV
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+
         return f
 
     def annotate_changes(self, img: Image, added: list[HouseObject], moved: list[HouseObject], display=False) -> plt.figure:
