@@ -1,3 +1,4 @@
+// import { supabaseServer } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 // import { Twilio } from 'twilio';
 
@@ -11,8 +12,12 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
+
     // const response = await req.json();
     // const participants = response.participants;
+    // const response = await req.json();
+    // const participants = response.participants;
+    // const houseId = response.house;
 
     // if (!Array.isArray(participants) || participants.length === 0) {
     //   return NextResponse.json({ message: 'Participants array is required' }, { status: 400 });
@@ -23,6 +28,11 @@ export async function POST(req: NextRequest) {
     // let conversation = null;
     // const allConversations = await client.conversations.v1.conversations.list();
     // conversation = allConversations.find((conv) => conv.friendlyName === friendlyName);
+    // Step 1: Check if the conversation already exists
+//     const friendlyName = houseId;
+//     let conversation = null;
+//     const allConversations = await client.conversations.v1.conversations.list();
+//     conversation = allConversations.find((conv) => conv.friendlyName === friendlyName);
 
     // if (!conversation) {
     //   // Create a new conversation if it doesn't exist
@@ -71,6 +81,10 @@ export async function POST(req: NextRequest) {
     //     author: 'Chatbot',
     //     body: 'Hey everyone! 👋 I’m RoomBot, your friendly digital helper here in the Room8 app! 🎉\n\nI’m here to make roommate life a little easier, whether it’s keeping track of chores, reminding everyone about bills, or just helping keep things organized.'
     //   });
+
+    // update supabase to indicate that the chatbot is active
+//     const supabase = await supabaseServer();
+//     const { data, error } = await supabase.from('houses').update({ chatbot_active: true }).eq('id', houseId);
 
     return NextResponse.json(
       {
