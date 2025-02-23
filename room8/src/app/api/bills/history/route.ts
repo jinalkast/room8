@@ -23,7 +23,7 @@ export async function GET(req: NextRequest): Promise<NextResponse<TApiResponse<T
       .select('*')
       .or(`debtor_id.eq.${user.id},loaner_id.eq.${user.id}`)
       .order('updated_at', { ascending: false });
-      // .range((page - 1) * 10, page * 10);
+    // .range((page - 1) * 10, page * 10);
     if (historyError) {
       console.log('historyError:', historyError);
       throw new Error('Error fetching history');
