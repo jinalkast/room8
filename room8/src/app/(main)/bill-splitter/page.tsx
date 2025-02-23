@@ -1,67 +1,80 @@
 'use client';
 
 import { useState } from 'react';
-import { FilePen, House, HandCoins, Receipt } from 'lucide-react';
+import { FilePen, House, HandCoins, Receipt, Book, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import CreateBillForm from './components/createBillForm';
-import OwesTable from './components/owesTable';
-import BillsTable from './components/billsTable';
-import { Card } from '@/components/ui/card';
-
-type Tab = {
-  icon: JSX.Element;
-  title: string;
-  component: JSX.Element;
-};
-
-type Tabs = {
-  [key: string]: Tab;
-};
+import DebtsTable from './components/debtsTable';
+import LoansTable from './components/loansTable';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Modal } from '@/components/modal';
+import SummaryCard from './components/summaryCard';
+import HistoryTable from './components/historyTable';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function BillSplitterPage() {
-  const TABS: Tabs = {
-    // summary: { icon: <House />, title: 'Summary', component: <div>Summary</div> },
-    create: {
-      icon: <FilePen />,
-      title: 'Create Bill',
-      component: <CreateBillForm />
-    },
-    owes: {
-      icon: <HandCoins />,
-      title: 'Outstanding Debts',
-      component: <OwesTable />
-    },
-    loans: {
-      icon: <Receipt />,
-      title: 'Outstanding Loans',
-      component: <BillsTable />
-    }
-  };
-
-  const [activeTab, setActiveTab] = useState(TABS.create);
+  const [isModelOpen, setIsModelOpen] = useState(false);
   return (
     <div>
       <h2 className="text-4xl mb-8">Bill Splitter</h2>
-
-      <Card className="p-8">
-        <nav className={cn('flex justify-center gap-6 ')}>
-          {Object.values(TABS).map((tab) => (
-            <div
-              key={tab.title}
-              onClick={() => setActiveTab(tab)}
-              className={cn(
-                'flex gap-3 cursor-pointer hover:bg-[#955363] p-2 rounded-md transition-all mb-4',
-                {
-                  'bg-[#490024]': activeTab.title === tab.title
-                }
-              )}>
-              {tab.icon}
-              <div className="hidden lg:block">{tab.title}</div>
-            </div>
-          ))}
-        </nav>
-        {activeTab.component}
-      </Card>
+      <div className="w-[50vw]">
+        <SummaryCard />
+        <Card>
+          <CardHeader>
+            <CardTitle>Bill Tracker</CardTitle>
+            <CardDescription>View your outstanding debts, loans, and history.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Tabs defaultValue="debts">
+              <div className="flex justify-between items-center">
+                <TabsList>
+                  <TabsTrigger value="debts">
+                    <div className="flex gap-2 items-center">
+                      <HandCoins />
+                      <p>Outstanding Debts</p>
+                    </div>
+                  </TabsTrigger>
+                  <TabsTrigger value="loans">
+                    <div className="flex gap-2 items-center">
+                      <Receipt />
+                      <p>Outstanding Loans</p>
+                    </div>
+                  </TabsTrigger>
+                  <TabsTrigger value="history">
+                    <div className="flex gap-2 items-center">
+                      <Book />
+                      <p>History</p>
+                    </div>
+                  </TabsTrigger>
+                </TabsList>
+                <Modal
+                  open={isModelOpen}
+                  className="min-w-[600px]"
+                  onOpenChange={setIsModelOpen}
+                  title={'Create Bill'}
+                  trigger={
+                    <Button>
+                      <Plus />
+                      Create Bill
+                    </Button>
+                  }>
+                  <CreateBillForm closeBillModal={() => setIsModelOpen(false)} />
+                </Modal>
+              </div>
+              <TabsContent value="debts">
+                <DebtsTable />
+              </TabsContent>
+              <TabsContent value="loans">
+                <LoansTable />
+              </TabsContent>
+              <TabsContent value="history">
+                <HistoryTable />
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

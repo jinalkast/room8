@@ -1,10 +1,12 @@
 import { supabaseServer } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest) {
   // delete chore from activities table based on id in url
 
-  const id = params.id;
+  const { pathname } = req.nextUrl;
+  const segments = pathname.split('/');
+  const id = segments[segments.length - 1];
 
   if (!id) {
     return NextResponse.json(
@@ -18,7 +20,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 
   const supabase = await supabaseServer();
 
-  const { error } = await supabase.from('activities').delete().eq('id', id);
+  const { error } = await supabase.from('chores').delete().eq('id', id);
 
   console.log(error);
 

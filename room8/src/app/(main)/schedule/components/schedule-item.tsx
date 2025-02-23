@@ -1,76 +1,175 @@
 'use client';
 
 import { Modal } from '@/components/modal';
-import { TActivity, TRoommate } from '@/lib/types';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, Circle, CircleCheck } from 'lucide-react';
 import { useState } from 'react';
-import useRoommates from '../../../../../hooks/useRoomates';
 import Image from 'next/image';
 import { DialogClose } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import useDeleteChore from '../../../../../hooks/useDeleteChore';
+import useDeleteChore from '../hooks/useDeleteChore';
+import useRoommates from '@/hooks/useRoommates';
+import { TActivity } from '../types';
+import LoadingSpinner from '@/components/loading';
+import { Switch } from '@/components/ui/switch';
+import useCompletedChores from '../hooks/useGetCompletedChores';
+import { cn } from '@/lib/utils';
+import useUpdateCompletedChore from '../hooks/useUpdateCompletedChore';
+import MutateLoadingSpinner from '@/components/mutate-loading';
 
 type props = {
   item: TActivity;
+  thisWeek: Date;
 };
 
-export default function ScheduleItem({ item }: props) {
+export default function ScheduleItem({ item, thisWeek }: props) {
   const [open, setOpen] = useState(false);
-  const { data: roommates, isLoading: roommatesLoading } = useRoommates();
 
-  const deleteChore = useDeleteChore();
+  const { data: roommates, isLoading: roommatesLoading } = useRoommates();
+  const { data: completedChores, isLoading: completedChoresLoading } = useCompletedChores(item.id);
+
+  const { mutate: deleteChore, isPending: pendingDeleteChore } = useDeleteChore();
+  const { mutate: updateChore, isPending: pendingUpdateChore } = useUpdateCompletedChore();
+
+  const isRoommateCompleted = (roommateId: string) => {
+    return completedChores?.some((chore) => {
+      const choreDate = new Date(chore.created_at);
+      return (
+        chore.profile_id === roommateId &&
+        choreDate >= thisWeek &&
+        choreDate < new Date(thisWeek.getTime() + 7 * 24 * 60 * 60 * 1000)
+      );
+    });
+  };
+
+  const isChoreCompleted = () => {
+    const thisWeekChores = completedChores?.filter((chore) => {
+      const choreDate = new Date(chore.created_at);
+      return (
+        choreDate >= thisWeek && choreDate < new Date(thisWeek.getTime() + 7 * 24 * 60 * 60 * 1000)
+      );
+    });
+    return thisWeekChores?.length === item.responsible.length;
+  };
 
   const responsibleRoommates = roommates?.filter((roommate) =>
     item.responsible.includes(roommate.id)
   );
 
+  if (roommatesLoading || !responsibleRoommates || completedChoresLoading) {
+    return <LoadingSpinner />;
+  }
+
+  const CardStub = () => {
+    if (responsibleRoommates.length === 0) {
+      return (
+        <div className="rounded-lg px-2 py-2 bg-primary/60 items-center cursor-pointer hover:bg-primary/90 transition">
+          <p className="text-sm">{item.title}</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="rounded-lg px-2 py-2 bg-primary/60 items-center cursor-pointer hover:bg-primary/90 transition">
+        <div className="flex items-center justify-between">
+          <p className="text-sm">{item.title}</p>
+          {isChoreCompleted() ? (
+            <CircleCheck className="text-green-600" />
+          ) : (
+            <Circle className="text-primary-foreground/50" />
+          )}
+        </div>
+
+        <ul className="flex mt-2 ml-2">
+          {responsibleRoommates.map((roommate) => (
+            <li key={roommate.id} className="rounded-full flex items-center gap-2 -ml-2">
+              <Image
+                src={roommate.imageUrl}
+                alt={roommate.name}
+                className={cn(
+                  'w-8 h-8 rounded-full ml-auto border-2 border-red-600',
+                  isRoommateCompleted(roommate.id) && 'border-green-600'
+                )}
+                width={28}
+                height={28}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <Modal
       open={open}
       onOpenChange={setOpen}
-      title={item.title}
+      title={'Chore Details'}
       trigger={
-        <div className="flex rounded-lg px-2 py-2 bg-primary items-center cursor-pointer hover:bg-primary/90 transition">
-          <p className="text-sm mr-2">{item.title}</p>
-          <CheckCircle className="ml-auto" size={20} />
+        <div>
+          <CardStub />
         </div>
       }
       footer={
-        <DialogClose asChild>
-          <Button
-            variant="destructive"
-            onClick={() => {
-              deleteChore.mutate(item.id);
-              setOpen(false);
-            }}>
-            Delete
-          </Button>
-        </DialogClose>
+        <>
+          <DialogClose asChild className="w-full">
+            <Button
+              variant="destructive"
+              onClick={() => {
+                deleteChore(item.id);
+                setOpen(false);
+              }}>
+              Delete
+            </Button>
+          </DialogClose>
+          <DialogClose asChild className="w-full">
+            <Button variant="secondary">Cancel</Button>
+          </DialogClose>
+        </>
       }>
-      <div className="py-4">
+      <div>
+        <MutateLoadingSpinner condition={pendingUpdateChore || pendingDeleteChore} />
+        <p className="mb-4">
+          <span className="font-bold text-macAccent">Name: </span>
+          <span>{item.title}</span>
+        </p>
         {item.description && (
           <div>
             <p>
-              <span className="font-semibold">Chore Description: </span> {item.description}
+              <span className="font-bold text-macAccent">Description: </span> {item.description}
             </p>
           </div>
         )}
 
         {responsibleRoommates && responsibleRoommates.length > 0 && (
           <div className="mt-4">
-            <p className="font-semibold">Responsible:</p>
+            <p className="font-bold text-macAccent">Responsible</p>
 
-            <ul className="flex flex-col gap-2 mt-2">
+            <ul className="flex flex-col gap-4 mt-4">
               {responsibleRoommates.map((roommate) => (
                 <li key={roommate.id} className="flex items-center gap-2">
                   <Image
-                    src={roommate.image_url}
+                    src={roommate.imageUrl}
                     alt={roommate.name}
                     className="w-8 h-8 rounded-full"
                     width={32}
                     height={32}
                   />
                   <p>{roommate.name}</p>
+
+                  <p className="ml-auto">
+                    {isRoommateCompleted(roommate.id) ? 'Completed' : 'Not Completed'}
+                  </p>
+                  <Switch
+                    id="chore-completed"
+                    checked={isRoommateCompleted(roommate.id) || false}
+                    onCheckedChange={() => {
+                      updateChore({
+                        id: item.id,
+                        userId: roommate.id,
+                        isCompleted: !isRoommateCompleted(roommate.id)
+                      });
+                    }}
+                  />
                 </li>
               ))}
             </ul>

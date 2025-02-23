@@ -1,14 +1,18 @@
 'use client';
 
 import { supabaseBrowser } from '@/lib/supabase/browser';
+import { Tables } from '@/lib/types/supabase';
 import { useQuery } from '@tanstack/react-query';
 
-const initUser = {
+const initUser: Tables<'profiles'> = {
   created_at: '',
-  name: '',
   email: '',
+  house_id: '',
   id: '',
-  image_url: ''
+  image_url: '',
+  name: '',
+  phone: '',
+  updated_at: ''
 };
 
 export default function useUser() {
