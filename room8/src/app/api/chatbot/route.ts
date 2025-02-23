@@ -12,7 +12,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
-
     // const response = await req.json();
     // const participants = response.participants;
     // const response = await req.json();
@@ -29,10 +28,10 @@ export async function POST(req: NextRequest) {
     // const allConversations = await client.conversations.v1.conversations.list();
     // conversation = allConversations.find((conv) => conv.friendlyName === friendlyName);
     // Step 1: Check if the conversation already exists
-//     const friendlyName = houseId;
-//     let conversation = null;
-//     const allConversations = await client.conversations.v1.conversations.list();
-//     conversation = allConversations.find((conv) => conv.friendlyName === friendlyName);
+    //     const friendlyName = houseId;
+    //     let conversation = null;
+    //     const allConversations = await client.conversations.v1.conversations.list();
+    //     conversation = allConversations.find((conv) => conv.friendlyName === friendlyName);
 
     // if (!conversation) {
     //   // Create a new conversation if it doesn't exist
@@ -83,8 +82,8 @@ export async function POST(req: NextRequest) {
     //   });
 
     // update supabase to indicate that the chatbot is active
-//     const supabase = await supabaseServer();
-//     const { data, error } = await supabase.from('houses').update({ chatbot_active: true }).eq('id', houseId);
+    //     const supabase = await supabaseServer();
+    //     const { data, error } = await supabase.from('houses').update({ chatbot_active: true }).eq('id', houseId);
 
     return NextResponse.json(
       {

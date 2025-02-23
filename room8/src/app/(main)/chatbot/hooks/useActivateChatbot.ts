@@ -5,7 +5,10 @@ import useGetHouse from '@/hooks/useGetHouse';
 import { TRoommate } from '@/lib/types';
 import { THouse } from '../../house-settings/types';
 
-export const activateChatbot = async (roommates: TRoommate[] | null, house: THouse | null): Promise<Json | null> => {
+export const activateChatbot = async (
+  roommates: TRoommate[] | null,
+  house: THouse | null
+): Promise<Json | null> => {
   const phoneList = roommates
     ? roommates.map((roommate) => roommate.phone).filter((phone) => phone != 'NULL')
     : [];
