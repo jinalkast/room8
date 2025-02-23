@@ -1,8 +1,11 @@
 import { supabaseServer } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = await params;
+export async function GET(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  const segments = pathname.split('/');
+  const id = segments[segments.length - 1];
+
   try {
     const supabase = await supabaseServer();
     const { data, error } = await supabase.from('amounts_owed').select('*').eq('bill_id', id);
