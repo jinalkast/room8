@@ -17,7 +17,6 @@ from detectron2.data import MetadataCatalog
 CONF_THRESH = 0.5                                                                           # min confidence for object detector
 DIST_THRESH = 15                                                                            # max number of pixels for object that moved slightly to still be considered in same spot                                                                     #
 IOU_THRESH = 0.8                                                                            # min IOU threshold for object to be considered in same spot
-# Faster R-CNN is trained on COCO dataset
 COCO_LABELS = {
     0: "person", 1: "bicycle", 2: "car", 3: "motorcycle", 4: "airplane", 5: "bus", 6: "train", 7: "truck", 8: "boat",
     9: "traffic light", 10: "fire hydrant", 11: "stop sign", 12: "parking meter", 13: "bench", 14: "bird", 15: "cat", 
@@ -31,7 +30,7 @@ COCO_LABELS = {
     74: "clock", 75: "vase", 76: "scissors", 77: "teddy bear", 78: "hair drier", 79: "toothbrush"
 }
 
-"""Define a class to represent a detection"""
+"""Class representing a detection"""
 class HouseObject:
     def __init__(self, label: int, bbox: list, mask: np.array = None) -> 'HouseObject':
         self.label = label
@@ -48,12 +47,12 @@ class HouseObject:
     def centroid(self) -> list[int]:
         return [int((self.x2 - self.x1)/2), int((self.y2 - self.y1)/2)] 
     
-    """Class number key"""
+    """COCO Class number key"""
     @property
     def class_num(self) -> str:
         return self.label
 
-    """Class label/ name"""
+    """COCO Class label/ name"""
     @property
     def class_name(self) -> str:
         return COCO_LABELS[self.label]
@@ -93,10 +92,10 @@ class HouseObject:
 
         return intersection_area / union_area
 
-
+"""Class for object detection and cleanliness assessment algorithms"""
 class CleanlinessDetector:
     def __init__(self) -> 'CleanlinessDetector':
-        # Load a Detectron2 model (Mask R-CNN)
+        # Init Mask R-CNN (i.e. instance segmentation) detector
         self.cfg = get_cfg()
         self.cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
         self.cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
@@ -180,6 +179,9 @@ class CleanlinessDetector:
     
     """Given an image, return list of objects detected"""
     def detect_objects(self, img: Image, display: bool = False) -> list[HouseObject]:
+        # Init return list
+        house_objects = []
+
         # Load image
         img_rgb = np.array(img.convert("RGB"))
 
@@ -191,18 +193,12 @@ class CleanlinessDetector:
         boxes = instances.pred_boxes.tensor.cpu().numpy()  # Bounding boxes
         masks = instances.pred_masks.cpu().numpy() if instances.has("pred_masks") else None
         classes = instances.pred_classes.cpu().numpy()  # Class indices
-        # scores = instances.scores.cpu().numpy()  # Confidence scores
+        scores = instances.scores.cpu().numpy()  # Confidence scores
 
-        # Metadata for COCO classes
-        # metadata = MetadataCatalog.get(self.cfg.DATASETS.TRAIN[0])
-        # class_names = metadata.get("thing_classes", None)
-
-        house_objects = []
-        
-        for i, (box, class_id) in enumerate(zip(boxes, classes)):
+        # Append detections to return
+        for i, (box, class_id) in enumerate(zip(boxes, classes, scores)):
             x1, y1, x2, y2 = map(int, box)
             mask = masks[i] if masks is not None else None
-
             house_objects.append(HouseObject(label=class_id, bbox=[x1, y1, x2, y2], mask=mask))
 
         if display:
@@ -347,7 +343,7 @@ class CleanlinessDetector:
         axarr.axis('off')  # Hide axis
         return f
 
-    """Exporting annotated before/after images and csv file to export_results folder"""
+    """Exporting annotated before, after, and changes image, and csv file to export_results folder"""
     def export_results(self, before_fig: plt.figure, after_fig: plt.figure, changes_fig: plt.figure, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> None:
         FORMATTED_DATETIME = datetime.now().strftime("%Y-%m-%d %Hh-%Mm-%Ss")
 
