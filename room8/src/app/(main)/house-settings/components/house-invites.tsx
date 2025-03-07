@@ -32,7 +32,7 @@ export default function HouseInvites() {
                         alt={invite.inviter.name}
                         width={48}
                         height={48}
-                        className="rounded-full"
+                        className="rounded-full h-10 w-10"
                       />
                       <p>
                         <span className="font-bold text-macAccent">{invite.inviter.name}</span>{' '}

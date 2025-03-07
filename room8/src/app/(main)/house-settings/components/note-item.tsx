@@ -59,7 +59,7 @@ function NoteItem({ note }: props) {
               alt={poster.name}
               width={24}
               height={24}
-              className="rounded-full"
+              className="rounded-full w-8 h-8"
             />
             <p className="text-sm">{poster.name}</p>
           </>

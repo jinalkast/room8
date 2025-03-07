@@ -1,9 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BotMessageSquare, CalendarCheck, HousePlus, Receipt, Settings } from 'lucide-react';
+import { BotMessageSquare, CalendarCheck, Cctv, HousePlus, Receipt, Settings } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardCards() {
   const PAGES = [
+    {
+      name: 'Cleanliness Manager',
+      icon: <Cctv size={54} strokeWidth={1} />,
+      link: '/cleanliness-manager'
+    },
     {
       name: 'Bill Splitter',
       icon: <Receipt size={54} strokeWidth={1} />,
@@ -27,7 +32,7 @@ export default function DashboardCards() {
     {
       name: 'Settings',
       icon: <Settings size={54} strokeWidth={1} />,
-      link: '/settings'
+      link: '/profile'
     }
   ];
 

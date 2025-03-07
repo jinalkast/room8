@@ -1,7 +1,17 @@
 'use client';
 
+import useUser from '@/app/auth/hooks/useUser';
 import { cn } from '@/lib/utils';
-import { BotMessageSquare, CalendarCheck, House, HousePlus, Receipt, Settings } from 'lucide-react';
+import {
+  BotMessageSquare,
+  CalendarCheck,
+  Cctv,
+  House,
+  HousePlus,
+  Receipt,
+  Settings,
+  User
+} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -54,32 +64,48 @@ const MenuLinkButton = ({ page, pathname }: { page: Page; pathname: string }) =>
 
 const MenuLinks = () => {
   const pathname = usePathname();
+  const { data: user } = useUser();
 
   const HOUSE_PAGES = {
-    dashboard: { path: '/dashboard', icon: <House />, title: 'Dashboard' },
-    billSplitter: { path: '/bill-splitter', icon: <Receipt />, title: 'Bill Splitter' },
-    choreSchedule: { path: '/schedule', icon: <CalendarCheck />, title: 'Chore Schedule' },
-    chatBot: { path: '/chatbot', icon: <BotMessageSquare />, title: 'ChatBot' }
+    dashboard: { path: '/dashboard', icon: <House />, title: 'Dashboard', auth: false },
+    cleanlinessManager: {
+      path: '/cleanliness-manager',
+      icon: <Cctv />,
+      title: 'Cleanliness Manager',
+      auth: true
+    },
+    billSplitter: { path: '/bill-splitter', icon: <Receipt />, title: 'Bill Splitter', auth: true },
+    choreSchedule: {
+      path: '/schedule',
+      icon: <CalendarCheck />,
+      title: 'Chore Schedule',
+      auth: true
+    },
+    chatBot: { path: '/chatbot', icon: <BotMessageSquare />, title: 'ChatBot', auth: true }
   };
 
   const USER_PAGES = {
-    houseSettings: { path: '/house-settings', icon: <HousePlus />, title: 'My House' },
-    settings: { path: '/settings', icon: <Settings />, title: 'My Settings' }
+    houseSettings: { path: '/house-settings', icon: <HousePlus />, title: 'My House', auth: false },
+    profile: { path: '/profile', icon: <User />, title: 'My Profile', auth: false }
   };
 
   return (
     <div className="mt-14">
       <p className="uppercase text-sm tracking-widest mb-4 opacity-80">House Management</p>
       <ul className="space-y-6">
-        {Object.values(HOUSE_PAGES).map((page) => (
-          <MenuLinkButton key={page.path} page={page} pathname={pathname} />
-        ))}
+        {Object.values(HOUSE_PAGES).map((page) => {
+          if (page.auth && !user?.house_id) return null;
+
+          return <MenuLinkButton key={page.path} page={page} pathname={pathname} />;
+        })}
       </ul>
       <p className="uppercase text-sm tracking-widest mt-8 mb-4 opacity-80">USER MANAGEMENT</p>
       <ul className="space-y-6">
-        {Object.values(USER_PAGES).map((page) => (
-          <MenuLinkButton key={page.path} page={page} pathname={pathname} />
-        ))}
+        {Object.values(USER_PAGES).map((page) => {
+          if (page.auth && !user?.house_id) return null;
+
+          return <MenuLinkButton key={page.path} page={page} pathname={pathname} />;
+        })}
       </ul>
     </div>
   );

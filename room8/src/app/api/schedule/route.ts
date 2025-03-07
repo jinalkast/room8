@@ -81,8 +81,6 @@ export async function POST(req: NextRequest) {
 
   const supabase = await supabaseServer();
 
-  console.log(title, date, description, responsible, houseId);
-
   const { data, error } = await supabase
     .from('chores')
     .insert([

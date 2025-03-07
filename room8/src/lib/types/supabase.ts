@@ -125,7 +125,6 @@ export type Database = {
       cleanliness_logs: {
         Row: {
           after_image_url: string
-          algorithm_output: Json
           before_image_url: string
           created_at: string
           house_id: string
@@ -133,15 +132,13 @@ export type Database = {
         }
         Insert: {
           after_image_url: string
-          algorithm_output: Json
           before_image_url: string
           created_at?: string
           house_id: string
-          id: string
+          id?: string
         }
         Update: {
           after_image_url?: string
-          algorithm_output?: Json
           before_image_url?: string
           created_at?: string
           house_id?: string
@@ -153,6 +150,110 @@ export type Database = {
             columns: ["house_id"]
             isOneToOne: false
             referencedRelation: "houses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cleanliness_tasks: {
+        Row: {
+          assigned_by_id: string | null
+          assigned_to_id: string | null
+          cl_log_id: string
+          completed_by_id: string | null
+          created_at: string
+          id: number
+          name: string
+          status: string
+        }
+        Insert: {
+          assigned_by_id?: string | null
+          assigned_to_id?: string | null
+          cl_log_id: string
+          completed_by_id?: string | null
+          created_at?: string
+          id?: number
+          name: string
+          status?: string
+        }
+        Update: {
+          assigned_by_id?: string | null
+          assigned_to_id?: string | null
+          cl_log_id?: string
+          completed_by_id?: string | null
+          created_at?: string
+          id?: number
+          name?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cleanliness_tasks_assigned_by_id_fkey"
+            columns: ["assigned_by_id"]
+            isOneToOne: false
+            referencedRelation: "amounts_owed"
+            referencedColumns: ["loaner_id"]
+          },
+          {
+            foreignKeyName: "cleanliness_tasks_assigned_by_id_fkey"
+            columns: ["assigned_by_id"]
+            isOneToOne: false
+            referencedRelation: "amounts_owed"
+            referencedColumns: ["debtor_id"]
+          },
+          {
+            foreignKeyName: "cleanliness_tasks_assigned_by_id_fkey"
+            columns: ["assigned_by_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cleanliness_tasks_assigned_to_id_fkey"
+            columns: ["assigned_to_id"]
+            isOneToOne: false
+            referencedRelation: "amounts_owed"
+            referencedColumns: ["loaner_id"]
+          },
+          {
+            foreignKeyName: "cleanliness_tasks_assigned_to_id_fkey"
+            columns: ["assigned_to_id"]
+            isOneToOne: false
+            referencedRelation: "amounts_owed"
+            referencedColumns: ["debtor_id"]
+          },
+          {
+            foreignKeyName: "cleanliness_tasks_assigned_to_id_fkey"
+            columns: ["assigned_to_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cleanliness_tasks_cl_log_id_fkey"
+            columns: ["cl_log_id"]
+            isOneToOne: false
+            referencedRelation: "cleanliness_logs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cleanliness_tasks_completed_by_id_fkey"
+            columns: ["completed_by_id"]
+            isOneToOne: false
+            referencedRelation: "amounts_owed"
+            referencedColumns: ["loaner_id"]
+          },
+          {
+            foreignKeyName: "cleanliness_tasks_completed_by_id_fkey"
+            columns: ["completed_by_id"]
+            isOneToOne: false
+            referencedRelation: "amounts_owed"
+            referencedColumns: ["debtor_id"]
+          },
+          {
+            foreignKeyName: "cleanliness_tasks_completed_by_id_fkey"
+            columns: ["completed_by_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
