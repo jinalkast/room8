@@ -66,7 +66,7 @@ class HouseObject:
     def distance(self, other: 'HouseObject') -> float:
         x1, y1 = self.centroid
         x2, y2 = other.centroid
-        return math.sqrt((x2-x1)**2 + (y2-y1)**2)  # Fixed power operation (^ to **)
+        return math.sqrt((x2-x1)**2 + (y2-y1)**2)
 
     """Intersection over union of 2 house objects"""
     def iou(self, other: 'HouseObject') -> float:
@@ -108,66 +108,36 @@ class CleanlinessDetector:
         # Create predictor
         self.model = DefaultPredictor(self.cfg)                                                  
     
-    """Improved frame differencing with adaptive thresholding"""
-    def frame_diff(self, before: np.array, after: np.array, min_area: int = 100, display: bool = False) -> np.array:
+    """Pixel-wise image differencing to return a binary mask of change regions"""
+    def frame_diff(self, before: np.array, after: np.array, min_area:int = 100, display: bool = False) -> np.array:
         # Convert to grayscale
         gray1 = cv2.cvtColor(np.array(before), cv2.COLOR_BGR2GRAY)
         gray2 = cv2.cvtColor(np.array(after), cv2.COLOR_BGR2GRAY)
-        
-        # Apply Gaussian blur to reduce noise
-        gray1 = cv2.GaussianBlur(gray1, (5, 5), 0)
-        gray2 = cv2.GaussianBlur(gray2, (5, 5), 0)
 
         # Compute absolute difference
         diff = cv2.absdiff(gray1, gray2)
-        
-        # Apply adaptive thresholding
-        thresh = cv2.adaptiveThreshold(
-            diff, 
-            255, 
-            cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
-            cv2.THRESH_BINARY, 
-            11, 
-            2
-        )
-        
-        # Apply morphological operations to clean up the mask
-        kernel = np.ones((5, 5), np.uint8)
-        thresh = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
-        thresh = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
-        
-        # Find contours
-        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        
+
+        # Threshold the difference to create a binary mask
+        _, binary_mask = cv2.threshold(diff, 30, 255, cv2.THRESH_BINARY)
+
+        # Find contours in the binary mask
+        contours, _ = cv2.findContours(binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
         # Create a blank mask of the same size as the input image, with 3 channels
         mask = np.zeros_like(before, dtype=np.uint8)
-        
-        # Draw filled contours for areas that meet the minimum size requirement
+
+        # Draw filled rectangles based on contours
         for contour in contours:
-            area = cv2.contourArea(contour)
-            if area >= min_area:
-                cv2.drawContours(mask, [contour], 0, (255, 255, 255), -1)
-        
-        # Dilate to ensure coverage of objects
-        mask = cv2.dilate(mask, kernel, iterations=2)
+            x, y, w, h = cv2.boundingRect(contour)
+            area = w * h
+            if area >= min_area:  # Ignore small changes based on area threshold
+                cv2.rectangle(mask, (x, y), (x + w, y + h), (255, 255, 255), thickness=cv2.FILLED)
 
         # Display frame differencing results
         if display:
-            fig, axs = plt.subplots(1, 3, figsize=(15, 5))
-            axs[0].imshow(cv2.cvtColor(before, cv2.COLOR_BGR2RGB))
-            axs[0].set_title('Before')
-            axs[0].axis('off')
-            
-            axs[1].imshow(cv2.cvtColor(after, cv2.COLOR_BGR2RGB))
-            axs[1].set_title('After')
-            axs[1].axis('off')
-            
-            axs[2].imshow(cv2.cvtColor(mask, cv2.COLOR_BGR2RGB))
-            axs[2].set_title('Difference Mask')
-            axs[2].axis('off')
-            
-            plt.tight_layout()
-            plt.show()
+            cv2.imshow("Rectangular Mask", mask)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
         return mask
     
@@ -424,8 +394,8 @@ class CleanlinessDetector:
         
         # Create a legend for the colors
         legend = {
-            "Added": (0, 255, 0),    # Green
-            "Moved": (0, 0, 255),    # Blue
+            "Moved": (0, 255, 0),    # Green
+            "Added": (0, 0, 255),    # Blue
             "Removed": (255, 0, 0)   # Red (not visible but for completeness)
         }
 
@@ -434,7 +404,7 @@ class CleanlinessDetector:
             x1, y1, x2, y2 = obj.bbox
             color = legend["Added"]
             cv2.rectangle(overlay, (x1, y1), (x2, y2), color, 2)
-            label = f"Added: {obj.class_name}"
+            label = f"{obj.class_name}"
             cv2.putText(overlay, label, (x1, y1 - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
@@ -449,7 +419,7 @@ class CleanlinessDetector:
                 x1, y1, x2, y2 = obj.bbox
                 color = legend["Moved"]
                 cv2.rectangle(overlay, (x1, y1), (x2, y2), color, 2)
-                label = f"Moved: {obj.class_name}"
+                label = f"{obj.class_name}"
                 cv2.putText(overlay, label, (x1, y1 - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
@@ -548,8 +518,8 @@ if __name__ == "__main__":
 
     # Use the original images for detection, but the highlights help us visualize
     # Detect objects in the before and after images
-    objects_before = cd.detect_objects(before_orig, True)
-    objects_after = cd.detect_objects(after_orig, True)
+    objects_before = cd.detect_objects(before_highlighted, True)
+    objects_after = cd.detect_objects(after_highlighted, True)
 
     print(f"Detected {len(objects_before)} objects in before image")
     print(f"Detected {len(objects_after)} objects in after image")
