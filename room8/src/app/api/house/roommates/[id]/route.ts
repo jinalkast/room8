@@ -1,10 +1,11 @@
 import { supabaseServer } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest) {
   try {
-    const param = await params;
-    const id = param.id;
+    const { pathname } = req.nextUrl;
+    const segments = pathname.split('/');
+    const id = segments[segments.length - 1];
 
     if (!id) {
       return NextResponse.json(

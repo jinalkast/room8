@@ -2,10 +2,13 @@ import { getUserHouseId } from '@/lib/services';
 import { supabaseServer } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest) {
   try {
+    const { pathname } = req.nextUrl;
+    const segments = pathname.split('/');
+    const taskId = segments[segments.length - 1];
+
     const supabase = await supabaseServer();
-    const taskId = params.id;
     const { status, assigned_to_id, assigned_by_id, completed_by_id } = await req.json();
     const houseId = await getUserHouseId();
 

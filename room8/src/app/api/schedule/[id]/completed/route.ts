@@ -1,9 +1,11 @@
 import { supabaseServer } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest) {
   try {
-    const { id } = await params;
+    const { pathname } = req.nextUrl;
+    const segments = pathname.split('/');
+    const id = segments[segments.length - 1];
 
     if (!id) {
       return NextResponse.json({ data: null, message: 'Missing chore ID' }, { status: 400 });
@@ -60,9 +62,12 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     return NextResponse.json({ data: null, message: (error as Error).message }, { status: 500 });
   }
 }
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(req: NextRequest) {
   try {
-    const { id } = params;
+    const { pathname } = req.nextUrl;
+    const segments = pathname.split('/');
+    const id = segments[segments.length - 1];
+
     const supabase = await supabaseServer();
 
     const {

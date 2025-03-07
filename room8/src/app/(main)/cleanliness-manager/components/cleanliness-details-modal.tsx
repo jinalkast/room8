@@ -31,16 +31,16 @@ function CleanlinessDetailsModal({ cleanlinessLogId, recent, showDetails }: prop
 
   const cleanlinessLog = cleanlinessLogs?.find((log) => log.id === cleanlinessLogId);
 
+  const { data: tasks, isLoading: loadingTasks } = useGetCleanlinessTasks(cleanlinessLog?.id);
+
   if (!cleanlinessLog) {
     return null;
   }
 
-  const { data: tasks, isLoading: loadingTasks } = useGetCleanlinessTasks(cleanlinessLog.id);
-
   return (
     <Modal
       title="Details"
-      className="min-w-[700px]"
+      className="min-w-fit"
       description={`See what changes were made to your shared space and assign cleanup tasks`}
       trigger={
         showDetails ? (
