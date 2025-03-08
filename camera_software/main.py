@@ -7,7 +7,7 @@ import io
 
 INACTIVITY_TIME_REQUIRED = 60*0.1  # 20 SECS minute
 MIN_COUNTER_AREA = 500  # Define your minimum area threshold
-HOUSE_ID = 'd49c90ae-7b59-47e3-b5e6-604f16026185'
+CAMERA_ID = '56525b19-fe19-433d-b231-fc08b8203d5a'
 ALGO_MICROSERVICE_URL = 'http://127.0.0.1:8000'
 
 def upload_frames_to_server(beforeFrame, afterFrame):
@@ -31,7 +31,7 @@ def upload_frames_to_server(beforeFrame, afterFrame):
     }
 
     # Send the POST request
-    response = requests.post(f'{ALGO_MICROSERVICE_URL}/upload/{HOUSE_ID}', files=files)
+    response = requests.post(f'{ALGO_MICROSERVICE_URL}/upload/{CAMERA_ID}', files=files)
 
     # Check the response status
     if response.status_code == 200:
@@ -85,7 +85,10 @@ def main():
             if (last_motion_time_detected is not None):
                 time_since_last_motion = time.time() - last_motion_time_detected
                 if time_since_last_motion > INACTIVITY_TIME_REQUIRED and not triggered:
-                    upload_frames_to_server(beforeFrame, frame)
+                    try:
+                        upload_frames_to_server(beforeFrame, frame)
+                    except Exception as e:
+                        print(f"Failed to upload frames: {e}")
                     # Update beforeFrame to the current frame
                     beforeFrame = frame
                     # Set triggered to True to prevent multiple uploads

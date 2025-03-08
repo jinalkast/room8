@@ -7,6 +7,7 @@ import { Modal } from '@/components/modal';
 import InviteUserModal from './invite-user-modal';
 import EditHouseModal from './edit-house-modal';
 import HouseNotes from './house-notes';
+import ActivateCameraCard from './activate-camera-card';
 
 type props = {
   house: THouse;
@@ -53,6 +54,7 @@ function HouseInfo({ house }: props) {
             <RoommatesTable remove />
           </CardContent>
         </Card>
+        <ActivateCameraCard />
       </div>
 
       <HouseNotes house={house} />

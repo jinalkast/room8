@@ -33,6 +33,8 @@ export function Modal({
   open,
   onOpenChange
 }: props) {
+
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>

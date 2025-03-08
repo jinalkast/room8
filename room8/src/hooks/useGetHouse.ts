@@ -14,7 +14,8 @@ export const fetchHouse = async (): Promise<THouse | null> => {
     owner: json.data.owner,
     name: json.data.name,
     address: json.data.address,
-    chatbotActive: json.data.chatbot_active
+    chatbotActive: json.data.chatbot_active,
+    cameraId: json.data.camera_id
   };
 
   return jsonData ?? null;

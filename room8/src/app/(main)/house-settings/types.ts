@@ -6,6 +6,10 @@ export type THouseInsertDB = TablesInsert<'houses'>;
 export type TInviteDB = Tables<'house_invites'> & { inviter: TRoommateDB } & { house: THouseDB };
 export type TNoteDB = Tables<'notes'>;
 
+export type TCameraBody = {
+  cameraId: string;
+};
+
 export type THouseBody = {
   address: string;
   name: string;
@@ -17,6 +21,7 @@ export type THouse = {
   name: string;
   address: string;
   chatbotActive: boolean;
+  cameraId: string | null;
 };
 
 export type TNote = {

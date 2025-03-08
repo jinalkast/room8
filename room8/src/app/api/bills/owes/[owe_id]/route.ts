@@ -2,11 +2,19 @@ import { supabaseServer } from '@/lib/supabase/server';
 import { TApiResponse, TOweDB } from '@/lib/types';
 import { NextResponse, NextRequest } from 'next/server';
 
-export async function PATCH(req: NextRequest): Promise<NextResponse<TApiResponse<TOweDB>>> {
+export async function PATCH(
+  req: NextRequest,
+  {
+    params
+  }: {
+    params: {
+      id: string;
+      owe_id: string;
+    };
+  }
+): Promise<NextResponse<TApiResponse<TOweDB>>> {
   try {
-    const { pathname } = req.nextUrl;
-    const segments = pathname.split('/');
-    const owe_id = segments[segments.length - 1];
+    const { id: bill_id, owe_id } = await params;
 
     const { paid } = await req.json();
     if (typeof paid !== 'boolean') {
