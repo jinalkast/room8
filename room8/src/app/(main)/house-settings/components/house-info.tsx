@@ -1,6 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { THouse } from '../types';
+import { Button } from '@/components/ui/button';
+import { Edit, Plus } from 'lucide-react';
 import RoommatesTable from '@/components/roommates-table';
+import { Modal } from '@/components/modal';
 import InviteUserModal from './invite-user-modal';
 import EditHouseModal from './edit-house-modal';
 import HouseNotes from './house-notes';

@@ -2,10 +2,11 @@ import { THouseBody } from '@/app/(main)/house-settings/types';
 import { supabaseServer } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest) {
   try {
-    const param = await params;
-    const id = param.id;
+    const { pathname } = req.nextUrl;
+    const segments = pathname.split('/');
+    const id = segments[segments.length - 1];
 
     const { address, name }: THouseBody = await req.json();
 
@@ -34,7 +35,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     return NextResponse.json(
       {
         data: null,
-        message: 'Updated house successfully'
+        message: 'Updated house successfuly'
       },
       { status: 200 }
     );

@@ -33,7 +33,7 @@ function TaskCard({ task, showLog }: props) {
       <div className="flex justify-between">
         <div className="flex items-center gap-4">
           <Badge variant={task.status}>{task.status}</Badge>
-          <p>{task.name}</p>
+          <p className="capitalize">{task.name}</p>
         </div>
 
         <div className="flex gap-2">
