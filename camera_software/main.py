@@ -7,7 +7,7 @@ import io
 
 INACTIVITY_TIME_REQUIRED = 60*0.1  # 20 SECS minute
 MIN_COUNTER_AREA = 500  # Define your minimum area threshold
-CAMERA_ID = 'd49c90ae-7b59-47e3-b5e6-604f16026185'
+CAMERA_ID = '56525b19-fe19-433d-b231-fc08b8203d5a'
 ALGO_MICROSERVICE_URL = 'http://127.0.0.1:8000'
 
 def upload_frames_to_server(beforeFrame, afterFrame):
