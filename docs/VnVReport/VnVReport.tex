@@ -11,6 +11,19 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage{longtable}
+\usepackage[shortlabels]{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=blue
+}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{graphicx}
 
 \input{../Comments}
 \input{../Common}
@@ -42,9 +55,14 @@ Date 2 & 1.1 & Notes\\
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l} 
   \toprule		
-  \textbf{symbol} & \textbf{description}\\
+  \textbf{Acronym} & \textbf{description}\\
   \midrule 
-  T & Test\\
+  SRS & Software Requirements Specification\\
+  VnV & Verification and Validation\\
+  CI/CD & Continuous Integration and Continuous deployment\\   
+  API & Application Programming Interface\\
+  Exp. & Expected\\
+  Act. & Actual\\
   \bottomrule
 \end{tabular}\\
 
@@ -67,7 +85,24 @@ This document ...
 \section{Functional Requirements Evaluation}
 
 \subsection{FR211}
-The system shall allow users to create an account using their name, email, and password.
+The system shall allow users to create an account using their Google account.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-UAHM-1} & \textbf{Profile Creation}\\\hline
+
+    \textbf{Description} & Tests if the system is able to handle creating user 			profiles in the system from frontend inputs \\ 
+
+    \small \textbf{Input} & Valid Google account sign in \\ 
+
+    \small \textbf{Exp. Output} & Room8 account created and Dashboard is shown \\ 
+
+    \small \textbf{Act. Output} & Room8 account created and Dashboard is shown\\ 
+    
+    \small \textbf{Result} & Pass\\ 
+
+  }
+\end{center}
 \subsection{FR212}
 The system shall allows users to log in to their account.
 \subsection{FR213}
@@ -224,7 +259,9 @@ This section will not be appropriate for every project.
 \wss{This section should highlight how feedback from the users and from 
 the supervisor (when one exists) shaped the final product.  In particular 
 the feedback from the Rev 0 demo to the supervisor (or to potential users) 
-should be highlighted.}
+should be highlighted.}\\
+\textbf{FR211} - Change description to use Google account instead of using name, email and password.\\
+\textbf{FST-UAHM-1} - See above description.
 
 \section{Automated Testing}
 		
