@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/useToast';
 import { useQueryClient } from '@tanstack/react-query';
-import usePatchOwe from '../hooks/patchOwe';
+import usePatchOwe from '@/app/(main)/bill-splitter/hooks/patchOwe';
 import LoadingSpinner from '@/components/loading';
 import { TOwe } from '@/lib/types';
 import { ClipboardCheck } from 'lucide-react';

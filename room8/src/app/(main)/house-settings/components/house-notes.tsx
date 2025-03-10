@@ -1,20 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { THouse } from '../types';
 import useGetNotes from '../hooks/useGetNotes';
 import CreateNoteModal from './create-note-modal';
-import useRoommates from '@/hooks/useRoommates';
 import LoadingSpinner from '@/components/loading';
-import { TRoommate } from '@/lib/types';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Star } from 'lucide-react';
 import NoteItem from './note-item';
 
-type props = {
-  house: THouse;
-};
-
-function HouseNotes({}: props) {
+function HouseNotes() {
   const { data: notes, isLoading: notesLoading } = useGetNotes();
 
   return (

@@ -11,13 +11,26 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage{longtable}
+\usepackage[shortlabels]{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=blue
+}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{graphicx}
 
 \input{../Comments}
 \input{../Common}
 
 \begin{document}
 
-\title{Verification and Validation Report: \progname} 
+\title{Verification and Validation Report: Room8} 
 \author{\authname}
 \date{\today}
 	
@@ -42,9 +55,14 @@ Date 2 & 1.1 & Notes\\
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l} 
   \toprule		
-  \textbf{symbol} & \textbf{description}\\
+  \textbf{Acronym} & \textbf{description}\\
   \midrule 
-  T & Test\\
+  SRS & Software Requirements Specification\\
+  VnV & Verification and Validation\\
+  CI/CD & Continuous Integration and Continuous deployment\\   
+  API & Application Programming Interface\\
+  Exp. & Expected\\
+  Act. & Actual\\
   \bottomrule
 \end{tabular}\\
 
@@ -66,14 +84,220 @@ This document ...
 
 \section{Functional Requirements Evaluation}
 
+\subsection{FR211}
+The system shall allow users to create an account using their Google account.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-UAHM-1} & \textbf{Profile Creation}\\\hline
+
+    \textbf{Description} & Tests if the system is able to handle creating user 			profiles in the system from frontend inputs \\ 
+
+    \small \textbf{Input} & Valid Google account sign in \\ 
+
+    \small \textbf{Exp. Output} & Room8 account created and Frontend redirects user to the dashboard \\ 
+
+    \small \textbf{Act. Output} & Room8 account created and Frontend redirects user to the dashboard\\ 
+    
+    \small \textbf{Result} & Pass\\ 
+
+  }
+\end{center}
+\subsection{FR212}
+The system shall allows users to log in to their account.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-UAHM-2} & \textbf{System Login}\\\hline
+
+    \textbf{Description} & Tests if the system is able to recognize a user profile and to authenticate them to the system \\ 
+
+    \textbf{Input} & Valid Google account matching the profile in the system \\ 
+
+    \textbf{Exp. Output} & User profile is authenticated with a new session entry. Frontend redirects user to the dashboard \\ 
+
+    \textbf{Act. Output} & User profile is authenticated with a new session entry. Frontend redirects user to the dashboard  \\ 
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
+\subsection{FR213}
+The system shall allows users to log out of their account.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-UAHM-3} & \textbf{System Logout}\\\hline
+
+    \textbf{Description} & Tests if the system logs the user out, invalidating their session and returning them to the homepage \\ 
+
+    \textbf{Input} & User clicks logout button \\ 
+
+    \textbf{Exp. Output} & The system invalidates the session and redirects the user to the homepage \\ 
+
+    \textbf{Act. Output} & The system invalidates the session and redirects the user to the homepage  \\ 
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
+\subsection{FR214}
+The system shall allow users to create a home group using the home name, address, and number of roommates.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-UAHM-4} & \textbf{Create Home Instance}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to create a new home group with specified details \\ 
+
+    \textbf{Input} & Home name, address, and number of roommates to their respective fields \\ 
+
+    \textbf{Exp. Output} & A new home group instance is created with the specified details, and the user is added as a member \\ 
+
+    \textbf{Act. Output} & A new home group instance is created with the specified details, and the user is added as a member  \\ 
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
+\subsection{FR215}
+The system shall allow users to invite other users to join their home group.
+
+\subsection{FR216}
+The system shall allow users to view the list of users in their home group.
+
+\subsection{FR217}
+The system shall allow users to remove users from their home
+group.
+
+\subsection{FR218}
+The system shall allow users to leave their home group.
+
+\subsection{FR221}
+The system shall allow users to configure the ChatBot settings to
+include or exclude messages corresponding to chore schedule, cleanliness
+manager, and bill splitter.
+
+\subsection{FR222}
+The ChatBot shall send reminders to the group chat about
+upcoming chores and events in the schedule 2 days in advance.
+
+\subsection{FR223}
+The ChatBot shall send notifications to the group chat about new
+shared living space cleanliness scores immediately after an event is added to
+the cleanliness manager page.
+
+\subsection{FR224}
+The ChatBot shall send notifications to the group chat about new
+shared expenses added to the bill splitter page immediately after its
+addition.
+
+\subsection{FR231}
+The system shall evaluate the cleanliness of the shared living space before and after a user enters and exits the space.
+
+\subsection{FR232}
+
+The system shall display the current cleanliness score of the shared living space.
+\subsection{FR233}
+
+The system shall display the detected messes in the shared living space.
+\subsection{FR234}
+
+The system shall allow users to view the cleanliness score of other users.
+
+\subsection{FR235}
+The system shall allow users to view the history of cleanliness scores and detected messes.
+
+\subsection{FR241}
+The system shall allow users to add a new chore to the schedule.
+
+\subsection{FR242}
+The system shall allow users to add a new event to the schedule.
+
+\subsection{FR243}
+The system shall allow users to input chore and event details (name, description, time, frequency, assigned users, etc.).
+
+\subsection{FR244}
+The system shall allow users to edit and delete chores and events.
+
+\subsection{FR245}
+The system shall allow users to view the schedule and mark chores as complete.
+
+\subsection{FR251}
+The system shall allow users to add a new expense to the bill splitter and notify the involved users.
+
+\subsection{FR252}
+The system shall allow users to view what they owe other housemates.
+
+\subsection{FR253}
+The system shall allow users to view what they owe others.
+
+\subsection{FR254}
+The system shall allow users to mark expenses as paid.
+
+\subsection{FR255}
+The system shall calculate debts in order to minimize the amount of transactions required between housemates.
+
+
 \section{Nonfunctional Requirements Evaluation}
-
 \subsection{Usability}
-		
-\subsection{Performance}
+\subsubsection{NFR237}
+The system shall declare an instances of someone altering a room
+finished one there has been no activity in the room for a designated period
+of time.
+\subsubsection{NFR242}
+The calendar system shall display all calendar events to users in
+their time zone.
 
-\subsection{etc.}
-	
+\subsection{Performance}
+\subsubsection{NFR214}
+The system should be able to authenticate a user with a median
+response time of under 1 second.
+\subsubsection{NFR234} Photos captured with the system will be in a quality high
+enough to differentiate objects within frame.
+\subsubsection{NFR235}
+The system shall process image data in under 30 minutes.
+
+\subsection{Privacy and Security}
+\subsubsection{NFR211}
+All data related to authentication must be encrypted in both
+transit and in storage.
+\subsubsection{NFR212}
+Error messages related to authentication should not disclose
+sensitive details such as ”Incorrect Password”.
+\subsubsection{NFR213}
+All data related to houses such as addresses and residents should
+be encrypted in transit and in rest.
+\subsubsection{NFR221}
+The chatbot shall not disclose any sensitive information in its
+messages such as addresses or full names.
+\subsubsection{NFR231}
+The system shall not record users.
+\subsubsection{NFR232}
+The system shall not capture images of users.
+\subsubsection{NFR233}
+The system shall encrypt and securely store all images of homes.
+\subsubsection{NFR244}
+The calendar system shall encrypt all events stored.
+\subsubsection{NFR251}
+The Bill Splitter system shall encrypt all events stored.
+
+
+\subsection{etc.(MAYBE RENAME TO "OTHER")}
+\subsubsection{NFR222}
+The chatbot shall not send users too frequently to prevent
+annoying users.
+\subsubsection{NFR236}
+The system shall not report false events which accuse someone of
+reducing the cleanliness score of an environment.
+\subsubsection{NFR241}
+The calendar system shall store all calendar events in UTC.
+\subsubsection{NFR243}
+The calendar system shall have a granularity of 5 minutes.
+\subsubsection{NFR252}
+The Bill Splitter shall allow users to record numerical values of
+prices with a granularity of two decimal places.
+
 \section{Comparison to Existing Implementation}	
 
 This section will not be appropriate for every project.
@@ -85,7 +309,10 @@ This section will not be appropriate for every project.
 \wss{This section should highlight how feedback from the users and from 
 the supervisor (when one exists) shaped the final product.  In particular 
 the feedback from the Rev 0 demo to the supervisor (or to potential users) 
-should be highlighted.}
+should be highlighted.}\\
+\textbf{FR211} - Change description to use Google account instead of using name, email and password.\\
+\textbf{FST-UAHM-1} - See above description. \\
+\textbf{FST-UAHM-2} - Change input field of testcase to using Google account instead of email and password. \\
 
 \section{Automated Testing}
 		
