@@ -99,8 +99,10 @@ The system shall allow users to create an account using their Google account.
 
     \small \textbf{Act. Output} & Room8 account created and Frontend redirects user to the dashboard\\ 
     
+    \small \textbf{Evaluation} & Acceptance testing\\
+    
     \small \textbf{Result} & Pass\\ 
-
+    
   }
 \end{center}
 \subsection{FR212}
@@ -117,6 +119,8 @@ The system shall allows users to log in to their account.
     \textbf{Exp. Output} & User profile is authenticated with a new session entry. Frontend redirects user to the dashboard \\ 
 
     \textbf{Act. Output} & User profile is authenticated with a new session entry. Frontend redirects user to the dashboard  \\ 
+    
+    \small \textbf{Evaluation} & Acceptance testing\\
     
     \small \textbf{Result} & Pass\\ 
   }
@@ -137,6 +141,8 @@ The system shall allows users to log out of their account.
 
     \textbf{Act. Output} & The system invalidates the session and redirects the user to the homepage  \\ 
     
+    \small \textbf{Evaluation} & Acceptance testing\\
+    
     \small \textbf{Result} & Pass\\ 
   }
 \end{center}
@@ -156,87 +162,561 @@ The system shall allow users to create a home group using the home name, address
 
     \textbf{Act. Output} & A new home group instance is created with the specified details, and the user is added as a member  \\ 
     
+    \small \textbf{Evaluation} & Acceptance testing\\
+    
     \small \textbf{Result} & Pass\\ 
   }
 \end{center}
 
 \subsection{FR215}
 The system shall allow users to invite other users to join their home group.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-UAHM-5} & \textbf{Invite and Remove Users From Home Instance}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to invite others to join a home group and remove them as needed \\ 
+
+    \textbf{Input} & Valid email address of another user to invite; selection of a user to remove \\ 
+
+    \textbf{Exp. Output} & The invited user receives an invitation, joins the home group upon acceptance, and can be removed by the home admin \\ 
+
+    \textbf{Act. Output} & The invited user receives an invitation, joins the home group upon acceptance, and can be removed by the home admin  \\ 
+    
+    \small \textbf{Evaluation} & Acceptance testing\\
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR216}
 The system shall allow users to view the list of users in their home group.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-UAHM-4} & \textbf{Create Home Instance}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to create a new home group with specified details \\ 
+
+    \textbf{Input} & Home name, address, and number of roommates to their respective fields \\ 
+
+    \textbf{Exp. Output} & A new home group instance is created with the specified details, and the user is added as a member \\ 
+
+    \textbf{Act. Output} & A new home group instance is created with the specified details, and the user is added as a member  \\ 
+    
+    \small \textbf{Evaluation} & Acceptance testing\\
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+  \\
+  \testcase{
+    \textbf{FST-UAHM-6} & \textbf{Leave Home Instance}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to leave a home group as needed \\ 
+
+    \textbf{Input} & Leave home button press \\ 
+
+    \textbf{Exp. Output} & User receives feedback on their action to leave the home group \\ 
+
+    \textbf{Act. Output} & User receives feedback on their action to leave the home group  \\ 
+    
+    \small \textbf{Evaluation} & Acceptance testing\\
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR217}
 The system shall allow users to remove users from their home
 group.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-UAHM-5} & \textbf{Invite and Remove Users From Home Instance}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to invite others to join a home group and remove them as needed \\ 
+
+    \textbf{Input} & Valid email address of another user to invite; selection of a user to remove \\ 
+
+    \textbf{Exp. Output} & The invited user receives an invitation, joins the home group upon acceptance, and can be removed by the home admin \\ 
+
+    \textbf{Act. Output} & The invited user receives an invitation, joins the home group upon acceptance, and can be removed by the home admin  \\ 
+    
+    \small \textbf{Evaluation} & Acceptance testing\\
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR218}
 The system shall allow users to leave their home group.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-UAHM-5} & \textbf{Invite and Remove Users From Home Instance}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to invite others to join a home group and remove them as needed \\ 
+
+    \textbf{Input} & Valid email address of another user to invite; selection of a user to remove \\ 
+
+    \textbf{Exp. Output} & The invited user receives an invitation, joins the home group upon acceptance, and can be removed by the home admin \\ 
+
+    \textbf{Act. Output} & The invited user receives an invitation, joins the home group upon acceptance, and can be removed by the home admin  \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+  \\
+  \testcase{
+    \textbf{FST-UAHM-6} & \textbf{Leave Home Instance}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to leave a home group as needed \\ 
+
+    \textbf{Input} & Leave home button press \\ 
+
+    \textbf{Exp. Output} & User receives feedback on their action to leave the home group \\ 
+
+    \textbf{Act. Output} & User receives feedback on their action to leave the home group  \\ 
+    
+    \small \textbf{Evaluation} & Acceptance testing\\
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR221}
 The system shall allow users to configure the ChatBot settings to
 include or exclude messages corresponding to chore schedule, cleanliness
 manager, and bill splitter.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-CC-1} & \textbf{Update Chatbot Settings}\\\hline
+
+    \textbf{Description} & Tests if the chatbot settings can be updated successfully by an authorized user \\ 
+
+    \textbf{Input} & Randomized array of include and exclude inputs \\ 
+
+    \textbf{Exp. Output} & ChatBot settings entry in database reflect the array of inputs \\ 
+
+    \textbf{Act. Output} & ChatBot settings entry in database reflect the array of inputs \\ 
+    
+    \small \textbf{Evaluation} & Acceptance testing\\
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR222}
 The ChatBot shall send reminders to the group chat about
 upcoming chores and events in the schedule 2 days in advance.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-CC-3} & \textbf{ChatBot Sends Messages to Groupchats}\\\hline
+
+    \textbf{Description} & Tests if the ChatBot is able to send messages to a group chat as per configuration \\ 
+
+    \textbf{Input} & Newly created chore, cleanliness score, and a shared expense \\ 
+
+    \textbf{Exp. Output} & Chatbot sends the appropriate configured messages to the group chat  \\ 
+
+    \textbf{Act. Output} & Chatbot sends the appropriate configured messages to the group chat  \\ 
+    
+    \small \textbf{Evaluation} & Acceptance testing\\
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR223}
 The ChatBot shall send notifications to the group chat about new
 shared living space cleanliness scores immediately after an event is added to
 the cleanliness manager page.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-CC-3} & \textbf{ChatBot Sends Messages to Groupchats}\\\hline
+
+    \textbf{Description} & Tests if the ChatBot is able to send messages to a group chat as per configuration \\ 
+
+    \textbf{Input} & Newly created chore, cleanliness score, and a shared expense \\ 
+
+    \textbf{Exp. Output} & Chatbot sends the appropriate configured messages to the group chat  \\ 
+
+    \textbf{Act. Output} & Chatbot sends the appropriate configured messages to the group chat  \\ 
+    
+    \small \textbf{Evaluation} & Acceptance testing\\
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR224}
 The ChatBot shall send notifications to the group chat about new
 shared expenses added to the bill splitter page immediately after its
 addition.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-CC-3} & \textbf{ChatBot Sends Messages to Groupchats}\\\hline
+
+    \textbf{Description} & Tests if the ChatBot is able to send messages to a group chat as per configuration \\ 
+
+    \textbf{Input} & Newly created chore, cleanliness score, and a shared expense \\ 
+
+    \textbf{Exp. Output} & Chatbot sends the appropriate configured messages to the group chat  \\ 
+
+    \textbf{Act. Output} & Chatbot sends the appropriate configured messages to the group chat  \\ 
+    
+    \small \textbf{Evaluation} & Acceptance testing\\
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR231}
-The system shall evaluate the cleanliness of the shared living space before and after a user enters and exits the space.
+The system shall list the changes in objects of the shared living space before and after a user enters and exits the space.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-CM-1} & \textbf{System Evaluates Cleanliness}\\\hline
 
-\subsection{FR232}
+    \textbf{Description} & Tests if the system can evaluate and record changed objects based on captured images \\ 
 
-The system shall display the current cleanliness score of the shared living space.
+    \textbf{Input} & N/A \\ 
+
+    \textbf{Exp. Output} & List of objects changed in the shared space \\ 
+
+    \textbf{Act. Output} & List of objects changed in the shared space \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
 \subsection{FR233}
+The system shall display the picture of the detected mess in the shared living space.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-CM-2} & \textbf{Display After Use Image}\\\hline
 
-The system shall display the detected messes in the shared living space.
+    \textbf{Description} & Tests if the system can evaluate and record cleanliness scores based on captured images \\ 
+
+    \textbf{Input} & N/A \\ 
+
+    \textbf{Exp. Output} & Prints user's changes to environment if any were made \\ 
+
+    \textbf{Act. Output} & Prints user's changes to environment if any were made \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
 \subsection{FR234}
-
 The system shall allow users to view the cleanliness score of other users.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-CM-2} & \textbf{Display After Use Image}\\\hline
+
+    \textbf{Description} & Tests if the system can evaluate and record cleanliness scores based on captured images \\ 
+
+    \textbf{Input} & N/A \\ 
+
+    \textbf{Exp. Output} & Prints user's changes to environment if any were made \\ 
+
+    \textbf{Act. Output} & Prints user's changes to environment if any were made \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR235}
 The system shall allow users to view the history of cleanliness scores and detected messes.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-CM-2} & \textbf{Display After Use Image}\\\hline
+
+    \textbf{Description} & Tests if the system can evaluate and record cleanliness scores based on captured images \\ 
+
+    \textbf{Input} & N/A \\ 
+
+    \textbf{Exp. Output} & Prints user's changes to environment if any were made \\ 
+
+    \textbf{Act. Output} & Prints user's changes to environment if any were made \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR241}
 The system shall allow users to add a new chore to the schedule.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-SC-1} & \textbf{Adding Event to Schedule}\\\hline
+
+    \textbf{Description} & Tests that new event appears in calendar after it is inputted. \\ 
+
+    \textbf{Input} & Title, date, time, and duration \\ 
+
+    \textbf{Exp. Output} & Calendar displaying new chore with input parameters \\ 
+
+    \textbf{Act. Output} & Calendar displaying new chore with input parameters \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR242}
 The system shall allow users to add a new event to the schedule.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-SC-1} & \textbf{Adding Event to Schedule}\\\hline
+
+    \textbf{Description} & Tests that new event appears in calendar after it is inputted. \\ 
+
+    \textbf{Input} & Title, date, time, and duration \\ 
+
+    \textbf{Exp. Output} & Calendar displaying new event with input parameters \\ 
+
+    \textbf{Act. Output} & Calendar displaying new event with input parameters \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR243}
 The system shall allow users to input chore and event details (name, description, time, frequency, assigned users, etc.).
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-SC-1} & \textbf{Adding Event to Schedule}\\\hline
+
+    \textbf{Description} & Tests that new event appears in calendar after it is inputted. \\ 
+
+    \textbf{Input} & Title, date, time, and duration \\ 
+
+    \textbf{Exp. Output} & Calendar displaying new chore/event with input parameters \\ 
+
+    \textbf{Act. Output} & Calendar displaying new chore/event with input parameters \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR244}
 The system shall allow users to edit and delete chores and events.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-SC-2} & \textbf{Removing Event from Schedule}\\\hline
+
+      \textbf{Description} & Tests that event disappears from calendar after existing event is removed. \\ 
+
+      \textbf{Input} & Chore/event from calendar represented by name, date, time, and duration. \\ 
+
+    \textbf{Exp. Output} & Chore/event that was removed is no longer displayed in its previous timeblock in the calendar \\ 
+
+    \textbf{Act. Output} & Chore/event that was removed is no longer displayed in its previous timeblock in the calendar \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+  \\  
+    \testcase{
+    \textbf{FST-SC-3} & \textbf{Editing Event in Schedule}\\\hline
+
+        \textbf{Description} & Tests that changes can be made to an already-existing event. \\ 
+
+        \textbf{Input} & Chore/event from calendar represented by name, date, time, and duration. \\ 
+
+    \textbf{Exp. Output} & Chore/event displayed in calendar after edits contains updated information (i.e. name, date, time, and/or duration) \\ 
+
+    \textbf{Act. Output} & Chore/event displayed in calendar after edits contains updated information (i.e. name, date, time, and/or duration) \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR245}
 The system shall allow users to view the schedule and mark chores as complete.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-SC-1} & \textbf{Adding Event to Schedule}\\\hline
+
+    \textbf{Description} & Tests that new event appears in calendar after it is inputted. \\ 
+
+    \textbf{Input} & Title, date, time, and duration \\ 
+
+    \textbf{Exp. Output} & Calendar displaying new chore/event with input parameters \\ 
+
+    \textbf{Act. Output} & Calendar displaying new chore/event with input parameters \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+  \\
+    \testcase{
+    \textbf{FST-SC-4} & \textbf{Display Event Schedule}\\\hline
+
+    \textbf{Description} & Tests that all events displayed in calendar view. \\ 
+
+    \textbf{Input} & User goes to calendar page \\ 
+
+    \textbf{Exp. Output} & Calendar displaying chores and events pertaining to the home group \\ 
+
+    \textbf{Act. Output} & Calendar displaying chores and events pertaining to the home group \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR251}
 The system shall allow users to add a new expense to the bill splitter and notify the involved users.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-BSC-1} & \textbf{Add and Split Expense}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to add a new expense and splits it among group members \\ 
+
+    \textbf{Input} & New expense with an amount and shared expense roommates \\ 
+
+    \textbf{Exp. Output} & Expense is split equally among group members and recorded \\ 
+
+    \textbf{Act. Output} & Expense is split equally among group members and recorded \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR252}
 The system shall allow users to view what they owe other housemates.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-BSC-2} & \textbf{Display User Expenses}\\\hline
+
+    \textbf{Description} & Tests if the system displays all expenses associated with a user \\ 
+
+    \textbf{Input} & User navigates to their expenses page \\ 
+
+    \textbf{Exp. Output} & System displays all expenses associated with the user \\ 
+
+    \textbf{Act. Output} & System displays all expenses associated with the user \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR253}
 The system shall allow users to view what they owe others.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-BSC-2} & \textbf{Display User Expenses}\\\hline
+
+    \textbf{Description} & Tests if the system displays all expenses associated with a user \\ 
+
+    \textbf{Input} & User navigates to their expenses page \\ 
+
+    \textbf{Exp. Output} & System displays all expenses associated with the user \\ 
+
+    \textbf{Act. Output} & System displays all expenses associated with the user \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+  \\
+    \testcase{
+    \textbf{FST-BSC-3} & \textbf{Mark Expense as Paid}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to mark an expense as paid \\ 
+
+    \textbf{Input} & User navigated to an expenses page and marks an expense as paid \\ 
+
+    \textbf{Exp. Output} & System updates the UI state and displays all expenses associated with the user \\ 
+
+    \textbf{Act. Output} & System updates the UI state and displays all expenses associated with the user \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR254}
 The system shall allow users to mark expenses as paid.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+    \testcase{
+    \textbf{FST-BSC-3} & \textbf{Mark Expense as Paid}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to mark an expense as paid \\ 
+
+    \textbf{Input} & User navigated to an expenses page and marks an expense as paid \\ 
+
+    \textbf{Exp. Output} & System updates the UI state and displays all expenses associated with the user \\ 
+
+    \textbf{Act. Output} & System updates the UI state and displays all expenses associated with the user \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR255}
 The system shall calculate debts in order to minimize the amount of transactions required between housemates.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-BSC-1} & \textbf{Add and Split Expense}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to add a new expense and splits it among group members \\ 
+
+    \textbf{Input} & New expense with an amount and shared expense roommates \\ 
+
+    \textbf{Exp. Output} & Expense is split equally among group members and recorded \\ 
+
+    \textbf{Act. Output} & Expense is split equally among group members and recorded \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 
 \section{Nonfunctional Requirements Evaluation}
@@ -312,7 +792,11 @@ the feedback from the Rev 0 demo to the supervisor (or to potential users)
 should be highlighted.}\\
 \textbf{FR211} - Change description to use Google account instead of using name, email and password.\\
 \textbf{FST-UAHM-1} - See above description. \\
-\textbf{FST-UAHM-2} - Change input field of testcase to using Google account instead of email and password. \\
+\textbf{FST-UAHM-2} - Change input field of test case to using Google account instead of email and password. \\
+\textbf{FST-CM-1} - Changed description to remove cleanliness score and add listing objects chaged. \\
+\textbf{FR232} - Removing because of it is no longer part of the implementation scope. \\
+\textbf{FST-CM-2} - Editing test case to remove cleanliness score mentions and update to showing after images. \\
+
 
 \section{Automated Testing}
 		
