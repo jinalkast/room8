@@ -112,7 +112,7 @@ export default function ProfilePage() {
             <p className="text-2xl mt-4">{user!.name}</p>
             <p className="text-muted-foreground text-lg mb-2">{user!.email}</p>
             <p className="text-muted-foreground text-lg mb-2 text-center">
-              Joined {new Date(user!.created_at).toLocaleDateString()}
+              Joined {new Date(user!.created_at).toUTCString()}
             </p>
             {user?.phone && (
               <span className="text-muted-foreground">
@@ -140,7 +140,7 @@ export default function ProfilePage() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="joined">Phone Number:</label>
+                <label htmlFor="phoneNumber">Phone Number:</label>
                 <Input
                   id="phoneNumber"
                   type="text"
@@ -150,7 +150,7 @@ export default function ProfilePage() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="joined">Profile Picture:</label>
+                <label htmlFor="profilePicture">Profile Picture:</label>
                 <Input
                   id="profilePicture"
                   type="file"

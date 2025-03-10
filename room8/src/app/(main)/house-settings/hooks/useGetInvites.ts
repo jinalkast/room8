@@ -18,7 +18,8 @@ export const fetchInvites = async (): Promise<TInvite[] | null> => {
           owner: invite.house.owner,
           name: invite.house.name,
           address: invite.house.address,
-          chatbotActive: invite.house.chatbot_active
+          chatbotActive: invite.house.chatbot_active,
+          cameraId: null
         },
         inviter: {
           id: invite.inviter.id,

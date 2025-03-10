@@ -75,7 +75,13 @@ async function fetchBillDetails(billId: string): Promise<TOwe[]> {
   return json.data;
 }
 
-export function BillDetailsContent({ billId, queryClient }: { billId: string; queryClient: QueryClient }) {
+export function BillDetailsContent({
+  billId,
+  queryClient
+}: {
+  billId: string;
+  queryClient: QueryClient;
+}) {
   const { data, isLoading, error } = useQuery({
     queryKey: ['billDetails', billId],
     queryFn: () => fetchBillDetails(billId)

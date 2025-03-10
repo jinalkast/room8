@@ -72,7 +72,6 @@ describe('HistoryTable Component', () => {
 
     // Ensure table is not displayed while loading
     expect(screen.queryByRole('table')).toBeNull();
-
   });
 
   it('renders empty state if no bill history exists', () => {
