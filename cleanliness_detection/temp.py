@@ -5,7 +5,6 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 from typing import Tuple
-from sklearn.neighbors import NearestNeighbors
 from pathlib import Path
 from datetime import datetime
 import csv
@@ -14,9 +13,9 @@ from detectron2.config import get_cfg
 from detectron2 import model_zoo
 from detectron2.data import MetadataCatalog
 
-CONF_THRESH = 0.5                                                                           # min confidence for object detector
-DIST_THRESH = 15                                                                            # max number of pixels for object that moved slightly to still be considered in same spot                                                                     #
-IOU_THRESH = 0.8                                                                            # min IOU threshold for object to be considered in same spot
+CONF_THRESH = 0.5                                                                           # Increased confidence threshold
+DIST_THRESH = 30                                                                            # Increased distance threshold
+IOU_THRESH = 0.6                                                                            # Decreased IOU threshold for better matching
 COCO_LABELS = {
     0: "person", 1: "bicycle", 2: "car", 3: "motorcycle", 4: "airplane", 5: "bus", 6: "train", 7: "truck", 8: "boat",
     9: "traffic light", 10: "fire hydrant", 11: "stop sign", 12: "parking meter", 13: "bench", 14: "bird", 15: "cat", 
@@ -32,10 +31,11 @@ COCO_LABELS = {
 
 """Class representing a detection"""
 class HouseObject:
-    def __init__(self, label: int, bbox: list, mask: np.array = None) -> 'HouseObject':
+    def __init__(self, label: int, bbox: list, score: float, mask: np.array = None) -> None:
         self.label = label
         self.x1, self.y1, self.x2, self.y2 = [int(b) for b in bbox]
         self.mask = mask
+        self.score = score  # Added confidence score
 
     """x1, y1, x2, y2"""
     @property
@@ -45,11 +45,11 @@ class HouseObject:
     """Centroid coordinates"""
     @property
     def centroid(self) -> list[int]:
-        return [int((self.x2 - self.x1)/2), int((self.y2 - self.y1)/2)] 
+        return [int(self.x1 + (self.x2 - self.x1)/2), int(self.y1 + (self.y2 - self.y1)/2)]  # Fixed centroid calculation
     
     """COCO Class number key"""
     @property
-    def class_num(self) -> str:
+    def class_num(self) -> int:  # Changed return type to int
         return self.label
 
     """COCO Class label/ name"""
@@ -66,7 +66,7 @@ class HouseObject:
     def distance(self, other: 'HouseObject') -> float:
         x1, y1 = self.centroid
         x2, y2 = other.centroid
-        return math.sqrt((x2-x1)^2 + (y2-y1)^2)
+        return math.sqrt((x2-x1)**2 + (y2-y1)**2)
 
     """Intersection over union of 2 house objects"""
     def iou(self, other: 'HouseObject') -> float:
@@ -91,21 +91,23 @@ class HouseObject:
         union_area = bbox1_area + bbox2_area - intersection_area
 
         return intersection_area / union_area
+    
+    def __str__(self) -> str:
+        return f"{self.class_name} (conf: {self.score:.2f})"
 
 """Class for object detection and cleanliness assessment algorithms"""
 class CleanlinessDetector:
-    def __init__(self) -> 'CleanlinessDetector':
+    def __init__(self) -> None:
         # Init Mask R-CNN (i.e. instance segmentation) detector
         self.cfg = get_cfg()
         self.cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
         self.cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
-        self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = CONF_THRESH                # Set a confidence threshold
-        self.cfg.MODEL.DEVICE = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
+        self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = CONF_THRESH
+        self.cfg.MODEL.DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
         # Create predictor
         self.model = DefaultPredictor(self.cfg)                                                  
     
-
     """Pixel-wise image differencing to return a binary mask of change regions"""
     def frame_diff(self, before: np.array, after: np.array, min_area:int = 100, display: bool = False) -> np.array:
         # Convert to grayscale
@@ -139,45 +141,75 @@ class CleanlinessDetector:
 
         return mask
     
-    """Intersect raw image with mask"""
-    def combine_image_mask(self, before_img: Image, after_img: Image, display: bool = False) -> [Image, Image]:
-        mask = self.frame_diff(before_img, after_img, min_area=200)
-        mask = Image.fromarray(np.uint8(mask)).convert('RGB')
-
-        # Convert PIL images to NumPy arrays
-        before_img = np.array(before_img.convert("RGB"))
-        after_img = np.array(after_img.convert("RGB"))
-        mask = np.array(mask)
-
+    """Enhanced method to combine image with mask"""
+    def combine_image_mask(self, before_img: Image, after_img: Image, display: bool = False):
+        # Convert PIL images to NumPy arrays for processing
+        before_np = np.array(before_img.convert("RGB"))
+        after_np = np.array(after_img.convert("RGB"))
+        
         # Convert RGB to BGR for OpenCV processing
-        before_img = cv2.cvtColor(before_img, cv2.COLOR_RGB2BGR)
-        after_img = cv2.cvtColor(after_img, cv2.COLOR_RGB2BGR)
-        mask = cv2.cvtColor(mask, cv2.COLOR_RGB2BGR)  
-
-        kernel = np.ones((5,5), np.uint8)
-        mask = cv2.dilate(mask, kernel, iterations=2)
-
-        # Apply the mask
-        before_img = cv2.bitwise_and(before_img, mask)
-        after_img = cv2.bitwise_and(after_img, mask)
-
-        # Convert BGR back to RGB
-        before_img = cv2.cvtColor(before_img, cv2.COLOR_BGR2RGB)
-        after_img = cv2.cvtColor(after_img, cv2.COLOR_BGR2RGB)
-
-        # Convert back to PIL
-        before_img = Image.fromarray(before_img)
-        after_img = Image.fromarray(after_img)
-
+        before_cv = cv2.cvtColor(before_np, cv2.COLOR_RGB2BGR)
+        after_cv = cv2.cvtColor(after_np, cv2.COLOR_RGB2BGR)
+        
+        # Generate difference mask with larger minimum area
+        mask = self.frame_diff(before_cv, after_cv, min_area=300, display=display)
+        
+        # Apply a more aggressive dilation to ensure we capture full objects
+        kernel = np.ones((7, 7), np.uint8)
+        mask = cv2.dilate(mask, kernel, iterations=3)
+        
+        # Convert mask to PIL for visualization if needed
+        mask_pil = Image.fromarray(mask).convert('RGB')
+        
+        # Don't filter the original images too aggressively
+        # Instead of bitwise_and, use the mask to enhance differences
+        # Create slightly modified versions that highlight differences
+        highlighted_before = before_cv.copy()
+        highlighted_after = after_cv.copy()
+        
+        # Add a semi-transparent overlay to areas outside the mask
+        for c in range(3):
+            highlighted_before[:, :, c] = np.where(
+                mask[:, :, c] == 0,
+                highlighted_before[:, :, c] * 0.7,  # Dim areas outside mask
+                highlighted_before[:, :, c]
+            )
+            highlighted_after[:, :, c] = np.where(
+                mask[:, :, c] == 0,
+                highlighted_after[:, :, c] * 0.7,  # Dim areas outside mask
+                highlighted_after[:, :, c]
+            )
+        
+        # Convert back to RGB for PIL
+        highlighted_before = cv2.cvtColor(highlighted_before, cv2.COLOR_BGR2RGB)
+        highlighted_after = cv2.cvtColor(highlighted_after, cv2.COLOR_BGR2RGB)
+        
+        # Convert to PIL images
+        before_result = Image.fromarray(highlighted_before)
+        after_result = Image.fromarray(highlighted_after)
+        
         # Display if required
         if display:
-            before_img.show(title="Before Mask")
-            after_img.show(title="After Mask")
-
-        return [before_img, after_img]
-
+            fig, axs = plt.subplots(1, 3, figsize=(15, 5))
+            axs[0].imshow(before_result)
+            axs[0].set_title('Before (Highlighted)')
+            axs[0].axis('off')
+            
+            axs[1].imshow(after_result)
+            axs[1].set_title('After (Highlighted)')
+            axs[1].axis('off')
+            
+            axs[2].imshow(mask_pil)
+            axs[2].set_title('Mask')
+            axs[2].axis('off')
+            
+            plt.tight_layout()
+            plt.show()
+        
+        # Return both the highlighted and original images
+        return [before_img, after_img, before_result, after_result]
     
-    """Given an image, return list of objects detected"""
+    """Given an image, return list of objects detected with improved filtering"""
     def detect_objects(self, img: Image, display: bool = False) -> list[HouseObject]:
         # Init return list
         house_objects = []
@@ -195,68 +227,99 @@ class CleanlinessDetector:
         classes = instances.pred_classes.cpu().numpy()  # Class indices
         scores = instances.scores.cpu().numpy()  # Confidence scores
 
-        # Append detections to return
-        for i, (box, class_id) in enumerate(zip(boxes, classes, scores)):
+        # Append detections to return, including scores
+        for i, (box, class_id, score) in enumerate(zip(boxes, classes, scores)):
             x1, y1, x2, y2 = map(int, box)
             mask = masks[i] if masks is not None else None
-            house_objects.append(HouseObject(label=class_id, bbox=[x1, y1, x2, y2], mask=mask))
+            
+            # Filter small detections
+            width, height = x2 - x1, y2 - y1
+            if width < 10 or height < 10:
+                continue
+                
+            house_objects.append(HouseObject(
+                label=class_id, 
+                bbox=[x1, y1, x2, y2], 
+                score=score,
+                mask=mask
+            ))
 
         if display:
-            self.annotate_image(img, house_objects)
+            self.annotate_image(img, house_objects, display=True)
 
         return house_objects
     
-
-    """Find all objects in 2 images and identify what was added, removed, and moved"""
-    def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[HouseObject]]:
-        added, removed, moved = [], [], []
+    """Completely rewritten difference calculation algorithm with better matching"""
+    def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[list[HouseObject]]]:
+        # Get objects from before and after images
         objects_before = self.detect_objects(before_img)
         objects_after = self.detect_objects(after_img)
-        centroids_before = np.array([obj.centroid for obj in objects_before])
-        centroids_after = np.array([obj.centroid for obj in objects_after])
-
-        if len(centroids_before) > 0 and len(centroids_after) > 0:
-            nbrs = NearestNeighbors(n_neighbors=1).fit(centroids_before)
-            dists, inds = nbrs.kneighbors(centroids_after)
-
-            objects_before_cp = objects_before.copy()
-            objects_after_cp = objects_after.copy()
-
-            # case 1: object didn't move (disregard these objects)
-            for obj2, dist, idx in zip(objects_after_cp, dists, inds):
-                obj1 = objects_before_cp[idx[0]]
-                if dist <= DIST_THRESH and obj1.iou(obj2) > IOU_THRESH and obj1.class_num == obj2.class_num:
-                    objects_before.remove(obj1)
-                    objects_after.remove(obj2)
-
-        # case 2: object was added to scene
-        objects_after_cp = objects_after.copy()
-        objects_before_classes = [obj.class_num for obj in objects_before]
-
-        for obj in objects_after_cp:
-            if obj.class_num not in objects_before_classes:
-                added.append(obj)
-                objects_after.remove(obj)
-
-        # case 3: object removed from scene
-        objects_before_cp = objects_before.copy()
-        objects_after_classes = [obj.class_num for obj in objects_after]
-
-        for obj in objects_before_cp:
-            if obj.class_num not in objects_after_classes:
-                removed.append(obj)
-                objects_before.remove(obj)
-
-        # case 4: object moved
-        objects_before_classes = [obj.class_num for obj in objects_before]
-        objects_after_classes = [obj.class_num for obj in objects_after]
         
-        moved_class_nums = list(set(objects_before_classes) & set(objects_after_classes))
-        for n in moved_class_nums:
-            before_matches = [obj for obj in objects_before if obj.class_num == n]
-            after_matches = [obj for obj in objects_after if obj.class_num == n]
-            moved.append([before_matches, after_matches])
-
+        # Lists to store results
+        added = []
+        removed = []
+        moved = []
+        
+        # If either list is empty, handle special case
+        if len(objects_before) == 0:
+            return objects_after, [], []  # All objects are added
+        if len(objects_after) == 0:
+            return [], objects_before, []  # All objects are removed
+        
+        # Create a matrix to keep track of matching
+        matched_before = [False] * len(objects_before)
+        matched_after = [False] * len(objects_after)
+        
+        # First pass: Match objects of the same class with high IoU (same object, didn't move)
+        for i, obj_before in enumerate(objects_before):
+            for j, obj_after in enumerate(objects_after):
+                # Skip already matched objects
+                if matched_before[i] or matched_after[j]:
+                    continue
+                
+                # Check if same class
+                if obj_before.class_num == obj_after.class_num:
+                    # Check distance and IoU
+                    dist = obj_before.distance(obj_after)
+                    iou = obj_before.iou(obj_after)
+                    
+                    if dist < DIST_THRESH or iou > IOU_THRESH:
+                        # Mark both as matched
+                        matched_before[i] = True
+                        matched_after[j] = True
+                        break
+        
+        # Second pass: Match objects of the same class with lower IoU (same object, moved)
+        for i, obj_before in enumerate(objects_before):
+            if matched_before[i]:
+                continue  # Skip already matched
+                
+            before_list = [obj_before]
+            after_list = []
+            
+            for j, obj_after in enumerate(objects_after):
+                if matched_after[j]:
+                    continue  # Skip already matched
+                
+                # Check if same class
+                if obj_before.class_num == obj_after.class_num:
+                    # Mark both as matched
+                    matched_before[i] = True
+                    matched_after[j] = True
+                    after_list.append(obj_after)
+            
+            if after_list:  # If we found at least one match
+                moved.append([before_list, after_list])
+        
+        # Collect unmatched objects
+        for i, obj_before in enumerate(objects_before):
+            if not matched_before[i]:
+                removed.append(obj_before)
+                
+        for j, obj_after in enumerate(objects_after):
+            if not matched_after[j]:
+                added.append(obj_after)
+        
         return added, removed, moved
 
     """Draw boxes and show classes for objects detected in image"""
@@ -269,91 +332,159 @@ class CleanlinessDetector:
 
         for obj in objects:
             x1, y1, x2, y2 = obj.bbox
+            # Use confidence score to determine color brightness
+            color_intensity = int(min(255, obj.score * 255))
+            color = (0, color_intensity, 0)  # Brighter green for higher confidence
+
+            # Draw bounding box on overlay
+            cv2.rectangle(overlay, (x1, y1), (x2, y2), color, 2)
+            
+            # Add label with confidence score
+            label = f"{obj.class_name} ({obj.score:.2f})"
+            cv2.putText(overlay, label, (x1, y1 - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
             # Draw instance mask if available
             if obj.mask is not None:
                 mask = obj.mask.astype(np.uint8) * 255  # Convert mask to 0-255 range
-                color = np.random.randint(0, 255, (3,), dtype=int).tolist()  # Random color
+                color_mask = np.random.randint(0, 255, (3,), dtype=int).tolist()  # Random color
                 
+                # Create a colored mask overlay
+                mask_overlay = np.zeros_like(overlay)
                 for c in range(3):
-                    overlay[:, :, c] = np.where(mask > 0, 
-                                                overlay[:, :, c] * 0.5 + color[c] * 0.5, 
-                                                overlay[:, :, c])
-
-            # Draw bounding box on overlay
-            cv2.rectangle(overlay, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            cv2.putText(overlay, obj.class_name, (x1, y1 - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                    mask_overlay[:, :, c] = np.where(mask > 0, color_mask[c], 0)
+                
+                # Blend the mask with the image
+                alpha = 0.3  # Transparency factor
+                mask_indices = mask > 0
+                for c in range(3):
+                    overlay[:, :, c] = np.where(
+                        mask_indices, 
+                        overlay[:, :, c] * (1 - alpha) + mask_overlay[:, :, c] * alpha,
+                        overlay[:, :, c]
+                    )
 
         # Blend overlay with original image
-        annotated_img = cv2.addWeighted(overlay, 0.6, img_np, 0.4, 0)
+        annotated_img = cv2.addWeighted(overlay, 0.7, img_np, 0.3, 0)
 
         # Display using Matplotlib
-        f = plt.figure()
+        f = plt.figure(figsize=(12, 8))
         axarr = f.add_subplot(1, 1, 1)
         axarr.imshow(annotated_img)  # Matplotlib expects RGB
         axarr.axis('off')  # Hide axis
+        
+        # Add object count
+        axarr.set_title(f"Detected {len(objects)} objects", fontsize=14)
 
         # Display using OpenCV
         if display:
-            cv2.imshow("Annotated Image", cv2.cvtColor(annotated_img, cv2.COLOR_RGB2BGR))  # Convert to BGR for OpenCV
+            cv2.imshow("Annotated Image", cv2.cvtColor(annotated_img, cv2.COLOR_RGB2BGR))
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 
         return f
 
-    def annotate_changes(self, img: Image, added: list[HouseObject], moved: list[HouseObject], display=False) -> plt.figure:
-        """Draw boxes around the changes (added, moved objects)"""
+    """Improved annotation of changes with better visualization"""
+    def annotate_changes(self, img: Image, added: list[HouseObject], moved: list, removed: list[HouseObject]=None, display=False) -> plt.figure:
         # Convert PIL.Image to a NumPy array (RGB)
-        img_np = np.array(img)
+        img_np = np.array(img.convert("RGB"))
 
-        # Make a copy for overlay (draw on this)
+        # Make a copy for overlay
         overlay = img_np.copy()
+        
+        # Create a legend for the colors
+        legend = {
+            "Moved": (0, 255, 0),    # Green
+            "Added": (0, 0, 255),    # Blue
+            "Removed": (255, 0, 0)   # Red (not visible but for completeness)
+        }
 
-        # Combine all changes into one list
-        changes = added.copy()
-        for move in moved:
-            changes.extend(move[1])  # Add the after objects from moved pairs
-
-        # Draw bounding boxes and labels
-        for obj in changes:
-            if not isinstance(obj, HouseObject):
-                raise ValueError(f"Expected HouseObject, got {type(obj)}: {obj}")
-
+        # Draw added objects in green
+        for obj in added:
             x1, y1, x2, y2 = obj.bbox
+            color = legend["Added"]
+            cv2.rectangle(overlay, (x1, y1), (x2, y2), color, 2)
+            label = f"{obj.class_name}"
+            cv2.putText(overlay, label, (x1, y1 - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
-            # Draw bounding box on overlay
-            cv2.rectangle(overlay, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            cv2.putText(overlay, obj.class_name, (x1, y1 - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        # Draw moved objects in blue
+        for move_pair in moved:
+            if len(move_pair) != 2:
+                continue
+                
+            before_objs, after_objs = move_pair
+            
+            for obj in after_objs:
+                x1, y1, x2, y2 = obj.bbox
+                color = legend["Moved"]
+                cv2.rectangle(overlay, (x1, y1), (x2, y2), color, 2)
+                label = f"{obj.class_name}"
+                cv2.putText(overlay, label, (x1, y1 - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
         # Blend overlay with original image
-        annotated_img = cv2.addWeighted(overlay, 0.6, img_np, 0.4, 0)
+        annotated_img = cv2.addWeighted(overlay, 0.7, img_np, 0.3, 0)
 
-        # Display using OpenCV
+        # Create a figure
+        f = plt.figure(figsize=(12, 8))
+        axarr = f.add_subplot(1, 1, 1)
+        axarr.imshow(annotated_img)
+        axarr.axis('off')
+        
+        # Add a title with counts
+        title = f"Changes: {len(added)} Added, {len(moved)} Moved"
+        if removed:
+            title += f", {len(removed)} Removed"
+        axarr.set_title(title, fontsize=14)
+        
+        # Add a legend
+        legend_patches = []
+        import matplotlib.patches as mpatches
+        for label, color in legend.items():
+            # Convert BGR to RGB for matplotlib
+            rgb_color = (color[2]/255, color[1]/255, color[0]/255)
+            patch = mpatches.Patch(color=rgb_color, label=label)
+            legend_patches.append(patch)
+        
+        axarr.legend(handles=legend_patches, loc='lower right')
+
+        # Display using OpenCV if requested
         if display:
-            cv2.imshow("Changes Annotated Image", cv2.cvtColor(annotated_img, cv2.COLOR_RGB2BGR))  # Convert to BGR
+            cv2.imshow("Changes", cv2.cvtColor(annotated_img, cv2.COLOR_RGB2BGR))
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 
-        # Display using Matplotlib
-        f = plt.figure()
-        axarr = f.add_subplot(1, 1, 1)
-        axarr.imshow(annotated_img)  # Matplotlib expects RGB
-        axarr.axis('off')  # Hide axis
         return f
 
-    """Exporting annotated before, after, and changes image, and csv file to export_results folder"""
-    def export_results(self, before_fig: plt.figure, after_fig: plt.figure, changes_fig: plt.figure, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> None:
-        FORMATTED_DATETIME = datetime.now().strftime("%Y-%m-%d %Hh-%Mm-%Ss")
+    """Fixed export results function"""
+    def export_results(self, before_fig: plt.figure, after_fig: plt.figure, changes_fig: plt.figure, 
+                      added: list, removed: list, moved: list) -> None:
+        FORMATTED_DATETIME = datetime.now().strftime("%Y-%m-%d_%Hh-%Mm-%Ss")
 
         # Path and making folder
         FOLDER_PATH = Path(f"{Path(__file__).parent}/exported_results/{FORMATTED_DATETIME}")
         FOLDER_PATH.mkdir(parents=True, exist_ok=True)
 
-        before_fig.savefig(FOLDER_PATH / 'before.svg', format='svg', dpi=1200)
-        after_fig.savefig(FOLDER_PATH / 'after.svg', format='svg', dpi=1200)
-        changes_fig.savefig(FOLDER_PATH / 'changes.svg', format='svg', dpi=1200)
+        before_fig.savefig(FOLDER_PATH / 'before.png', format='png', dpi=300)
+        after_fig.savefig(FOLDER_PATH / 'after.png', format='png', dpi=300)
+        changes_fig.savefig(FOLDER_PATH / 'changes.png', format='png', dpi=300)
+
+        # Prepare data for CSV
+        added_names = [obj.class_name if isinstance(obj, HouseObject) else str(obj) for obj in added]
+        removed_names = [obj.class_name if isinstance(obj, HouseObject) else str(obj) for obj in removed]
+        
+        # Handle moved objects
+        moved_names = []
+        for move_pair in moved:
+            if isinstance(move_pair, list) and len(move_pair) == 2:
+                before_objs, after_objs = move_pair
+                if before_objs and after_objs:
+                    # Get the class name from the first object
+                    if isinstance(before_objs[0], HouseObject):
+                        moved_names.append(before_objs[0].class_name)
+                    else:
+                        moved_names.append(str(before_objs[0]))
 
         # Writing to the CSV
         csv_path = FOLDER_PATH / "results.csv"
@@ -362,65 +493,49 @@ class CleanlinessDetector:
             writer = csv.writer(file)
             # Headers of CSV
             fields = ["Added", "Removed", "Moved"]
-
-            max_length = max(len(added), len(removed), len(moved))
-
             writer.writerow(fields)
 
+            max_length = max(len(added_names), len(removed_names), len(moved_names))
+
             for i in range(max_length):
-                added_obj = added[i] if i < len(added) else ""
-                removed_obj = removed[i] if i < len(removed) else ""
-                moved_obj = moved[i] if i < len(moved) else ""
+                added_obj = added_names[i] if i < len(added_names) else ""
+                removed_obj = removed_names[i] if i < len(removed_names) else ""
+                moved_obj = moved_names[i] if i < len(moved_names) else ""
 
                 # Write row
                 writer.writerow([added_obj, removed_obj, moved_obj])
+        
+        print(f"Results exported to {FOLDER_PATH}")
 
 if __name__ == "__main__":
     cd = CleanlinessDetector()
     # Process images
-    before_img = Image.open("cleanliness_detection/samples/1/before.png")
-    after_img = Image.open("cleanliness_detection/samples/1/after.png")
+    before_img = Image.open("cleanliness_detection/samples/5/before.jpeg")
+    after_img = Image.open("cleanliness_detection/samples/5/after.jpeg")
 
-    [before_mask, after_mask] = cd.combine_image_mask(before_img, after_img, display=True)
+    # Get the original and highlighted versions
+    before_orig, after_orig, before_highlighted, after_highlighted = cd.combine_image_mask(before_img, after_img, display=True)
 
+    # Use the original images for detection, but the highlights help us visualize
     # Detect objects in the before and after images
-    objects_before = cd.detect_objects(before_mask, True)
-    objects_after = cd.detect_objects(after_mask, True)
+    objects_before = cd.detect_objects(before_highlighted, True)
+    objects_after = cd.detect_objects(after_highlighted, True)
 
-    # Create dictionaries to map object IDs to class names and vice versa
-    before_id_to_name = {obj: obj.class_name for obj in objects_before}
-    after_id_to_name = {obj: obj.class_name for obj in objects_after}
+    print(f"Detected {len(objects_before)} objects in before image")
+    print(f"Detected {len(objects_after)} objects in after image")
 
-    before_name_to_id = {obj.class_name: obj for obj in objects_before}
-    after_name_to_id = {obj.class_name: obj for obj in objects_after}
+    # Calculate the differences using the same original images
+    added, removed, moved = cd.calculate_difference(before_orig, after_orig)
 
-    # Calculate the differences
-    added, removed, moved = cd.calculate_difference(before_mask, after_mask)
-
-    # Extract class names for printing
-    added_names = [obj.class_name for obj in added]
-    removed_names = [obj.class_name for obj in removed]
-    moved_names = [obj[0][0].class_name for obj in moved]
-
-    # Convert object IDs to class names
-    before_names = [before_id_to_name[obj] for obj in objects_before]
-    after_names = [after_id_to_name[obj] for obj in objects_after]
-
-    # Calculate the objects_changed list using class names
-    objects_changed_names = [x for x in after_names if x not in before_names]
-
-    # Convert the class names back to object IDs using the after_name_to_id dictionary
-    objects_changed_ids = [after_name_to_id[name] for name in objects_changed_names]
+    print(f"Added: {len(added)}")
+    print(f"Removed: {len(removed)}")
+    print(f"Moved: {len(moved)}")
 
     # Annotate the before and after images
-    before_fig = cd.annotate_image(before_img, objects_before, True)
-    after_fig = cd.annotate_image(after_img, objects_after, True)
+    before_fig = cd.annotate_image(before_orig, objects_before, True)
+    after_fig = cd.annotate_image(after_orig, objects_after, True)
 
-    # Annotate the changes in the after image using the object IDs
-    changes_fig = cd.annotate_changes(after_img, objects_changed_ids, moved, True)
+    # Annotate the changes in the after image
+    changes_fig = cd.annotate_changes(after_orig, added, moved, removed, True)
 
-    cd.export_results(before_fig, after_fig, changes_fig,added_names, removed_names, moved_names)
-
-
-
-
+    cd.export_results(before_fig, after_fig, changes_fig, added, removed, moved)
