@@ -7,17 +7,17 @@ import QueryProvider from '@/components/query-provider';
 
 jest.mock('@/hooks/useRoommates', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn()
 }));
 
 jest.mock('@/hooks/useGetHouse', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn()
 }));
 
 jest.mock('@/app/(main)/house-settings/hooks/useRemoveRoomate', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn()
 }));
 
 jest.mock('next/image', () => () => <img alt="roommate profile" />);
@@ -39,11 +39,15 @@ describe('RoommatesTable Component', () => {
 
   it('renders empty state when no roommates exist', () => {
     (useRoommates as jest.Mock).mockReturnValue({ data: [], isLoading: false });
-    (useGetHouse as jest.Mock).mockReturnValue({ data: { address: '123 Main St' }, isLoading: false });
+    (useGetHouse as jest.Mock).mockReturnValue({
+      data: { address: '123 Main St' },
+      isLoading: false
+    });
 
-    render(<QueryProvider>
+    render(
+      <QueryProvider>
         <RoommatesTable />
-        </QueryProvider>
+      </QueryProvider>
     );
 
     expect(screen.getByText('No roommates found')).toBeTruthy();
@@ -52,12 +56,27 @@ describe('RoommatesTable Component', () => {
   it('renders roommates when data is available', () => {
     (useRoommates as jest.Mock).mockReturnValue({
       data: [
-        { id: '1', name: 'John Doe', email: 'john@example.com', phone: '1234567890', imageUrl: '/john.jpg' },
-        { id: '2', name: 'Jane Doe', email: 'jane@example.com', phone: '0987654321', imageUrl: '/jane.jpg' },
+        {
+          id: '1',
+          name: 'John Doe',
+          email: 'john@example.com',
+          phone: '1234567890',
+          imageUrl: '/john.jpg'
+        },
+        {
+          id: '2',
+          name: 'Jane Doe',
+          email: 'jane@example.com',
+          phone: '0987654321',
+          imageUrl: '/jane.jpg'
+        }
       ],
-      isLoading: false,
+      isLoading: false
     });
-    (useGetHouse as jest.Mock).mockReturnValue({ data: { address: '123 Main St' }, isLoading: false });
+    (useGetHouse as jest.Mock).mockReturnValue({
+      data: { address: '123 Main St' },
+      isLoading: false
+    });
     (useRemoveRoommate as jest.Mock).mockReturnValue({ mutate: jest.fn() });
 
     render(<RoommatesTable />);
@@ -70,10 +89,21 @@ describe('RoommatesTable Component', () => {
 
   it('renders remove button when `remove` prop is true', () => {
     (useRoommates as jest.Mock).mockReturnValue({
-      data: [{ id: '1', name: 'John Doe', email: 'john@example.com', phone: '1234567890', imageUrl: '/john.jpg' }],
-      isLoading: false,
+      data: [
+        {
+          id: '1',
+          name: 'John Doe',
+          email: 'john@example.com',
+          phone: '1234567890',
+          imageUrl: '/john.jpg'
+        }
+      ],
+      isLoading: false
     });
-    (useGetHouse as jest.Mock).mockReturnValue({ data: { address: '123 Main St' }, isLoading: false });
+    (useGetHouse as jest.Mock).mockReturnValue({
+      data: { address: '123 Main St' },
+      isLoading: false
+    });
 
     render(<RoommatesTable remove />);
 
@@ -83,16 +113,27 @@ describe('RoommatesTable Component', () => {
   it('Opens remove modal when icon button is clicked', () => {
     const mockRemoveRoommate = jest.fn();
     (useRoommates as jest.Mock).mockReturnValue({
-      data: [{ id: '1', name: 'John Doe', email: 'john@example.com', phone: '1234567890', imageUrl: '/john.jpg' }],
-      isLoading: false,
+      data: [
+        {
+          id: '1',
+          name: 'John Doe',
+          email: 'john@example.com',
+          phone: '1234567890',
+          imageUrl: '/john.jpg'
+        }
+      ],
+      isLoading: false
     });
-    (useGetHouse as jest.Mock).mockReturnValue({ data: { address: '123 Main St' }, isLoading: false });
+    (useGetHouse as jest.Mock).mockReturnValue({
+      data: { address: '123 Main St' },
+      isLoading: false
+    });
     (useRemoveRoommate as jest.Mock).mockReturnValue({ mutate: mockRemoveRoommate });
 
     render(<RoommatesTable remove />);
 
     fireEvent.click(screen.getByRole('button'));
-    
+
     expect(screen.getByText('Remove User')).toBeTruthy();
   });
 });

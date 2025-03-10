@@ -79,10 +79,10 @@ describe('ProfilePage Component', () => {
     });
 
     render(
-        <QueryProvider>
-            <ProfilePage />
-        </QueryProvider>
-);
+      <QueryProvider>
+        <ProfilePage />
+      </QueryProvider>
+    );
 
     fireEvent.click(screen.getByText('Edit Profile'));
 

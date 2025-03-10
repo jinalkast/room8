@@ -54,8 +54,12 @@ function CreateNoteModal({}: props) {
         </div>
 
         <div className="flex items-center gap-2">
-          <Label htmlFor='favourited'>Favourited</Label>
-          <Checkbox id='favourited' checked={favorite} onCheckedChange={() => setFavorite((prev) => !prev)} />
+          <Label htmlFor="favourited">Favourited</Label>
+          <Checkbox
+            id="favourited"
+            checked={favorite}
+            onCheckedChange={() => setFavorite((prev) => !prev)}
+          />
         </div>
       </div>
     </Modal>

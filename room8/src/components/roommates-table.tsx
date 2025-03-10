@@ -42,7 +42,7 @@ function RoommatesTable({ remove, hideFooter }: props) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {(roommates && roommates.length > 0) ? (
+        {roommates && roommates.length > 0 ? (
           roommates.map((roommate: TRoommate) => (
             <TableRow key={roommate.id}>
               <TableCell className="flex gap-4 items-center">
