@@ -95,9 +95,9 @@ The system shall allow users to create an account using their Google account.
 
     \small \textbf{Input} & Valid Google account sign in \\ 
 
-    \small \textbf{Exp. Output} & Room8 account created and Dashboard is shown \\ 
+    \small \textbf{Exp. Output} & Room8 account created and Frontend redirects user to the dashboard \\ 
 
-    \small \textbf{Act. Output} & Room8 account created and Dashboard is shown\\ 
+    \small \textbf{Act. Output} & Room8 account created and Frontend redirects user to the dashboard\\ 
     
     \small \textbf{Result} & Pass\\ 
 
@@ -105,10 +105,60 @@ The system shall allow users to create an account using their Google account.
 \end{center}
 \subsection{FR212}
 The system shall allows users to log in to their account.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-UAHM-2} & \textbf{System Login}\\\hline
+
+    \textbf{Description} & Tests if the system is able to recognize a user profile and to authenticate them to the system \\ 
+
+    \textbf{Input} & Valid Google account matching the profile in the system \\ 
+
+    \textbf{Exp. Output} & User profile is authenticated with a new session entry. Frontend redirects user to the dashboard \\ 
+
+    \textbf{Act. Output} & User profile is authenticated with a new session entry. Frontend redirects user to the dashboard  \\ 
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
 \subsection{FR213}
 The system shall allows users to log out of their account.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-UAHM-3} & \textbf{System Logout}\\\hline
+
+    \textbf{Description} & Tests if the system logs the user out, invalidating their session and returning them to the homepage \\ 
+
+    \textbf{Input} & User clicks logout button \\ 
+
+    \textbf{Exp. Output} & The system invalidates the session and redirects the user to the homepage \\ 
+
+    \textbf{Act. Output} & The system invalidates the session and redirects the user to the homepage  \\ 
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
 \subsection{FR214}
 The system shall allow users to create a home group using the home name, address, and number of roommates.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+    \textbf{FST-UAHM-4} & \textbf{Create Home Instance}\\\hline
+
+    \textbf{Description} & Tests if the system allows users to create a new home group with specified details \\ 
+
+    \textbf{Input} & Home name, address, and number of roommates to their respective fields \\ 
+
+    \textbf{Exp. Output} & A new home group instance is created with the specified details, and the user is added as a member \\ 
+
+    \textbf{Act. Output} & A new home group instance is created with the specified details, and the user is added as a member  \\ 
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \subsection{FR215}
 The system shall allow users to invite other users to join their home group.
@@ -261,7 +311,8 @@ the supervisor (when one exists) shaped the final product.  In particular
 the feedback from the Rev 0 demo to the supervisor (or to potential users) 
 should be highlighted.}\\
 \textbf{FR211} - Change description to use Google account instead of using name, email and password.\\
-\textbf{FST-UAHM-1} - See above description.
+\textbf{FST-UAHM-1} - See above description. \\
+\textbf{FST-UAHM-2} - Change input field of testcase to using Google account instead of email and password. \\
 
 \section{Automated Testing}
 		
