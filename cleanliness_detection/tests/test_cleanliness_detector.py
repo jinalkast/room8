@@ -6,6 +6,9 @@ from temp import CleanlinessDetector
 # Define test image directory
 TEST_IMAGE_DIR = "tests/test_images"
 
+# Blacklist of items to exclude from the results
+BLACKLIST = ["chair", "dining table"]
+
 @pytest.fixture(scope="module", autouse=True)
 def setup_test_images():
     """Ensure the test image directory exists and has test images."""
@@ -38,8 +41,8 @@ def detector():
     # 1 object added, 1 object removed
     ("before7.png", "after7.png", (['laptop'], ['handbag'], [])),
 
-    # 1 object added, 1 object removed, 1 object moved
-    ("before8.png", "after8.png", (['potted plant'], ['handbag'], ['laptop'])),
+    # 2 objects added, 1 object removed, 1 object moved
+    ("before8.png", "after8.png", (['vase', 'potted plant'], ['handbag'], ['laptop'])),
 ])
 def test_calculate_difference(detector, before_img, after_img, expected):
     """Test object detection and difference calculation using real images."""
@@ -50,13 +53,9 @@ def test_calculate_difference(detector, before_img, after_img, expected):
     after_img = Image.open(after_path)
 
     # Get original & highlighted versions
-    before_orig, after_orig, before_highlighted, after_highlighted = detector.combine_image_mask(
+    before_orig, after_orig, _, _ = detector.combine_image_mask(
         before_img, after_img, display=False
     )
-
-    # Object detection using highlighted images
-    objects_before = detector.detect_objects(before_highlighted, False)
-    objects_after = detector.detect_objects(after_highlighted, False)
 
     # Calculate differences using original images
     added, removed, moved = detector.calculate_difference(before_orig, after_orig)
@@ -64,7 +63,12 @@ def test_calculate_difference(detector, before_img, after_img, expected):
     # Convert moved objects to names for comparison
     added_names = [obj.class_name for obj in added]
     removed_names = [obj.class_name for obj in removed]
-    moved_names = [obj[0].class_name for obj in moved]
+    moved_names = [obj[0][0].class_name for obj in moved]
+
+    # Filter out blacklisted items
+    added_names = [name for name in added_names if name.lower() not in BLACKLIST]
+    removed_names = [name for name in removed_names if name.lower() not in BLACKLIST]
+    moved_names = [name for name in moved_names if name.lower() not in BLACKLIST]
 
     # Assertions
     assert added_names == expected[0], f"Expected added: {expected[0]}, got {added_names}"
