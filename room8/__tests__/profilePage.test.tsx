@@ -61,7 +61,7 @@ describe('ProfilePage Component', () => {
     expect(screen.getByText('My Profile')).toBeTruthy();
     expect(screen.getByText('John Doe')).toBeTruthy();
     expect(screen.getByText('john@example.com')).toBeTruthy();
-    expect(screen.getByText('Joined 2023-12-31')).toBeTruthy();
+    expect(screen.getByText('Joined Mon, 01 Jan 2024 00:00:00 GMT')).toBeTruthy();
     expect(screen.getByText('123-456-7890')).toBeTruthy();
   });
 
