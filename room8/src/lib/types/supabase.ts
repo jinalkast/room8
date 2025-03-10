@@ -520,7 +520,7 @@ export type Database = {
           house_id?: string | null;
           id?: string;
           image_url: string;
-          name: string;
+          name?: string;
           phone?: string | null;
           updated_at?: string;
         };

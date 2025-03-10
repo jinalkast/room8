@@ -4,7 +4,7 @@ import useCreateNote from '@/app/(main)/house-settings/hooks/useCreateNote';
 
 jest.mock('@/app/(main)/house-settings/hooks/useCreateNote', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn()
 }));
 
 describe('CreateNoteModal Component', () => {
@@ -44,8 +44,6 @@ describe('CreateNoteModal Component', () => {
     expect(input.value).toEqual('Test Note');
   });
 
-
-
   it('calls createNote with correct data when "Post Note" is clicked', () => {
     const mockCreateNote = jest.fn();
     (useCreateNote as jest.Mock).mockReturnValue({ mutate: mockCreateNote, isPending: false });
@@ -53,7 +51,9 @@ describe('CreateNoteModal Component', () => {
     render(<CreateNoteModal />);
     fireEvent.click(screen.getByText('Create Note'));
 
-    fireEvent.change(screen.getByPlaceholderText('Note text...'), { target: { value: 'New Note' } });
+    fireEvent.change(screen.getByPlaceholderText('Note text...'), {
+      target: { value: 'New Note' }
+    });
     fireEvent.click(screen.getByRole('checkbox'));
     fireEvent.click(screen.getByText('Post Note'));
 
