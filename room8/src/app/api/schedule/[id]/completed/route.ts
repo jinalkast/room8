@@ -5,7 +5,7 @@ export async function GET(req: NextRequest) {
   try {
     const { pathname } = req.nextUrl;
     const segments = pathname.split('/');
-    const id = segments[segments.length - 1];
+    const id = segments[segments.length - 2];
 
     if (!id) {
       return NextResponse.json({ data: null, message: 'Missing chore ID' }, { status: 400 });
@@ -20,6 +20,7 @@ export async function GET(req: NextRequest) {
       .eq('activity_id', id);
 
     if (responsibleError) {
+      console.log(responsibleError);
       throw new Error('Failed to fetch responsible entries');
     }
 
@@ -66,7 +67,7 @@ export async function POST(req: NextRequest) {
   try {
     const { pathname } = req.nextUrl;
     const segments = pathname.split('/');
-    const id = segments[segments.length - 1];
+    const id = segments[segments.length - 2];
 
     const supabase = await supabaseServer();
 
