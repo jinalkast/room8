@@ -23,7 +23,7 @@ function ActivateCameraCard() {
       setTimeout(() => setStopStream(true), 0);
       setIsOpen(false);
     }
-    // For some reason this library throws an error when no QR code is found
+    // For some reason this library throws an error when no QR code is foun
     // if (err) {
     //   console.error(err);
     //   toast({
