@@ -140,7 +140,7 @@ export default function ProfilePage() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="joined">Phone Number:</label>
+                <label htmlFor="phoneNumber">Phone Number:</label>
                 <Input
                   id="phoneNumber"
                   type="text"
@@ -150,7 +150,7 @@ export default function ProfilePage() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="joined">Profile Picture:</label>
+                <label htmlFor="profilePicture">Profile Picture:</label>
                 <Input
                   id="profilePicture"
                   type="file"
