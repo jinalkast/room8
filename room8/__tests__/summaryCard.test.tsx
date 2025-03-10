@@ -3,7 +3,6 @@ import SummaryCard from '@/app/(main)/bill-splitter/components/summaryCard';
 import useBills from '@/app/(main)/bill-splitter/hooks/useBills';
 import useOwes from '@/app/(main)/bill-splitter/hooks/useOwes';
 import QueryProvider from '@/components/query-provider';
-import LoadingSpinner from '@/components/loading';
 
 jest.mock('@/app/(main)/bill-splitter/hooks/useBills');
 jest.mock('@/app/(main)/bill-splitter/hooks/useOwes');
@@ -40,16 +39,13 @@ describe('SummaryCard Component', () => {
       </QueryProvider>
     );
 
-    // Check card titles
     expect(screen.getByText(/Summary/i)).toBeTruthy();
     expect(screen.getByText(/See your current debts and loans/i)).toBeTruthy();
 
-    // Check summary values
-    expect(screen.getByText('$50.00')).toBeTruthy(); // You Owe
-    expect(screen.getByText('$1600.00')).toBeTruthy(); // Gave Out
-    expect(screen.getByText('$1080.00')).toBeTruthy(); // Still Owed (1600 - (20+500))
+    expect(screen.getByText('$50.00')).toBeTruthy();
+    expect(screen.getByText('$1600.00')).toBeTruthy();
+    expect(screen.getByText('$1080.00')).toBeTruthy();
 
-    // Check upcoming debt deadlines
     expect(screen.getByText(/Upcoming Debt Deadlines/i)).toBeTruthy();
     expect(screen.getByText(/Groceries/i)).toBeTruthy();
     expect(screen.getByText(/Due: 2025-03-15/i)).toBeTruthy();
@@ -67,7 +63,7 @@ describe('SummaryCard Component', () => {
       </QueryProvider>
     );
 
-    expect(screen.queryByText('Upcoming Debt Deadlines')).toBeNull(); // Checks for loading spinner
+    expect(screen.queryByText('Upcoming Debt Deadlines')).toBeNull();
   });
 
   it('shows empty state when no debts exist', async () => {

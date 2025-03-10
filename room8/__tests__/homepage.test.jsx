@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom'; // Provides additional Jest matchers
-import HomePage from '@/app/page'; // Adjust path if needed
+import '@testing-library/jest-dom';
+import HomePage from '@/app/page';
 
 describe('HomePage Component', () => {
   it('renders the main heading', () => {
@@ -15,7 +15,7 @@ describe('HomePage Component', () => {
 
     const subheading = screen.getByRole('heading', {
       level: 2,
-      name: /Proof of Concept Demo By Team 19/i,
+      name: /Proof of Concept Demo By Team 19/i
     });
 
     expect(subheading).toBeInTheDocument();
@@ -23,7 +23,7 @@ describe('HomePage Component', () => {
 
   it('renders the "Sign In" button', () => {
     render(<HomePage />);
-    
+
     const button = screen.getByRole('button', { name: /Sign In/i });
     expect(button).toBeInTheDocument();
   });

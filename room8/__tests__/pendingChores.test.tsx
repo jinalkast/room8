@@ -5,7 +5,6 @@ import useAllActivities from '../src/app/(main)/schedule/hooks/useGetAllActiviti
 import useUser from '@/app/auth/hooks/useUser';
 import QueryProvider from '@/components/query-provider';
 
-// Mock the hooks
 jest.mock('../src/app/(main)/schedule/hooks/useGetAllActivities');
 jest.mock('@/app/auth/hooks/useUser');
 jest.mock('../src/app/(main)/schedule/components/pending-item', () => ({
@@ -116,7 +115,6 @@ describe('PendingChores Component', () => {
       </QueryProvider>
     );
 
-    // Should show 2 activities for user123
     expect(screen.getByTestId('pending-item-0')).toBeInTheDocument();
     expect(screen.getByTestId('pending-item-1')).toBeInTheDocument();
     expect(screen.queryByText('Clean bathroom')).not.toBeInTheDocument();

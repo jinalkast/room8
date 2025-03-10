@@ -54,19 +54,6 @@ describe('ChatBotPage', () => {
     expect(screen.getAllByRole('heading', { level: 3 }).length).toBeGreaterThan(1);
   });
 
-  //   test('toggles a chatbot setting', async () => {
-  //     (useGetHouse as jest.Mock).mockReturnValue({ isLoading: false, data: { chatbotActive: true } });
-  //     render(
-  //       <QueryClientProvider client={queryClient}>
-  //         <ChatBotPage />
-  //       </QueryClientProvider>
-  //     );
-
-  //     const settingCheckbox = screen.getByLabelText(/House Updates/i);
-  //     fireEvent.click(settingCheckbox);
-  //     expect(settingCheckbox.).toBeTruthy();
-  //   });
-
   test('activates chatbot on button click', async () => {
     const mutateMock = jest.fn();
     (useGetHouse as jest.Mock).mockReturnValue({
