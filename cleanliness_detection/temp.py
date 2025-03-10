@@ -1,5 +1,6 @@
 import math
 import torch
+import random
 from PIL import Image
 import numpy as np
 import cv2
@@ -508,34 +509,60 @@ class CleanlinessDetector:
         print(f"Results exported to {FOLDER_PATH}")
 
 if __name__ == "__main__":
-    cd = CleanlinessDetector()
-    # Process images
-    before_img = Image.open("cleanliness_detection/samples/5/before.jpeg")
-    after_img = Image.open("cleanliness_detection/samples/5/after.jpeg")
+    for i in range(100):
+        # time the processing of the images and output the time taken in a csv file
+        start_time = datetime.now()
+        cd = CleanlinessDetector()
 
-    # Get the original and highlighted versions
-    before_orig, after_orig, before_highlighted, after_highlighted = cd.combine_image_mask(before_img, after_img, display=True)
+        # Generate a random number between 1 and 7
+        random_folder = random.randint(1, 7)
+        
+        # do a check for the random folder if it's 1-4, use .png, 5 is jpeg, else is jpg
+        if random_folder <= 4:
+            file_type = "png"
+        elif random_folder == 5:
+            file_type = "jpeg"
+        else:
+            file_type = "jpg"
+        before_path = f"cleanliness_detection/samples/{random_folder}/before.{file_type}"
+        after_path = f"cleanliness_detection/samples/{random_folder}/after.{file_type}"
 
-    # Use the original images for detection, but the highlights help us visualize
-    # Detect objects in the before and after images
-    objects_before = cd.detect_objects(before_highlighted, True)
-    objects_after = cd.detect_objects(after_highlighted, True)
+        # Process images
+        before_img = Image.open(before_path)
+        after_img = Image.open(after_path)
 
-    print(f"Detected {len(objects_before)} objects in before image")
-    print(f"Detected {len(objects_after)} objects in after image")
+        # Get the original and highlighted versions
+        before_orig, after_orig, before_highlighted, after_highlighted = cd.combine_image_mask(before_img, after_img, display=False)
 
-    # Calculate the differences using the same original images
-    added, removed, moved = cd.calculate_difference(before_orig, after_orig)
+        # Use the original images for detection, but the highlights help us visualize
+        # Detect objects in the before and after images
+        objects_before = cd.detect_objects(before_highlighted, False)
+        objects_after = cd.detect_objects(after_highlighted, False)
 
-    print(f"Added: {len(added)}")
-    print(f"Removed: {len(removed)}")
-    print(f"Moved: {len(moved)}")
+        print(f"Detected {len(objects_before)} objects in before image")
+        print(f"Detected {len(objects_after)} objects in after image")
 
-    # Annotate the before and after images
-    before_fig = cd.annotate_image(before_orig, objects_before, True)
-    after_fig = cd.annotate_image(after_orig, objects_after, True)
+        # Calculate the differences using the same original images
+        added, removed, moved = cd.calculate_difference(before_orig, after_orig)
 
-    # Annotate the changes in the after image
-    changes_fig = cd.annotate_changes(after_orig, added, moved, removed, True)
+        print(f"Added: {len(added)}")
+        print(f"Removed: {len(removed)}")
+        print(f"Moved: {len(moved)}")
 
-    cd.export_results(before_fig, after_fig, changes_fig, added, removed, moved)
+        # Annotate the before and after images
+        before_fig = cd.annotate_image(before_orig, objects_before, False)
+        after_fig = cd.annotate_image(after_orig, objects_after, False)
+
+        # Annotate the changes in the after image
+        changes_fig = cd.annotate_changes(after_orig, added, moved, removed, False)
+
+        cd.export_results(before_fig, after_fig, changes_fig, added, removed, moved)
+        end_time = datetime.now()
+        time_taken = end_time - start_time
+        print(f"Time taken: {time_taken}")
+        with open('time_taken.csv', 'a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([time_taken])
+        print("--------------------------------------------------")
+    
+    print("All images processed successfully")
