@@ -1,7 +1,7 @@
 import pytest
 from PIL import Image
 import os
-from ..temp import CleanlinessDetector
+from temp import CleanlinessDetector
 
 # Define test image directory
 TEST_IMAGE_DIR = "tests/test_images"
@@ -55,16 +55,18 @@ def test_calculate_difference(detector, before_img, after_img, expected):
     )
 
     # Object detection using highlighted images
-    objects_before = detector.detect_objects(before_highlighted, True)
-    objects_after = detector.detect_objects(after_highlighted, True)
+    objects_before = detector.detect_objects(before_highlighted, False)
+    objects_after = detector.detect_objects(after_highlighted, False)
 
     # Calculate differences using original images
     added, removed, moved = detector.calculate_difference(before_orig, after_orig)
 
     # Convert moved objects to names for comparison
-    moved_names = [obj[0] for obj in moved]
+    added_names = [obj.class_name for obj in added]
+    removed_names = [obj.class_name for obj in removed]
+    moved_names = [obj[0].class_name for obj in moved]
 
     # Assertions
-    assert added == expected[0], f"Expected added: {expected[0]}, got {added}"
-    assert removed == expected[1], f"Expected removed: {expected[1]}, got {removed}"
+    assert added_names == expected[0], f"Expected added: {expected[0]}, got {added_names}"
+    assert removed_names == expected[1], f"Expected removed: {expected[1]}, got {removed_names}"
     assert moved_names == expected[2], f"Expected moved: {expected[2]}, got {moved_names}"
