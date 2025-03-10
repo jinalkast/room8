@@ -5,6 +5,10 @@ on:
   push:
     paths:
       - "room8/**"
+  pull_request:
+    branches: [ "main", "dev" ]
+    paths:
+      - "room8/**"
 jobs:
   run-defined-frontend-tests:
     runs-on: ubuntu-latest
