@@ -249,11 +249,22 @@ class CleanlinessDetector:
 
         return house_objects
     
+    """Only consider detections within mask"""
+    def filter_detections(self, detections: list[HouseObject], mask:np.array):
+        filtered_detections = []
+        for det in detections:
+            (x, y) = det.centroid
+            if np.all(mask[y, x] == [255, 255, 255]):
+                filtered_detections.append(det)
+        return filtered_detections
+    
     """Completely rewritten difference calculation algorithm with better matching"""
     def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[list[HouseObject]]]:
-        # Get objects from before and after images
-        objects_before = self.detect_objects(before_img)
-        objects_after = self.detect_objects(after_img)
+        mask = self.frame_diff(before_img, after_img)       #binary mask
+        
+        # Get objects within binary mask
+        objects_before = self.filter_detections(self.detect_objects(before_img), mask)
+        objects_after = self.filter_detections(self.detect_objects(after_img), mask)
         
         # Lists to store results
         added = []
