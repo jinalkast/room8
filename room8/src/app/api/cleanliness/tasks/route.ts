@@ -14,7 +14,11 @@ export async function GET(req: NextRequest) {
       throw new Error('User is not in a house');
     }
 
-    const { data: houseData, error: houseError } = await supabase.from('houses').select('camera_id').eq('id', houseId).single();
+    const { data: houseData, error: houseError } = await supabase
+      .from('houses')
+      .select('camera_id')
+      .eq('id', houseId)
+      .single();
     if (houseError || !houseData) {
       console.log('house data error:', houseError);
       throw new Error('Error fetching house data');

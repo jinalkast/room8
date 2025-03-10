@@ -29,7 +29,11 @@ export async function GET(
       throw new Error('User not authenticated');
     }
 
-    const { data: houseData, error: houseError } = await supabase.from('houses').select('camera_id').eq('id', houseID).single();
+    const { data: houseData, error: houseError } = await supabase
+      .from('houses')
+      .select('camera_id')
+      .eq('id', houseID)
+      .single();
     if (houseError || !houseData) {
       console.log('house data error:', houseError);
       throw new Error('Error fetching house data');

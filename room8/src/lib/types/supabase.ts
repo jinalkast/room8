@@ -118,36 +118,36 @@ export type Database = {
       };
       cleanliness_logs: {
         Row: {
-          after_image_url: string
-          before_image_url: string
-          camera_id: string
-          created_at: string
-          id: string
-        }
+          after_image_url: string;
+          before_image_url: string;
+          camera_id: string;
+          created_at: string;
+          id: string;
+        };
         Insert: {
-          after_image_url: string
-          before_image_url: string
-          camera_id: string
-          created_at?: string
-          id?: string
-        }
+          after_image_url: string;
+          before_image_url: string;
+          camera_id: string;
+          created_at?: string;
+          id?: string;
+        };
         Update: {
-          after_image_url?: string
-          before_image_url?: string
-          camera_id?: string
-          created_at?: string
-          id?: string
-        }
+          after_image_url?: string;
+          before_image_url?: string;
+          camera_id?: string;
+          created_at?: string;
+          id?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "cleanliness_logs_camera_id_fkey"
-            columns: ["camera_id"]
-            isOneToOne: false
-            referencedRelation: "houses"
-            referencedColumns: ["camera_id"]
-          },
-        ]
-      }
+            foreignKeyName: 'cleanliness_logs_camera_id_fkey';
+            columns: ['camera_id'];
+            isOneToOne: false;
+            referencedRelation: 'houses';
+            referencedColumns: ['camera_id'];
+          }
+        ];
+      };
       cleanliness_tasks: {
         Row: {
           assigned_by_id: string | null;
@@ -328,35 +328,35 @@ export type Database = {
       };
       houses: {
         Row: {
-          address: string
-          camera_id: string | null
-          chatbot_active: boolean
-          created_at: string
-          id: string
-          name: string
-          owner: string
-          updated_at: string
-        }
+          address: string;
+          camera_id: string | null;
+          chatbot_active: boolean;
+          created_at: string;
+          id: string;
+          name: string;
+          owner: string;
+          updated_at: string;
+        };
         Insert: {
-          address: string
-          camera_id?: string | null
-          chatbot_active?: boolean
-          created_at?: string
-          id?: string
-          name?: string
-          owner: string
-          updated_at?: string
-        }
+          address: string;
+          camera_id?: string | null;
+          chatbot_active?: boolean;
+          created_at?: string;
+          id?: string;
+          name?: string;
+          owner: string;
+          updated_at?: string;
+        };
         Update: {
-          address?: string
-          camera_id?: string | null
-          chatbot_active?: boolean
-          created_at?: string
-          id?: string
-          name?: string
-          owner?: string
-          updated_at?: string
-        }
+          address?: string;
+          camera_id?: string | null;
+          chatbot_active?: boolean;
+          created_at?: string;
+          id?: string;
+          name?: string;
+          owner?: string;
+          updated_at?: string;
+        };
         Relationships: [
           {
             foreignKeyName: 'houses_owner_fkey';

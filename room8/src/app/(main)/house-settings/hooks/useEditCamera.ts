@@ -12,7 +12,7 @@ export const fetchPutCamera = async ({
   const res = await fetch(`/api/house/${houseId}/camera`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({cameraId} as TCameraBody)
+    body: JSON.stringify({ cameraId } as TCameraBody)
   });
 
   if (!res.ok) {
