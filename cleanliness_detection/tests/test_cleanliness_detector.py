@@ -18,28 +18,28 @@ def detector():
 
 @pytest.mark.parametrize("before_img, after_img, expected", [
     # No changes
-    ("before.jpeg", "after_no_change.jpeg", ([], [], [])),
+    ("before1.png", "after1.png", ([], [], [])),
 
     # 1 object added
-    ("before.jpeg", "after_added.jpeg", (['chair'], [], [])),
+    ("before2.png", "after2.png", (['laptop'], [], [])),
 
     # 1 object removed
-    ("before.jpeg", "after_removed.jpeg", ([], ['table'], [])),
+    ("before3.png", "after3.png", ([], ['laptop'], [])),
 
     # 1 object moved
-    ("before.jpeg", "after_moved.jpeg", ([], [], ['sofa'])),
+    ("before4.png", "after4.png", ([], [], ['laptop'])),
 
-    # 1 object added, 1 object removed
-    ("before.jpeg", "after_added_removed.jpeg", (['lamp'], ['desk'], [])),
+    # 1 object moved, 1 object removed
+    ("before5.png", "after5.png", ([], ['handbag'], ['laptop'])),
 
     # 1 object added, 1 object moved
-    ("before.jpeg", "after_added_moved.jpeg", (['cup'], [], ['book'])),
+    ("before6.png", "after6.png", (['handbag'], [], ['laptop'])),
 
-    # 1 object removed, 1 object moved
-    ("before.jpeg", "after_removed_moved.jpeg", ([], ['plant'], ['stool'])),
+    # 1 object added, 1 object removed
+    ("before7.png", "after7.png", (['laptop'], ['handbag'], [])),
 
     # 1 object added, 1 object removed, 1 object moved
-    ("before.jpeg", "after_all.jpeg", (['bottle'], ['keyboard'], ['monitor'])),
+    ("before8.png", "after8.png", (['potted plant'], ['handbag'], ['laptop'])),
 ])
 def test_calculate_difference(detector, before_img, after_img, expected):
     """Test object detection and difference calculation using real images."""
