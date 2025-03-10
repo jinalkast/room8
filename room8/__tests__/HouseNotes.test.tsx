@@ -8,22 +8,26 @@ import QueryProvider from '@/components/query-provider';
 
 jest.mock('@/app/(main)/house-settings/hooks/useGetNotes', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn()
 }));
 
-jest.mock('@/app/(main)/house-settings/components/create-note-modal', () => () => <div>Create Note</div>);
+jest.mock('@/app/(main)/house-settings/components/create-note-modal', () => () => (
+  <div>Create Note</div>
+));
 // jest.mock('@/components/loading', () => () => <div>Loading...</div>);
-jest.mock('@/app/(main)/house-settings/components/note-item', () => ({ note } : { note: TNote }) => <div>{note.text}</div>);
+jest.mock('@/app/(main)/house-settings/components/note-item', () => ({ note }: { note: TNote }) => (
+  <div>{note.text}</div>
+));
 
 describe('HouseNotes Component', () => {
   it('renders loading state', () => {
     (useGetNotes as jest.Mock).mockReturnValue({ data: null, isLoading: true });
 
     render(
-        <QueryProvider>
-            <HouseNotes />
-        </QueryProvider>
-);
+      <QueryProvider>
+        <HouseNotes />
+      </QueryProvider>
+    );
 
     expect(screen.getByRole('loading')).toBeTruthy();
   });
@@ -39,22 +43,24 @@ describe('HouseNotes Component', () => {
   it('renders notes when data is available', () => {
     (useGetNotes as jest.Mock).mockReturnValue({
       data: [
-        {   createdAt: '2024-01-01T00:00:00Z',
-            favourited: false,
-            houseId: '123',
-            id: '1',
-            posterId: '1',
-            text: 'First Note', 
+        {
+          createdAt: '2024-01-01T00:00:00Z',
+          favourited: false,
+          houseId: '123',
+          id: '1',
+          posterId: '1',
+          text: 'First Note'
         },
-        {   createdAt: '2024-01-02T00:00:00Z',
-            favourited: false,
-            houseId: '123',
-            id: '2',
-            posterId: '1',
-            text: 'Second Note', 
-        },
+        {
+          createdAt: '2024-01-02T00:00:00Z',
+          favourited: false,
+          houseId: '123',
+          id: '2',
+          posterId: '1',
+          text: 'Second Note'
+        }
       ],
-      isLoading: false,
+      isLoading: false
     });
 
     render(<HouseNotes />);

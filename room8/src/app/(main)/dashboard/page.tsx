@@ -30,7 +30,7 @@ export default function DashboardPage() {
               <SummaryCard />
               <PendingChores />
             </div>
-            <div>{house && <HouseNotes house={house} />}</div>
+            <div>{house && <HouseNotes />}</div>
           </div>
         ) : (
           <div className="p-4 grid place-content-center border rounded-lg w-1/2">

@@ -6,17 +6,17 @@ import useDeclineInvite from '@/app/(main)/house-settings/hooks/useDeclineInvite
 
 jest.mock('@/app/(main)/house-settings/hooks/useGetInvites', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn()
 }));
 
 jest.mock('@/app/(main)/house-settings/hooks/useAcceptInvite', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn()
 }));
 
 jest.mock('@/app/(main)/house-settings/hooks/useDeclineInvite', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn()
 }));
 
 describe('HouseInvites Component', () => {
@@ -24,8 +24,8 @@ describe('HouseInvites Component', () => {
     {
       id: 'invite1',
       inviter: { name: 'John Doe', imageUrl: '/john.png' },
-      house: { name: 'Sunset Villa', address: '123 Ocean Drive' },
-    },
+      house: { name: 'Sunset Villa', address: '123 Ocean Drive' }
+    }
   ];
 
   beforeEach(() => {
@@ -82,7 +82,10 @@ describe('HouseInvites Component', () => {
     const mockDeclineInvite = jest.fn();
     (useGetInvites as jest.Mock).mockReturnValue({ data: mockInvites, isLoading: false });
     (useAcceptInvite as jest.Mock).mockReturnValue({ mutate: jest.fn(), isPending: false });
-    (useDeclineInvite as jest.Mock).mockReturnValue({ mutate: mockDeclineInvite, isPending: false });
+    (useDeclineInvite as jest.Mock).mockReturnValue({
+      mutate: mockDeclineInvite,
+      isPending: false
+    });
 
     render(<HouseInvites />);
 

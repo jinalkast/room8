@@ -75,9 +75,7 @@ describe('BillDetailsContent Component', () => {
   });
 
   it('shows loading spinner when fetching bill details', async () => {
-    global.fetch = jest.fn(() =>
-      new Promise(() => {})
-    ) as jest.Mock; // Keeps the fetch unresolved
+    global.fetch = jest.fn(() => new Promise(() => {})) as jest.Mock; // Keeps the fetch unresolved
 
     render(
       <QueryProvider>

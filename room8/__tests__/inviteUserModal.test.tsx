@@ -6,17 +6,23 @@ import { THouse } from '@/app/(main)/house-settings/types';
 
 jest.mock('@/app/(main)/house-settings/hooks/useInviteUser', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn()
 }));
 
 jest.mock('@/app/auth/hooks/useUser', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn()
 }));
 
-
 describe('InviteUserModal Component', () => {
-  const mockHouse: THouse = { id: 'house123', address: '123 Main St', owner: '123', name: 'Humble Abode', 'chatbotActive': false };
+  const mockHouse: THouse = {
+    id: 'house123',
+    address: '123 Main St',
+    owner: '123',
+    name: 'Humble Abode',
+    chatbotActive: false,
+    cameraId: null
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -45,12 +51,11 @@ describe('InviteUserModal Component', () => {
     (useInviteUser as jest.Mock).mockReturnValue({ mutate: jest.fn(), isPending: false });
 
     render(<InviteUserModal house={mockHouse} />);
-    fireEvent.click(screen.getByText('Invite Roommate'))
+    fireEvent.click(screen.getByText('Invite Roommate'));
     expect(screen.getByText('Invite User')).toBeTruthy();
     expect(screen.getByText('Cancel')).toBeTruthy();
     expect(screen.getByText('Invite a roommate to 123 Main St')).toBeTruthy();
   });
-
 
   it('calls inviteUser when invite button is clicked', () => {
     const mockInviteUser = jest.fn();
@@ -58,7 +63,7 @@ describe('InviteUserModal Component', () => {
     (useInviteUser as jest.Mock).mockReturnValue({ mutate: mockInviteUser, isPending: false });
 
     render(<InviteUserModal house={mockHouse} />);
-    fireEvent.click(screen.getByText('Invite Roommate'))
+    fireEvent.click(screen.getByText('Invite Roommate'));
 
     const input = screen.getByPlaceholderText('Email');
     fireEvent.change(input, { target: { value: 'test@example.com' } });
@@ -69,9 +74,8 @@ describe('InviteUserModal Component', () => {
     expect(mockInviteUser).toHaveBeenCalledWith({
       houseId: 'house123',
       inviterId: 'user123',
-      userEmail: 'test@example.com',
+      userEmail: 'test@example.com'
     });
-
   });
 
   it('disables invite button while invite is pending', () => {
@@ -79,7 +83,7 @@ describe('InviteUserModal Component', () => {
     (useInviteUser as jest.Mock).mockReturnValue({ mutate: jest.fn(), isPending: true });
 
     render(<InviteUserModal house={mockHouse} />);
-    fireEvent.click(screen.getByText('Invite Roommate'))
+    fireEvent.click(screen.getByText('Invite Roommate'));
 
     expect(screen.getByText('Invite User').isContentEditable).toBeFalsy();
   });
