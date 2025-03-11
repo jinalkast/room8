@@ -771,7 +771,7 @@ their time zone.
 \subsection{Performance}
 \subsubsection{NFR214}
 The system should be able to authenticate a user with a median
-response time of under 1 second.\\\\Using Jest (A front-end JavaScript testing library) we are able to rapidly execute sign-in attempts as if we were a user. Executing the sign-in attempt 50 times and averaging the result gives us the following execution times.
+response time of under 1 second.\\\\Using Jest (A front-end JavaScript testing library) we are able to rapidly execute sign-in attempts as if we were a user. Executing the sign-in attempt approximately 50 times (some failed due to timeouts) and averaging the result gives us the following execution times.
 
 
 \begin{figure}[H]
@@ -827,6 +827,33 @@ messages such as addresses or full names.
 
 \subsubsection{NFR235}
 The system shall process image data in under 30 minutes.
+
+To test this, we ran the image processing algorithm 100 times on both a high-spec and a low-spec machine and averaged the execution matrix.
+
+The specifications for the low-spec machine are:
+\begin{itemize}
+\item \textbf{GPU}: Integrated Graphics with CPU (shared GPU memory of 8GB)
+\item \textbf{RAM}: 16 GB
+\item \textbf{CPU cores}: 6 with 12 logical processors
+\item \textbf{CPU speed}: 2.5 GHz
+
+\end{itemize}
+The specifications for the high-spec machine are:
+\begin{itemize}
+\item \textbf{GPU}:  NVIDIA Geforce GTX 1650 (4 GB dedicated GPU memory, 8 GB shared, 12 GB total)
+\item \textbf{RAM}: 16 GB
+\item \textbf{CPU cores}: 6 with 12 logical processors
+\item \textbf{CPU speed}: 4 GHz
+\end{itemize}
+
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{./imgs/cleanAlgTimes.png}
+    \caption{Component Diagram}
+    \label{fig: High level component diagram}
+\end{figure}
+
+As you can see it's clear that we satisfy the non-functional requirement.
 
 \subsection{Privacy and Security}
 \subsubsection{NFR211}
@@ -1154,6 +1181,14 @@ graduate attribute of Reflection.
   predict a feasible amount of effort and the right tasks needed to build the
   evidence that demonstrates the required quality?  (It is expected that most
   teams will have had to deviate from their original VnV Plan.)
+\end{enumerate}
+
+Answers:
+\begin{enumerate}
+  \item Compiling results from tests such as code coverage metrics and satisfaction criteria was simple and easy to port over to the document. Additionally, due to how advanced the average testing library is, writing test cases to check various things such as running time, output results, etc is very easy and that made working on the tests for this deliverable very easy. Finally, division of labour in the deliverable was a lot easier because multiple people can contribute to a section independently because our project is divided into seperat mini-projects that can each have their own automated tests, unit tests, etc.
+  \item Creating appropriate unit tests was difficult at first because the team was inexperienced with writing quality unit tests. After that another pain point 
+  \item Tests for the cleanliness detection system (the AI system) were inspired from conversations with our supervisor Dr. Tharmarasa, who advised us to curate sample cases to prove our system's functionality. Unit tests and generally all front-end tests we're implemented without discussions from users or peers. The reason clients and proxies were not consulted for the development of tests was because our requirements were not built from user feedback.
+  \item 
 \end{enumerate}
 
 \end{document}
