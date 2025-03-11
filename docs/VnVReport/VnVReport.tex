@@ -771,7 +771,7 @@ their time zone.
 \subsection{Performance}
 \subsubsection{NFR214}
 The system should be able to authenticate a user with a median
-response time of under 1 second.\\\\Using Jest (A front-end JavaScript testing library) we are able to rapidly execute sign-in attempts as if we were a user. Executing the sign-in attempt 50 times and averaging the result gives us the following execution times.
+response time of under 1 second.\\\\Using Jest (A front-end JavaScript testing library) we are able to rapidly execute sign-in attempts as if we were a user. Executing the sign-in attempt approximately 50 times (some failed due to timeouts) and averaging the result gives us the following execution times.
 
 
 \begin{figure}[H]
@@ -827,6 +827,33 @@ messages such as addresses or full names.
 
 \subsubsection{NFR235}
 The system shall process image data in under 30 minutes.
+
+To test this, we ran the image processing algorithm 100 times on both a high-spec and a low-spec machine and averaged the execution matrix.
+
+The specifications for the low-spec machine are:
+\begin{itemize}
+\item \textbf{GPU}: Integrated Graphics with CPU (shared GPU memory of 8GB)
+\item \textbf{RAM}: 16 GB
+\item \textbf{CPU cores}: 6 with 12 logical processors
+\item \textbf{CPU speed}: 2.5 GHz
+
+\end{itemize}
+The specifications for the high-spec machine are:
+\begin{itemize}
+\item \textbf{GPU}:  NVIDIA Geforce GTX 1650 (4 GB dedicated GPU memory, 8 GB shared, 12 GB total)
+\item \textbf{RAM}: 16 GB
+\item \textbf{CPU cores}: 6 with 12 logical processors
+\item \textbf{CPU speed}: 4 GHz
+\end{itemize}
+
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{./imgs/cleanAlgTimes.png}
+    \caption{Component Diagram}
+    \label{fig: High level component diagram}
+\end{figure}
+
+As you can see it's clear that we satisfy the non-functional requirement.
 
 \subsection{Privacy and Security}
 \subsubsection{NFR211}
@@ -1090,7 +1117,7 @@ While it is recommended to test as much of your code as possible. Due to time co
 \item Ensuring the UI displayed information fetched from the back-end
 \item Ensuring inputs and buttons on the UI are able to be interacted with
 \end{itemize}
-In the front-end, 105 different tests were written for over 20+ components resulting in the following code-coverage report.
+In the front-end, 115 different tests were written for over 20+ components resulting in the following code-coverage report.
 
 
 % Define new column types with smaller font
@@ -1100,97 +1127,112 @@ In the front-end, 105 different tests were written for over 20+ components resul
 \newgeometry{left=5mm,right=5mm}
 \begin{longtable}{|S{0.3\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | U{0.1\linewidth}|}
     \caption{\bf Front-end Code Coverage Report} \label{tab:coverage} \\
-    \hline
-    \textbf{File} & \textbf{\% Stmts} & \textbf{\% Branch} & \textbf{\% Funcs} & \textbf{\% Lines} & \textbf{Uncovered Line \#s} \\
-    \hline
-    \endfirsthead
-    
-    \hline
-    \textbf{File} & \textbf{\% Stmts} & \textbf{\% Branch} & \textbf{\% Funcs} & \textbf{\% Lines} & \textbf{Uncovered Line \#s} \\
-    \hline
-    \endhead
-    
-    \hline
-    \endfoot
-    
-    \hline
-    \endlastfoot
+      \hline
+      \textbf{File} & \textbf{\% Stmts} & \textbf{\% Branch} & \textbf{\% Funcs} & \textbf{\% Lines} & \textbf{Uncovered Line \#s} \\
+      \hline
+      \endfirsthead
+      
+      \hline
+      \textbf{File} & \textbf{\% Stmts} & \textbf{\% Branch} & \textbf{\% Funcs} & \textbf{\% Lines} & \textbf{Uncovered Line \#s} \\
+      \hline
+      \endhead
+      
+      \hline
+      \endfoot
+      
+      \hline
+      \endlastfoot
 
-    All files & 82.9  & 93.24  & 58.87  & 82.9  & \\ \hline
-    app & 100 & 100 & 100 & 100 & \\ \hline
-    \quad page.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    app/(main)/bill-splitter/components & 83.37 & 100 & 60 & 83.37 & \\ \hline
-    \quad debtsTable.tsx & 83.72 & 100 & 25 & 83.72 & 26--32, 34--38, 76--77 \\ \hline
-    \quad historyTable.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad loansTable.tsx & 63.82 & 100 & 57.14 & 63.82 & 22--67, 91--93, 95--96 \\ \hline
-    \quad summaryCard.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad summaryCardStub.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    app/(main)/bill-splitter/hooks & 33.33 & 100 & 12.5 & 33.33 & \\ \hline
-    \quad patchOwe.ts & 55.26 & 100 & 50 & 55.26 & 5--21 \\ \hline
-    \quad useBillHistory.ts & 19.44 & 100 & 0 & 19.44 & 6--29, 32--36 \\ \hline
-    \quad useBills.ts & 26.08 & 100 & 0 & 26.08 & 5--16, 19--23 \\ \hline
-    \quad useOwes.ts & 26.08 & 100 & 0 & 26.08 & 5--16, 19--23 \\ \hline
-    app/(main)/chatbot & 95.62 & 80 & 50 & 95.62 & \\ \hline
-    \quad page.tsx & 95.62 & 80 & 50 & 95.62 & 81--85, 101 \\ \hline
-    app/(main)/chatbot/components & 95.74 & 33.33 & 50 & 95.74 & \\ \hline
-    \quad chatbot-setting-stub.tsx & 95.74 & 33.33 & 50 & 95.74 & 21--22 \\ \hline
-    app/(main)/chatbot/hooks & 24.39 & 100 & 0 & 24.39 & \\ \hline
-    \quad useActivateChatbot.ts & 24.39 & 100 & 0 & 24.39 & 9--24, 27--41 \\ \hline
-    app/(main)/dashboard/components & 100 & 100 & 100 & 100 & \\ \hline
-    \quad dashboard-cards.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    app/(main)/house-settings/components & 100 & 100 & 100 & 100 & \\ \hline
-    \quad create-note-modal.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad edit-house-modal.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad house-invites.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad house-notes.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad invite-user-modal.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    app/(main)/house-settings/hooks & 35 & 100 & 20 & 35 & \\ \hline
-    \quad useRemoveRoomate.ts & 35 & 100 & 20 & 35 & 5--15, 22--23, 25--32, 34--38 \\ \hline
-    app/(main)/profile & 87.22 & 80 & 60 & 87.22 & \\ \hline
-    \quad page.tsx & 87.22 & 80 & 60 & 87.22 & 25--31, 39--43, 94--101, 159--161 \\ \hline
-    app/(main)/schedule & 23.07 & 100 & 0 & 23.07 & \\ \hline
-    \quad adapters.ts & 23.07 & 100 & 0 & 23.07 & 4--13 \\ \hline
-    app/(main)/schedule/components & 98.76 & 95.74 & 100 & 98.76 & \\ \hline
-    \quad chore-history.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad create-chore-modal.tsx & 99.41 & 85.71 & 100 & 99.41 & 143 \\ \hline
-    \quad pending-chores.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad pending-item.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad schedule-item.tsx & 95.58 & 92 & 100 & 95.58 & 64--69, 76--77 \\ \hline
-    \quad schedule.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    app/(main)/schedule/hooks & 33.48 & 100 & 0 & 33.48 & \\ \hline
-    \quad useCreateChore.ts & 14.28 & 100 & 0 & 14.28 & 5--17, 20--42 \\ \hline
-    \quad useDeleteChore.ts & 14.63 & 100 & 0 & 14.63 & 5--16, 19--41 \\ \hline
-    \quad useGetAllActivities.ts & 36.36 & 100 & 0 & 36.36 & 7--15, 18--22 \\ \hline
-    \quad useGetAllCompletedChores.ts & 69.76 & 100 & 0 & 69.76 & 29--36, 39--43 \\ \hline
-    \quad useGetCompletedChores.ts & 50 & 100 & 0 & 50 & 12--19, 22--26 \\ \hline
-    \quad useUpdateCompletedChore.ts & 24 & 100 & 0 & 24 & 11--23, 26--50 \\ \hline
-    app/auth/hooks & 47.36 & 100 & 0 & 47.36 & \\ \hline
-    \quad useUser.tsx & 47.36 & 100 & 0 & 47.36 & 19--38 \\ \hline
-    components & 100 & 100 & 85.71 & 100 & \\ \hline
-    \quad loading.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad modal.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad mutate-loading.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad query-provider.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad roommates-table.tsx & 100 & 100 & 50 & 100 & \\ \hline
-    components/ui & 97.69 & 88.23 & 100 & 97.69 & \\ \hline
-    \quad button.tsx & 100 & 50 & 100 & 100 & 42 \\ \hline
-    \quad card.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad checkbox.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad dialog.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad form.tsx & 92.26 & 92.85 & 100 & 92.26 & 50--51, 123--133 \\ \hline
-    \quad input.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad label.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    \quad table.tsx & 100 & 100 & 100 & 100 & \\ \hline
-    hooks & 45.16 & 75 & 33.33 & 45.16 & \\ \hline
-    \quad useGetHouse.ts & 24.13 & 100 & 0 & 24.13 & 6--22, 25--29 \\ \hline
-    \quad useRoommates.ts & 63.33 & 60 & 100 & 63.33 & 9--11, 13--20 \\ \hline
-    \quad useToast.ts & 45.5 & 100 & 14.28 & 45.5 & 27--30, 59--72, 75--125, 131--136, 140--167 \\ \hline
-    lib & 61.53 & 100 & 50 & 61.53 & \\ \hline
-    \quad utils.ts & 61.53 & 100 & 50 & 61.53 & 9--13 \\ \hline
-    lib/constants & 100 & 100 & 100 & 100 & \\ \hline
-    \quad index.ts & 100 & 100 & 100 & 100 & \\ \hline
-    lib/supabase & 44.44 & 100 & 0 & 44.44 & \\ \hline
-    \quad browser.ts & 44.44 & 100 & 0 & 44.44 & 5--9 \\ \hline
+      All files & 83.2 & 91.05 & 58.33 & 83.2 & \\ \hline
+      app & 100 & 100 & 100 & 100 & \\ \hline
+      \quad page.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      app/(main)/bill-splitter/components & 83.37 & 100 & 60 & 83.37 & \\ \hline
+      \quad debtsTable.tsx & 83.72 & 100 & 25 & 83.72 & 26--32, 34--38, 76--77 \\ \hline
+      \quad historyTable.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad loansTable.tsx & 63.82 & 100 & 57.14 & 63.82 & 22--67, 91--93, 95--96 \\ \hline
+      \quad summaryCard.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad summaryCardStub.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      app/(main)/bill-splitter/hooks & 33.33 & 100 & 12.5 & 33.33 & \\ \hline
+      \quad patchOwe.ts & 55.26 & 100 & 50 & 55.26 & 5--21 \\ \hline
+      \quad useBillHistory.ts & 19.44 & 100 & 0 & 19.44 & 6--29, 32--36 \\ \hline
+      \quad useBills.ts & 26.08 & 100 & 0 & 26.08 & 5--16, 19--23 \\ \hline
+      \quad useOwes.ts & 26.08 & 100 & 0 & 26.08 & 5--16, 19--23 \\ \hline
+      app/(main)/chatbot & 95.62 & 80 & 50 & 95.62 & \\ \hline
+      \quad page.tsx & 95.62 & 80 & 50 & 95.62 & 81--85, 101 \\ \hline
+      app/(main)/chatbot/components & 95.74 & 33.33 & 50 & 95.74 & \\ \hline
+      \quad chatbot-setting-stub.tsx & 95.74 & 33.33 & 50 & 95.74 & 21--22 \\ \hline
+      app/(main)/chatbot/hooks & 24.39 & 100 & 0 & 24.39 & \\ \hline
+      \quad useActivateChatbot.ts & 24.39 & 100 & 0 & 24.39 & 9--24, 27--41 \\ \hline
+      app/(main)/cleanliness-manager/components & 88 & 77.77 & 62.5 & 88 & \\ \hline
+      \quad cleanliness-details-modal.tsx & 86.45 & 16.66 & 100 & 86.45 & 39--50, 62 \\ \hline
+      \quad cleanliness-image.tsx & 30.76 & 100 & 0 & 30.76 & 11--37 \\ \hline
+      \quad cleanliness-logs.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad cleanliness-past.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad task-card.tsx & 91.8 & 75 & 33.33 & 91.8 & 50, 79--83, 90--93 \\ \hline
+      \quad task-list.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      app/(main)/cleanliness-manager/hooks & 54.1 & 100 & 20 & 54.1 & \\ \hline
+      \quad useCleanlinessLogs.tsx & 46.34 & 100 & 33.33 & 46.34 & 6--27 \\ \hline
+      \quad useGetCleanlinessTasks.tsx & 67.85 & 100 & 0 & 67.85 & 37--49, 52--56 \\ \hline
+      \quad useUpdateCleanlinessTask.tsx & 44.89 & 100 & 20 & 44.89 & 13--26, 33--34, 36--41, 43--47 \\ \hline
+      app/(main)/dashboard/components & 100 & 100 & 100 & 100 & \\ \hline
+      \quad dashboard-cards.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      app/(main)/house-settings/components & 100 & 100 & 100 & 100 & \\ \hline
+      \quad create-note-modal.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad edit-house-modal.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad house-invites.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad house-notes.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad invite-user-modal.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      app/(main)/house-settings/hooks & 35 & 100 & 20 & 35 & \\ \hline
+      \quad useRemoveRoomate.ts & 35 & 100 & 20 & 35 & 5--15, 22--23, 25--32, 34--38 \\ \hline
+      app/(main)/profile & 87.22 & 80 & 60 & 87.22 & \\ \hline
+      \quad page.tsx & 87.22 & 80 & 60 & 87.22 & 25--31, 39--43, 94--101, 159--161 \\ \hline
+      app/(main)/schedule & 23.07 & 100 & 0 & 23.07 & \\ \hline
+      \quad adapters.ts & 23.07 & 100 & 0 & 23.07 & 4--13 \\ \hline
+      app/(main)/schedule/components & 98.76 & 95.74 & 100 & 98.76 & \\ \hline
+      \quad chore-history.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad create-chore-modal.tsx & 99.41 & 85.71 & 100 & 99.41 & 143 \\ \hline
+      \quad pending-chores.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad pending-item.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad schedule-item.tsx & 95.58 & 92 & 100 & 95.58 & 64--69, 76--77 \\ \hline
+      \quad schedule.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      app/(main)/schedule/hooks & 33.48 & 100 & 0 & 33.48 & \\ \hline
+      \quad useCreateChore.ts & 14.28 & 100 & 0 & 14.28 & 5--17, 20--42 \\ \hline
+      \quad useDeleteChore.ts & 14.63 & 100 & 0 & 14.63 & 5--16, 19--41 \\ \hline
+      \quad useGetAllActivities.ts & 36.36 & 100 & 0 & 36.36 & 7--15, 18--22 \\ \hline
+      \quad useGetAllCompletedChores.ts & 69.76 & 100 & 0 & 69.76 & 29--36, 39--43 \\ \hline
+      \quad useGetCompletedChores.ts & 50 & 100 & 0 & 50 & 12--19, 22--26 \\ \hline
+      \quad useUpdateCompletedChore.ts & 24 & 100 & 0 & 24 & 11--23, 26--50 \\ \hline
+      app/auth/hooks & 47.36 & 100 & 0 & 47.36 & \\ \hline
+      \quad useUser.tsx & 47.36 & 100 & 0 & 47.36 & 19--38 \\ \hline
+      components & 100 & 100 & 85.71 & 100 & \\ \hline
+      \quad loading.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad modal.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad mutate-loading.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad query-provider.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad roommates-table.tsx & 100 & 100 & 50 & 100 & \\ \hline
+      components/ui & 98.1 & 88.88 & 100 & 98.1 & \\ \hline
+      \quad badge.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad button.tsx & 100 & 50 & 100 & 100 & 42 \\ \hline
+      \quad card.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad checkbox.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad dialog.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad form.tsx & 92.26 & 92.85 & 100 & 92.26 & 50--51, 123--133 \\ \hline
+      \quad input.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad label.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad popover.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad switch.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad table.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad tabs.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      hooks & 50 & 69.23 & 53.84 & 50 & \\ \hline
+      \quad useGetHouse.ts & 65.51 & 60 & 100 & 65.51 & 10--19 \\ \hline
+      \quad useRoommates.ts & 63.33 & 60 & 100 & 63.33 & 9--11, 13--20 \\ \hline
+      \quad useToast.ts & 45.5 & 100 & 14.28 & 45.5 & 27--30, 59--72, 75--125, 131--136, 140--167 \\ \hline
+      lib & 61.53 & 100 & 50 & 61.53 & \\ \hline
+      \quad utils.ts & 61.53 & 100 & 50 & 61.53 & 9--13 \\ \hline
+      lib/constants & 100 & 100 & 100 & 100 & \\ \hline
+      \quad index.ts & 100 & 100 & 100 & 100 & \\ \hline
+      lib/supabase & 44.44 & 100 & 0 & 44.44 & \\ \hline
+      \quad browser.ts & 44.44 & 100 & 0 & 44.44 & 5--9 \\ \hline
 
 \end{longtable}
 \restoregeometry
@@ -1228,7 +1270,36 @@ The code coverage reports shows some trends, mainly that all most if not all of 
 Automated tests include the unit tests and the cleanliness detection system's test samples. The front-end tests were additionally automated to run on push and on merge requests to main and dev. These automated tests on GitHub in conjunction with branch rules that prevent merging branches which fail tests ensure that no changes the fail tests will make it to the production environment.
 		
 \section{Trace to Requirements}
-		
+    \begin{itemize}
+      \item \textbf{FR211:} FST-UAHM-1
+      \item \textbf{FR212:} FST-UAHM-2
+      \item \textbf{FR213:} FST-UAHM-3
+      \item \textbf{FR214:} FST-UAHM-4
+      \item \textbf{FR215:} FST-UAHM-5
+      \item \textbf{FR216:} FST-UAHM-4
+      \item \textbf{FR217:} FST-UAHM-5
+      \item \textbf{FR218:} FST-UAHM-5, FST-UAHM-6
+      \item \textbf{FR221:} FST-CC-1
+      \item \textbf{FR222:} FST-CC-3
+      \item \textbf{FR223:} FST-CC-3
+      \item \textbf{FR224:} FST-CC-3
+      \item \textbf{FR231:} FST-CM-1
+      \item \textbf{FR233:} FST-CM-2
+      \item \textbf{FR234:} FST-CM-2
+      \item \textbf{FR235:} FST-CM-2
+      \item \textbf{FR241:} FST-SC-1
+      \item \textbf{FR242:} FST-SC-1
+      \item \textbf{FR243:} FST-SC-1
+      \item \textbf{FR244:} FST-SC-2, FST-SC-3
+      \item \textbf{FR245:} FST-SC-1, FST-SC-4
+      \item \textbf{FR251:} FST-BSC-1
+      \item \textbf{FR252:} FST-BSC-2
+      \item \textbf{FR253:} FST-BSC-2, FST-BSC-3
+      \item \textbf{FR254:} FST-BSC-3
+      \item \textbf{FR255:} FST-BSC-1
+    \end{itemize}
+
+
 \section{Trace to Modules}		
 
 \section{Code Coverage Metrics}
@@ -1258,6 +1329,14 @@ graduate attribute of Reflection.
   predict a feasible amount of effort and the right tasks needed to build the
   evidence that demonstrates the required quality?  (It is expected that most
   teams will have had to deviate from their original VnV Plan.)
+\end{enumerate}
+
+Answers:
+\begin{enumerate}
+  \item Compiling results from tests such as code coverage metrics and satisfaction criteria was simple and easy to port over to the document. Additionally, due to how advanced the average testing library is, writing test cases to check various things such as running time, output results, etc is very easy and that made working on the tests for this deliverable very easy. Finally, division of labour in the deliverable was a lot easier because multiple people can contribute to a section independently because our project is divided into seperat mini-projects that can each have their own automated tests, unit tests, etc.
+  \item Creating appropriate unit tests was difficult at first because the team was inexperienced with writing quality unit tests. After that another pain point 
+  \item Tests for the cleanliness detection system (the AI system) were inspired from conversations with our supervisor Dr. Tharmarasa, who advised us to curate sample cases to prove our system's functionality. Unit tests and generally all front-end tests we're implemented without discussions from users or peers. The reason clients and proxies were not consulted for the development of tests was because our requirements were not built from user feedback.
+  \item 
 \end{enumerate}
 
 \end{document}
