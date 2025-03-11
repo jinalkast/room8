@@ -1231,7 +1231,26 @@ In the front-end, 115 different tests were written for over 20+ components resul
 \restoregeometry
 
 \section{Functional Testing}
-Functional testing is described as ensuring that the system behaves as expected given specific inputs. In the case of Room8, the functional testing is implemented in the form of 
+Functional testing is described as ensuring that the system behaves as expected given specific inputs. In the case of Room8, the functional testing is implemented in the form of test cases generated with specific samples which should match an expected output once passed through the cleanliness detection algorithm. It helped us identify which areas the software performs well in, and which ones needed improvement.\\
+
+
+For example, the cleanliness detection software accurately captures the events of zero objects added, removed, and moved, in a scene where there are no changes. Similarly, in other test cases where single items were either added, removed, or moved, the system was able to correctly label the changes to the living spaces.\\
+
+One area that the functional tests highlighted as an area of improvement was the sensitivity of our algorithm. Although it does a great job of recognizing all of the changes that are made, the heightened sensitivity results in false positives being produced.\\
+
+In total, 8 test cases were produced, they are as follows:
+\begin{itemize}
+\item no changes
+\item 1 object added
+\item 1 object removed
+\item 1 object moved
+\item 1 object added, 1 object removed
+\item 1 object added, 1 object moved
+\item 1 object removed, 1 object moved
+\item 1 object added, 1 object removed, 1 object moved 
+\end{itemize}
+
+In the end, all test cases passed, with the following table containing the results of the coverage report.
 
 \newgeometry{left=5mm,right=5mm}
 \begin{longtable}{|S{0.3\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | U{0.1\linewidth}|}
@@ -1451,8 +1470,8 @@ Automated tests include the unit tests and the cleanliness detection system's te
       \quad browser.ts & 44.44 & 100 & 0 & 44.44 & 5--9 \\ \hline
 
 \end{longtable}
-\restoregeometry
 
+\newpage
 \begin{longtable}{|S{0.3\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | U{0.1\linewidth}|}
     \caption{\bf Detector Code Coverage Report} \label{tab:coverage} \\
       \hline
