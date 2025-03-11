@@ -35,10 +35,12 @@ export default function ChoreHistory() {
                   {new Date(chore.created_at).toLocaleDateString()}
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Completed {chore.chore.chores.title} on{' '}
-                {new Date(chore.created_at).toLocaleString()}
-              </p>
+              {chore?.chore?.chores?.title && (
+                <p className="text-sm text-muted-foreground">
+                  Completed {chore.chore.chores.title} on{' '}
+                  {new Date(chore.created_at).toLocaleString()}
+                </p>
+              )}
             </div>
           ))}
         </div>
