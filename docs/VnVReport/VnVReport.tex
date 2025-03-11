@@ -45,8 +45,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+March 10, 2025 & 1 & Authors on front page\\
 \bottomrule
 \end{tabularx}
 
@@ -68,7 +67,6 @@ Date 2 & 1.1 & Notes\\
   \bottomrule
 \end{tabular}\\
 
-\wss{symbols, abbreviations or acronyms -- you can reference the SRS tables if needed}
 
 \newpage
 
@@ -82,7 +80,7 @@ Date 2 & 1.1 & Notes\\
 
 \pagenumbering{arabic}
 
-This document ...
+This document covers the testing results of various unit tests and test from the VnV Plan document.
 
 \section{Functional Requirements Evaluation}
 
@@ -1094,10 +1092,6 @@ prices with a granularity of two decimal places.
   }
 \end{center}
 
-\section{Comparison to Existing Implementation}	
-
-This section will not be appropriate for every project.
-
 \section{Unit Testing}
 Unit testing for this project is defined as a way of testing the smallest piece of code that can be logically isolated. Logical isolation means to isolate a piece of code based on a particular function. In this project, unit testing was performed on the user-facing application of the project while the other codebases of the project will be tested with other methods.\\\\For context on the this section of the report, the client-facing application was built using the following tools:
 \begin{itemize}
@@ -1109,7 +1103,6 @@ and is broken up into different pages based on application features such as:
 \item Cleanliness management system
 \item Chore scheduling system
 \item Bill splitting system
-\item ...
 \end{itemize}
 While it is recommended to test as much of your code as possible. Due to time constraints and generally better use of our time, the team developed unit tests only for the critical components (Referring to React components) of our application, while other components that exist for purposes such as reusable styling or wrappers were ignoring. In general, unit tests were written with the objective of:
 \begin{itemize}
@@ -1239,11 +1232,6 @@ In the front-end, 115 different tests were written for over 20+ components resul
 
 
 \section{Changes Due to Testing}
-
-\wss{This section should highlight how feedback from the users and from 
-the supervisor (when one exists) shaped the final product.  In particular 
-the feedback from the Rev 0 demo to the supervisor (or to potential users) 
-should be highlighted.}\\
 \textbf{FR211} - Change description to use Google account instead of using name, email and password.\\
 \textbf{FST-UAHM-1} - See above description. \\
 \textbf{FST-UAHM-2} - Change input field of test case to using Google account instead of email and password. \\
@@ -1323,6 +1311,118 @@ Automated tests include the unit tests and the cleanliness detection system's te
 
 
 \section{Code Coverage Metrics}
+\newgeometry{left=5mm,right=5mm}
+\begin{longtable}{|S{0.3\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | U{0.1\linewidth}|}
+    \caption{\bf Front-end Code Coverage Report} \label{tab:coverage} \\
+      \hline
+      \textbf{File} & \textbf{\% Stmts} & \textbf{\% Branch} & \textbf{\% Funcs} & \textbf{\% Lines} & \textbf{Uncovered Line \#s} \\
+      \hline
+      \endfirsthead
+      
+      \hline
+      \textbf{File} & \textbf{\% Stmts} & \textbf{\% Branch} & \textbf{\% Funcs} & \textbf{\% Lines} & \textbf{Uncovered Line \#s} \\
+      \hline
+      \endhead
+      
+      \hline
+      \endfoot
+      
+      \hline
+      \endlastfoot
+
+      All files & 83.2 & 91.05 & 58.33 & 83.2 & \\ \hline
+      app & 100 & 100 & 100 & 100 & \\ \hline
+      \quad page.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      app/(main)/bill-splitter/components & 83.37 & 100 & 60 & 83.37 & \\ \hline
+      \quad debtsTable.tsx & 83.72 & 100 & 25 & 83.72 & 26--32, 34--38, 76--77 \\ \hline
+      \quad historyTable.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad loansTable.tsx & 63.82 & 100 & 57.14 & 63.82 & 22--67, 91--93, 95--96 \\ \hline
+      \quad summaryCard.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad summaryCardStub.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      app/(main)/bill-splitter/hooks & 33.33 & 100 & 12.5 & 33.33 & \\ \hline
+      \quad patchOwe.ts & 55.26 & 100 & 50 & 55.26 & 5--21 \\ \hline
+      \quad useBillHistory.ts & 19.44 & 100 & 0 & 19.44 & 6--29, 32--36 \\ \hline
+      \quad useBills.ts & 26.08 & 100 & 0 & 26.08 & 5--16, 19--23 \\ \hline
+      \quad useOwes.ts & 26.08 & 100 & 0 & 26.08 & 5--16, 19--23 \\ \hline
+      app/(main)/chatbot & 95.62 & 80 & 50 & 95.62 & \\ \hline
+      \quad page.tsx & 95.62 & 80 & 50 & 95.62 & 81--85, 101 \\ \hline
+      app/(main)/chatbot/components & 95.74 & 33.33 & 50 & 95.74 & \\ \hline
+      \quad chatbot-setting-stub.tsx & 95.74 & 33.33 & 50 & 95.74 & 21--22 \\ \hline
+      app/(main)/chatbot/hooks & 24.39 & 100 & 0 & 24.39 & \\ \hline
+      \quad useActivateChatbot.ts & 24.39 & 100 & 0 & 24.39 & 9--24, 27--41 \\ \hline
+      app/(main)/cleanliness-manager/components & 88 & 77.77 & 62.5 & 88 & \\ \hline
+      \quad cleanliness-details-modal.tsx & 86.45 & 16.66 & 100 & 86.45 & 39--50, 62 \\ \hline
+      \quad cleanliness-image.tsx & 30.76 & 100 & 0 & 30.76 & 11--37 \\ \hline
+      \quad cleanliness-logs.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad cleanliness-past.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad task-card.tsx & 91.8 & 75 & 33.33 & 91.8 & 50, 79--83, 90--93 \\ \hline
+      \quad task-list.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      app/(main)/cleanliness-manager/hooks & 54.1 & 100 & 20 & 54.1 & \\ \hline
+      \quad useCleanlinessLogs.tsx & 46.34 & 100 & 33.33 & 46.34 & 6--27 \\ \hline
+      \quad useGetCleanlinessTasks.tsx & 67.85 & 100 & 0 & 67.85 & 37--49, 52--56 \\ \hline
+      \quad useUpdateCleanlinessTask.tsx & 44.89 & 100 & 20 & 44.89 & 13--26, 33--34, 36--41, 43--47 \\ \hline
+      app/(main)/dashboard/components & 100 & 100 & 100 & 100 & \\ \hline
+      \quad dashboard-cards.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      app/(main)/house-settings/components & 100 & 100 & 100 & 100 & \\ \hline
+      \quad create-note-modal.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad edit-house-modal.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad house-invites.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad house-notes.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad invite-user-modal.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      app/(main)/house-settings/hooks & 35 & 100 & 20 & 35 & \\ \hline
+      \quad useRemoveRoomate.ts & 35 & 100 & 20 & 35 & 5--15, 22--23, 25--32, 34--38 \\ \hline
+      app/(main)/profile & 87.22 & 80 & 60 & 87.22 & \\ \hline
+      \quad page.tsx & 87.22 & 80 & 60 & 87.22 & 25--31, 39--43, 94--101, 159--161 \\ \hline
+      app/(main)/schedule & 23.07 & 100 & 0 & 23.07 & \\ \hline
+      \quad adapters.ts & 23.07 & 100 & 0 & 23.07 & 4--13 \\ \hline
+      app/(main)/schedule/components & 98.76 & 95.74 & 100 & 98.76 & \\ \hline
+      \quad chore-history.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad create-chore-modal.tsx & 99.41 & 85.71 & 100 & 99.41 & 143 \\ \hline
+      \quad pending-chores.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad pending-item.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad schedule-item.tsx & 95.58 & 92 & 100 & 95.58 & 64--69, 76--77 \\ \hline
+      \quad schedule.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      app/(main)/schedule/hooks & 33.48 & 100 & 0 & 33.48 & \\ \hline
+      \quad useCreateChore.ts & 14.28 & 100 & 0 & 14.28 & 5--17, 20--42 \\ \hline
+      \quad useDeleteChore.ts & 14.63 & 100 & 0 & 14.63 & 5--16, 19--41 \\ \hline
+      \quad useGetAllActivities.ts & 36.36 & 100 & 0 & 36.36 & 7--15, 18--22 \\ \hline
+      \quad useGetAllCompletedChores.ts & 69.76 & 100 & 0 & 69.76 & 29--36, 39--43 \\ \hline
+      \quad useGetCompletedChores.ts & 50 & 100 & 0 & 50 & 12--19, 22--26 \\ \hline
+      \quad useUpdateCompletedChore.ts & 24 & 100 & 0 & 24 & 11--23, 26--50 \\ \hline
+      app/auth/hooks & 47.36 & 100 & 0 & 47.36 & \\ \hline
+      \quad useUser.tsx & 47.36 & 100 & 0 & 47.36 & 19--38 \\ \hline
+      components & 100 & 100 & 85.71 & 100 & \\ \hline
+      \quad loading.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad modal.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad mutate-loading.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad query-provider.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad roommates-table.tsx & 100 & 100 & 50 & 100 & \\ \hline
+      components/ui & 98.1 & 88.88 & 100 & 98.1 & \\ \hline
+      \quad badge.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad button.tsx & 100 & 50 & 100 & 100 & 42 \\ \hline
+      \quad card.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad checkbox.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad dialog.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad form.tsx & 92.26 & 92.85 & 100 & 92.26 & 50--51, 123--133 \\ \hline
+      \quad input.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad label.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad popover.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad switch.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad table.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      \quad tabs.tsx & 100 & 100 & 100 & 100 & \\ \hline
+      hooks & 50 & 69.23 & 53.84 & 50 & \\ \hline
+      \quad useGetHouse.ts & 65.51 & 60 & 100 & 65.51 & 10--19 \\ \hline
+      \quad useRoommates.ts & 63.33 & 60 & 100 & 63.33 & 9--11, 13--20 \\ \hline
+      \quad useToast.ts & 45.5 & 100 & 14.28 & 45.5 & 27--30, 59--72, 75--125, 131--136, 140--167 \\ \hline
+      lib & 61.53 & 100 & 50 & 61.53 & \\ \hline
+      \quad utils.ts & 61.53 & 100 & 50 & 61.53 & 9--13 \\ \hline
+      lib/constants & 100 & 100 & 100 & 100 & \\ \hline
+      \quad index.ts & 100 & 100 & 100 & 100 & \\ \hline
+      lib/supabase & 44.44 & 100 & 0 & 44.44 & \\ \hline
+      \quad browser.ts & 44.44 & 100 & 0 & 44.44 & 5--9 \\ \hline
+
+\end{longtable}
+\restoregeometry
 
 \bibliographystyle{plainnat}
 \bibliography{../../refs/References}
