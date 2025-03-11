@@ -1,0 +1,24 @@
+name: frontendTesting
+run-name: ${{ github.actor }} is testing frontend
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - "room8/**"
+  pull_request:
+    branches: [ "main", "dev" ]
+    paths:
+      - "room8/**"
+jobs:
+  run-defined-frontend-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: room8
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - run: npm ci --force
+      - run: npm run test
