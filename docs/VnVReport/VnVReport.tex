@@ -845,7 +845,7 @@ transit and in storage.
 
     \textbf{Act. Output} & Stored and data in transit are encrypted \\ 
     
-	\small \textbf{Evaluation} & Functional testing\\    
+	\small \textbf{Evaluation} & Acceptance testing\\    
     
     \small \textbf{Result} & Pass\\ 
   }
@@ -889,38 +889,183 @@ be encrypted in transit and in rest.
 
     \textbf{Act. Output} & Verification that data in transit and stored data are encrypted \\ 
     
-	\small \textbf{Evaluation} & Functional testing\\    
+	\small \textbf{Evaluation} & Acceptance testing\\    
     
     \small \textbf{Result} & Pass\\ 
   }
 \end{center}
 
-\subsubsection{NFR231}
-The system shall not record users.
-\subsubsection{NFR232}
-The system shall not capture images of users.
 \subsubsection{NFR233}
 The system shall encrypt and securely store all images of homes.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+	\textbf{NFST-CM-2} & \textbf{Encryption of Images and Videos}\\\hline
+
+	\textbf{Description} & Tests system to ensure encryption and secure storage of images and videos. \\ 
+
+    \textbf{Input} & Captured image and recording of shared space \\ 
+
+    \textbf{Exp. Output} & Image recording in storage are encrypted \\ 
+
+    \textbf{Act. Output} & Image recording in storage are encrypted \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
 \subsubsection{NFR244}
 The calendar system shall encrypt all events stored.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+	\textbf{NFST-SC-3} & \textbf{Events Are Encrypted}\\\hline
+
+	\textbf{Description} & Tests if system encrypts stored events \\ 
+
+	\textbf{Input} & Creating event \\ 
+
+    \textbf{Exp. Output} & Event is encrypted in transit and storage \\ 
+
+    \textbf{Act. Output} & Event is encrypted in transit and storage \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
 \subsubsection{NFR251}
 The Bill Splitter system shall encrypt all events stored.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+	\textbf{NFST-BSC-1} & \textbf{Events Are Encrypted}\\\hline
 
+	\textbf{Description} & Tests if system encrypts bill splitter events \\ 
 
-\subsection{etc.(MAYBE RENAME TO "OTHER")}
+	\textbf{Input} & Bill splitting is used \\ 
+
+    \textbf{Exp. Output} & Event is encrypted in transit and storage \\ 
+
+    \textbf{Act. Output} & Event is encrypted in transit and storage \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
+\subsection{Other}
 \subsubsection{NFR222}
 The chatbot shall not send users too frequently to prevent
 annoying users.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+	\textbf{NFST-CC-2} & \textbf{User Messaging Frequency}\\\hline
+
+	\textbf{Description} & Tests ChatBot to ensure it reasonably messages user and not too frequently. \\ 
+
+	\textbf{Input} & Trigger multiple notifications. \\ 
+
+    \textbf{Exp. Output} & Verify notifications are not excessively frequent \\ 
+
+    \textbf{Act. Output} & Verify notifications are not excessively frequent \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
 \subsubsection{NFR236}
 The system shall not report false events which accuse someone of
 reducing the cleanliness score of an environment.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+	\textbf{NFCT-CM-5} & \textbf{False Event Prevention}\\\hline
+
+	\textbf{Description} & Test to check if system avoids false \\ 
+
+	\textbf{Input} & User uses shared space but does not make a mess. \\ 
+
+    \textbf{Exp. Output} & Objects that were not changed are not listed \\ 
+
+    \textbf{Act. Output} & Objects that were not changed are not listed \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
 \subsubsection{NFR241}
 The calendar system shall store all calendar events in UTC.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+	\textbf{NFIT-SC-1} & \textbf{Calendar Event Time Storage and Display}\\\hline
+
+	\textbf{Description} & Tests calendar to ensure event time in database is in UTC but on user's application is displayed in user's local time. \\ 
+
+    \textbf{Input} & Event scheduled with specific time and date. \\ 
+
+    \textbf{Exp. Output} & Event in database in UTC and on user's calendar in their local time \\ 
+
+    \textbf{Act. Output} & Event in database in UTC and on user's calendar in their local time \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
 \subsubsection{NFR243}
 The calendar system shall have a granularity of 5 minutes.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+	\textbf{NFIT-SC-1} & \textbf{Calendar Event Time Storage and Display}\\\hline
+
+	\textbf{Description} & Tests calendar to ensure event time in database is in UTC but on user's application is displayed in user's local time. \\ 
+
+    \textbf{Input} & Event scheduled with specific time and date. \\ 
+
+    \textbf{Exp. Output} & Event in database in UTC and on user's calendar in their local time \\ 
+
+    \textbf{Act. Output} & Event in database in UTC and on user's calendar in their local time \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
+
 \subsubsection{NFR252}
 The Bill Splitter shall allow users to record numerical values of
 prices with a granularity of two decimal places.
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+  \testcase{
+	\textbf{NFCT-BSC-2} & \textbf{Precision of Numerical Values}\\\hline
+
+	\textbf{Description} & Tests bill splitter's ability to calculate and display numerical values with preicion of two decimal places. \\ 
+
+	\textbf{Input} & Prices entered to split between two users. \\ 
+
+    \textbf{Exp. Output} & Price each user owes is display \\ 
+
+    \textbf{Act. Output} & Price each user owes is display \\ 
+    
+	\small \textbf{Evaluation} & Acceptance testing\\    
+    
+    \small \textbf{Result} & Pass\\ 
+  }
+\end{center}
 
 \section{Comparison to Existing Implementation}	
 
@@ -1063,6 +1208,9 @@ should be highlighted.}\\
 \textbf{FST-CM-1} - Changed description to remove cleanliness score and add listing objects chaged. \\
 \textbf{FR232} - Removing because of it is no longer part of the implementation scope. \\
 \textbf{FST-CM-2} - Editing test case to remove cleanliness score mentions and update to showing after images. \\
+\textbf{NFR236} - Removing mention of cleanliness score. \\
+\textbf{NFCT-CM-5} - See above description. \\
+
 
 
 \subsection{Changes Due to Unit Testing}
