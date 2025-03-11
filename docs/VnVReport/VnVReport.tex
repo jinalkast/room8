@@ -1230,6 +1230,34 @@ In the front-end, 115 different tests were written for over 20+ components resul
 \end{longtable}
 \restoregeometry
 
+\section{Functional Testing}
+Functional testing is described as ensuring that the system behaves as expected given specific inputs. In the case of Room8, the functional testing is implemented in the form of 
+
+\newgeometry{left=5mm,right=5mm}
+\begin{longtable}{|S{0.3\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | U{0.1\linewidth}|}
+    \caption{\bf Detector Code Coverage Report} \label{tab:coverage} \\
+      \hline
+      \textbf{File} & \textbf{\% Stmts} & \textbf{\% Miss} & \textbf{\% Cover} & \textbf{Missing} \\
+      \hline
+      \endfirsthead
+      
+      \hline
+      \textbf{File} & \textbf{\% Stmts} & \textbf{\% Miss} & \textbf{\% Cover} & \textbf{Missing} \\
+      \hline
+      \endhead
+      
+      \hline
+      \endfoot
+      
+      \hline
+      \endlastfoot
+
+      main.py & 300 & 129 & 57 & 63, 96, 138-140, 193-207, 238, 248, 289, 339-396, 401-469, 474-519, 522-545 \\ \hline
+      testCleanlinessDetector.py & 29 & 0 & 100 & \\ \hline
+      TOTAL & 329 & 129 & 61 & \\ \hline
+
+\end{longtable}
+\restoregeometry
 
 \section{Changes Due to Testing}
 \textbf{FR211} - Change description to use Google account instead of using name, email and password.\\
@@ -1421,6 +1449,31 @@ Automated tests include the unit tests and the cleanliness detection system's te
       \quad index.ts & 100 & 100 & 100 & 100 & \\ \hline
       lib/supabase & 44.44 & 100 & 0 & 44.44 & \\ \hline
       \quad browser.ts & 44.44 & 100 & 0 & 44.44 & 5--9 \\ \hline
+
+\end{longtable}
+\restoregeometry
+
+\begin{longtable}{|S{0.3\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | >{\centering\arraybackslash}p{0.1\linewidth} | U{0.1\linewidth}|}
+    \caption{\bf Detector Code Coverage Report} \label{tab:coverage} \\
+      \hline
+      \textbf{File} & \textbf{\% Stmts} & \textbf{\% Miss} & \textbf{\% Cover} & \textbf{Missing} \\
+      \hline
+      \endfirsthead
+      
+      \hline
+      \textbf{File} & \textbf{\% Stmts} & \textbf{\% Miss} & \textbf{\% Cover} & \textbf{Missing} \\
+      \hline
+      \endhead
+      
+      \hline
+      \endfoot
+      
+      \hline
+      \endlastfoot
+
+      main.py & 300 & 129 & 57 & 63, 96, 138-140, 193-207, 238, 248, 289, 339-396, 401-469, 474-519, 522-545 \\ \hline
+      testCleanlinessDetector.py & 29 & 0 & 100 & \\ \hline
+      TOTAL & 329 & 129 & 61 & \\ \hline
 
 \end{longtable}
 \restoregeometry
