@@ -91,12 +91,4 @@ describe('EditHouseModal Component', () => {
       houseId: 'house123'
     });
   });
-
-  // it('disables edit button while edit request is pending', () => {
-  //   (useEditHouse as jest.Mock).mockReturnValue({ mutate: jest.fn(), isPending: true });
-
-  //   render(<EditHouseModal house={mockHouse} />);
-
-  //   expect(screen.getByText('Edit House')).toBeDisabled();
-  // });
 });

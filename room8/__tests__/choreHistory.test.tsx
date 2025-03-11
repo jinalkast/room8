@@ -3,7 +3,6 @@ import '@testing-library/jest-dom';
 import ChoreHistory from '../src/app/(main)/schedule/components/chore-history';
 import useAllCompletedChores from '../src/app/(main)/schedule/hooks/useGetAllCompletedChores';
 
-// Mock the hooks
 jest.mock('../src/app/(main)/schedule/hooks/useGetAllCompletedChores');
 jest.mock('next/image', () => ({
   __esModule: true,
@@ -78,7 +77,6 @@ describe('ChoreHistory Component', () => {
       expect(screen.getByText(/Completed Take Out Trash on/)).toBeInTheDocument();
     });
 
-    // Check for dates
     const date1 = new Date('2023-05-10T15:00:00Z').toLocaleDateString();
     const date2 = new Date('2023-05-11T14:30:00Z').toLocaleDateString();
 

@@ -5,7 +5,6 @@ import useAllActivities from '@/app/(main)/schedule/hooks/useGetAllActivities';
 import useUser from '@/app/auth/hooks/useUser';
 import QueryProvider from '@/components/query-provider';
 
-// Mock the hooks
 jest.mock('@/app/(main)/schedule/hooks/useGetAllActivities', () => ({
   __esModule: true,
   default: jest.fn()
@@ -16,12 +15,10 @@ jest.mock('@/app/auth/hooks/useUser', () => ({
   default: jest.fn()
 }));
 
-// Mock the CreateChoreModal component
 jest.mock('@/app/(main)/schedule/components/create-chore-modal', () => () => (
   <button>Create Chore</button>
 ));
 
-// Mock the ScheduleItem component to avoid loading issues
 jest.mock('@/app/(main)/schedule/components/schedule-item', () => ({
   __esModule: true,
   default: ({ item }: { item: any }) => <div>{item.title}</div>
@@ -114,21 +111,16 @@ describe('ScheduleViewer Component', () => {
       </QueryProvider>
     );
 
-    // Initially shows all activities
     expect(screen.getByText('Clean Kitchen')).toBeInTheDocument();
     expect(screen.getByText('Take out Trash')).toBeInTheDocument();
 
-    // Click to show only my activities
     fireEvent.click(screen.getByText('Show Mine'));
 
-    // Should only show user1's activities
     expect(screen.getByText('Clean Kitchen')).toBeInTheDocument();
     expect(screen.queryByText('Take out Trash')).not.toBeInTheDocument();
 
-    // Click to show all activities again
     fireEvent.click(screen.getByText('Show All'));
 
-    // Should show all activities again
     expect(screen.getByText('Clean Kitchen')).toBeInTheDocument();
     expect(screen.getByText('Take out Trash')).toBeInTheDocument();
   });

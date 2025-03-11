@@ -5,7 +5,6 @@ import useCreateChore from '@/app/(main)/schedule/hooks/useCreateChore';
 import useRoommates from '@/hooks/useRoommates';
 import { daysOfWeek } from '@/lib/constants';
 
-// Mock the hooks
 jest.mock('@/app/(main)/schedule/hooks/useCreateChore');
 jest.mock('@/hooks/useRoommates');
 jest.mock('next/image', () => ({
@@ -82,19 +81,14 @@ describe('CreateChoreModal Component', () => {
     render(<CreateChoreModal />);
     fireEvent.click(screen.getByText('Add Chore'));
 
-    // Find all day elements
     const sundayElements = screen.getAllByText('S');
-
-    // Find the first 'T' which represents Tuesday
     const tuesdayElement = screen.getAllByText('T')[0];
     fireEvent.click(tuesdayElement);
 
-    // Wait for the UI to update
     await waitFor(() => {
       expect(tuesdayElement.parentElement).toHaveClass('flex gap-2');
     });
 
-    // After clicking Tuesday, Sunday should no longer be selected
     const sundayParentElements = sundayElements.map((el) => el.parentElement);
     const selectedSundayElement = sundayParentElements.find((el) =>
       el?.classList.contains('flex gap-2')
@@ -106,10 +100,8 @@ describe('CreateChoreModal Component', () => {
     render(<CreateChoreModal />);
     fireEvent.click(screen.getByText('Add Chore'));
 
-    // Click on John Doe
     fireEvent.click(screen.getByText('John Doe'));
 
-    // Wait for the UI to update
     await waitFor(() => {
       const johnElement = screen.getByText('John Doe').parentElement;
       expect(johnElement).toHaveClass('bg-primary');
@@ -123,18 +115,14 @@ describe('CreateChoreModal Component', () => {
     render(<CreateChoreModal />);
     fireEvent.click(screen.getByText('Add Chore'));
 
-    // Fill in the form
     fireEvent.change(screen.getByLabelText('Chore Name'), { target: { value: 'Clean Kitchen' } });
     fireEvent.change(screen.getByLabelText('Description'), { target: { value: 'Wipe counters' } });
     fireEvent.click(screen.getByText('John Doe'));
-    fireEvent.click(screen.getAllByText('T')[0]); // Tuesday (first T is Tuesday, second is Thursday)
+    fireEvent.click(screen.getAllByText('T')[0]);
 
-    // Submit the form
     fireEvent.click(screen.getByText('Create Chore'));
 
-    // Wait for the async form submission to complete
     await waitFor(() => {
-      // Check if createChore was called with the right arguments
       expect(mockCreateChore).toHaveBeenCalledWith({
         responsible: ['user1'],
         date: 'tuesday',
@@ -148,13 +136,10 @@ describe('CreateChoreModal Component', () => {
     render(<CreateChoreModal />);
     fireEvent.click(screen.getByText('Add Chore'));
 
-    // Fill in the form
     fireEvent.change(screen.getByLabelText('Chore Name'), { target: { value: 'Clean Kitchen' } });
 
-    // Click Cancel
     fireEvent.click(screen.getByText('Cancel'));
 
-    // Reopen the form and check if it's reset
     fireEvent.click(screen.getByText('Add Chore'));
     expect(screen.getByLabelText('Chore Name')).toHaveValue('');
   });
@@ -163,10 +148,8 @@ describe('CreateChoreModal Component', () => {
     render(<CreateChoreModal />);
     fireEvent.click(screen.getByText('Add Chore'));
 
-    // Submit the form without filling in required fields
     fireEvent.click(screen.getByText('Create Chore'));
 
-    // Check for validation error messages
     await waitFor(() => {
       expect(screen.getByText('Title is required')).toBeInTheDocument();
       expect(screen.getByText('Description is required')).toBeInTheDocument();

@@ -4,7 +4,6 @@ import useBillsHistory from '@/app/(main)/bill-splitter/hooks/useBillHistory';
 import { TBillHistory } from '@/app/(main)/bill-splitter/types';
 import QueryProvider from '@/components/query-provider';
 
-// Mock useBillsHistory
 jest.mock('@/app/(main)/bill-splitter/hooks/useBillHistory');
 
 const mockBillsHistory: TBillHistory[] = [
@@ -39,14 +38,12 @@ describe('HistoryTable Component', () => {
       </QueryProvider>
     );
 
-    // Check if table headers exist
     expect(screen.getByText(/Name/i)).toBeTruthy();
     expect(screen.getByText(/Loaned From/i)).toBeTruthy();
     expect(screen.getByText(/Loaned To/i)).toBeTruthy();
     expect(screen.getByText(/Paid On/i)).toBeTruthy();
     expect(screen.getByText(/Amount/i)).toBeTruthy();
 
-    // Check if bills are displayed
     expect(screen.getByText(/Rent/i)).toBeTruthy();
     expect(screen.getByText(/Charlie/i)).toBeTruthy();
     expect(screen.getByText(/David/i)).toBeTruthy();
@@ -70,7 +67,6 @@ describe('HistoryTable Component', () => {
       </QueryProvider>
     );
 
-    // Ensure table is not displayed while loading
     expect(screen.queryByRole('table')).toBeNull();
   });
 
@@ -86,7 +82,6 @@ describe('HistoryTable Component', () => {
       </QueryProvider>
     );
 
-    // Ensure the table caption is still present
     expect(screen.getByText(/History of all debt payments/i)).toBeTruthy();
   });
 });
