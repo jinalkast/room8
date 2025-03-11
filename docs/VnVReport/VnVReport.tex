@@ -64,6 +64,12 @@ March 10, 2025 & 1 & Authors on front page\\
   API & Application Programming Interface\\
   Exp. & Expected\\
   Act. & Actual\\
+  Stmts & Statements\\
+  Fncs & Functions\\
+  NFR & Non-Functional Requirement\\
+  FR & Functional Requirement\\
+  JS & JavaScript\\
+  UTC & Coordinated Universal Time\\
   \bottomrule
 \end{tabular}\\
 
@@ -106,7 +112,7 @@ The system shall allow users to create an account using their Google account.
   }
 \end{center}
 \subsection{FR212}
-The system shall allows users to log in to their account.
+The system shall allows users to login to their account.
 \renewcommand{\arraystretch}{1.5}
 \begin{center}
   \testcase{
@@ -774,8 +780,8 @@ response time of under 1 second.\\\\Using Jest (A front-end JavaScript testing l
 
 \begin{figure}[H]
     \includegraphics[width=\linewidth]{./imgs/signinTimes.png}
-    \caption{Component Diagram}
-    \label{fig: High level component diagram}
+    \caption{Sign In Times}
+    \label{fig: Sign In Time Diagram}
 \end{figure}
 
 As you can see it's clear that we satisfy the non-functional requirement.
@@ -847,8 +853,8 @@ The specifications for the high-spec machine are:
 
 \begin{figure}[H]
     \includegraphics[width=\linewidth]{./imgs/cleanAlgTimes.png}
-    \caption{Component Diagram}
-    \label{fig: High level component diagram}
+    \caption{Cleanliness Algorithm Processing Times}
+    \label{fig: Cleanliness Algorithm Processing Times Diagram}
 \end{figure}
 
 As you can see it's clear that we satisfy the non-functional requirement.
@@ -1104,7 +1110,7 @@ and is broken up into different pages based on application features such as:
 \item Chore scheduling system
 \item Bill splitting system
 \end{itemize}
-While it is recommended to test as much of your code as possible. Due to time constraints and generally better use of our time, the team developed unit tests only for the critical components (Referring to React components) of our application, while other components that exist for purposes such as reusable styling or wrappers were ignoring. In general, unit tests were written with the objective of:
+While it is recommended to test as much of your code as possible, due to time constraints and generally better use of our time, the team developed unit tests only for the critical components (Referring to React components) of our application, while other components that exist for purposes such as reusable styling or wrappers were ignored. In general, unit tests were written with the objective of:
 \begin{itemize}
 \item Ensure key UI components were rendering
 \item Ensuring the UI displayed information fetched from the back-end
@@ -1230,6 +1236,7 @@ In the front-end, 115 different tests were written for over 20+ components resul
 \end{longtable}
 \restoregeometry
 
+
 \section{Functional Testing}
 Functional testing is described as ensuring that the system behaves as expected given specific inputs. In the case of Room8, the functional testing is implemented in the form of test cases generated with specific samples which should match an expected output once passed through the cleanliness detection algorithm. It helped us identify which areas the software performs well in, and which ones needed improvement.\\
 
@@ -1279,15 +1286,17 @@ In the end, all test cases passed, with the following table containing the resul
 \restoregeometry
 
 \section{Changes Due to Testing}
-\textbf{FR211} - Change description to use Google account instead of using name, email and password.\\
-\textbf{FST-UAHM-1} - See above description. \\
-\textbf{FST-UAHM-2} - Change input field of test case to using Google account instead of email and password. \\
-\textbf{FST-CM-1} - Changed description to remove cleanliness score and add listing objects chaged. \\
-\textbf{FR232} - Removing because of it is no longer part of the implementation scope. \\
-\textbf{FST-CM-2} - Editing test case to remove cleanliness score mentions and update to showing after images. \\
-\textbf{NFR236} - Removing mention of cleanliness score. \\
-\textbf{NFCT-CM-5} - See above description. \\
-
+The following are requirements that were modified during the process of creating tests and/or writing the VnV Report:
+\begin{itemize}
+\item\textbf{FR211} - Change description to use Google account instead of using name, email and password.
+\item\textbf{FST-UAHM-1} - See above description. 
+\item\textbf{FST-UAHM-2} - Change input field of test case to using Google account instead of email and password. 
+\item\textbf{FST-CM-1} - Changed description to remove cleanliness score and add listing objects chaged.
+\item\textbf{FR232} - Removing because of it is no longer part of the implementation scope. 
+\item\textbf{FST-CM-2} - Editing test case to remove cleanliness score mentions and update to showing after images. 
+\item\textbf{NFR236} - Removing mention of cleanliness score. 
+\item\textbf{NFCT-CM-5} - See above description. 
+\end{itemize}
 
 
 \subsection{Changes Due to Unit Testing}
@@ -1296,10 +1305,17 @@ Unit testing discovered several bugs and anti-patterns in the front-end codebase
 \item Invalid references for form inputs and form labels. Leading to input labels not focusing their corresponding form input.
 \item Unneccessary props on React components.
 \item Missing semantic HTML attributes such as "role" on various items. Making the app less accessible and more difficult for the testing library to find components.
-\item Checking for lists to be empty with <LIST VARIABLE NAME>. This resulted in empty lists still being evaluated to "True" because in JS empty lists are truthy and resulted in code logic that was supposed to trigger when the list was empty to not work as expected.
-\item Displaying times without the timezone. This was detected because the testing suite failed on various environments due to the timezone printing differently on machines with different timezones.
+\item Checking for lists to be empty by calling the list in a boolean statement, and not explicitly checking its length. This resulted in empty lists still being evaluated to "True" because in JS empty lists are truthy and resulted in code logic that was supposed to trigger when the list was empty to not work as expected.
+\item Displaying times without the time zone. This was detected because the testing suite failed on various environments due to the time zone printing differently on machines with different time zones.
 \end{itemize}
 The code coverage reports shows some trends, mainly that all most if not all of our hooks have poor code coverage rates. This is expected and acceptable because the purpose of the hooks is to fetch data from the back-end and display it on the front-end and since we were mocking the back-end data, most of the hooks' functionality were not used.
+
+\subsection{Changes Due to Functional Testing}
+As mentioned in the functional testing section above, it was discovered through functional testing that the cleanliness detection algorithm was more sensitive to slight changes in the scene that were not expected in the output. As a result, a "blacklist" was created to filter out objects that, in the context of our problem, are unreasonable to detect as changes.\\
+
+For instance, an oven, refrigerator, or table are very rarely (if at all) going to be added, removed, or moved from a kitchen. As such, even if the detector incorrectly labels them as changes between the before and after images, these can be disregarded and removed from the outputs.\\
+
+To be clear, the blacklist was only applied to the functional tests. This was a point that has been brought up by our project supervisor in the past, and we plan to migrate it to the overall cleanliness detector as a result. This will help fine-tune our outputs to exactly what we expect.
 
 \section{Automated Testing}
 Automated tests include the unit tests and the cleanliness detection system's test samples. The front-end tests were additionally automated to run on push and on merge requests to main and dev. These automated tests on GitHub in conjunction with branch rules that prevent merging branches which fail tests ensure that no changes the fail tests will make it to the production environment.
@@ -1526,9 +1542,9 @@ graduate attribute of Reflection.
 
 Answers:
 \begin{enumerate}
-  \item Compiling results from tests such as code coverage metrics and satisfaction criteria was simple and easy to port over to the document. Additionally, due to how advanced the average testing library is, writing test cases to check various things such as running time, output results, etc is very easy and that made working on the tests for this deliverable very easy. Finally, division of labour in the deliverable was a lot easier because multiple people can contribute to a section independently because our project is divided into separate mini-projects that can each have their own automated tests, unit tests, etc.
-  \item Creating appropriate unit tests was difficult at first because the team was inexperienced with writing quality unit tests. After that another pain point that we encountered while writing this document was finding appropriate sections to place our tests for the AI cleanliness detection system. Those tests are neither automated nor are they unit tests but they are extremely relevant. In the end we ended up creating a section for those tests.
-  \item Tests for the cleanliness detection system (the AI system) were inspired from conversations with our supervisor Dr. Tharmarasa, who advised us to curate sample cases to prove our system's functionality. Unit tests and generally all front-end tests we're implemented without discussions from users or peers. The reason clients and proxies were not consulted for the development of tests was because our requirements were not built from user feedback.
+  \item Compiling results from tests such as code coverage metrics and satisfaction criteria was simple and easy to port over to the document. Additionally, due to how advanced the average testing library is, writing test cases to check various things such as running time, output results, etc. is very easy and that made working on the tests for this deliverable very easy. Finally, division of labour in the deliverable was a lot easier because multiple people can contribute to a section independently because our project is divided into separate mini-projects that can each have their own automated tests, unit tests, etc.
+  \item Creating appropriate unit tests was difficult at first because the team was inexperienced with writing quality unit tests. After that, another pain point that we encountered while writing this document was finding appropriate sections to place our tests for the AI cleanliness detection system. Those tests are neither automated nor are they unit tests but they are extremely relevant. In the end, we ended up creating a section for those tests.
+  \item Tests for the cleanliness detection system (the AI system) were inspired from conversations with our supervisor Dr. Tharmarasa, who advised us to curate sample cases to prove our system's functionality. Unit tests and generally all front-end tests were implemented without discussions from users or peers. The reason clients and proxies were not consulted for the development of tests was because our requirements were not built from user feedback.
   \item Our original VnV plan differed from the actual verification and validation activities in several ways. First, the testing tools we used provided unexpected insights into code improvements, such as missing accessibility labels and code smells we hadn't anticipated detecting. Second, some non-functional requirements weren't defined precisely enough to create clear test cases for them, requiring us to develop more specific interpretations. Finally, after completing this VnV report, we gained a much better understanding of what makes a requirement feasibly testable, knowledge we will apply when writing requirements for future projects. These deviations were primarily due to our team's inexperience with comprehensive testing methodologies at the project's outset.
 \end{enumerate}
 
