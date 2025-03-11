@@ -1,6 +1,7 @@
 \documentclass[12pt, titlepage]{article}
 
 \usepackage{booktabs}
+\usepackage{float}
 \usepackage{tabularx}
 \usepackage{hyperref}
 \hypersetup{
@@ -733,7 +734,17 @@ their time zone.
 \subsection{Performance}
 \subsubsection{NFR214}
 The system should be able to authenticate a user with a median
-response time of under 1 second.
+response time of under 1 second.\\\\Using Jest (A front-end JavaScript testing library) we are able to rapidly execute sign-in attempts as if we were a user. Executing the sign-in attempt 50 times and averaging the result gives us the following execution times.
+
+
+\begin{figure}[H]
+    \includegraphics[width=\linewidth]{./imgs/signinTimes.png}
+    \caption{Component Diagram}
+    \label{fig: High level component diagram}
+\end{figure}
+
+As you can see it's clear that we satisfy the non-functional requirement.
+
 \subsubsection{NFR234} Photos captured with the system will be in a quality high
 enough to differentiate objects within frame.
 \subsubsection{NFR235}
