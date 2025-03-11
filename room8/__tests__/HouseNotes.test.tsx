@@ -14,7 +14,7 @@ jest.mock('@/app/(main)/house-settings/hooks/useGetNotes', () => ({
 jest.mock('@/app/(main)/house-settings/components/create-note-modal', () => () => (
   <div>Create Note</div>
 ));
-// jest.mock('@/components/loading', () => () => <div>Loading...</div>);
+
 jest.mock('@/app/(main)/house-settings/components/note-item', () => ({ note }: { note: TNote }) => (
   <div>{note.text}</div>
 ));

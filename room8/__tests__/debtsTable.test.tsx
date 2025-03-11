@@ -4,7 +4,6 @@ import useOwes from '@/app/(main)/bill-splitter/hooks/useOwes';
 import { TOwe } from '@/lib/types';
 import QueryProvider from '@/components/query-provider';
 
-// Mock useOwes
 jest.mock('@/app/(main)/bill-splitter/hooks/useOwes');
 
 const mockOwes: TOwe[] = [
@@ -49,13 +48,11 @@ describe('DebtsTable Component', () => {
       </QueryProvider>
     );
 
-    // Check if table headers exist
     expect(screen.getByText(/Name/i)).toBeTruthy();
     expect(screen.getByText(/Owed To/i)).toBeTruthy();
     expect(screen.getByText(/Deadline/i)).toBeTruthy();
     expect(screen.getByText(/Amount/i)).toBeTruthy();
 
-    // Check if debts are displayed
     expect(screen.getByText(/Groceries/i)).toBeTruthy();
     expect(screen.getByText(/Alice/i)).toBeTruthy();
     expect(screen.getByText('$50')).toBeTruthy();

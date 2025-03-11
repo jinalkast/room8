@@ -7,7 +7,6 @@ import useDeleteChore from '../src/app/(main)/schedule/hooks/useDeleteChore';
 import useUpdateCompletedChore from '../src/app/(main)/schedule/hooks/useUpdateCompletedChore';
 import { TActivity } from '../src/app/(main)/schedule/types';
 
-// Mock the hooks
 jest.mock('@/hooks/useRoommates');
 jest.mock('../src/app/(main)/schedule/hooks/useGetCompletedChores');
 jest.mock('../src/app/(main)/schedule/hooks/useDeleteChore');
@@ -84,10 +83,8 @@ describe('ScheduleItem Component', () => {
   it('opens the modal when clicked', async () => {
     render(<ScheduleItem item={mockItem} thisWeek={thisWeek} />);
 
-    // Click on the chore item to open modal
     fireEvent.click(screen.getByText('Clean Kitchen'));
 
-    // Check if modal content is visible
     await waitFor(() => {
       expect(screen.getByText('Chore Details')).toBeInTheDocument();
       expect(screen.getByText('Description:', { exact: false })).toBeInTheDocument();
@@ -98,13 +95,10 @@ describe('ScheduleItem Component', () => {
   it('shows completed status correctly for roommates', async () => {
     render(<ScheduleItem item={mockItem} thisWeek={thisWeek} />);
 
-    // Open the modal
     fireEvent.click(screen.getByText('Clean Kitchen'));
 
     await waitFor(() => {
-      // User1 should be marked as completed
       expect(screen.getByText('Completed')).toBeInTheDocument();
-      // User2 should be marked as not completed
       expect(screen.getByText('Not Completed')).toBeInTheDocument();
     });
   });
@@ -118,7 +112,6 @@ describe('ScheduleItem Component', () => {
 
     render(<ScheduleItem item={mockItem} thisWeek={thisWeek} />);
 
-    // Open the modal
     fireEvent.click(screen.getByText('Clean Kitchen'));
 
     await waitFor(() => {
@@ -136,13 +129,11 @@ describe('ScheduleItem Component', () => {
 
     render(<ScheduleItem item={mockItem} thisWeek={thisWeek} />);
 
-    // Open the modal
     fireEvent.click(screen.getByText('Clean Kitchen'));
 
     await waitFor(() => {
-      // Find switch for user2 (not completed) and toggle it
       const switches = screen.getAllByRole('switch');
-      fireEvent.click(switches[1]); // Second switch should be for user2
+      fireEvent.click(switches[1]);
 
       expect(mockUpdate).toHaveBeenCalledWith({
         id: 1,
