@@ -562,7 +562,7 @@ if __name__ == "__main__":
         print(f"Time taken: {time_taken}")
         with open('time_taken.csv', 'a', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow([time_taken])
+            writer.writerow([random_folder, time_taken])
         print("--------------------------------------------------")
     
     print("All images processed successfully")
