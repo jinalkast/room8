@@ -518,28 +518,38 @@ class CleanlinessDetector:
         
         print(f"Results exported to {FOLDER_PATH}")
 
-if __name__ == "__main__":
-    detector = CleanlinessDetector()
+def main(before_img_path_or_bytes: any, after_img_path_or_bytes: any):
+    cd = CleanlinessDetector()
     # Process images
-    before_img = Image.open("test_images/before1.png")
-    after_img = Image.open("test_images/after1.png")
+    before_img = Image.open(before_img_path_or_bytes)
+    after_img = Image.open(after_img_path_or_bytes)
 
-    # Get original & highlighted versions
-    before_orig, after_orig, before_highlighted, after_highlighted = detector.combine_image_mask(
-        before_img, after_img, display=False
-    )
+    # Get the original and highlighted versions
+    before_orig, after_orig, before_highlighted, after_highlighted = cd.combine_image_mask(before_img, after_img, display=True)
 
-    # Object detection using highlighted images
-    objects_before = detector.detect_objects(before_highlighted, True)
-    objects_after = detector.detect_objects(after_highlighted, True)
+    # Use the original images for detection, but the highlights help us visualize
+    # Detect objects in the before and after images
+    objects_before = cd.detect_objects(before_highlighted, True)
+    objects_after = cd.detect_objects(after_highlighted, True)
 
-    # Calculate differences using original images
-    added, removed, moved = detector.calculate_difference(before_orig, after_orig)
+    print(f"Detected {len(objects_before)} objects in before image")
+    print(f"Detected {len(objects_after)} objects in after image")
 
-    # Convert moved objects to names for comparison
-    moved_names = [obj[0] for obj in moved]
+    # Calculate the differences using the same original images
+    added, removed, moved = cd.calculate_difference(before_orig, after_orig)
 
-    # Assertions
-    print("Expected added: 0, got {added}")
-    print("Expected removed: 0, got {removed}")
-    print("Expected moved: 0, got {moved_names}")
+    print(f"Added: {len(added)}")
+    print(f"Removed: {len(removed)}")
+    print(f"Moved: {len(moved)}")
+
+    # Annotate the before and after images
+    before_fig = cd.annotate_image(before_orig, objects_before, True)
+    after_fig = cd.annotate_image(after_orig, objects_after, True)
+
+    # Annotate the changes in the after image
+    changes_fig = cd.annotate_changes(after_orig, added, moved, removed, True)
+
+    cd.export_results(before_fig, after_fig, changes_fig, added, removed, moved)
+
+if __name__ == "__main__":
+    main('test_images/before1.png', 'test_images/after1.png')

@@ -13,6 +13,8 @@ from detectron2.config import get_cfg
 from detectron2 import model_zoo
 from detectron2.data import MetadataCatalog
 
+BLACKLIST = ['sink', 'oven', 'fridge', 'refrigerator', 'microwave', 'toaster', 'stove', 'table', 'dishwasher']
+
 CONF_THRESH = 0.5                                                                           # Increased confidence threshold
 DIST_THRESH = 30                                                                            # Increased distance threshold
 IOU_THRESH = 0.6                                                                            # Decreased IOU threshold for better matching
@@ -247,7 +249,7 @@ class CleanlinessDetector:
         if display:
             self.annotate_image(img, house_objects, display=True)
 
-        return house_objects
+        return [house_objects[i] for i in range(len(house_objects)) if house_objects[i].class_name.lower() not in BLACKLIST]
     
     """Completely rewritten difference calculation algorithm with better matching"""
     def calculate_difference(self, before_img: Image, after_img: Image) -> Tuple[list[HouseObject], list[HouseObject], list[list[HouseObject]]]:
@@ -457,61 +459,59 @@ class CleanlinessDetector:
 
         return f
 
-    """Fixed export results function"""
-    def export_results(self, before_fig: plt.figure, after_fig: plt.figure, changes_fig: plt.figure, 
-                      added: list, removed: list, moved: list) -> None:
-        FORMATTED_DATETIME = datetime.now().strftime("%Y-%m-%d_%Hh-%Mm-%Ss")
+    """Exporting annotated before/after images and csv file to export_results folder"""
+    def export_results(self, before_fig: plt.figure, after_fig: plt.figure, changes_fig: plt.figure, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> None:
+        FORMATTED_DATETIME = datetime.now().strftime("%Y-%m-%d %Hh-%Mm-%Ss")
 
         # Path and making folder
         FOLDER_PATH = Path(f"{Path(__file__).parent}/exported_results/{FORMATTED_DATETIME}")
         FOLDER_PATH.mkdir(parents=True, exist_ok=True)
 
-        before_fig.savefig(FOLDER_PATH / 'before.png', format='png', dpi=300)
-        after_fig.savefig(FOLDER_PATH / 'after.png', format='png', dpi=300)
-        changes_fig.savefig(FOLDER_PATH / 'changes.png', format='png', dpi=300)
+        before_fig.savefig(FOLDER_PATH / 'before.svg', format='svg', dpi=1200)
+        after_fig.savefig(FOLDER_PATH / 'after.svg', format='svg', dpi=1200)
+        changes_fig.savefig(FOLDER_PATH / 'changes.svg', format='svg', dpi=1200)
 
-        # Prepare data for CSV
-        added_names = [obj.class_name if isinstance(obj, HouseObject) else str(obj) for obj in added]
-        removed_names = [obj.class_name if isinstance(obj, HouseObject) else str(obj) for obj in removed]
-        
-        # Handle moved objects
-        moved_names = []
-        for move_pair in moved:
-            if isinstance(move_pair, list) and len(move_pair) == 2:
-                before_objs, after_objs = move_pair
-                if before_objs and after_objs:
-                    # Get the class name from the first object
-                    if isinstance(before_objs[0], HouseObject):
-                        moved_names.append(before_objs[0].class_name)
-                    else:
-                        moved_names.append(str(before_objs[0]))
+        # # Writing to the CSV
+        # csv_path = FOLDER_PATH / "results.csv"
 
-        # Writing to the CSV
-        csv_path = FOLDER_PATH / "results.csv"
+        # with open(csv_path, 'w', newline='') as file:
+        #     writer = csv.writer(file)
+        #     # Headers of CSV
+        #     fields = ["Added", "Removed", "Moved"]
 
-        with open(csv_path, 'w', newline='') as file:
-            writer = csv.writer(file)
-            # Headers of CSV
-            fields = ["Added", "Removed", "Moved"]
-            writer.writerow(fields)
+        #     max_length = max(len(added), len(removed), len(moved))
 
-            max_length = max(len(added_names), len(removed_names), len(moved_names))
+        #     writer.writerow(fields)
 
-            for i in range(max_length):
-                added_obj = added_names[i] if i < len(added_names) else ""
-                removed_obj = removed_names[i] if i < len(removed_names) else ""
-                moved_obj = moved_names[i] if i < len(moved_names) else ""
+        #     for i in range(max_length):
+        #         added_obj = added[i] if i < len(added) else ""
+        #         removed_obj = removed[i] if i < len(removed) else ""
+        #         moved_obj = moved[i] if i < len(moved) else ""
 
-                # Write row
-                writer.writerow([added_obj, removed_obj, moved_obj])
-        
-        print(f"Results exported to {FOLDER_PATH}")
+        #         # # Calculate scores for added, removed, and moved objects
+        #         # added_score = SCORE_WEIGHTS.get(added_obj, [0, 0, 0])[0] if added_obj else 0
+        #         # removed_score = SCORE_WEIGHTS.get(removed_obj, [0, 0, 0])[1] if removed_obj else 0
+        #         # moved_score = SCORE_WEIGHTS.get(moved_obj, [0, 0, 0])[2] if moved_obj else 0
 
-if __name__ == "__main__":
+        #         # # Calculate total score for the row
+        #         # total_score = added_score + removed_score + moved_score
+
+        #         # Write row
+        #         writer.writerow([added_obj, removed_obj, moved_obj])
+        tasklist = []
+        for added_item in added:
+            tasklist.append(f"{added_item} added")
+        for moved_item in moved:
+            tasklist.append(f"{moved_item[0][0]} moved")
+        for removed_item in removed:
+            tasklist.append(f"{removed_item} removed")
+        return tasklist
+
+def main(before, after):
     cd = CleanlinessDetector()
     # Process images
-    before_img = Image.open("cleanliness_detection/samples/5/before.jpeg")
-    after_img = Image.open("cleanliness_detection/samples/5/after.jpeg")
+    before_img = Image.open(before)
+    after_img = Image.open(after)
 
     # Get the original and highlighted versions
     before_orig, after_orig, before_highlighted, after_highlighted = cd.combine_image_mask(before_img, after_img, display=True)
@@ -539,3 +539,6 @@ if __name__ == "__main__":
     changes_fig = cd.annotate_changes(after_orig, added, moved, removed, True)
 
     cd.export_results(before_fig, after_fig, changes_fig, added, removed, moved)
+
+if __name__ == "__main__":
+    main("cleanliness_detection/samples/5/before.jpeg", "cleanliness_detection/samples/5/after.jpeg")
