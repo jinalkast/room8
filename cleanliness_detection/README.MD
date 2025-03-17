@@ -11,6 +11,7 @@ Optional: Configure your VSCode interpreter to `cleanliness_detection\venv\Scrip
 Install the requirements from the requirements.txt 
 ```
 pip install -r requirements.txt
+pip install 'git+https://github.com/facebookresearch/detectron2.git'
 ```
 
 If you're getting issues installing the requirements try the following:
@@ -19,5 +20,5 @@ If you're getting issues installing the requirements try the following:
 3. If the `python -m ensurepip --user` failed, go to your pyvenv.cfg file in the venv folder and change `include-system-site-packages` to `true`
 4. Reinstall pip and other installation dependencies with `python -m pip install --upgrade pip setuptools wheel` and `pip install cmake wheel setuptools`
 
-Run the FastAPI in dev with `fastapi dev main.py`
+Run the FastAPI in dev with `fastapi dev app/main.py`
 
