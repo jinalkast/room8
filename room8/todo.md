@@ -2,6 +2,8 @@ Auxiliary - Zayn
 [ ] Simple landing page
 [ ] Simple login page
 
+User Guide Tutorial - Zayn
+
 Dashboard - Zayn
 [ ] Add cleanliness summary to dashboard
 
