@@ -1,68 +1,54 @@
-Dashboard
-[ ] Design dashboard
-[ ] Display welcome message to current user and current house
-[ ] Show upcoming chores
-[ ] Show active bills
-[ ] Show latest and favourited notes
+Auxiliary - Zayn
+[ ] Simple landing page
+[ ] Simple login page
+
+Dashboard - Zayn
+[ ] Add cleanliness summary to dashboard
+
+Cleanliness Manager - Zayn
+[ ] AI: if no changes detected, don't add event
+[ ] Hide if no camera
+[ ] Fix image resolution
+[ ] Multi-task select assign
+[ ] Default sort by status on events
+[ ] Add filters to events
+[ ] Complete all, etc
+[ ] Move confidence interval into subheading
+[ ] Ability to delete tasks completely
+[ ] switched canceled to "dismissed" and make it gray
+[ ] Switch icons to drop down
+[ ] Add an unassign button
+[ ] Add a "match" feature that sets old to completed and new to deleted
+[ ] Add a stats section to show how many were completed by each person and how many were added
 
 Bill Splitter
-[ ] Switch table to multi-vew table with overall, outstanding debts, outstanding loans, and history
-[ ] Make clicking each modal window open up all the info of the particular entry
-[ ] Add modal window button to add a bill
-[ ] Add selection to choose roommates, then after a roommate is selected, you can add their amount
-[ ] Add different options to split debt
+[ ] Visually colour the different summary cards - Zayn
+[ ] Remove the gave out (useless info) - Zayn
+[ ] Save and use custom bills - Maged
+[ ] time from now next to date - Zayn
+[ ] increment buttons next to bill - Zayn
+[ ] Fix helper buttons - Zayn
 
-House Management Page
-[X] Display different pages if user has a house or not
+Schedules - Maged
+[ ] Add a quick chores list (cleaning, cooking, groceries, etc.)
+[ ] Add a "filter by user"
 
-- User has a house page
-  [X] invite user button modal window and leave house button
-  [X] Info of house: Nickname and address
-  [X] Table component that shows all the roommates (able to pass in different props to the component that update the table settings)
-  [ ] Add house notes feature
+House - Maged
+[ ] House pending invites section
+[ ] Ability to see who was invited and to revoke invites
+[ ] Add manual text input for camera id
 
-- User has no house
-  [ ] create a house button modal window
-  [X] join house table with active invite requests
-  [ ] fix multiple house invites and cleaning invites once joined
+Chatbot - Jinal
+[ ] Ensure that it activates and deactivates properly
+[ ] Ensure settings actually work
 
-Schedule
-[ ] Update schedule UI
-[ ] Update "create chore" modal window
-[ ] Create a better looking day selection
-[ ] Create a better looking assign to
-[ ] NEED TO DISCUSS HOW TO HANDLE THIS
+Chore History - Maged
+[ ] Add a list of all actions that happened
+[ ] Search bar
+[ ] Filtering
 
-ChatBot
-[ ] Add ChatBotActive to house table
-[ ] Update UI to match status
-[ ] Use the roommates table component
+Presentation
 
-Settings
-[ ] Update Name
-[ ] Update Phone number
-[ ] Update profile picture?
-
-User Manual
-[ ] Design user manual
-
-Other
-[ ] Home page?
-[ ] Better login page?
-
-<!--
-IGNORE
- Hooks:
-[ ] getHouse
-[ ] createHouse
-[ ] inviteUser
-[ ] acceptInvite
-[ ] getInvites
-
-- implement get house hook
-- show house info view vs no house depending if house exists
-- create modal to invite user
-- create hook to invite user
-- link modal to use the hook
-- display all invites in table
-- add accept invite button -->
+- Main user testing is people ACTUALLY using the app (no cleanliness manager)
+- 1 Day live demo of us actually using the app, timelapse with how tickets change
+- To test cleanliness manager, had people sit in front of computer, and receive 5 sets of before and after images and see how they use the application
