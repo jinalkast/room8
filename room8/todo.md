@@ -33,7 +33,7 @@ Bill Splitter
 
 Schedules - Maged
 [ ] Add a quick chores list (cleaning, cooking, groceries, etc.)
-[ ] Add a "filter by user"
+[X] Add a "filter by user"
 
 House - Maged
 [ ] House pending invites section
