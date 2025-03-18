@@ -26,7 +26,7 @@ Cleanliness Manager - Zayn
 Bill Splitter
 [ ] Visually colour the different summary cards - Zayn
 [ ] Remove the gave out (useless info) - Zayn
-[ ] Save and use custom bills - Maged
+[x] Save and use custom bills - Maged
 [ ] time from now next to date - Zayn
 [ ] increment buttons next to bill - Zayn
 [ ] Fix helper buttons - Zayn
