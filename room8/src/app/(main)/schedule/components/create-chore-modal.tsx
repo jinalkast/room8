@@ -7,7 +7,16 @@ import { useState } from 'react';
 import useCreateChore from '../hooks/useCreateChore';
 import useRoommates from '@/hooks/useRoommates';
 import { daysOfWeek } from '@/lib/constants';
-import { Plus } from 'lucide-react';
+import {
+  GlassWater,
+  Paintbrush,
+  Plus,
+  Refrigerator,
+  RefrigeratorIcon,
+  Soup,
+  Trash,
+  WashingMachine
+} from 'lucide-react';
 import Image from 'next/image';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -30,6 +39,45 @@ const choreSchema = z.object({
 
 type ChoreFormValues = z.infer<typeof choreSchema>;
 
+type chorePreset = {
+  name: string;
+  description: string;
+  icon: JSX.Element;
+};
+
+const chorePresets: chorePreset[] = [
+  {
+    name: 'Sweeping',
+    description: 'Sweep the floor',
+    icon: <Paintbrush />
+  },
+  {
+    name: 'Mopping',
+    description: 'Mop the floor',
+    icon: <GlassWater />
+  },
+  {
+    name: 'Dishes',
+    description: 'Wash the dishes',
+    icon: <Soup />
+  },
+  {
+    name: 'Groceries',
+    description: 'Grocery Run',
+    icon: <Refrigerator />
+  },
+  {
+    name: 'Laundry',
+    description: 'Do the laundry',
+    icon: <WashingMachine />
+  },
+  {
+    name: 'Trash',
+    description: 'Take out the trash',
+    icon: <Trash />
+  }
+];
+
 export default function CreateChoreModal() {
   const [open, setOpen] = useState(false);
   const { data: roommates, isLoading: roommatesLoading } = useRoommates();
@@ -49,6 +97,11 @@ export default function CreateChoreModal() {
     createChore.mutate(values);
     form.reset();
     setOpen(false);
+  };
+
+  const handleApplyPreset = (preset: chorePreset) => {
+    form.setValue('title', preset.name);
+    form.setValue('description', preset.description);
   };
 
   return (
@@ -102,6 +155,17 @@ export default function CreateChoreModal() {
               </FormItem>
             )}
           />
+          <section>
+          <h2 className="font-semibold">Chore Presets</h2>
+          <div className="flex flex-wrap border rounded-md overflow-x-auto p-2 gap-2">
+            {chorePresets.map((chore) => (
+              <Button onClick={() => handleApplyPreset(chore)} className="max-w-[120px]">
+                {chore.name}
+                {chore.icon}
+              </Button>
+            ))}
+          </div>
+          </section>
 
           <FormField
             control={form.control}
