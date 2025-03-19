@@ -19,7 +19,7 @@ Cleanliness Manager - Zayn
 [X] Move confidence interval into subheading
 [ ] Ability to delete tasks completely
 [X] switched canceled to "dismissed" and make it gray
-[ ] Switch icons to drop down
+[X] Switch icons to drop down
 [ ] Add an unassign button
 [ ] Add a "match" feature that sets old to completed and new to deleted
 [ ] Add a stats section to show how many were completed by each person and how many were added

@@ -51,8 +51,9 @@ function CleanlinessDetailsModal({ cleanlinessLogId, recent, showDetails }: prop
       description={`See what changes were made to your shared space and assign cleanup tasks`}
       trigger={
         showDetails ? (
-          <Button variant={'secondary'}>
-            <Info />
+          <Button variant="ghost" className="w-full justify-start">
+            <ClipboardEdit className="h-4 w-4 mr-2" />
+            View Details
           </Button>
         ) : (
           <Button className={cn(recent ? 'w-full mt-4' : '')}>

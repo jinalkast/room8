@@ -1,7 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { TCleanlinessTask } from '../hooks/useGetCleanlinessTasks';
 import { Badge } from '@/components/ui/badge';
-import { ClipboardCheck, Crosshair, Info, Send, Target, X } from 'lucide-react';
+import {
+  CircleEllipsis,
+  ClipboardCheck,
+  Crosshair,
+  EllipsisVertical,
+  Info,
+  Send,
+  Target,
+  X
+} from 'lucide-react';
 import useUpdateCleanlinessTask from '../hooks/useUpdateCleanlinessTask';
 import useRoommates from '@/hooks/useRoommates';
 import useUser from '@/app/auth/hooks/useUser';
@@ -53,63 +62,87 @@ function TaskCard({ task, showLog }: props) {
         </div>
 
         <div className="flex gap-2">
-          {showLog && <CleanlinessDetailsModal showDetails cleanlinessLogId={task.cl_log_id} />}
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="secondary">
-                <Send className="h-4 w-4" />
+              <Button variant="ghost" size={'icon'}>
+                <EllipsisVertical />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-fit p-2">
+            <PopoverContent className="w-fit p-2" align="end">
               <div className="flex flex-col gap-2">
-                {roommates?.map((roommate) => (
-                  <PopoverClose asChild key={roommate.id}>
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start"
-                      onClick={() =>
-                        updateTask({
-                          id: task.id,
-                          status: 'pending',
-                          assigned_to_id: roommate.id,
-                          assigned_by_id: user.id
-                        })
-                      }>
-                      <Image
-                        src={roommate.imageUrl}
-                        alt={roommate.name}
-                        className="w-6 h-6 rounded-full mr-1"
-                        width={24}
-                        height={24}
-                      />
-                      {roommate.name}
+                {showLog && (
+                  <CleanlinessDetailsModal showDetails cleanlinessLogId={task.cl_log_id} />
+                )}
+
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="ghost" className="w-full justify-start">
+                      <Send className="h-4 w-4 mr-2" />
+                      Assign to roommate
                     </Button>
-                  </PopoverClose>
-                ))}
+                  </PopoverTrigger>
+                  <PopoverContent className="w-fit p-2">
+                    <div className="flex flex-col gap-2">
+                      {roommates?.map((roommate) => (
+                        <PopoverClose asChild key={roommate.id}>
+                          <Button
+                            variant="ghost"
+                            className="w-full justify-start"
+                            onClick={() =>
+                              updateTask({
+                                id: task.id,
+                                status: 'pending',
+                                assigned_to_id: roommate.id,
+                                assigned_by_id: user.id
+                              })
+                            }>
+                            <Image
+                              src={roommate.imageUrl}
+                              alt={roommate.name}
+                              className="w-6 h-6 rounded-full mr-1"
+                              width={24}
+                              height={24}
+                            />
+                            {roommate.name}
+                          </Button>
+                        </PopoverClose>
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
+                <PopoverClose asChild>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start"
+                    onClick={() =>
+                      updateTask({
+                        id: task.id,
+                        status: 'completed',
+                        completed_by_id: user.id
+                      })
+                    }>
+                    <ClipboardCheck className="h-4 w-4 mr-2" />
+                    Mark as completed
+                  </Button>
+                </PopoverClose>
+                <PopoverClose asChild>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start"
+                    onClick={() =>
+                      updateTask({
+                        id: task.id,
+                        status: 'dismissed'
+                      })
+                    }>
+                    <X className="h-4 w-4 mr-2" />
+                    Dismiss
+                  </Button>
+                </PopoverClose>
               </div>
             </PopoverContent>
           </Popover>
-          <Button
-            variant={'secondary'}
-            onClick={() =>
-              updateTask({
-                id: task.id,
-                status: 'completed',
-                completed_by_id: user.id
-              })
-            }>
-            <ClipboardCheck />
-          </Button>
-          <Button
-            variant={'secondary'}
-            onClick={() =>
-              updateTask({
-                id: task.id,
-                status: 'dismissed'
-              })
-            }>
-            <X />
-          </Button>
         </div>
       </div>
       {task.assigned_to && (
