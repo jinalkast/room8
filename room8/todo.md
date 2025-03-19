@@ -32,7 +32,7 @@ Bill Splitter
 [ ] Fix helper buttons - Zayn
 
 Schedules - Maged
-[ ] Add a quick chores list (cleaning, cooking, groceries, etc.)
+[X] Add a quick chores list (cleaning, cooking, groceries, etc.)
 [ ] Add a "filter by user"
 
 House - Maged
