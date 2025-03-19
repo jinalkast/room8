@@ -58,7 +58,7 @@ Presentation
 
 Bugs and Testing
 [ ] cant save bill preset if owed by is selected (make it so that its just ignored)
-[ ] cant create bill anymore
+[X] cant create bill anymore
 [ ] make bill preset font the same as rest
 [ ] move chore presets to the top of the modal window, keep "chore presets" font and space below the same as rest of input fields
 [ ] when inviting a user, if the email does not correspond to a user it should return the error "this user does not exist on the app!"

@@ -212,7 +212,7 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
           }
 
           owes.delete(user?.id || 'XXX'); // DELETE owe for self
-          // postBillMutation.mutate(formData);
+          postBillMutation.mutate(formData);
         })}
         className="space-y-6 pb-4">
         {presetsStatus === 'pending' && <div>Fetching Presets</div>}
