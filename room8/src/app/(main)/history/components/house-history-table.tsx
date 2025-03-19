@@ -94,6 +94,8 @@ export default function HouseHistory() {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <h2 className="text-xl">House History</h2>
+          <div className='flex items-center gap-2'>
+            <p className='text-sm'>Filter by roommate:</p>
           <Select value={selectedUserID} onValueChange={(value) => setSelectedUserID(value)}>
             <SelectTrigger className="w-[180px] bg-macMaroon">
               <SelectValue placeholder="Filter by roommate" />
@@ -109,6 +111,7 @@ export default function HouseHistory() {
               </SelectItem>
             </SelectContent>
           </Select>
+          </div>
         </CardTitle>
         <CardDescription>View everything that's ever happened in one spot!</CardDescription>
       </CardHeader>
