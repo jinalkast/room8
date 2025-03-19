@@ -2,11 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import useRoommates from '@/hooks/useRoommates';
-import UserSkeleton from '@/components/userSkeleton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { postBillSchema } from '@/app/(main)/bill-splitter/types';
+import { postBillSchema, TBillPreset } from '@/app/(main)/bill-splitter/types';
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -22,23 +21,41 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/useToast';
 import useUser from '@/app/auth/hooks/useUser';
-import usePostBill from '../hooks/postBill';
+import usePostBill from '@/app/(main)/bill-splitter/hooks/postBill';
 import { useQueryClient } from '@tanstack/react-query';
-import { Currency, DollarSign, XIcon } from 'lucide-react';
+import { DollarSign } from 'lucide-react';
 import LoadingSpinner from '@/components/loading';
-import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { DatePicker } from '@/components/datepicker';
+import BillPresetsButton from '@/app/(main)/bill-splitter/components/billPresetsButton';
+import usePostBillPreset from '@/app/(main)/bill-splitter/hooks/postBillPresets';
+import useBillPresets from '@/app/(main)/bill-splitter/hooks/useBillPresets';
 
 export default function CreateBillForm({ closeBillModal }: { closeBillModal: () => void }) {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
   const [roommatesSelected, setRoommatesSelected] = useState<string[]>([]);
+  const { data: presetsData, status: presetsStatus } = useBillPresets();
 
   const { data: user, status: userStatus } = useUser();
   const { data: roommates, status: roommatesStatus } = useRoommates();
+  const { mutate: postBillPreset, isPending: isPresetPostPending } = usePostBillPreset({
+    queryClient,
+    onSuccessCallback() {
+      toast({
+        title: 'Success',
+        description: 'Preset Successfully saved'
+      });
+    },
+    onErrorCallback() {
+      toast({
+        title: 'Error',
+        description: 'We could not save this preset'
+      });
+    }
+  });
 
   const postBillMutation = usePostBill({
     onSuccessCallback: () => {
@@ -138,6 +155,36 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
     form.setValue('owes', newOwes);
   };
 
+  const applyPreset = (preset: TBillPreset) => {
+    form.setValue('name', preset.name);
+    form.setValue('amount', preset.amount);
+    form.setValue('owed_by', preset.owed_by);
+    form.setValue('owes', preset.owes);
+    form.clearErrors();
+  };
+
+  const handleSavePreset = (formData: z.infer<typeof postBillSchema>) => {
+    const totalAmount = formData.amount;
+    const owes = formData.owes;
+    let sum = 0;
+
+    owes.forEach((amount) => {
+      sum += amount;
+    });
+
+    const roundingError = Math.abs(totalAmount - sum);
+    if (roundingError > 1) {
+      toast({
+        title: 'Error',
+        description: 'The amounts do not add up to the total value. Please check the values.'
+      });
+      return;
+    }
+
+    // setPresets(prev=> [...prev, {...formData, owes: new Map(formData.owes)}]);
+    postBillPreset(formData);
+  };
+
   if (userStatus === 'pending' || roommatesStatus === 'pending') {
     return <LoadingSpinner />;
   }
@@ -145,9 +192,9 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((values) => {
-          const totalAmount = values.amount;
-          const owes = values.owes;
+        onSubmit={form.handleSubmit((formData) => {
+          const totalAmount = formData.amount;
+          const owes = formData.owes;
           let sum = 0;
 
           owes.forEach((amount) => {
@@ -165,9 +212,32 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
           }
 
           owes.delete(user?.id || 'XXX'); // DELETE owe for self
-          postBillMutation.mutate(values);
+          // postBillMutation.mutate(formData);
         })}
         className="space-y-6 pb-4">
+        {presetsStatus === 'pending' && <div>Fetching Presets</div>}
+        {presetsStatus === 'error' && <div>Error Fetching Presets</div>}
+        {presetsStatus === 'success' && (
+          <div>
+            <div className="flex flex-row justify-between">
+              <p>Presets</p>
+            </div>
+            <div className="!my-2 border rounded-md p-2">
+              <div className="flex gap-2 items-center">
+                {presetsData!.map((preset, index) => (
+                  <BillPresetsButton billPreset={preset} applyPreset={applyPreset} />
+                ))}
+                {presetsData!.length === 0 && <p className="text-sm text-muted">No presets available</p>}
+              </div>
+            </div>
+            <Button
+              disabled={isPresetPostPending}
+              onClick={() => handleSavePreset(form.getValues())}>
+              Save current as a preset
+            </Button>
+          </div>
+        )}
+
         <FormField
           control={form.control}
           name="name"
@@ -234,7 +304,6 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
             </FormItem>
           )}
         />
-
         <FormField
           control={form.control}
           name="owes"
@@ -347,7 +416,6 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
             </FormItem>
           )}
         />
-
         <Button
           className="w-full"
           disabled={postBillMutation.isPending || roommatesStatus !== 'success'}
