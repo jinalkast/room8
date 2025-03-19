@@ -16,7 +16,7 @@ Cleanliness Manager - Zayn
 [X] Default sort by status on events
 [ ] Add filters to events
 [ ] Complete all, etc
-[ ] Move confidence interval into subheading
+[X] Move confidence interval into subheading
 [ ] Ability to delete tasks completely
 [X] switched canceled to "dismissed" and make it gray
 [ ] Switch icons to drop down

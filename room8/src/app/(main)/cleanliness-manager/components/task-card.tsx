@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { TCleanlinessTask } from '../hooks/useGetCleanlinessTasks';
 import { Badge } from '@/components/ui/badge';
-import { ClipboardCheck, Info, Send, X } from 'lucide-react';
+import { ClipboardCheck, Crosshair, Info, Send, Target, X } from 'lucide-react';
 import useUpdateCleanlinessTask from '../hooks/useUpdateCleanlinessTask';
 import useRoommates from '@/hooks/useRoommates';
 import useUser from '@/app/auth/hooks/useUser';
@@ -27,13 +27,29 @@ function TaskCard({ task, showLog }: props) {
     return <LoadingSpinner />;
   }
 
+  const removeConfidenceInterval = (name: string) => {
+    const confidence = name.match(/\(conf: ([0-9.]+)\)/);
+    if (confidence) {
+      const percentage = +confidence[1] * 100;
+      return [name.replace(confidence[0], ''), percentage.toFixed(0) + '%'];
+    }
+    return [name, ''];
+  };
+
   return (
     <div key={task.id} className="p-2 border rounded-lg shadow-sm">
       <MutateLoadingSpinner condition={isPending} />
       <div className="flex justify-between">
         <div className="flex items-center gap-4">
           <Badge variant={task.status}>{task.status}</Badge>
-          <p className="capitalize">{task.name}</p>
+          <p className="capitalize flex items-center gap-2">
+            {removeConfidenceInterval(task.name)[0]}
+            {removeConfidenceInterval(task.name)[1] && (
+              <span className="text-sm text-muted-foreground flex items-center gap-1">
+                <Crosshair size={16} /> {removeConfidenceInterval(task.name)[1]}
+              </span>
+            )}
+          </p>
         </div>
 
         <div className="flex gap-2">
