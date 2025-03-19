@@ -10,7 +10,7 @@ Dashboard - Zayn
 
 Cleanliness Manager - Zayn
 [ ] AI: if no changes detected, don't add event
-[ ] Hide if no camera
+[X] Hide if no camera
 [ ] Fix image resolution
 [ ] Multi-task select assign
 [ ] Default sort by status on events
