@@ -50,3 +50,5 @@ export type TInvite = {
   inviter: TRoommate;
   userId: string;
 };
+
+export type TPendingInvite = Tables<'house_invites'> & { invited_user: TRoommateDB };

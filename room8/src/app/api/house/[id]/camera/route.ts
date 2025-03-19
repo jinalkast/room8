@@ -6,8 +6,8 @@ export async function PUT(req: NextRequest) {
   try {
     const { pathname } = req.nextUrl;
     const segments = pathname.split('/');
-    const id = segments[segments.length - 1];
-
+    const id = segments[segments.length - 2];
+    console.log('id:', id)
     const { cameraId }: TCameraBody = await req.json();
 
     if (!cameraId) {

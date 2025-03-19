@@ -37,9 +37,9 @@ Schedules - Maged
 
 
 House - Maged
-[ ] House pending invites section
-[ ] Ability to see who was invited and to revoke invites
-[ ] Add manual text input for camera id
+[X] House pending invites section
+[X] Ability to see who was invited and to revoke invites
+[X] Add manual text input for camera id
 
 Chatbot - Jinal
 [ ] Ensure that it activates and deactivates properly
