@@ -1,28 +1,33 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { act, useState } from 'react';
+import { useState } from 'react';
 import ScheduleItem from './schedule-item';
-import { daysOfWeek } from '@/lib/constants';
 import useAllActivities from '../hooks/useGetAllActivities';
 import useUser from '@/app/auth/hooks/useUser';
-import { Modal } from '@/components/modal';
-import { DialogClose } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import useCreateChore from '../hooks/useCreateChore';
 import useRoommates from '@/hooks/useRoommates';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import LoadingSpinner from '@/components/loading';
-import { Plus, User, Users } from 'lucide-react';
+import { User, Users } from 'lucide-react';
 import CreateChoreModal from './create-chore-modal';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
+const ALL_USER_ID = '123';
 
 export default function ScheduleViewer() {
-  const [showAll, setShowAll] = useState(true);
+  const [selectedUserID, setSelectedUserID] = useState<string>(ALL_USER_ID);
   const { data: activities, isLoading: activitiesLoading } = useAllActivities();
   const { data: user, isLoading: userLoading } = useUser();
+  const { data: roommates, isLoading: roommatesLoading } = useRoommates();
 
   const thisWeek = new Date();
   thisWeek.setDate(thisWeek.getDate() - thisWeek.getDay());
@@ -35,9 +40,9 @@ export default function ScheduleViewer() {
     });
   };
 
-  const filteredActivities = showAll
+  const filteredActivities = selectedUserID === ALL_USER_ID
     ? activities
-    : activities?.filter((activity) => activity.responsible.includes(user?.id));
+    : activities?.filter((activity) => activity.responsible.includes(selectedUserID));
 
   return (
     <Card>
@@ -56,9 +61,13 @@ export default function ScheduleViewer() {
               <CreateChoreModal />
               <Button
                 onClick={() => {
-                  setShowAll((prev) => !prev);
+                  if (selectedUserID !== user?.id) {
+                    setSelectedUserID(user?.id || ALL_USER_ID);
+                  } else {
+                    setSelectedUserID(ALL_USER_ID);
+                  }
                 }}>
-                {showAll ? (
+                {selectedUserID !== user?.id ? (
                   <>
                     <User />
                     Show Mine
@@ -70,6 +79,25 @@ export default function ScheduleViewer() {
                   </>
                 )}
               </Button>
+              <Select value={selectedUserID} onValueChange={(value) => setSelectedUserID(value)}>
+                <SelectTrigger className="w-[180px] bg-macMaroon">
+                  <SelectValue placeholder="Filter by roommate" />
+                </SelectTrigger>
+                <SelectContent>
+                  {roommates?.map((roommate) => (
+                    <SelectItem
+                      key={roommate.id}
+                      value={roommate.id}
+                      className="flex items-center"
+                      >
+                      {roommate.name}
+                    </SelectItem>
+                  ))}
+                  <SelectItem value={ALL_USER_ID} className="flex items-center">
+                    All Roommates
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid grid-cols-7 gap-4">
               {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map(
