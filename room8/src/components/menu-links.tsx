@@ -8,6 +8,7 @@ import {
   Cctv,
   House,
   HousePlus,
+  Notebook,
   Receipt,
   Settings,
   User
@@ -81,7 +82,8 @@ const MenuLinks = () => {
       title: 'Chore Schedule',
       auth: true
     },
-    chatBot: { path: '/chatbot', icon: <BotMessageSquare />, title: 'ChatBot', auth: true }
+    chatBot: { path: '/chatbot', icon: <BotMessageSquare />, title: 'ChatBot', auth: true },
+    history: { path: '/history', icon: <Notebook />, title: 'House History', auth: true }
   };
 
   const USER_PAGES = {

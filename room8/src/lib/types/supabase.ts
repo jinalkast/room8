@@ -189,6 +189,7 @@ export type Database = {
           assigned_by_id: string | null
           assigned_to_id: string | null
           cl_log_id: string
+          completed_at: string | null
           completed_by_id: string | null
           created_at: string
           id: number
@@ -199,6 +200,7 @@ export type Database = {
           assigned_by_id?: string | null
           assigned_to_id?: string | null
           cl_log_id: string
+          completed_at?: string | null
           completed_by_id?: string | null
           created_at?: string
           id?: number
@@ -209,6 +211,7 @@ export type Database = {
           assigned_by_id?: string | null
           assigned_to_id?: string | null
           cl_log_id?: string
+          completed_at?: string | null
           completed_by_id?: string | null
           created_at?: string
           id?: number
