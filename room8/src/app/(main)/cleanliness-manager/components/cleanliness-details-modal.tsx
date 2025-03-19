@@ -21,6 +21,13 @@ type props = {
   showDetails?: boolean;
 };
 
+const STATUS_PRIORITY = {
+  unassigned: 0,
+  pending: 1,
+  completed: 2,
+  dismissed: 3
+};
+
 function CleanlinessDetailsModal({ cleanlinessLogId, recent, showDetails }: props) {
   const { data: houseData } = useGetHouse();
 
@@ -79,7 +86,11 @@ function CleanlinessDetailsModal({ cleanlinessLogId, recent, showDetails }: prop
             <p className="mt-6 mb-2">Created Tasks</p>
             {tasks && tasks?.length > 0 ? (
               <div className="space-y-4">
-                {tasks?.map((task) => <TaskCard key={task.id} task={task} />)}
+                {tasks
+                  ?.sort((a, b) => {
+                    return STATUS_PRIORITY[a.status] - STATUS_PRIORITY[b.status];
+                  })
+                  .map((task) => <TaskCard key={task.id} task={task} />)}
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center border rounded-lg p-4">

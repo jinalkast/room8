@@ -89,7 +89,7 @@ function TaskCard({ task, showLog }: props) {
             onClick={() =>
               updateTask({
                 id: task.id,
-                status: 'canceled'
+                status: 'dismissed'
               })
             }>
             <X />

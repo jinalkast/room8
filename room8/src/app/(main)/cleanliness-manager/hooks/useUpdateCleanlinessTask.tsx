@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface UpdateCleanlinessTaskPayload {
   id: number;
-  status: 'unassigned' | 'pending' | 'completed' | 'canceled';
+  status: 'unassigned' | 'pending' | 'completed' | 'dismissed';
   assigned_to_id?: string;
   assigned_by_id?: string;
   completed_by_id?: string;

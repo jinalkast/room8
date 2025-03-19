@@ -26,7 +26,7 @@ export async function PUT(req: NextRequest) {
       completed_by_id: null
     };
 
-    if (status === 'canceled') {
+    if (status === 'dismissed') {
       updateData.assigned_to_id = null;
       updateData.assigned_by_id = null;
     } else if (status === 'completed') {

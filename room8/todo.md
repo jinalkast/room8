@@ -13,12 +13,12 @@ Cleanliness Manager - Zayn
 [X] Hide if no camera
 [X] Fix image resolution
 [ ] Multi-task select assign
-[ ] Default sort by status on events
+[X] Default sort by status on events
 [ ] Add filters to events
 [ ] Complete all, etc
 [ ] Move confidence interval into subheading
 [ ] Ability to delete tasks completely
-[ ] switched canceled to "dismissed" and make it gray
+[X] switched canceled to "dismissed" and make it gray
 [ ] Switch icons to drop down
 [ ] Add an unassign button
 [ ] Add a "match" feature that sets old to completed and new to deleted
