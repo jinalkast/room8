@@ -7,8 +7,10 @@ import {
   Crosshair,
   EllipsisVertical,
   Info,
+  PinOff,
   Send,
   Target,
+  Trash,
   X
 } from 'lucide-react';
 import useUpdateCleanlinessTask from '../hooks/useUpdateCleanlinessTask';
@@ -20,6 +22,7 @@ import Image from 'next/image';
 import { PopoverClose } from '@radix-ui/react-popover';
 import CleanlinessDetailsModal from './cleanliness-details-modal';
 import MutateLoadingSpinner from '@/components/mutate-loading';
+import useDeleteCleanlinessTask from '../hooks/useDeleteCleanlinessTask';
 
 type props = {
   task: TCleanlinessTask;
@@ -28,6 +31,7 @@ type props = {
 
 function TaskCard({ task, showLog }: props) {
   const { mutate: updateTask, isPending } = useUpdateCleanlinessTask();
+  const { mutate: deleteTask, isPending: isDeleting } = useDeleteCleanlinessTask();
 
   const { data: roommates, isLoading: loadingRoommates } = useRoommates();
   const { data: user, isLoading: loadingUser } = useUser();
@@ -126,20 +130,49 @@ function TaskCard({ task, showLog }: props) {
                     Mark as completed
                   </Button>
                 </PopoverClose>
-                <PopoverClose asChild>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start"
-                    onClick={() =>
-                      updateTask({
-                        id: task.id,
-                        status: 'dismissed'
-                      })
-                    }>
-                    <X className="h-4 w-4 mr-2" />
-                    Dismiss
-                  </Button>
-                </PopoverClose>
+                {task.status !== 'unassigned' && (
+                  <PopoverClose asChild>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start"
+                      onClick={() =>
+                        updateTask({
+                          id: task.id,
+                          status: 'unassigned'
+                        })
+                      }>
+                      <PinOff className="h-4 w-4 mr-2" />
+                      Unassign
+                    </Button>
+                  </PopoverClose>
+                )}
+                {task.status !== 'dismissed' && (
+                  <PopoverClose asChild>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start"
+                      onClick={() =>
+                        updateTask({
+                          id: task.id,
+                          status: 'dismissed'
+                        })
+                      }>
+                      <X className="h-4 w-4 mr-2" />
+                      Dismiss
+                    </Button>
+                  </PopoverClose>
+                )}
+                {task.status === 'dismissed' && (
+                  <PopoverClose asChild>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start"
+                      onClick={() => deleteTask(task.id)}>
+                      <Trash className="h-4 w-4 mr-2" />
+                      Delete
+                    </Button>
+                  </PopoverClose>
+                )}
               </div>
             </PopoverContent>
           </Popover>
