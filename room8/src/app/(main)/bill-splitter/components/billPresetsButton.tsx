@@ -37,6 +37,7 @@ const BillPresetsButton = ({
 
   const handleDeletePreset = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
+    e.stopPropagation();
     deletePreset(billPreset.id);
   };
 

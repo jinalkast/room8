@@ -232,7 +232,10 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
             </div>
             <Button
               disabled={isPresetPostPending}
-              onClick={() => handleSavePreset(form.getValues())}>
+              onClick={(e) => {
+                e.preventDefault();
+                handleSavePreset(form.getValues())
+              }}>
               Save current as a preset
             </Button>
           </div>
