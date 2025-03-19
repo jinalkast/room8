@@ -9,9 +9,12 @@ import { Result } from '@zxing/library';
 import BarcodeScannerComponent from 'react-qr-barcode-scanner';
 import { useToast } from '@/hooks/useToast';
 import useEditCamera from '../hooks/useEditCamera';
+import { Input } from '@/components/ui/input';
 
 function ActivateCameraCard() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isScannerOpen, setIsScannerOpen] = useState(false);
+  const [isManualInputOpen, setIsManualInputOpen] = useState(false);
+  const [manualInput, setManualInput] = useState<string>('');
   const [stopStream, setStopStream] = useState(false);
   const { mutate: editCamera, isPending: isEditCameraPending } = useEditCamera();
   const { data: house, isLoading: houseLoading, isError: houseError } = useGetHouse();
@@ -21,7 +24,7 @@ function ActivateCameraCard() {
       editCamera({ cameraId: data.getText(), houseId: house.id });
       setStopStream(true);
       setTimeout(() => setStopStream(true), 0);
-      setIsOpen(false);
+      setIsScannerOpen(false);
     }
     // For some reason this library throws an error when no QR code is found
     // if (err) {
@@ -32,6 +35,12 @@ function ActivateCameraCard() {
     //   });;
     // }
   };
+
+  const handleManualSubmit = () => {
+    if (manualInput && house) {
+      editCamera({ cameraId: manualInput, houseId: house.id });
+    }
+  }
 
   if (houseLoading) return <LoadingSpinner />;
 
@@ -50,22 +59,22 @@ function ActivateCameraCard() {
           </CardDescription>
         )}
       </CardHeader>
-      <CardContent>
+      <CardContent className='flex gap-2'>
         <Modal
-          open={isOpen}
-          onOpenChange={(isOpen) => {
-            setStopStream(!isOpen);
-            if (!isOpen) {
+          open={isScannerOpen}
+          onOpenChange={(isScannerOpen) => {
+            setStopStream(!isScannerOpen);
+            if (!isScannerOpen) {
               // Need a 1 tick delay when unmounting component due to the way the library works
               setTimeout(() => setStopStream(true), 0);
             }
-            setIsOpen(isOpen);
+            setIsScannerOpen(isScannerOpen);
           }}
           key={'QR Code Modal'}
           title={`Scan a QR Code to connect your Camera`}
           trigger={
             <Button disabled={isEditCameraPending} variant={'default'}>
-              {house?.cameraId === null ? 'Activate Here' : 'Update Here'}
+              {'Scan QR Code'}
               <Camera className="!h-6 !w-6" />
             </Button>
           }>
@@ -75,6 +84,27 @@ function ActivateCameraCard() {
             height={500}
             onUpdate={handleScan}
           />
+        </Modal>
+        <Modal
+          open={isManualInputOpen}
+          onOpenChange={(isManualInputOpen) => {
+            if (!isManualInputOpen) {
+              // Reset when closing modal
+              setManualInput('');
+            }
+            setIsManualInputOpen(isManualInputOpen);
+          }}
+          key={'Enter New Camera ID'}
+          title={`Enter Camera ID`}
+          trigger={
+            <Button disabled={isEditCameraPending} variant={'default'}>
+              {'Enter CameraID Manually'}
+            </Button>
+          }>
+            <div className='flex flex-col gap-2'>
+              <Input placeholder='your camera id' type='text' value={manualInput} onChange={(e)=>setManualInput(e.target.value)}></Input>
+              <Button disabled={isEditCameraPending} className='w-full' onClick={handleManualSubmit}>Submit</Button>
+            </div>
         </Modal>
       </CardContent>
     </Card>
