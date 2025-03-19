@@ -1,8 +1,9 @@
 Auxiliary - Zayn
 [ ] Simple landing page
 [ ] Simple login page
-
-User Guide Tutorial - Zayn
+[ ] User Guide Tutorial
+[ ] 2 Responsive mobile screens
+[ ] Update all toast to use success or failure and better text
 
 Dashboard - Zayn
 [ ] Add cleanliness summary to dashboard
@@ -35,7 +36,6 @@ Schedules - Maged
 [X] Add a "filter by user"
 [X] Add a quick chores list (cleaning, cooking, groceries, etc.)
 
-
 House - Maged
 [X] House pending invites section
 [X] Ability to see who was invited and to revoke invites
@@ -55,3 +55,10 @@ Presentation
 - Main user testing is people ACTUALLY using the app (no cleanliness manager)
 - 1 Day live demo of us actually using the app, timelapse with how tickets change
 - To test cleanliness manager, had people sit in front of computer, and receive 5 sets of before and after images and see how they use the application
+
+Bugs and Testing
+[ ] cant save bill preset if owed by is selected (make it so that its just ignored)
+[ ] cant create bill anymore
+[ ] make bill preset font the same as rest
+[ ] move chore presets to the top of the modal window, keep "chore presets" font and space below the same as rest of input fields
+[ ] when inviting a user, if the email does not correspond to a user it should return the error "this user does not exist on the app!"
