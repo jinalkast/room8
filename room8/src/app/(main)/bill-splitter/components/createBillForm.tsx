@@ -158,7 +158,6 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
   const applyPreset = (preset: TBillPreset) => {
     form.setValue('name', preset.name);
     form.setValue('amount', preset.amount);
-    form.setValue('owed_by', preset.owed_by);
     form.setValue('owes', preset.owes);
     form.clearErrors();
   };
@@ -218,27 +217,38 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
         {presetsStatus === 'pending' && <div>Fetching Presets</div>}
         {presetsStatus === 'error' && <div>Error Fetching Presets</div>}
         {presetsStatus === 'success' && (
-          <div>
-            <div className="flex flex-row justify-between">
-              <p>Presets</p>
-            </div>
-            <div className="!my-2 border rounded-md p-2">
-              <div className="flex gap-2 items-center">
-                {presetsData!.map((preset, index) => (
-                  <BillPresetsButton billPreset={preset} applyPreset={applyPreset} />
-                ))}
-                {presetsData!.length === 0 && <p className="text-sm text-muted">No presets available</p>}
-              </div>
-            </div>
-            <Button
-              disabled={isPresetPostPending}
-              onClick={(e) => {
-                e.preventDefault();
-                handleSavePreset(form.getValues())
-              }}>
-              Save current as a preset
-            </Button>
-          </div>
+          <FormField
+            control={form.control}
+            name="equally"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bill Presets</FormLabel>
+                <FormControl>
+                  <>
+                    <div className="!my-2 border rounded-md p-2">
+                      <div className="flex gap-2 items-center">
+                        {presetsData!.map((preset, index) => (
+                          <BillPresetsButton billPreset={preset} applyPreset={applyPreset} />
+                        ))}
+                        {presetsData!.length === 0 && (
+                          <p className="text-sm text-muted">No presets available</p>
+                        )}
+                      </div>
+                    </div>
+                    <Button
+                      disabled={isPresetPostPending}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleSavePreset(form.getValues());
+                      }}>
+                      Save current as a preset
+                    </Button>
+                  </>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         )}
 
         <FormField
