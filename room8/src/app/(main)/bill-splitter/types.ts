@@ -11,7 +11,6 @@ export const postBillSchema = z.object({
 export const postBillPresetSchema = z.object({
   name: z.string().nonempty('Name is required'),
   amount: z.coerce.number().min(0, 'Amount must be a positive number'),
-  owed_by: z.date().optional(),
   owes: z.map(z.string(), z.number())
 });
 

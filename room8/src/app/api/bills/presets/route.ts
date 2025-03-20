@@ -104,7 +104,7 @@ export async function POST(
           house_id: userProfile.house_id,
           name: validatedData.name,
           amount: validatedData.amount,
-          owed_by: validatedData.owed_by?.toString() ?? undefined,
+          owed_by: undefined,
           owes: JSON.stringify(Object.fromEntries(validatedData.owes))
         }
       ])

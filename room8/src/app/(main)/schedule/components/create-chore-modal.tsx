@@ -128,6 +128,17 @@ export default function CreateChoreModal() {
       }>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium leading-none">Chore Presets</label>
+            <div className="flex flex-wrap border rounded-md overflow-x-auto p-2 gap-2">
+              {chorePresets.map((chore) => (
+                <Button onClick={() => handleApplyPreset(chore)} className="max-w-[120px]">
+                  {chore.name}
+                  {chore.icon}
+                </Button>
+              ))}
+            </div>
+          </div>
           <FormField
             control={form.control}
             name="title"
@@ -141,7 +152,6 @@ export default function CreateChoreModal() {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="description"
@@ -155,17 +165,6 @@ export default function CreateChoreModal() {
               </FormItem>
             )}
           />
-          <section>
-          <h2 className="font-semibold">Chore Presets</h2>
-          <div className="flex flex-wrap border rounded-md overflow-x-auto p-2 gap-2">
-            {chorePresets.map((chore) => (
-              <Button onClick={() => handleApplyPreset(chore)} className="max-w-[120px]">
-                {chore.name}
-                {chore.icon}
-              </Button>
-            ))}
-          </div>
-          </section>
 
           <FormField
             control={form.control}
