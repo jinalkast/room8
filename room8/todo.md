@@ -21,7 +21,7 @@ Cleanliness Manager - Zayn
 [X] switched canceled to "dismissed" and make it gray
 [X] Switch icons to drop down
 [X] Add an unassign button
-[ ] Add a "match" feature that sets old to completed and new to deleted
+[X] Add a "match" feature that sets old to completed and new to deleted
 [ ] Add a stats section to show how many were completed by each person and how many were added
 
 Bill Splitter

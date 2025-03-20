@@ -102,7 +102,8 @@ const MenuLinks = () => {
       path: '/chatbot',
       icon: <BotMessageSquare />,
       title: 'ChatBot',
-      auth: true
+      auth: true,
+      camera: false
     },
     history: {
       path: '/history',
