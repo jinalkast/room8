@@ -14,7 +14,7 @@ Cleanliness Manager - Zayn
 [X] Fix image resolution
 [ ] Multi-task select assign
 [X] Default sort by status on events
-[ ] Add filters to events
+[X] Add filters to events
 [ ] Complete all, etc
 [X] Move confidence interval into subheading
 [X] Ability to delete tasks completely

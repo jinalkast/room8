@@ -1,5 +1,19 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowUpDown, ChevronDown, Filter, SortAsc, User, Check } from 'lucide-react';
+import {
+  ArrowUpDown,
+  ChevronDown,
+  Filter,
+  SortAsc,
+  User,
+  Check,
+  Circle,
+  Zap,
+  Send,
+  ClipboardCheck,
+  PinOff,
+  Trash,
+  X
+} from 'lucide-react';
 import TaskList from './task-list';
 import useGetCleanlinessTasks from '../hooks/useGetCleanlinessTasks';
 import LoadingSpinner from '@/components/loading';
@@ -9,6 +23,9 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import useRoommates from '@/hooks/useRoommates';
 import Image from 'next/image';
+import { PopoverClose } from '@radix-ui/react-popover';
+import useUpdateAllCleanlinessTasks from '../hooks/useUpdateAllCleanlinessTasks';
+import useDeleteAllCleanlinessTasks from '../hooks/useDeleteAllCleanlinessTasks';
 
 type Status = 'Unassigned' | 'Pending' | 'Completed' | 'Dismissed';
 type SortBy = 'Date (newest)' | 'Date (oldest)' | 'Status priority';
@@ -18,6 +35,9 @@ export default function CleanlinessLogs() {
   const { data: tasks, isLoading: loadingTasks } = useGetCleanlinessTasks();
   const { data: user } = useUser();
   const { data: roommates, isLoading: loadingRoommates } = useRoommates();
+
+  const { mutate: updateTasks, isPending } = useUpdateAllCleanlinessTasks();
+  const { mutate: deleteTasks, isPending: isDeleting } = useDeleteAllCleanlinessTasks();
 
   // State for filters
   const [statusFilters, setStatusFilters] = useState<Status[]>([
@@ -155,7 +175,7 @@ export default function CleanlinessLogs() {
             </Button>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <Popover>
               <PopoverTrigger asChild>
                 <Button className="flex gap-2">
@@ -279,6 +299,114 @@ export default function CleanlinessLogs() {
                       </Button>
                     )
                   )}
+                </div>
+              </PopoverContent>
+            </Popover>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="secondary" className="ml-auto mr-2" size={'icon'}>
+                  <Zap fill="white" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-fit p-2" align="end">
+                <div className="flex flex-col gap-2">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="ghost" className="w-full justify-start">
+                        <Send className="h-4 w-4 mr-2" />
+                        Assign all to roommate
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-fit p-2">
+                      <div className="flex flex-col gap-2">
+                        {roommates?.map((roommate) => (
+                          <PopoverClose asChild key={roommate.id}>
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-start"
+                              onClick={() => {
+                                updateTasks({
+                                  ids: filteredTasks().map((t) => t.id),
+                                  status: 'pending',
+                                  assigned_to_id: roommate.id,
+                                  assigned_by_id: user.id
+                                });
+                              }}>
+                              <Image
+                                src={roommate.imageUrl}
+                                alt={roommate.name}
+                                className="w-6 h-6 rounded-full mr-1"
+                                width={24}
+                                height={24}
+                              />
+                              {roommate.name}
+                            </Button>
+                          </PopoverClose>
+                        ))}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+
+                  <PopoverClose asChild>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start"
+                      onClick={() => {
+                        updateTasks({
+                          ids: filteredTasks().map((t) => t.id),
+                          status: 'completed',
+                          completed_by_id: user.id
+                        });
+                      }}>
+                      <ClipboardCheck className="h-4 w-4 mr-2" />
+                      Mark all as completed
+                    </Button>
+                  </PopoverClose>
+
+                  <PopoverClose asChild>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start"
+                      onClick={() => {
+                        updateTasks({
+                          ids: filteredTasks().map((t) => t.id),
+                          status: 'unassigned'
+                        });
+                      }}>
+                      <PinOff className="h-4 w-4 mr-2" />
+                      Unassign all
+                    </Button>
+                  </PopoverClose>
+
+                  <PopoverClose asChild>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start"
+                      onClick={() => {
+                        updateTasks({
+                          ids: filteredTasks().map((t) => t.id),
+                          status: 'dismissed'
+                        });
+                      }}>
+                      <X className="h-4 w-4 mr-2" />
+                      Dismiss all
+                    </Button>
+                  </PopoverClose>
+
+                  <PopoverClose asChild>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start"
+                      onClick={() => {
+                        deleteTasks({
+                          ids: filteredTasks().map((t) => t.id)
+                        });
+                      }}>
+                      <Trash className="h-4 w-4 mr-2" />
+                      Delete all
+                    </Button>
+                  </PopoverClose>
                 </div>
               </PopoverContent>
             </Popover>
