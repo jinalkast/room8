@@ -18,6 +18,7 @@ export const fetchBillsHistory = async (pageNumber: number): Promise<TBillHistor
   const data: TBillHistory[] = json.data!.map((amountOwed) => {
     return {
       owe_id: amountOwed.owe_id!,
+      debtor_id: amountOwed.debtor_id!,
       debtor: amountOwed.debtor_name!,
       loaner: amountOwed.loaner_name!,
       amount_paid: amountOwed.amount_owed!,

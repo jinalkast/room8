@@ -46,9 +46,9 @@ Chatbot - Jinal
 [ ] Ensure settings actually work
 
 Chore History - Maged
-[ ] Add a list of all actions that happened
+[X] Add a list of all actions that happened
 [ ] Search bar
-[ ] Filtering
+[X] Filtering
 
 Presentation
 

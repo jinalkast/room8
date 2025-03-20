@@ -18,6 +18,7 @@ export const postBillPresetSchema = z.object({
 export type TBillHistory = {
   owe_id: string;
   debtor: string;
+  debtor_id: string;
   loaner: string;
   amount_paid: number;
   date_paid: string;

@@ -21,6 +21,7 @@ export async function PUT(req: NextRequest) {
       assigned_to_id?: string | null;
       assigned_by_id?: string | null;
       completed_by_id?: string | null;
+      completed_at?: string | null;
     } = {
       status: status,
       completed_by_id: null
@@ -29,8 +30,10 @@ export async function PUT(req: NextRequest) {
     if (status === 'canceled') {
       updateData.assigned_to_id = null;
       updateData.assigned_by_id = null;
+      updateData.completed_at = null;
     } else if (status === 'completed') {
       updateData.status = 'completed';
+      updateData.completed_at = new Date().toISOString();
       if (!completed_by_id) {
         throw new Error('Completed by ID is required for completed status');
       }
@@ -41,6 +44,7 @@ export async function PUT(req: NextRequest) {
       }
       updateData.assigned_to_id = assigned_to_id;
       updateData.assigned_by_id = assigned_by_id;
+      updateData.completed_at = null;
     } else {
       throw new Error('Invalid status');
     }

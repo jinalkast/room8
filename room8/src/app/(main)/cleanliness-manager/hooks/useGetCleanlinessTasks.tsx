@@ -9,6 +9,7 @@ export type TCleanlinessTask = {
   assigned_to_id: string;
   assigned_by_id: string;
   status: 'unassigned' | 'pending' | 'completed' | 'canceled';
+  completed_at: string | null;
   assigned_by: {
     id: string;
     name: string;
