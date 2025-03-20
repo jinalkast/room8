@@ -21,6 +21,7 @@ export async function PUT(req: NextRequest) {
       assigned_to_id?: string | null;
       assigned_by_id?: string | null;
       completed_by_id?: string | null;
+      completed_at?: string | null;
     } = {
       status: status,
       completed_by_id: null
@@ -32,6 +33,7 @@ export async function PUT(req: NextRequest) {
       updateData.completed_by_id = null;
     } else if (status === 'completed') {
       updateData.status = 'completed';
+      updateData.completed_at = new Date().toISOString();
       if (!completed_by_id) {
         throw new Error('Completed by ID is required for completed status');
       }

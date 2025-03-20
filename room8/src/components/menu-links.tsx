@@ -9,6 +9,7 @@ import {
   Cctv,
   House,
   HousePlus,
+  Notebook,
   Receipt,
   Settings,
   User
@@ -101,6 +102,12 @@ const MenuLinks = () => {
       path: '/chatbot',
       icon: <BotMessageSquare />,
       title: 'ChatBot',
+      auth: true
+    },
+    history: {
+      path: '/history',
+      icon: <Notebook />,
+      title: 'House History',
       auth: true,
       camera: false
     }

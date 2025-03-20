@@ -2,7 +2,7 @@ import { TApiResponse, TCleanlinessLog } from '@/lib/types';
 import { Tables } from '@/lib/types/supabase';
 import { useQuery } from '@tanstack/react-query';
 
-export const fetchCleanlinessLogs = async (houseID: string): Promise<TCleanlinessLog[] | null> => {
+export const fetchCleanlinessLogs = async (houseID: string): Promise<TCleanlinessLog[]> => {
   const searchParams = new URLSearchParams({ houseID });
   const res = await fetch(`/api/cleanliness?` + searchParams.toString(), {
     method: 'GET',
@@ -22,7 +22,7 @@ export const fetchCleanlinessLogs = async (houseID: string): Promise<TCleanlines
         after_image_url: log.after_image_url,
         created_at: log.created_at
       };
-    }) ?? null
+    }) ?? []
   );
 };
 

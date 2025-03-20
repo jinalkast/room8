@@ -1,19 +1,14 @@
 import ChoreHistory from '@/app/(main)/schedule/components/chore-history';
 import PendingChores from '@/app/(main)/schedule/components/pending-chores';
 import ScheduleViewer from '@/app/(main)/schedule/components/schedule';
+import HouseHistory from './components/house-history-table';
 
 export default function SchedulePage() {
   return (
     <div>
-      <h2 className="text-4xl mb-8">House Schedule</h2>
-      <ScheduleViewer />
-      <div className="flex gap-6 mt-6">
+      <h2 className="text-4xl mb-8">House History</h2>
         <div className="flex-1">
-          <PendingChores />
-        </div>
-        <div className="flex-1">
-          <ChoreHistory />
-        </div>
+          <HouseHistory />
       </div>
     </div>
   );

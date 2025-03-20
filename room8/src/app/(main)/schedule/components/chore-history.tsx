@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import useAllCompletedChores from '../hooks/useGetAllCompletedChores';
+import useAllCompletedChores from '@/app/(main)/schedule/hooks/useGetAllCompletedChores';
 import Image from 'next/image';
 import LoadingSpinner from '@/components/loading';
 
