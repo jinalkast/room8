@@ -1,4 +1,4 @@
-import { TCleanlinessTask } from '../hooks/useGetCleanlinessTasks';
+import { TCleanlinessTask } from '../types';
 import TaskCard from './task-card';
 
 type props = {

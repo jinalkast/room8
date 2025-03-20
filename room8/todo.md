@@ -12,10 +12,10 @@ Cleanliness Manager - Zayn
 [ ] AI: if no changes detected, don't add event
 [X] Hide if no camera
 [X] Fix image resolution
-[ ] Multi-task select assign
+[X] Multi-task select assign
 [X] Default sort by status on events
 [X] Add filters to events
-[ ] Complete all, etc
+[X] Complete all, etc
 [X] Move confidence interval into subheading
 [X] Ability to delete tasks completely
 [X] switched canceled to "dismissed" and make it gray
