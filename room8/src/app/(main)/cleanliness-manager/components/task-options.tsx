@@ -10,6 +10,7 @@ import useRoommates from '@/hooks/useRoommates';
 import Image from 'next/image';
 import useUser from '@/app/auth/hooks/useUser';
 import { TCleanlinessTask } from '../types';
+import MatchExistingTaskModal from './match-existing-task-modal';
 
 type props = {
   task: TCleanlinessTask;
@@ -21,7 +22,7 @@ function TaskOptionsDropdown({ task, showLog }: props) {
   const { data: roommates } = useRoommates();
 
   const { mutate: updateTask, isPending } = useUpdateCleanlinessTask();
-  const { mutate: deleteTask, isPending: isDeleting } = useDeleteCleanlinessTask();
+  const { mutate: deleteTask } = useDeleteCleanlinessTask();
 
   if (!user) return;
 
@@ -36,6 +37,8 @@ function TaskOptionsDropdown({ task, showLog }: props) {
       <PopoverContent className="w-fit p-2" align="end">
         <div className="flex flex-col gap-2">
           {showLog && <CleanlinessDetailsModal showDetails cleanlinessLogId={task.cl_log_id} />}
+
+          <MatchExistingTaskModal task={task} />
 
           <Popover>
             <PopoverTrigger asChild>

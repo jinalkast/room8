@@ -28,8 +28,9 @@ export default function CleanlinessLogs() {
       <CardContent>
         <div className="space-y-4">
           <TaskFilters filteredTasks={filteredTasks} setFilteredTasks={setFilteredTasks} />
-
-          <TaskList tasks={filteredTasks} />
+          <div className=" max-h-[60vh] overflow-y-auto">
+            <TaskList tasks={filteredTasks} />
+          </div>
         </div>
       </CardContent>
     </Card>

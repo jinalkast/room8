@@ -14,6 +14,7 @@ import useGetHouse from '@/hooks/useGetHouse';
 import useRoommates from '@/hooks/useRoommates';
 import TaskFilters from './task-filters';
 import { TCleanlinessTask } from '../types';
+import TaskList from './task-list';
 
 type props = {
   cleanlinessLogId: string;
@@ -84,26 +85,12 @@ function CleanlinessDetailsModal({ cleanlinessLogId, recent, showDetails }: prop
               <TaskFilters
                 filteredTasks={filteredTasks}
                 setFilteredTasks={setFilteredTasks}
+                logId={cleanlinessLog.id}
                 modal
               />
             </div>
 
-            {tasks && tasks?.length > 0 ? (
-              <div className="space-y-4">
-                {filteredTasks.map((task) => (
-                  <TaskCard key={task.id} task={task} />
-                ))}
-                {filteredTasks.length === 0 && (
-                  <div className="flex flex-col items-center justify-center border rounded-lg p-4 h-[210px]">
-                    <p className="text-muted-foreground">No tasks match the current filters</p>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center border rounded-lg p-4">
-                <p className="text-muted-foreground">No tasks detected</p>
-              </div>
-            )}
+            <TaskList tasks={filteredTasks} showLog={false} />
           </div>
         </div>
       )}

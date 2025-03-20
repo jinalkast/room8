@@ -11,9 +11,10 @@ import { TCleanlinessTask } from '../types';
 type props = {
   task: TCleanlinessTask;
   showLog?: boolean;
+  matchExistingTask?: boolean;
 };
 
-function TaskCard({ task, showLog }: props) {
+function TaskCard({ task, showLog, matchExistingTask }: props) {
   const { data: user, isLoading: loadingUser } = useUser();
   const { isLoading: loadingRoommates } = useRoommates();
 
@@ -36,9 +37,7 @@ function TaskCard({ task, showLog }: props) {
           </p>
         </div>
 
-        <div className="flex gap-2">
-          <TaskOptionsDropdown task={task} showLog={showLog} />
-        </div>
+        {!matchExistingTask && <TaskOptionsDropdown task={task} showLog={showLog} />}
       </div>
       {task.assigned_to && (
         <p className="mt-2 text-muted-foreground text-sm">

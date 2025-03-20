@@ -13,11 +13,12 @@ import TaskMultiActions from './task-multi-actions';
 type props = {
   filteredTasks: TCleanlinessTask[];
   setFilteredTasks: (tasks: TCleanlinessTask[]) => void;
+  logId?: string;
   modal?: boolean;
 };
 
-function TaskFilters({ filteredTasks, setFilteredTasks, modal }: props) {
-  const { data: tasks, isLoading: loadingTasks } = useGetCleanlinessTasks();
+function TaskFilters({ filteredTasks, setFilteredTasks, modal, logId }: props) {
+  const { data: tasks, isLoading: loadingTasks } = useGetCleanlinessTasks(logId);
   const { data: user } = useUser();
   const { data: roommates, isLoading: loadingRoommates } = useRoommates();
 
