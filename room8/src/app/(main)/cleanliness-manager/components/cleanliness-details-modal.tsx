@@ -1,19 +1,20 @@
 import { Modal } from '@/components/modal';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, ClipboardEdit, Info, Plus } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { ArrowRight, ClipboardEdit } from 'lucide-react';
 import React, { useState } from 'react';
 import { DialogClose } from '@/components/ui/dialog';
 import useUser from '@/app/auth/hooks/useUser';
 import LoadingSpinner from '@/components/loading';
-import { TCleanlinessLog } from '@/lib/types';
-import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import CleanlinessImage from './cleanliness-image';
 import useGetCleanlinessTasks from '../hooks/useGetCleanlinessTasks';
 import TaskCard from './task-card';
 import useCleanlinessLogs from '../hooks/useCleanlinessLogs';
 import useGetHouse from '@/hooks/useGetHouse';
+import useRoommates from '@/hooks/useRoommates';
+import TaskFilters from './task-filters';
+import { TCleanlinessTask } from '../types';
+import TaskList from './task-list';
 
 type props = {
   cleanlinessLogId: string;
@@ -23,18 +24,19 @@ type props = {
 
 function CleanlinessDetailsModal({ cleanlinessLogId, recent, showDetails }: props) {
   const { data: houseData } = useGetHouse();
-
+  const { data: user } = useUser();
+  const { data: roommates, isLoading: loadingRoommates } = useRoommates();
   const { data: cleanlinessLogs } = useCleanlinessLogs({
     params: { houseID: houseData?.id || 'placeholder_for_typescript' },
     enabled: houseData !== undefined
   });
-
   const cleanlinessLog = cleanlinessLogs?.find((log) => log.id === cleanlinessLogId);
-
   const { data: tasks, isLoading: loadingTasks } = useGetCleanlinessTasks(cleanlinessLog?.id);
 
-  if (!cleanlinessLog) {
-    return null;
+  const [filteredTasks, setFilteredTasks] = useState<TCleanlinessTask[]>([]);
+
+  if (!cleanlinessLog || loadingTasks || !tasks || !user || loadingRoommates || !roommates) {
+    return <LoadingSpinner />;
   }
 
   return (
@@ -44,8 +46,9 @@ function CleanlinessDetailsModal({ cleanlinessLogId, recent, showDetails }: prop
       description={`See what changes were made to your shared space and assign cleanup tasks`}
       trigger={
         showDetails ? (
-          <Button variant={'secondary'}>
-            <Info />
+          <Button variant="ghost" className="w-full justify-start">
+            <ClipboardEdit className="h-4 w-4 mr-2" />
+            View Details
           </Button>
         ) : (
           <Button className={cn(recent ? 'w-full mt-4' : '')}>
@@ -61,7 +64,7 @@ function CleanlinessDetailsModal({ cleanlinessLogId, recent, showDetails }: prop
       {loadingTasks ? (
         <LoadingSpinner />
       ) : (
-        <div>
+        <div className="min-h-[500px]">
           <div className="flex justify-center gap-4 items-center">
             <CleanlinessImage
               imageUrl={cleanlinessLog.before_image_url}
@@ -77,15 +80,17 @@ function CleanlinessDetailsModal({ cleanlinessLogId, recent, showDetails }: prop
           </div>
           <div>
             <p className="mt-6 mb-2">Created Tasks</p>
-            {tasks && tasks?.length > 0 ? (
-              <div className="space-y-4">
-                {tasks?.map((task) => <TaskCard key={task.id} task={task} />)}
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center border rounded-lg p-4">
-                <p className="text-muted-foreground">No tasks detected</p>
-              </div>
-            )}
+
+            <div className="flex gap-2 mb-4">
+              <TaskFilters
+                filteredTasks={filteredTasks}
+                setFilteredTasks={setFilteredTasks}
+                logId={cleanlinessLog.id}
+                modal
+              />
+            </div>
+
+            <TaskList tasks={filteredTasks} showLog={false} />
           </div>
         </div>
       )}

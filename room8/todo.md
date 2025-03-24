@@ -10,18 +10,18 @@ Dashboard - Zayn
 
 Cleanliness Manager - Zayn
 [ ] AI: if no changes detected, don't add event
-[ ] Hide if no camera
-[ ] Fix image resolution
-[ ] Multi-task select assign
-[ ] Default sort by status on events
-[ ] Add filters to events
-[ ] Complete all, etc
-[ ] Move confidence interval into subheading
-[ ] Ability to delete tasks completely
-[ ] switched canceled to "dismissed" and make it gray
-[ ] Switch icons to drop down
-[ ] Add an unassign button
-[ ] Add a "match" feature that sets old to completed and new to deleted
+[X] Hide if no camera
+[X] Fix image resolution
+[X] Multi-task select assign
+[X] Default sort by status on events
+[X] Add filters to events
+[X] Complete all, etc
+[X] Move confidence interval into subheading
+[X] Ability to delete tasks completely
+[X] switched canceled to "dismissed" and make it gray
+[X] Switch icons to drop down
+[X] Add an unassign button
+[X] Add a "match" feature that sets old to completed and new to deleted
 [ ] Add a stats section to show how many were completed by each person and how many were added
 
 Bill Splitter

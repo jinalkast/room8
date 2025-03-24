@@ -1,8 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import useGetHouse from '@/hooks/useGetHouse';
 import { BotMessageSquare, CalendarCheck, Cctv, HousePlus, Receipt, Settings } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardCards() {
+  const { data: house } = useGetHouse();
+
   const PAGES = [
     {
       name: 'Cleanliness Manager',
@@ -40,15 +43,19 @@ export default function DashboardCards() {
 
   return (
     <div className="flex gap-4 mb-6">
-      {PAGES.map((page) => (
-        <div
-          onClick={() => router.push(page.link)}
-          key={page.name}
-          className="cursor-pointer transition-all hover:bg-primary/10 border rounded-lg grid place-content-center w-36 h-36 text-center">
-          <div className="flex justify-center mb-2">{page.icon}</div>
-          <p>{page.name}</p>
-        </div>
-      ))}
+      {PAGES.map((page) => {
+        if (page.name === 'Cleanliness Manager' && !house?.cameraId) return null;
+
+        return (
+          <div
+            onClick={() => router.push(page.link)}
+            key={page.name}
+            className="cursor-pointer transition-all hover:bg-primary/10 border rounded-lg grid place-content-center w-36 h-36 text-center">
+            <div className="flex justify-center mb-2">{page.icon}</div>
+            <p>{page.name}</p>
+          </div>
+        );
+      })}
     </div>
   );
 }

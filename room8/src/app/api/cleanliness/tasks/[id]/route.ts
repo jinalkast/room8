@@ -27,10 +27,10 @@ export async function PUT(req: NextRequest) {
       completed_by_id: null
     };
 
-    if (status === 'canceled') {
+    if (status === 'dismissed') {
       updateData.assigned_to_id = null;
       updateData.assigned_by_id = null;
-      updateData.completed_at = null;
+      updateData.completed_by_id = null;
     } else if (status === 'completed') {
       updateData.status = 'completed';
       updateData.completed_at = new Date().toISOString();
@@ -44,7 +44,10 @@ export async function PUT(req: NextRequest) {
       }
       updateData.assigned_to_id = assigned_to_id;
       updateData.assigned_by_id = assigned_by_id;
-      updateData.completed_at = null;
+    } else if (status === 'unassigned') {
+      updateData.assigned_to_id = null;
+      updateData.assigned_by_id = null;
+      updateData.completed_by_id = null;
     } else {
       throw new Error('Invalid status');
     }
@@ -73,6 +76,43 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json(
       {
         data: null,
+        message: (error as Error).message
+      },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const { pathname } = req.nextUrl;
+    const segments = pathname.split('/');
+    const taskId = segments[segments.length - 1];
+
+    const supabase = await supabaseServer();
+    const houseId = await getUserHouseId();
+
+    if (!houseId) {
+      throw new Error('User is not in a house');
+    }
+
+    const { error } = await supabase.from('cleanliness_tasks').delete().eq('id', taskId);
+
+    if (error) {
+      console.error('Error deleting task:', error);
+      throw new Error('Error deleting cleanliness task');
+    }
+
+    return NextResponse.json(
+      {
+        message: 'Successfully deleted task'
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Error in DELETE /cleanliness/tasks/[id]:', error);
+    return NextResponse.json(
+      {
         message: (error as Error).message
       },
       { status: 500 }

@@ -12,8 +12,8 @@ function CleanlinessImage({ imageUrl, size, title }: props) {
   return (
     <Modal
       title="Image Details"
-      className="min-w-fit"
       description={title}
+      className="min-w-[750px]"
       trigger={
         <div className={`w-[300px] h-[200px] relative`}>
           <Image
@@ -25,13 +25,16 @@ function CleanlinessImage({ imageUrl, size, title }: props) {
           />
         </div>
       }>
-      <Image
-        alt="after image of your shared space"
-        className="w-[650px] rounded-xl"
-        width={300}
-        height={225}
-        src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/cleanliness_images/${imageUrl}`}
-      />
+      <div className="h-[500px] relative">
+        <Image
+          alt="after image of your shared space"
+          className="rounded-xl"
+          unoptimized
+          fill
+          objectFit="contain"
+          src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/cleanliness_images/${imageUrl}`}
+        />
+      </div>
     </Modal>
   );
 }
