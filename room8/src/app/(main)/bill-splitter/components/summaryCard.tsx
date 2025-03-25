@@ -61,9 +61,16 @@ export default function SummaryCard({}: props) {
         ) : (
           <>
             <div className="flex gap-6">
-              <SummaryCardStub title="You Owe" number={debtsTotal?.toFixed(2)} />
-              <SummaryCardStub title="Gave Out" number={loanedTotal?.toFixed(2)} />
-              <SummaryCardStub title="Still Owed" number={loanedTotalOwed?.toFixed(2)} />
+              <SummaryCardStub
+                title="You Owe"
+                number={debtsTotal?.toFixed(2)}
+                colour="text-[#f43f5e]"
+              />
+              <SummaryCardStub
+                title="Still Owed"
+                number={loanedTotalOwed?.toFixed(2)}
+                colour="text-[#10b981]"
+              />
             </div>
             {
               <div className="mt-6">

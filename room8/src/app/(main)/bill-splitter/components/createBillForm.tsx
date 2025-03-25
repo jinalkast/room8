@@ -184,6 +184,38 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
     postBillPreset(formData);
   };
 
+  const setDatePreset = (preset: string) => {
+    const today = new Date();
+    let newDate: Date;
+
+    switch (preset) {
+      case 'tomorrow':
+        newDate = new Date(today);
+        newDate.setDate(today.getDate() + 1);
+        break;
+      case 'next week':
+        newDate = new Date(today);
+        newDate.setDate(today.getDate() + 7);
+        break;
+      case 'next month':
+        newDate = new Date(today);
+        newDate.setMonth(today.getMonth() + 1);
+        break;
+      case 'start of next month':
+        newDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+        break;
+      default:
+        newDate = new Date(today);
+    }
+
+    form.setValue('owed_by', newDate);
+  };
+
+  const incrementBillAmount = (amount: number) => {
+    const currentAmount = form.getValues('amount') || 0;
+    form.setValue('amount', +currentAmount + amount);
+  };
+
   if (userStatus === 'pending' || roommatesStatus === 'pending') {
     return <LoadingSpinner />;
   }
@@ -240,7 +272,8 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                       onClick={(e) => {
                         e.preventDefault();
                         handleSavePreset(form.getValues());
-                      }}>
+                      }}
+                      size={'sm'}>
                       Save current as a preset
                     </Button>
                   </>
@@ -294,6 +327,50 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
             </FormItem>
           )}
         />
+        <div className="!mt-2 rounded-md">
+          <div className="flex gap-2 flex-wrap">
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={(e) => {
+                e.preventDefault();
+                setDatePreset('tomorrow');
+              }}
+              className="flex-1">
+              Tomorrow
+            </Button>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={(e) => {
+                e.preventDefault();
+                setDatePreset('next week');
+              }}
+              className="flex-1">
+              Next Week
+            </Button>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={(e) => {
+                e.preventDefault();
+                setDatePreset('next month');
+              }}
+              className="flex-1">
+              Next Month
+            </Button>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={(e) => {
+                e.preventDefault();
+                setDatePreset('start of next month');
+              }}
+              className="flex-1">
+              Start of Next Month
+            </Button>
+          </div>
+        </div>
         <FormField
           control={form.control}
           name="amount"
@@ -317,6 +394,23 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
             </FormItem>
           )}
         />
+        <div className="!mt-2 rounded-md">
+          <div className="flex gap-2 flex-wrap">
+            {[1, 5, 10, 25, 50, 100, 500].map((amount) => (
+              <Button
+                key={amount}
+                size="sm"
+                variant="secondary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  incrementBillAmount(amount);
+                }}
+                className="flex-1">
+                +${amount}
+              </Button>
+            ))}
+          </div>
+        </div>
         <FormField
           control={form.control}
           name="owes"
@@ -389,9 +483,11 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                   </div>
                 </FormControl>
               )}
-              <div className="!mt-4 border rounded-md p-2">
-                <div className="flex gap-2">
+              <div className="!mt-4 rounded-md">
+                <div className="flex gap-2 flex-wrap">
                   <Button
+                    size="sm"
+                    variant="secondary"
                     onClick={(e) => {
                       e.preventDefault();
                       splitBillEqually();
@@ -400,6 +496,8 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                     Equally
                   </Button>
                   <Button
+                    size="sm"
+                    variant="secondary"
                     onClick={(e) => {
                       e.preventDefault();
                       splitBillEquallyExcludeMe();
@@ -408,6 +506,8 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                     Exclude Me
                   </Button>
                   <Button
+                    size="sm"
+                    variant="secondary"
                     onClick={(e) => {
                       e.preventDefault();
                       splitBillHalfAndHalf();
@@ -416,6 +516,8 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                     Half & Half
                   </Button>
                   <Button
+                    size="sm"
+                    variant="secondary"
                     onClick={(e) => {
                       e.preventDefault();
                       clearAll();
