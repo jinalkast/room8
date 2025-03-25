@@ -25,12 +25,12 @@ Cleanliness Manager - Zayn
 [ ] Add a stats section to show how many were completed by each person and how many were added
 
 Bill Splitter
-[ ] Visually colour the different summary cards - Zayn
-[ ] Remove the gave out (useless info) - Zayn
+[X] Visually colour the different summary cards - Zayn
+[X] Remove the gave out (useless info) - Zayn
 [x] Save and use custom bills - Maged
-[ ] time from now next to date - Zayn
-[ ] increment buttons next to bill - Zayn
-[ ] Fix helper buttons - Zayn
+[X] time from now next to date - Zayn
+[X] increment buttons next to bill - Zayn
+[X] Fix helper buttons - Zayn
 
 Schedules - Maged
 [X] Add a "filter by user"

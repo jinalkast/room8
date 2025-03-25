@@ -42,7 +42,7 @@ const BillPresetsButton = ({
   };
 
   return (
-    <Button onClick={handleApplyPreset} className="max-w-[120px]">
+    <Button size={'sm'} variant={'secondary'} onClick={handleApplyPreset} className="max-w-[120px]">
       {billPreset.name}
       <Button
         size="icon"
@@ -50,7 +50,7 @@ const BillPresetsButton = ({
         className="p-1 !h-6 !w-6"
         disabled={isPresetDeleting}
         onClick={handleDeletePreset}>
-        <Trash className="!h-4 !w-4" fill={'none'} stroke={'currentColor'} />
+        <Trash className="!h-3.5 !w-3.5" fill={'none'} stroke={'currentColor'} />
       </Button>
     </Button>
   );
