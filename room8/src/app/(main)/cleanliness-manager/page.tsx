@@ -7,6 +7,7 @@ import CleanlinessPast from './components/cleanliness-past';
 import CleanlinessLogs from './components/cleanliness-logs';
 import LoadingSpinner from '@/components/loading';
 import CleanlinessStats from './components/cleanliness-stats';
+import UserGuideModal from '@/components/user-guide-modal';
 
 export default function CleanlinessManagerPage() {
   const { data: houseData, isLoading } = useGetHouse();

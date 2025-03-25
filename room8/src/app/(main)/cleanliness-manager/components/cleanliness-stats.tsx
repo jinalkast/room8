@@ -12,6 +12,8 @@ import {
 } from '@/components/ui/chart';
 import { chartConfig } from '../utils/chart-config';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 export default function CleanlinessStats() {
   const { data: cleanlinessStats } = useCleanlinessStats();
@@ -19,7 +21,10 @@ export default function CleanlinessStats() {
   return (
     <Card className="mb-6">
       <CardHeader>
-        <CardTitle>Cleanliness Stats</CardTitle>
+        <CardTitle>
+          Cleanliness Stats
+          <UserGuideModal data={USER_GUIDE.CLEANLINESS_STATS} />
+        </CardTitle>
         <CardDescription>Here&apos;s how everyone&apos;s doing with cleanliness!</CardDescription>
       </CardHeader>
       <CardContent>

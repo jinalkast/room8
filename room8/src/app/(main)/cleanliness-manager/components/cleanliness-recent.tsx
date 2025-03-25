@@ -5,6 +5,8 @@ import CleanlinessImage from './cleanliness-image';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CleanlinessDetailsModal from './cleanliness-details-modal';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 type props = {
   cleanlinessLog?: TCleanlinessLog | null;
