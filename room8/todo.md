@@ -9,7 +9,7 @@ Dashboard - Zayn
 [ ] Add cleanliness summary to dashboard
 
 Cleanliness Manager - Zayn
-[ ] AI: if no changes detected, don't add event
+[X] AI: if no changes detected, don't add event
 [X] Hide if no camera
 [X] Fix image resolution
 [X] Multi-task select assign
@@ -22,7 +22,7 @@ Cleanliness Manager - Zayn
 [X] Switch icons to drop down
 [X] Add an unassign button
 [X] Add a "match" feature that sets old to completed and new to deleted
-[ ] Add a stats section to show how many were completed by each person and how many were added
+[X] Add a stats section to show how many were completed by each person and how many were added
 
 Bill Splitter
 [ ] Visually colour the different summary cards - Zayn
