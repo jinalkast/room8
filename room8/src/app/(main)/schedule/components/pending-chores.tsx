@@ -5,6 +5,8 @@ import useAllActivities from '../hooks/useGetAllActivities';
 import useUser from '@/app/auth/hooks/useUser';
 import LoadingSpinner from '@/components/loading';
 import PendingItem from './pending-item';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 export default function PendingChores() {
   const { data: activities, isLoading: activitiesLoading } = useAllActivities();
@@ -30,7 +32,9 @@ export default function PendingChores() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Pending Chores</CardTitle>
+        <CardTitle>
+          Pending Chores <UserGuideModal data={USER_GUIDE.CS_PENDING} />
+        </CardTitle>
         <CardDescription>View your pending chores and mark them as complete.</CardDescription>
       </CardHeader>
       <CardContent>

@@ -12,6 +12,8 @@ import PendingChores from '../schedule/components/pending-chores';
 import HouseNotes from '../house-settings/components/house-notes';
 import useGetHouse from '@/hooks/useGetHouse';
 import DashboardCards from './components/dashboard-cards';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 export default function DashboardPage() {
   const [open, setOpen] = useState<boolean>(false);
@@ -22,7 +24,9 @@ export default function DashboardPage() {
   return (
     user && (
       <div>
-        <h2 className="text-4xl mb-8">Hello, {user.name}</h2>
+        <h2 className="text-4xl mb-8 flex gap-2">
+          Hello, {user.name} <UserGuideModal data={USER_GUIDE.DASHBOARD} />
+        </h2>
         {user.house_id ? (
           <div className="flex gap-6">
             <div>

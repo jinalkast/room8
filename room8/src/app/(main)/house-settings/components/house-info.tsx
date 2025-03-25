@@ -6,6 +6,8 @@ import EditHouseModal from '@/app/(main)/house-settings/components/edit-house-mo
 import HouseNotes from '@/app/(main)/house-settings/components/house-notes';
 import ActivateCameraCard from '@/app/(main)/house-settings/components/activate-camera-card';
 import PendingInvitesTable from '@/app/(main)/house-settings/components/pending-roommates-table';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 type props = {
   house: THouse;
@@ -17,7 +19,9 @@ function HouseInfo({ house }: props) {
       <div className="basis-2/3 flex flex-col gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>House Info</CardTitle>
+            <CardTitle>
+              House Info <UserGuideModal data={USER_GUIDE.H_INFO} />
+            </CardTitle>
             <CardDescription>Manage and view your house information.</CardDescription>
           </CardHeader>
           <CardContent>
@@ -45,7 +49,9 @@ function HouseInfo({ house }: props) {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Housemates</CardTitle>
+            <CardTitle>
+              Housemates <UserGuideModal data={USER_GUIDE.H_MEMBERS} />
+            </CardTitle>
             <CardDescription>See who you&apos;re living with!</CardDescription>
           </CardHeader>
           <CardContent>
@@ -54,7 +60,9 @@ function HouseInfo({ house }: props) {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Pending Invites</CardTitle>
+            <CardTitle>
+              Pending Invites <UserGuideModal data={USER_GUIDE.H_INVITES} />
+            </CardTitle>
             <CardDescription>We&apos;re waiting on a response from these people</CardDescription>
           </CardHeader>
           <CardContent>

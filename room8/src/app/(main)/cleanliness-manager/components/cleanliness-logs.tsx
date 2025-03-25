@@ -7,6 +7,8 @@ import { useState } from 'react';
 import useRoommates from '@/hooks/useRoommates';
 import { TCleanlinessTask } from '../types';
 import TaskFilters from './task-filters';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 export default function CleanlinessLogs() {
   const { data: tasks, isLoading: loadingTasks } = useGetCleanlinessTasks();
@@ -22,7 +24,9 @@ export default function CleanlinessLogs() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Cleanliness Tasks</CardTitle>
+        <CardTitle>
+          Cleanliness Tasks <UserGuideModal data={USER_GUIDE.CM_TASKS} />
+        </CardTitle>
         <CardDescription>View the cleanliness Tasks for your house</CardDescription>
       </CardHeader>
       <CardContent>

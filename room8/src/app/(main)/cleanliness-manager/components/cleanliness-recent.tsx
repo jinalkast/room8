@@ -16,7 +16,9 @@ export default function CleanlinessRecent({ cleanlinessLog }: props) {
   return (
     <Card className="mb-6">
       <CardHeader>
-        <CardTitle>Most Recent Event</CardTitle>
+        <CardTitle>
+          Most Recent Event <UserGuideModal data={USER_GUIDE.CM_RECENT_EVENT} />
+        </CardTitle>
         <CardDescription>Here&apos;s what just happened at home!</CardDescription>
         <CardDescription>
           {cleanlinessLog &&

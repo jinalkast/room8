@@ -3,6 +3,8 @@ import useGetNotes from '../hooks/useGetNotes';
 import CreateNoteModal from './create-note-modal';
 import LoadingSpinner from '@/components/loading';
 import NoteItem from './note-item';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 function HouseNotes() {
   const { data: notes, isLoading: notesLoading } = useGetNotes();
@@ -10,7 +12,9 @@ function HouseNotes() {
   return (
     <Card className="basis-1/3 h-[85vh] overflow-y-auto">
       <CardHeader>
-        <CardTitle>House Notes</CardTitle>
+        <CardTitle>
+          House Notes <UserGuideModal data={USER_GUIDE.H_NOTES} />
+        </CardTitle>
         <CardDescription>See what your roommates are saying!</CardDescription>
       </CardHeader>
 

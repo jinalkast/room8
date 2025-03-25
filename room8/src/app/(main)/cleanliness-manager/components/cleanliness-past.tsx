@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/table';
 import { TCleanlinessLog } from '@/lib/types';
 import CleanlinessDetailsModal from './cleanliness-details-modal';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 type props = {
   cleanlinessLogs: TCleanlinessLog[] | null | undefined;
@@ -20,7 +22,9 @@ function CleanlinessPast({ cleanlinessLogs }: props) {
   return (
     <Card className="mb-6">
       <CardHeader>
-        <CardTitle>Past Events</CardTitle>
+        <CardTitle>
+          Past Events <UserGuideModal data={USER_GUIDE.CM_EVENTS} />
+        </CardTitle>
         <CardDescription>
           See what changes were made to your shared space and assign cleanup tasks.
         </CardDescription>

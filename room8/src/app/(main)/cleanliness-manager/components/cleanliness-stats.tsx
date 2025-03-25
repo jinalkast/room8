@@ -23,7 +23,7 @@ export default function CleanlinessStats() {
       <CardHeader>
         <CardTitle>
           Cleanliness Stats
-          <UserGuideModal data={USER_GUIDE.CLEANLINESS_STATS} />
+          <UserGuideModal data={USER_GUIDE.CM_STATS} />
         </CardTitle>
         <CardDescription>Here&apos;s how everyone&apos;s doing with cleanliness!</CardDescription>
       </CardHeader>
