@@ -6,6 +6,7 @@ import CleanlinessRecent from './components/cleanliness-recent';
 import CleanlinessPast from './components/cleanliness-past';
 import CleanlinessLogs from './components/cleanliness-logs';
 import LoadingSpinner from '@/components/loading';
+import CleanlinessStats from './components/cleanliness-stats';
 
 export default function CleanlinessManagerPage() {
   const { data: houseData, isLoading } = useGetHouse();
@@ -24,6 +25,7 @@ export default function CleanlinessManagerPage() {
       {houseData?.cameraId && !isLoading && (
         <div className="flex gap-6">
           <div className="basis-[40vw] flex flex-col">
+            <CleanlinessStats />
             <CleanlinessRecent cleanlinessLog={cleanlinessLogs && cleanlinessLogs[0]} />
             <CleanlinessPast cleanlinessLogs={cleanlinessLogs} />
           </div>

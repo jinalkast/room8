@@ -28,7 +28,7 @@ export default function useDeleteAllCleanlinessTasks() {
       return fetchDeleteAllCleanlinessTasks(payload);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cleanliness-tasks'] });
+      queryClient.invalidateQueries({ queryKey: ['cleanliness-tasks', 'cleanliness-stats'] });
       toast({
         title: 'Success!',
         description: 'All tasks deleted successfully'

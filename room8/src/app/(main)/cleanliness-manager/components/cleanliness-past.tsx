@@ -18,7 +18,7 @@ type props = {
 
 function CleanlinessPast({ cleanlinessLogs }: props) {
   return (
-    <Card>
+    <Card className="mb-6">
       <CardHeader>
         <CardTitle>Past Events</CardTitle>
         <CardDescription>

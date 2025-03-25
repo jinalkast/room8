@@ -33,7 +33,7 @@ export default function useUpdateCleanlinessTask() {
       return fetchUpdateCleanlinessTask(payload);
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['cleanliness-tasks'] });
+      queryClient.invalidateQueries({ queryKey: ['cleanliness-tasks', 'cleanliness-stats'] });
       toast({
         title: 'Success!',
         description: `Task successfully ${variables.status}`
