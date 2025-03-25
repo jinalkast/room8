@@ -1,11 +1,6 @@
 'use client';
 
-import useSignOut from '@/app/auth/hooks/useSignOut';
 import useUser from '@/app/auth/hooks/useUser';
-import { Modal } from '@/components/modal';
-import { Button } from '@/components/ui/button';
-import { DialogClose } from '@/components/ui/dialog';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useState } from 'react';
 import SummaryCard from '../bill-splitter/components/summaryCard';
 import PendingChores from '../schedule/components/pending-chores';
