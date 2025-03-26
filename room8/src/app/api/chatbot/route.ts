@@ -7,7 +7,7 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const senderPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 const messagingServiceSid = process.env.TWILIO_MESSAGING_SERVICE_SID;
 
-Initialize Twilio client
+// Initialize Twilio client
 const client = new Twilio(accountSid, authToken);
 
 export async function POST(req: NextRequest) {
