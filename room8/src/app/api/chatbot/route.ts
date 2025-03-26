@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: 'Message sent successfully to the group conversation'
+        message: 'Message sent successfully to the group conversation',
         conversationSid: conversation.sid,
         messageSid: messageResponse.sid
       },
