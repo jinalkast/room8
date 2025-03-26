@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
         body: 'Hey everyone! 👋 I’m RoomBot, your friendly digital helper here in the Room8 app! 🎉\n\nI’m here to make roommate life a little easier, whether it’s keeping track of chores, reminding everyone about bills, or just helping keep things organized.'
       });
 
-    update supabase to indicate that the chatbot is active
+    // update supabase to indicate that the chatbot is active
         const supabase = await supabaseServer();
         const { data, error } = await supabase.from('houses').update({ chatbot_active: true }).eq('id', houseId);
 
