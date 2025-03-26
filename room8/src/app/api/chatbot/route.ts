@@ -14,8 +14,6 @@ export async function POST(req: NextRequest) {
   try {
     const response = await req.json();
     const participants = response.participants;
-    const response = await req.json();
-    const participants = response.participants;
     const houseId = response.house;
 
     if (!Array.isArray(participants) || participants.length === 0) {
@@ -23,14 +21,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Step 1: Check if the conversation already exists
-    const friendlyName = 'Group Chat';
+    const friendlyName = houseId;
     let conversation = null;
     const allConversations = await client.conversations.v1.conversations.list();
     conversation = allConversations.find((conv) => conv.friendlyName === friendlyName);
-        const friendlyName = houseId;
-        let conversation = null;
-        const allConversations = await client.conversations.v1.conversations.list();
-        conversation = allConversations.find((conv) => conv.friendlyName === friendlyName);
 
     if (!conversation) {
       // Create a new conversation if it doesn't exist
