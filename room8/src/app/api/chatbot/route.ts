@@ -27,7 +27,6 @@ export async function POST(req: NextRequest) {
     let conversation = null;
     const allConversations = await client.conversations.v1.conversations.list();
     conversation = allConversations.find((conv) => conv.friendlyName === friendlyName);
-    Step 1: Check if the conversation already exists
         const friendlyName = houseId;
         let conversation = null;
         const allConversations = await client.conversations.v1.conversations.list();
