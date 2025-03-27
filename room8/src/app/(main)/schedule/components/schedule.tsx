@@ -20,6 +20,8 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 const ALL_USER_ID = '123';
 
@@ -40,14 +42,17 @@ export default function ScheduleViewer() {
     });
   };
 
-  const filteredActivities = selectedUserID === ALL_USER_ID
-    ? activities
-    : activities?.filter((activity) => activity.responsible.includes(selectedUserID));
+  const filteredActivities =
+    selectedUserID === ALL_USER_ID
+      ? activities
+      : activities?.filter((activity) => activity.responsible.includes(selectedUserID));
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Weekly Schedule</CardTitle>
+        <CardTitle>
+          Weekly Schedule <UserGuideModal data={USER_GUIDE.CS_CALENDAR} />
+        </CardTitle>
         <CardDescription>
           View your weekly schedule and add chores for you and your roommates.
         </CardDescription>
@@ -85,11 +90,7 @@ export default function ScheduleViewer() {
                 </SelectTrigger>
                 <SelectContent>
                   {roommates?.map((roommate) => (
-                    <SelectItem
-                      key={roommate.id}
-                      value={roommate.id}
-                      className="flex items-center"
-                      >
+                    <SelectItem key={roommate.id} value={roommate.id} className="flex items-center">
                       {roommate.name}
                     </SelectItem>
                   ))}

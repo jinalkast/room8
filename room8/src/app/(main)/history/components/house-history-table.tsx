@@ -17,6 +17,8 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { useMemo, useState } from 'react';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
+import UserGuideModal from '@/components/user-guide-modal';
 
 type historyItem = {
   person: {
@@ -77,8 +79,8 @@ export default function HouseHistory() {
                 name: task.completed_by.name,
                 image_url: task.completed_by.image_url || ''
               },
-              date: task.completed_at!,
-              text: `${task.completed_by.name} completed ${task.name} on ${new Date(task.completed_at!).toLocaleString()}`
+              date: task.created_at!,
+              text: `${task.completed_by.name} completed ${task.name} on ${new Date(task.created_at!).toLocaleString()}`
             };
           })
       )
@@ -94,29 +96,30 @@ export default function HouseHistory() {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <h2 className="text-xl">House History</h2>
-          <div className='flex items-center gap-2'>
-            <p className='text-sm'>Filter by roommate:</p>
-          <Select value={selectedUserID} onValueChange={(value) => setSelectedUserID(value)}>
-            <SelectTrigger className="w-[180px] bg-macMaroon">
-              <SelectValue placeholder="Filter by roommate" />
-            </SelectTrigger>
-            <SelectContent>
-              {roommates?.map((roommate) => (
-                <SelectItem key={roommate.id} value={roommate.id} className="flex items-center">
-                  {roommate.name}
+          <div className="flex items-center gap-2">
+            <p className="text-sm">Filter by roommate:</p>
+            <Select value={selectedUserID} onValueChange={(value) => setSelectedUserID(value)}>
+              <SelectTrigger className="w-[180px] bg-macMaroon">
+                <SelectValue placeholder="Filter by roommate" />
+              </SelectTrigger>
+              <SelectContent>
+                {roommates?.map((roommate) => (
+                  <SelectItem key={roommate.id} value={roommate.id} className="flex items-center">
+                    {roommate.name}
+                  </SelectItem>
+                ))}
+                <SelectItem value={ALL_USER_ID} className="flex items-center">
+                  All Roommates
                 </SelectItem>
-              ))}
-              <SelectItem value={ALL_USER_ID} className="flex items-center">
-                All Roommates
-              </SelectItem>
-            </SelectContent>
-          </Select>
+              </SelectContent>
+            </Select>
+            <UserGuideModal data={USER_GUIDE.HISTORY} />
           </div>
         </CardTitle>
         <CardDescription>View everything that's ever happened in one spot!</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col max-h-[900px] overflow-y-auto border rounded-lg">
+        <div className="flex flex-col max-h-[70vh] overflow-y-auto border rounded-lg">
           {historyItems
             ?.filter((i) =>
               selectedUserID === ALL_USER_ID ? true : i.person.id === selectedUserID

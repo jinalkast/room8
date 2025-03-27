@@ -12,6 +12,8 @@ import { Modal } from '@/components/modal';
 import SummaryCard from './components/summaryCard';
 import HistoryTable from './components/historyTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 export default function BillSplitterPage() {
   const [isModelOpen, setIsModelOpen] = useState(false);
@@ -22,7 +24,9 @@ export default function BillSplitterPage() {
         <SummaryCard />
         <Card>
           <CardHeader>
-            <CardTitle>Bill Tracker</CardTitle>
+            <CardTitle>
+              Bill Tracker <UserGuideModal data={USER_GUIDE.BS_TRACKER} />
+            </CardTitle>
             <CardDescription>View your outstanding debts, loans, and history.</CardDescription>
           </CardHeader>
           <CardContent>

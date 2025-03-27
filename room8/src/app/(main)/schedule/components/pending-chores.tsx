@@ -5,6 +5,8 @@ import useAllActivities from '../hooks/useGetAllActivities';
 import useUser from '@/app/auth/hooks/useUser';
 import LoadingSpinner from '@/components/loading';
 import PendingItem from './pending-item';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 export default function PendingChores() {
   const { data: activities, isLoading: activitiesLoading } = useAllActivities();

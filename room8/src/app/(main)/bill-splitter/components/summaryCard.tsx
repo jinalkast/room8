@@ -6,6 +6,8 @@ import useOwes from '../hooks/useOwes';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import LoadingSpinner from '@/components/loading';
 import SummaryCardStub from './summaryCardStub';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 type props = {};
 
@@ -52,7 +54,7 @@ export default function SummaryCard({}: props) {
   return (
     <Card className="mb-6">
       <CardHeader>
-        <CardTitle>Summary</CardTitle>
+        <CardTitle>Bills Summary</CardTitle>
         <CardDescription>See your current debts and loans.</CardDescription>
       </CardHeader>
       <CardContent>
