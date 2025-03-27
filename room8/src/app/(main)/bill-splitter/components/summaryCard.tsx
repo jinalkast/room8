@@ -54,9 +54,7 @@ export default function SummaryCard({}: props) {
   return (
     <Card className="mb-6">
       <CardHeader>
-        <CardTitle>
-          Bills Summary <UserGuideModal data={USER_GUIDE.BS_SUMMARY} />
-        </CardTitle>
+        <CardTitle>Bills Summary</CardTitle>
         <CardDescription>See your current debts and loans.</CardDescription>
       </CardHeader>
       <CardContent>

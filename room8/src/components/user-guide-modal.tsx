@@ -35,8 +35,8 @@ function UserGuideModal({ data }: props) {
           <CarouselContent>
             {data.slides.map((slide, index) => (
               <CarouselItem key={index}>
-                <div className="relative h-[350px] rounded-md border">
-                  <Image src={slide.src} alt={slide.alt} fill className="object-cover" />
+                <div className="relative h-[350px] rounded-md ">
+                  <Image src={slide.src} alt={slide.alt} fill className="p-2 object-contain" />
                 </div>
 
                 <p className="mt-2 text-center">{slide.explanation}</p>

@@ -49,9 +49,7 @@ function HouseInfo({ house }: props) {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>
-              Housemates <UserGuideModal data={USER_GUIDE.H_MEMBERS} />
-            </CardTitle>
+            <CardTitle>Housemates</CardTitle>
             <CardDescription>See who you&apos;re living with!</CardDescription>
           </CardHeader>
           <CardContent>
@@ -60,9 +58,7 @@ function HouseInfo({ house }: props) {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>
-              Pending Invites <UserGuideModal data={USER_GUIDE.H_INVITES} />
-            </CardTitle>
+            <CardTitle>Pending Invites</CardTitle>
             <CardDescription>We&apos;re waiting on a response from these people</CardDescription>
           </CardHeader>
           <CardContent>

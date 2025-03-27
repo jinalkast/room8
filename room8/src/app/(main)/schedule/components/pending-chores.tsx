@@ -32,9 +32,7 @@ export default function PendingChores() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>
-          Pending Chores <UserGuideModal data={USER_GUIDE.CS_PENDING} />
-        </CardTitle>
+        <CardTitle>Pending Chores</CardTitle>
         <CardDescription>View your pending chores and mark them as complete.</CardDescription>
       </CardHeader>
       <CardContent>
