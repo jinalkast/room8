@@ -36,12 +36,14 @@ export default function useEditCamera() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['house'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'camera edited successfully'
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

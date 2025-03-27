@@ -25,12 +25,14 @@ export default function useDeleteCleanlinessTask() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cleanliness-tasks', 'cleanliness-stats'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'Task deleted successfully'
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

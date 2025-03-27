@@ -27,12 +27,14 @@ export default function useCreateNote() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['notes'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'Note created successfully'
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

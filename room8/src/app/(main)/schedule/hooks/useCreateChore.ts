@@ -28,12 +28,14 @@ export default function useCreateChore() {
       queryClient.invalidateQueries({ queryKey: ['all-completed-chores'] });
       queryClient.invalidateQueries({ queryKey: ['completed-chores'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'Chore successfully created'
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

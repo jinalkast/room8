@@ -35,12 +35,14 @@ export default function useUpdateCleanlinessTask() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['cleanliness-tasks', 'cleanliness-stats'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: `Task successfully ${variables.status}`
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

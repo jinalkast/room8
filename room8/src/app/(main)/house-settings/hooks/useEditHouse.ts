@@ -36,12 +36,14 @@ export default function useEditHouse() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['house'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'House edited successfully'
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

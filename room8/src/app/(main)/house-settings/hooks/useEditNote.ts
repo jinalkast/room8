@@ -35,12 +35,14 @@ export default function useEditNote() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['notes'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'Note edited successfully'
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

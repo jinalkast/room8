@@ -51,6 +51,7 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
     },
     onErrorCallback() {
       toast({
+        variant: 'destructive',
         title: 'Error',
         description: 'We could not save this preset'
       });
@@ -60,6 +61,7 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
   const postBillMutation = usePostBill({
     onSuccessCallback: () => {
       toast({
+        variant: 'success',
         title: 'Success!',
         description: "You're bill has been created"
       });
@@ -68,6 +70,7 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
     },
     onErrorCallback: () => {
       toast({
+        variant: 'destructive',
         title: 'Error',
         description: "So, something went wrong when creating you're bill"
       });
@@ -174,6 +177,7 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
     const roundingError = Math.abs(totalAmount - sum);
     if (roundingError > 1) {
       toast({
+        variant: 'destructive',
         title: 'Error',
         description: 'The amounts do not add up to the total value. Please check the values.'
       });
@@ -236,6 +240,7 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
 
           if (roundingError > 1) {
             toast({
+              variant: 'destructive',
               title: 'Error',
               description: 'The amounts do not add up to the total value. Please check the values.'
             });

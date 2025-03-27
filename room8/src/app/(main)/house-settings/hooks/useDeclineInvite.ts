@@ -25,12 +25,14 @@ export default function useDeclineInvite() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['invites'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'Invite declined successfully'
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

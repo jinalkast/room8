@@ -27,12 +27,14 @@ export default function useDeleteChore() {
       queryClient.invalidateQueries({ queryKey: ['all-completed-chores'] });
       queryClient.invalidateQueries({ queryKey: ['completed-chores'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'Chore successfully deleted'
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

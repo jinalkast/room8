@@ -24,6 +24,7 @@ export default function DebtsTable() {
   const patchOweMutation = usePatchOwe({
     onSuccessCallback: () => {
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'Bill status updated'
       });
@@ -32,6 +33,7 @@ export default function DebtsTable() {
     },
     onErrorCallback: () => {
       toast({
+        variant: 'destructive',
         title: 'Error',
         description: 'We could not update the bill status'
       });
