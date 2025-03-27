@@ -130,13 +130,23 @@ export default function CreateChoreModal() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <label className="text-sm font-medium leading-none">Chore Presets</label>
-            <div className="flex flex-wrap border rounded-md overflow-x-auto p-2 gap-2">
-              {chorePresets.map((chore) => (
-                <Button onClick={() => handleApplyPreset(chore)} className="max-w-[120px]">
-                  {chore.name}
-                  {chore.icon}
-                </Button>
-              ))}
+            <div className="!my-2 border rounded-md p-2">
+              <div className="flex flex-wrap gap-2 items-center">
+                {chorePresets.map((chore) => (
+                  <Button
+                    key={chore.name}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleApplyPreset(chore);
+                    }}
+                    size="sm"
+                    variant="secondary"
+                    className="flex-1">
+                    {chore.name}
+                    {chore.icon}
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
           <FormField
