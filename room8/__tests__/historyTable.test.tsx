@@ -13,7 +13,8 @@ const mockBillsHistory: TBillHistory[] = [
     loaner: 'Charlie',
     debtor: 'David',
     amount_paid: 500,
-    date_paid: '2025-03-01'
+    date_paid: '2025-03-01',
+    debtor_id: '2'
   },
   {
     owe_id: '2',
@@ -21,7 +22,8 @@ const mockBillsHistory: TBillHistory[] = [
     loaner: 'Eve',
     debtor: 'Frank',
     amount_paid: 60,
-    date_paid: '2025-03-05'
+    date_paid: '2025-03-05',
+    debtor_id: '3'
   }
 ];
 
