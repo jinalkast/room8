@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import useAcceptInvite from '../hooks/useAcceptInvite';
 import useDeclineInvite from '../hooks/useDeclineInvite';
 import Image from 'next/image';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 export default function HouseInvites() {
   const { data: invites, isLoading } = useGetInvites();

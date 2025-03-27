@@ -31,11 +31,16 @@ function CleanlinessDetailsModal({ cleanlinessLogId, recent, showDetails }: prop
     enabled: houseData !== undefined
   });
   const cleanlinessLog = cleanlinessLogs?.find((log) => log.id === cleanlinessLogId);
+
   const { data: tasks, isLoading: loadingTasks } = useGetCleanlinessTasks(cleanlinessLog?.id);
 
   const [filteredTasks, setFilteredTasks] = useState<TCleanlinessTask[]>([]);
 
-  if (!cleanlinessLog || loadingTasks || !tasks || !user || loadingRoommates || !roommates) {
+  if (!cleanlinessLog) {
+    return;
+  }
+
+  if (loadingTasks || !tasks || !user || loadingRoommates || !roommates) {
     return <LoadingSpinner />;
   }
 

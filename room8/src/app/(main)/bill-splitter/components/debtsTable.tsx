@@ -45,7 +45,7 @@ export default function DebtsTable() {
   }
 
   return (
-    <Table className="mt-4">
+    <Table className="mt-4 max-sm:min-w-[600px]">
       <TableCaption>Your outstanding debts to roommates, pay them off asap!</TableCaption>
       <TableHeader>
         <TableRow>

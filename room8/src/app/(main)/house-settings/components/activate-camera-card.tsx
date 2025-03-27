@@ -40,14 +40,14 @@ function ActivateCameraCard() {
     if (manualInput && house) {
       editCamera({ cameraId: manualInput, houseId: house.id });
     }
-  }
+  };
 
   if (houseLoading) return <LoadingSpinner />;
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Camera System</CardTitle>
+        <CardTitle>Camera System </CardTitle>
         {house?.cameraId && (
           <CardDescription>
             Your Camera ID is <span className="text-macAccent">{house.cameraId}</span>
@@ -59,7 +59,7 @@ function ActivateCameraCard() {
           </CardDescription>
         )}
       </CardHeader>
-      <CardContent className='flex gap-2'>
+      <CardContent className="flex gap-2">
         <Modal
           open={isScannerOpen}
           onOpenChange={(isScannerOpen) => {
@@ -101,10 +101,16 @@ function ActivateCameraCard() {
               {'Enter CameraID Manually'}
             </Button>
           }>
-            <div className='flex flex-col gap-2'>
-              <Input placeholder='your camera id' type='text' value={manualInput} onChange={(e)=>setManualInput(e.target.value)}></Input>
-              <Button disabled={isEditCameraPending} className='w-full' onClick={handleManualSubmit}>Submit</Button>
-            </div>
+          <div className="flex flex-col gap-2">
+            <Input
+              placeholder="your camera id"
+              type="text"
+              value={manualInput}
+              onChange={(e) => setManualInput(e.target.value)}></Input>
+            <Button disabled={isEditCameraPending} className="w-full" onClick={handleManualSubmit}>
+              Submit
+            </Button>
+          </div>
         </Modal>
       </CardContent>
     </Card>

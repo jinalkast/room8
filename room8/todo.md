@@ -1,9 +1,12 @@
 Auxiliary - Zayn
 [X] Simple landing page
 [X] Simple login page
-[X] User Guide Tutorial
+[X] User Guide Tutorial Modal
+[X] Individual guides
 [X] 2 Responsive mobile screens
 [X] Update all toast to use success or failure and better text
+[X] Update all helper buttons to use small size and secondary variant
+
 
 Cleanliness Manager - Zayn
 [X] AI: if no changes detected, don't add event

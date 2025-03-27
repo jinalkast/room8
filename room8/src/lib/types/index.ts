@@ -47,3 +47,13 @@ export type TBill = {
   sum_paid_back: number;
   total_owed: number;
 };
+
+export type TUserGuideData = {
+  title: string;
+  description?: string;
+  slides: {
+    explanation: string;
+    src: string;
+    alt: string;
+  }[];
+};

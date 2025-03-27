@@ -27,7 +27,7 @@ export default function LoansTable() {
   }
 
   return (
-    <Table className="mt-4">
+    <Table className="mt-4 max-sm:min-w-[600px]">
       <TableCaption>What your roommates owe you!</TableCaption>
       <TableHeader>
         <TableRow>
