@@ -431,7 +431,8 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                               src={roommate.imageUrl}
                             />
                           </Avatar>
-                          <p className={cn(!thisRoommateSelected && 'opacity-30')}>
+                          <p
+                            className={cn('max-sm:text-sm', !thisRoommateSelected && 'opacity-30')}>
                             {roommate.name}
                           </p>
                           <div className="flex gap-2 items-center ml-auto">

@@ -23,6 +23,62 @@ type Page = {
   title: string;
 };
 
+export const HOUSE_PAGES = {
+  dashboard: {
+    path: '/dashboard',
+    icon: <House />,
+    title: 'Dashboard',
+    auth: false,
+    camera: false
+  },
+  cleanlinessManager: {
+    path: '/cleanliness-manager',
+    icon: <Cctv />,
+    title: 'Cleanliness Manager',
+    auth: true,
+    camera: true
+  },
+  billSplitter: {
+    path: '/bill-splitter',
+    icon: <Receipt />,
+    title: 'Bill Splitter',
+    auth: true,
+    camera: false
+  },
+  choreSchedule: {
+    path: '/schedule',
+    icon: <CalendarCheck />,
+    title: 'Chore Schedule',
+    auth: true,
+    camera: false
+  },
+  chatBot: {
+    path: '/chatbot',
+    icon: <BotMessageSquare />,
+    title: 'ChatBot',
+    auth: true,
+    camera: false
+  },
+  history: {
+    path: '/history',
+    icon: <Notebook />,
+    title: 'House History',
+    auth: true,
+    camera: false
+  }
+};
+
+export const USER_PAGES = {
+  houseSettings: {
+    path: '/house-settings',
+    icon: <HousePlus />,
+    title: 'My House',
+    auth: false,
+    camera: false
+  },
+  profile: { path: '/profile', icon: <User />, title: 'My Profile', auth: false, camera: false }
+};
+
 const MenuLinkButton = ({ page, pathname }: { page: Page; pathname: string }) => {
   return (
     <div className="relative">
@@ -68,62 +124,6 @@ const MenuLinks = () => {
   const pathname = usePathname();
   const { data: house } = useGetHouse();
   const { data: user } = useUser();
-
-  const HOUSE_PAGES = {
-    dashboard: {
-      path: '/dashboard',
-      icon: <House />,
-      title: 'Dashboard',
-      auth: false,
-      camera: false
-    },
-    cleanlinessManager: {
-      path: '/cleanliness-manager',
-      icon: <Cctv />,
-      title: 'Cleanliness Manager',
-      auth: true,
-      camera: true
-    },
-    billSplitter: {
-      path: '/bill-splitter',
-      icon: <Receipt />,
-      title: 'Bill Splitter',
-      auth: true,
-      camera: false
-    },
-    choreSchedule: {
-      path: '/schedule',
-      icon: <CalendarCheck />,
-      title: 'Chore Schedule',
-      auth: true,
-      camera: false
-    },
-    chatBot: {
-      path: '/chatbot',
-      icon: <BotMessageSquare />,
-      title: 'ChatBot',
-      auth: true,
-      camera: false
-    },
-    history: {
-      path: '/history',
-      icon: <Notebook />,
-      title: 'House History',
-      auth: true,
-      camera: false
-    }
-  };
-
-  const USER_PAGES = {
-    houseSettings: {
-      path: '/house-settings',
-      icon: <HousePlus />,
-      title: 'My House',
-      auth: false,
-      camera: false
-    },
-    profile: { path: '/profile', icon: <User />, title: 'My Profile', auth: false, camera: false }
-  };
 
   return (
     <div className="mt-14">
