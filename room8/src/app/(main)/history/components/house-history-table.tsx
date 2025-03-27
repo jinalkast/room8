@@ -20,16 +20,6 @@ import { useMemo, useState } from 'react';
 import { USER_GUIDE } from '@/lib/constants/user-guide';
 import UserGuideModal from '@/components/user-guide-modal';
 
-type historyItem = {
-  person: {
-    name: string;
-    image_url: string;
-    id: string;
-  };
-  text: string;
-  date: string;
-};
-
 const ALL_USER_ID = '123';
 
 export default function HouseHistory() {
@@ -94,12 +84,12 @@ export default function HouseHistory() {
   return (
     <Card className="w-full xl:w-2/3">
       <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <h2 className="text-xl">House History</h2>
-          <div className="flex items-center gap-2">
+        <CardTitle className="max-sm:block flex items-center justify-between">
+          <h2 className="text-xl max-sm:mb-2">House History</h2>
+          <div className="flex items-center gap-2 max-sm:justify-between">
             <p className="text-sm">Filter by roommate:</p>
             <Select value={selectedUserID} onValueChange={(value) => setSelectedUserID(value)}>
-              <SelectTrigger className="w-[180px] bg-macMaroon">
+              <SelectTrigger className="max-sm:w-[140px] w-[180px] bg-macMaroon">
                 <SelectValue placeholder="Filter by roommate" />
               </SelectTrigger>
               <SelectContent>
@@ -109,17 +99,19 @@ export default function HouseHistory() {
                   </SelectItem>
                 ))}
                 <SelectItem value={ALL_USER_ID} className="flex items-center">
-                  All Roommates
+                  All
                 </SelectItem>
               </SelectContent>
             </Select>
-            <UserGuideModal data={USER_GUIDE.HISTORY} />
+            <div className="max-sm:hidden">
+              <UserGuideModal data={USER_GUIDE.HISTORY} />
+            </div>
           </div>
         </CardTitle>
         <CardDescription>View everything that's ever happened in one spot!</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col max-h-[70vh] overflow-y-auto border rounded-lg">
+        <div className="flex flex-col max-h-[70vh] max-sm:max-h-[55vh] overflow-y-auto border rounded-lg">
           {historyItems
             ?.filter((i) =>
               selectedUserID === ALL_USER_ID ? true : i.person.id === selectedUserID
