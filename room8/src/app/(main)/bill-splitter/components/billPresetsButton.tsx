@@ -24,6 +24,7 @@ const BillPresetsButton = ({
     },
     onErrorCallback() {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: 'Failed to delete the preset'
       });

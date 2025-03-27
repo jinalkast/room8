@@ -26,12 +26,14 @@ export default function useRemoveRoommate() {
       queryClient.invalidateQueries({ queryKey: ['house'] });
       queryClient.invalidateQueries({ queryKey: ['user'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'Roommate removed successfully'
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

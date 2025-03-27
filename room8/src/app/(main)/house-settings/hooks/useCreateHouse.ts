@@ -28,12 +28,14 @@ export default function useCreateHouse() {
       queryClient.invalidateQueries({ queryKey: ['house'] });
       queryClient.invalidateQueries({ queryKey: ['roommates'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'House created successfully'
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

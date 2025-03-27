@@ -36,6 +36,7 @@ export default function useEditProfile({ onSuccessCallback }: { onSuccessCallbac
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'Profile Updated successfully'
       });
@@ -45,6 +46,7 @@ export default function useEditProfile({ onSuccessCallback }: { onSuccessCallbac
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

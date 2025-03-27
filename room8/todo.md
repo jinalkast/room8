@@ -1,12 +1,9 @@
 Auxiliary - Zayn
-[ ] Simple landing page
-[ ] Simple login page
-[ ] User Guide Tutorial
-[ ] 2 Responsive mobile screens
-[ ] Update all toast to use success or failure and better text
-
-Dashboard - Zayn
-[ ] Add cleanliness summary to dashboard
+[X] Simple landing page
+[X] Simple login page
+[X] User Guide Tutorial
+[X] 2 Responsive mobile screens
+[X] Update all toast to use success or failure and better text
 
 Cleanliness Manager - Zayn
 [X] AI: if no changes detected, don't add event
