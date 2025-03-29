@@ -25,12 +25,14 @@ export default function useDeleteNote() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notes'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'Note deleted successfully'
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

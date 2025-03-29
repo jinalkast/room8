@@ -32,7 +32,7 @@ export default function HistoryTable() {
   }
 
   return (
-    <Table>
+    <Table className="mt-4 max-sm:min-w-[800px]">
       <TableCaption>History of all debt payments</TableCaption>
       <TableHeader>
         <TableRow>

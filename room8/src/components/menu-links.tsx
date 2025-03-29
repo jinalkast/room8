@@ -1,6 +1,7 @@
 'use client';
 
 import useUser from '@/app/auth/hooks/useUser';
+import useGetHouse from '@/hooks/useGetHouse';
 import { cn } from '@/lib/utils';
 import {
   BotMessageSquare,
@@ -8,6 +9,7 @@ import {
   Cctv,
   House,
   HousePlus,
+  Notebook,
   Receipt,
   Settings,
   User
@@ -19,6 +21,62 @@ type Page = {
   path: string;
   icon: JSX.Element;
   title: string;
+};
+
+export const HOUSE_PAGES = {
+  dashboard: {
+    path: '/dashboard',
+    icon: <House />,
+    title: 'Dashboard',
+    auth: false,
+    camera: false
+  },
+  cleanlinessManager: {
+    path: '/cleanliness-manager',
+    icon: <Cctv />,
+    title: 'Cleanliness Manager',
+    auth: true,
+    camera: true
+  },
+  billSplitter: {
+    path: '/bill-splitter',
+    icon: <Receipt />,
+    title: 'Bill Splitter',
+    auth: true,
+    camera: false
+  },
+  choreSchedule: {
+    path: '/schedule',
+    icon: <CalendarCheck />,
+    title: 'Chore Schedule',
+    auth: true,
+    camera: false
+  },
+  chatBot: {
+    path: '/chatbot',
+    icon: <BotMessageSquare />,
+    title: 'ChatBot',
+    auth: true,
+    camera: false
+  },
+  history: {
+    path: '/history',
+    icon: <Notebook />,
+    title: 'House History',
+    auth: true,
+    camera: false
+  }
+};
+
+export const USER_PAGES = {
+  houseSettings: {
+    path: '/house-settings',
+    icon: <HousePlus />,
+    title: 'My House',
+    auth: false,
+    camera: false
+  },
+  profile: { path: '/profile', icon: <User />, title: 'My Profile', auth: false, camera: false }
 };
 
 const MenuLinkButton = ({ page, pathname }: { page: Page; pathname: string }) => {
@@ -64,30 +122,8 @@ const MenuLinkButton = ({ page, pathname }: { page: Page; pathname: string }) =>
 
 const MenuLinks = () => {
   const pathname = usePathname();
+  const { data: house } = useGetHouse();
   const { data: user } = useUser();
-
-  const HOUSE_PAGES = {
-    dashboard: { path: '/dashboard', icon: <House />, title: 'Dashboard', auth: false },
-    cleanlinessManager: {
-      path: '/cleanliness-manager',
-      icon: <Cctv />,
-      title: 'Cleanliness Manager',
-      auth: true
-    },
-    billSplitter: { path: '/bill-splitter', icon: <Receipt />, title: 'Bill Splitter', auth: true },
-    choreSchedule: {
-      path: '/schedule',
-      icon: <CalendarCheck />,
-      title: 'Chore Schedule',
-      auth: true
-    },
-    chatBot: { path: '/chatbot', icon: <BotMessageSquare />, title: 'ChatBot', auth: true }
-  };
-
-  const USER_PAGES = {
-    houseSettings: { path: '/house-settings', icon: <HousePlus />, title: 'My House', auth: false },
-    profile: { path: '/profile', icon: <User />, title: 'My Profile', auth: false }
-  };
 
   return (
     <div className="mt-14">
@@ -95,6 +131,8 @@ const MenuLinks = () => {
       <ul className="space-y-6">
         {Object.values(HOUSE_PAGES).map((page) => {
           if (page.auth && !user?.house_id) return null;
+
+          if (page.camera && !house?.cameraId) return null;
 
           return <MenuLinkButton key={page.path} page={page} pathname={pathname} />;
         })}

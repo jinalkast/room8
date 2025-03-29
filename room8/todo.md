@@ -1,68 +1,64 @@
-Dashboard
-[ ] Design dashboard
-[ ] Display welcome message to current user and current house
-[ ] Show upcoming chores
-[ ] Show active bills
-[ ] Show latest and favourited notes
+Auxiliary - Zayn
+[X] Simple landing page
+[X] Simple login page
+[X] User Guide Tutorial Modal
+[X] Individual guides
+[X] 2 Responsive mobile screens
+[X] Update all toast to use success or failure and better text
+[X] Update all helper buttons to use small size and secondary variant
+
+
+Cleanliness Manager - Zayn
+[X] AI: if no changes detected, don't add event
+[X] Hide if no camera
+[X] Fix image resolution
+[X] Multi-task select assign
+[X] Default sort by status on events
+[X] Add filters to events
+[X] Complete all, etc
+[X] Move confidence interval into subheading
+[X] Ability to delete tasks completely
+[X] switched canceled to "dismissed" and make it gray
+[X] Switch icons to drop down
+[X] Add an unassign button
+[X] Add a "match" feature that sets old to completed and new to deleted
+[X] Add a stats section to show how many were completed by each person and how many were added
 
 Bill Splitter
-[ ] Switch table to multi-vew table with overall, outstanding debts, outstanding loans, and history
-[ ] Make clicking each modal window open up all the info of the particular entry
-[ ] Add modal window button to add a bill
-[ ] Add selection to choose roommates, then after a roommate is selected, you can add their amount
-[ ] Add different options to split debt
+[X] Visually colour the different summary cards - Zayn
+[X] Remove the gave out (useless info) - Zayn
+[x] Save and use custom bills - Maged
+[X] time from now next to date - Zayn
+[X] increment buttons next to bill - Zayn
+[X] Fix helper buttons - Zayn
 
-House Management Page
-[X] Display different pages if user has a house or not
+Schedules - Maged
+[X] Add a "filter by user"
+[X] Add a quick chores list (cleaning, cooking, groceries, etc.)
 
-- User has a house page
-  [X] invite user button modal window and leave house button
-  [X] Info of house: Nickname and address
-  [X] Table component that shows all the roommates (able to pass in different props to the component that update the table settings)
-  [ ] Add house notes feature
+House - Maged
+[X] House pending invites section
+[X] Ability to see who was invited and to revoke invites
+[X] Add manual text input for camera id
 
-- User has no house
-  [ ] create a house button modal window
-  [X] join house table with active invite requests
-  [ ] fix multiple house invites and cleaning invites once joined
+Chatbot - Jinal
+[ ] Ensure that it activates and deactivates properly
+[ ] Ensure settings actually work
 
-Schedule
-[ ] Update schedule UI
-[ ] Update "create chore" modal window
-[ ] Create a better looking day selection
-[ ] Create a better looking assign to
-[ ] NEED TO DISCUSS HOW TO HANDLE THIS
+Chore History - Maged
+[X] Add a list of all actions that happened
+[ ] Search bar
+[X] Filtering
 
-ChatBot
-[ ] Add ChatBotActive to house table
-[ ] Update UI to match status
-[ ] Use the roommates table component
+Presentation
 
-Settings
-[ ] Update Name
-[ ] Update Phone number
-[ ] Update profile picture?
+- Main user testing is people ACTUALLY using the app (no cleanliness manager)
+- 1 Day live demo of us actually using the app, timelapse with how tickets change
+- To test cleanliness manager, had people sit in front of computer, and receive 5 sets of before and after images and see how they use the application
 
-User Manual
-[ ] Design user manual
-
-Other
-[ ] Home page?
-[ ] Better login page?
-
-<!--
-IGNORE
- Hooks:
-[ ] getHouse
-[ ] createHouse
-[ ] inviteUser
-[ ] acceptInvite
-[ ] getInvites
-
-- implement get house hook
-- show house info view vs no house depending if house exists
-- create modal to invite user
-- create hook to invite user
-- link modal to use the hook
-- display all invites in table
-- add accept invite button -->
+Bugs and Testing
+[X] cant save bill preset if owed by is selected (make it so that its just ignored)
+[X] cant create bill anymore
+[X] make bill preset font the same as rest
+[X] move chore presets to the top of the modal window, keep "chore presets" font and space below the same as rest of input fields
+[ ] when inviting a user, if the email does not correspond to a user it should return the error "this user does not exist on the app!"

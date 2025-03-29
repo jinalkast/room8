@@ -6,6 +6,8 @@ import useOwes from '../hooks/useOwes';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import LoadingSpinner from '@/components/loading';
 import SummaryCardStub from './summaryCardStub';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 type props = {};
 
@@ -35,14 +37,14 @@ export default function SummaryCard({}: props) {
     .map((debt) => (
       <div
         key={debt.owe_id}
-        className="flex items-center justify-between py-2 px-4 mb-2 rounded-lg border bg-card text-card-foreground shadow-sm">
+        className="max-sm:flex-col max-sm:text-center flex items-center justify-between py-2 px-4 mb-2 rounded-lg border bg-card text-card-foreground shadow-sm">
         <div className="flex flex-col">
           <span className="font-medium">
             {debt.bill_name || <span className="text-muted-foreground">Untitled Debt</span>}
           </span>
           <span className="text-sm text-muted-foreground">Due: {debt.owed_by}</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="max-sm:flex-col flex items-center gap-4">
           <span className="text-sm">To: {debt.loaner_name}</span>
           <span className="font-semibold">${debt.amount_owed}</span>
         </div>
@@ -52,7 +54,7 @@ export default function SummaryCard({}: props) {
   return (
     <Card className="mb-6">
       <CardHeader>
-        <CardTitle>Summary</CardTitle>
+        <CardTitle>Bills Summary</CardTitle>
         <CardDescription>See your current debts and loans.</CardDescription>
       </CardHeader>
       <CardContent>
@@ -60,17 +62,26 @@ export default function SummaryCard({}: props) {
           <LoadingSpinner />
         ) : (
           <>
-            <div className="flex gap-6">
-              <SummaryCardStub title="You Owe" number={debtsTotal?.toFixed(2)} />
-              <SummaryCardStub title="Gave Out" number={loanedTotal?.toFixed(2)} />
-              <SummaryCardStub title="Still Owed" number={loanedTotalOwed?.toFixed(2)} />
+            <div className="max-sm:flex-col flex gap-6">
+              <SummaryCardStub
+                title="You Owe"
+                number={debtsTotal?.toFixed(2)}
+                colour="text-[#f43f5e]"
+              />
+              <SummaryCardStub
+                title="Still Owed"
+                number={loanedTotalOwed?.toFixed(2)}
+                colour="text-[#10b981]"
+              />
             </div>
             {
               <div className="mt-6">
                 <CardTitle>Upcoming Debt Deadlines</CardTitle>
                 {debtsSuccess && deadlineCards!.length > 0 ? (
                   <div>
-                    <ul className="mt-4">{deadlineCards}</ul>
+                    <ul className="mt-4 max-sm:max-h-[200px] max-sm:overflow-y-auto max-sm:border max-sm:rounded-lg max-sm:p-2">
+                      {deadlineCards}
+                    </ul>
                   </div>
                 ) : (
                   <CardDescription className="mt-2">

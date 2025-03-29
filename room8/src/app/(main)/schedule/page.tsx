@@ -1,6 +1,6 @@
-import ChoreHistory from './components/chore-history';
-import PendingChores from './components/pending-chores';
-import ScheduleViewer from './components/schedule';
+import ChoreHistory from '@/app/(main)/schedule/components/chore-history';
+import PendingChores from '@/app/(main)/schedule/components/pending-chores';
+import ScheduleViewer from '@/app/(main)/schedule/components/schedule';
 
 export default function SchedulePage() {
   return (

@@ -34,6 +34,7 @@ export default function useUpdateCompletedChore() {
       queryClient.invalidateQueries({ queryKey: ['all-completed-chores'] });
       queryClient.invalidateQueries({ queryKey: ['completed-chores', variables.id] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: variables.isCompleted
           ? 'Chore marked as completed'
@@ -42,6 +43,7 @@ export default function useUpdateCompletedChore() {
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

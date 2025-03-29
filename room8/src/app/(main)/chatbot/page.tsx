@@ -17,6 +17,8 @@ import ChatBotSettingsStub from './components/chatbot-setting-stub';
 import { useState } from 'react';
 import useGetHouse from '@/hooks/useGetHouse';
 import LoadingSpinner from '@/components/loading';
+import UserGuideModal from '@/components/user-guide-modal';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 export type TSettingKeys =
   | 'roommate-updates'
@@ -90,7 +92,9 @@ export default function ChatBotPage() {
       <div className="w-[40vw] flex flex-col">
         <Card>
           <CardHeader>
-            <CardTitle>Activate ChatBot</CardTitle>
+            <CardTitle>
+              Activate ChatBot <UserGuideModal data={USER_GUIDE.CHATBOT} />
+            </CardTitle>
             <CardDescription>
               This ChatBot will send all the following roommates SMS notifcations regarding the
               state of the household

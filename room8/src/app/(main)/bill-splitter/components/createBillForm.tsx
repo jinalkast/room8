@@ -2,11 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import useRoommates from '@/hooks/useRoommates';
-import UserSkeleton from '@/components/userSkeleton';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { postBillSchema } from '@/app/(main)/bill-splitter/types';
+import { postBillSchema, TBillPreset } from '@/app/(main)/bill-splitter/types';
 
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -22,27 +21,47 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/useToast';
 import useUser from '@/app/auth/hooks/useUser';
-import usePostBill from '../hooks/postBill';
+import usePostBill from '@/app/(main)/bill-splitter/hooks/postBill';
 import { useQueryClient } from '@tanstack/react-query';
-import { Currency, DollarSign, XIcon } from 'lucide-react';
+import { DollarSign } from 'lucide-react';
 import LoadingSpinner from '@/components/loading';
-import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { DatePicker } from '@/components/datepicker';
+import BillPresetsButton from '@/app/(main)/bill-splitter/components/billPresetsButton';
+import usePostBillPreset from '@/app/(main)/bill-splitter/hooks/postBillPresets';
+import useBillPresets from '@/app/(main)/bill-splitter/hooks/useBillPresets';
 
 export default function CreateBillForm({ closeBillModal }: { closeBillModal: () => void }) {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
   const [roommatesSelected, setRoommatesSelected] = useState<string[]>([]);
+  const { data: presetsData, status: presetsStatus } = useBillPresets();
 
   const { data: user, status: userStatus } = useUser();
   const { data: roommates, status: roommatesStatus } = useRoommates();
+  const { mutate: postBillPreset, isPending: isPresetPostPending } = usePostBillPreset({
+    queryClient,
+    onSuccessCallback() {
+      toast({
+        title: 'Success',
+        description: 'Preset Successfully saved'
+      });
+    },
+    onErrorCallback() {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'We could not save this preset'
+      });
+    }
+  });
 
   const postBillMutation = usePostBill({
     onSuccessCallback: () => {
       toast({
+        variant: 'success',
         title: 'Success!',
         description: "You're bill has been created"
       });
@@ -51,6 +70,7 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
     },
     onErrorCallback: () => {
       toast({
+        variant: 'destructive',
         title: 'Error',
         description: "So, something went wrong when creating you're bill"
       });
@@ -138,6 +158,68 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
     form.setValue('owes', newOwes);
   };
 
+  const applyPreset = (preset: TBillPreset) => {
+    form.setValue('name', preset.name);
+    form.setValue('amount', preset.amount);
+    form.setValue('owes', preset.owes);
+    form.clearErrors();
+  };
+
+  const handleSavePreset = (formData: z.infer<typeof postBillSchema>) => {
+    const totalAmount = formData.amount;
+    const owes = formData.owes;
+    let sum = 0;
+
+    owes.forEach((amount) => {
+      sum += amount;
+    });
+
+    const roundingError = Math.abs(totalAmount - sum);
+    if (roundingError > 1) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'The amounts do not add up to the total value. Please check the values.'
+      });
+      return;
+    }
+
+    // setPresets(prev=> [...prev, {...formData, owes: new Map(formData.owes)}]);
+    postBillPreset(formData);
+  };
+
+  const setDatePreset = (preset: string) => {
+    const today = new Date();
+    let newDate: Date;
+
+    switch (preset) {
+      case 'tomorrow':
+        newDate = new Date(today);
+        newDate.setDate(today.getDate() + 1);
+        break;
+      case 'next week':
+        newDate = new Date(today);
+        newDate.setDate(today.getDate() + 7);
+        break;
+      case 'next month':
+        newDate = new Date(today);
+        newDate.setMonth(today.getMonth() + 1);
+        break;
+      case 'start of next month':
+        newDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+        break;
+      default:
+        newDate = new Date(today);
+    }
+
+    form.setValue('owed_by', newDate);
+  };
+
+  const incrementBillAmount = (amount: number) => {
+    const currentAmount = form.getValues('amount') || 0;
+    form.setValue('amount', +currentAmount + amount);
+  };
+
   if (userStatus === 'pending' || roommatesStatus === 'pending') {
     return <LoadingSpinner />;
   }
@@ -145,9 +227,9 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((values) => {
-          const totalAmount = values.amount;
-          const owes = values.owes;
+        onSubmit={form.handleSubmit((formData) => {
+          const totalAmount = formData.amount;
+          const owes = formData.owes;
           let sum = 0;
 
           owes.forEach((amount) => {
@@ -158,6 +240,7 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
 
           if (roundingError > 1) {
             toast({
+              variant: 'destructive',
               title: 'Error',
               description: 'The amounts do not add up to the total value. Please check the values.'
             });
@@ -165,9 +248,47 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
           }
 
           owes.delete(user?.id || 'XXX'); // DELETE owe for self
-          postBillMutation.mutate(values);
+          postBillMutation.mutate(formData);
         })}
         className="space-y-6 pb-4">
+        {presetsStatus === 'pending' && <div>Fetching Presets</div>}
+        {presetsStatus === 'error' && <div>Error Fetching Presets</div>}
+        {presetsStatus === 'success' && (
+          <FormField
+            control={form.control}
+            name="equally"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bill Presets</FormLabel>
+                <FormControl>
+                  <>
+                    <div className="!my-2 border rounded-md p-2">
+                      <div className="flex gap-2 items-center">
+                        {presetsData!.map((preset, index) => (
+                          <BillPresetsButton billPreset={preset} applyPreset={applyPreset} />
+                        ))}
+                        {presetsData!.length === 0 && (
+                          <p className="text-sm text-muted">No presets available</p>
+                        )}
+                      </div>
+                    </div>
+                    <Button
+                      disabled={isPresetPostPending}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleSavePreset(form.getValues());
+                      }}
+                      size={'sm'}>
+                      Save current as a preset
+                    </Button>
+                  </>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+
         <FormField
           control={form.control}
           name="name"
@@ -211,6 +332,50 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
             </FormItem>
           )}
         />
+        <div className="!mt-2 rounded-md">
+          <div className="flex gap-2 flex-wrap">
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={(e) => {
+                e.preventDefault();
+                setDatePreset('tomorrow');
+              }}
+              className="flex-1">
+              Tomorrow
+            </Button>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={(e) => {
+                e.preventDefault();
+                setDatePreset('next week');
+              }}
+              className="flex-1">
+              Next Week
+            </Button>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={(e) => {
+                e.preventDefault();
+                setDatePreset('next month');
+              }}
+              className="flex-1">
+              Next Month
+            </Button>
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={(e) => {
+                e.preventDefault();
+                setDatePreset('start of next month');
+              }}
+              className="flex-1">
+              Start of Next Month
+            </Button>
+          </div>
+        </div>
         <FormField
           control={form.control}
           name="amount"
@@ -234,7 +399,23 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
             </FormItem>
           )}
         />
-
+        <div className="!mt-2 rounded-md">
+          <div className="flex gap-2 flex-wrap">
+            {[1, 5, 10, 25, 50, 100, 500].map((amount) => (
+              <Button
+                key={amount}
+                size="sm"
+                variant="secondary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  incrementBillAmount(amount);
+                }}
+                className="flex-1">
+                +${amount}
+              </Button>
+            ))}
+          </div>
+        </div>
         <FormField
           control={form.control}
           name="owes"
@@ -255,7 +436,8 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                               src={roommate.imageUrl}
                             />
                           </Avatar>
-                          <p className={cn(!thisRoommateSelected && 'opacity-30')}>
+                          <p
+                            className={cn('max-sm:text-sm', !thisRoommateSelected && 'opacity-30')}>
                             {roommate.name}
                           </p>
                           <div className="flex gap-2 items-center ml-auto">
@@ -307,9 +489,11 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                   </div>
                 </FormControl>
               )}
-              <div className="!mt-4 border rounded-md p-2">
-                <div className="flex gap-2">
+              <div className="!mt-4 rounded-md">
+                <div className="flex gap-2 flex-wrap">
                   <Button
+                    size="sm"
+                    variant="secondary"
                     onClick={(e) => {
                       e.preventDefault();
                       splitBillEqually();
@@ -318,6 +502,8 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                     Equally
                   </Button>
                   <Button
+                    size="sm"
+                    variant="secondary"
                     onClick={(e) => {
                       e.preventDefault();
                       splitBillEquallyExcludeMe();
@@ -326,6 +512,8 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                     Exclude Me
                   </Button>
                   <Button
+                    size="sm"
+                    variant="secondary"
                     onClick={(e) => {
                       e.preventDefault();
                       splitBillHalfAndHalf();
@@ -334,6 +522,8 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
                     Half & Half
                   </Button>
                   <Button
+                    size="sm"
+                    variant="secondary"
                     onClick={(e) => {
                       e.preventDefault();
                       clearAll();
@@ -347,7 +537,6 @@ export default function CreateBillForm({ closeBillModal }: { closeBillModal: () 
             </FormItem>
           )}
         />
-
         <Button
           className="w-full"
           disabled={postBillMutation.isPending || roommatesStatus !== 'success'}

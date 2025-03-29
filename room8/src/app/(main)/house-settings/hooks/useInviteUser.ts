@@ -26,13 +26,16 @@ export default function useInviteUser() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['invites'] });
+      queryClient.invalidateQueries({ queryKey: ['pendingInvites'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'User invited successfully'
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface UpdateCleanlinessTaskPayload {
   id: number;
-  status: 'unassigned' | 'pending' | 'completed' | 'canceled';
+  status: 'unassigned' | 'pending' | 'completed' | 'dismissed';
   assigned_to_id?: string;
   assigned_by_id?: string;
   completed_by_id?: string;
@@ -33,14 +33,16 @@ export default function useUpdateCleanlinessTask() {
       return fetchUpdateCleanlinessTask(payload);
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['cleanliness-tasks'] });
+      queryClient.invalidateQueries({ queryKey: ['cleanliness-tasks', 'cleanliness-stats'] });
       toast({
+        variant: 'success',
         title: 'Success!',
         description: `Task successfully ${variables.status}`
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });

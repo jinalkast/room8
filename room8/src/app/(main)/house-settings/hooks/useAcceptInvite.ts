@@ -29,12 +29,14 @@ export default function useAcceptInvite() {
       queryClient.invalidateQueries({ queryKey: ['user'] });
 
       toast({
+        variant: 'success',
         title: 'Success!',
         description: "You've successfully joined the house"
       });
     },
     onError: (err) => {
       toast({
+        variant: 'destructive',
         title: 'Error!',
         description: err.message
       });
