@@ -263,9 +263,9 @@ An improvement in academic performance for students experience stress caused by 
     \item UC5: Cleanliness Management
     \begin{enumerate}
         \item User navigates to the “Cleanliness Management” section.
-        \item System displays the current cleanliness score and detected messes.
-        \item User selects another user to view their cleanliness score.
-        \item System displays the selected user’s cleanliness score and pending tasks.
+        \item System displays the list of objects added, moved or removed.
+        \item User selects another user to view their cleanliness tasks.
+        \item System displays the selected user’s pending cleanliness tasks.
     \end{enumerate}
     
     \item UC6: SMS ChatBot
@@ -356,7 +356,7 @@ The glossary provides definitions for the key terms used throughout the project.
 
     \item \textbf{"After" Picture:} he image of the shared living space after a student uses it.\newline
 
-    \item \textbf{CASL (Cleanliness Score):} A score assigned to a student after they have finished using the shared living space. It is derived from an algorithm in which the inputs are a "before" and "after" picture pair.\newline
+    \item \textbf{Cleanliness Tasks:} A list assigned to a user after they have finished using the shared living space and have assigned themselves or been assigned by another user. It is derived from an algorithm in which the inputs are a "before" and "after" picture pair.\newline
 
     \item \textbf{OAuth 2.0:} An open standard protocol for authorization, allowing secure access to user data across different services without revealing login credentials. OAuth is commonly used to enable single sign-on or to grant third-party applications limited access to a user's resources.\newline
 
@@ -428,7 +428,7 @@ This section describes how the system’s operations will influence its environm
 \begin{flushleft}
   \item \textbf{Digital minimalism:} Students part of a home cab conduct all interactions on one platform. All common virtual services are provided by the Room8 application, hence eliminating the need for other applications that clutter the digital space.\newline
 
-  \item \textbf{Accountability:} Room8 promotes social responsibility and user accountability by assessing the cleanliness state of the room before/after use and quantifying the difference in the 2 states, providing a cleanliness score. Students are given objective feedback and all students in the home are held accountable for their actions.\newline
+  \item \textbf{Accountability:} Room8 promotes social responsibility and user accountability by assessing the cleanliness state of the room before/after use and quantifying the difference in the 2 states, providing a cleanliness task list. Students are given objective feedback and all students in the home are held accountable for their actions.\newline
   
   \item \textbf{Ease social tension:} Students living in a home can feel tense about confronting their roommates when asking them to clean up, pay them back, or do the chores they agreed to. The ChatBot sends reminders about these duties, taking the pressure off students to confront each other and risk compromising their relationships.\newline 
 \end{flushleft}
@@ -489,7 +489,7 @@ Invariants are properties of the environment that the system must maintain throu
   	\begin{itemize}
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
-  			\item \textbf{FR211:} The system shall allow users to create an account using their name, email, phone number, and password.
+  			\item \textbf{FR211:} The system shall allow users to create an account using their accounts.
             \item \textbf{FR212:} The system shall allows users to log in to their account.
             \item \textbf{FR213:} The system shall allows users to log out of their account.
             \item \textbf{FR214:} The system shall allow users to create a home group using the home name, address, and number of roommates.
@@ -512,7 +512,7 @@ Invariants are properties of the environment that the system must maintain throu
   		\begin{itemize}
   			\item \textbf{FR221:} The system shall allow users to configure the ChatBot settings to include or exclude messages corresponding to chore schedule, cleanliness manager, and bill splitter.
             \item \textbf{FR222:} The ChatBot shall send reminders to the group chat about upcoming chores and events in the schedule 2 days in advance.
-            \item \textbf{FR223:} The ChatBot shall send notifications to the group chat about new shared living space cleanliness scores immediately after an event is added to the cleanliness manager page.
+            \item \textbf{FR223:} The ChatBot shall send notifications to the group chat about new shared living space cleanliness tasks immediately after an event is added to the cleanliness manager page.
             \item \textbf{FR224:} The ChatBot shall send notifications to the group chat about new shared expenses added to the bill splitter page immediately after its addition.
             \item \textbf{FR225:} The system shall allow users to activate the ChatBot feature which will create combined groupchat including all the residents as well the bot itself.
   		\end{itemize}
@@ -527,9 +527,8 @@ Invariants are properties of the environment that the system must maintain throu
   		\item \textbf{Functional Requirements:}
   		\begin{itemize}
             \item \textbf{FR231:} The system shall evaluate the cleanliness of the shared living space before and after a user enters and exits the space.
-  			\item \textbf{FR232:} The system shall display the current cleanliness score of the shared living space.
             \item \textbf{FR233:} The system shall display the detected messes in the shared living space.
-            \item \textbf{FR234:} The system shall allow users to view the history of cleanliness scores and detected messes.
+            \item \textbf{FR234:} The system shall allow users to view the history of cleanliness tasks completed or pending and detected messes.
         \end{itemize}
         \item \textbf{Non-Functional Requirements:}
         \begin{itemize}
@@ -538,7 +537,7 @@ Invariants are properties of the environment that the system must maintain throu
             \item \textbf{NFR233:} The system shall encrypt and securely store all images of homes.
             \item \textbf{NFR234:} Photos captured with the system will be in a quality high enough to differentiate objects within frame.
             \item \textbf{NFR235:} The system shall process image data in under 30 minutes.
-            \item \textbf{NFR236:} The system shall not report false events which accuse someone of reducing the cleanliness score of an environment.
+            \item \textbf{NFR236:} The system shall not report false events.
             \item \textbf{NFR237:} The system shall declare an instances of someone altering a room finished one there has been no activity in the room for a designated period of time.
   		\end{itemize}
   	\end{itemize}
@@ -954,19 +953,19 @@ Thus, S.3 Interfaces will be available in a future revision of this document.
     \item \textbf{Success Postcondition:} Expenses are updated and expense log reflects expense transactions. Debts are recalculated to facilitate the least amount of transactions between housemates.
 \end{itemize}
 
-\nsubsection{S.4.15 User Views Cleanliness Score}
+\nsubsection{S.4.15 User Views Cleanliness Tasks}
 \begin{itemize}
     \item \textbf{Use Case:} UC5
     \item \textbf{Primary Actor:} User
     \item \textbf{Precondition:} User is logged in and has an existing home. Home has cleanliness detector setup.
-    \item \textbf{Trigger:} User wants to view current cleanliness score of the shared living space and latest usage.
+    \item \textbf{Trigger:} User wants to view current cleanliness tasks of the shared living space and latest usage.
 
     \item \textbf{Main Success Scenario:}
     \begin{enumerate}
         \item User navigates to the “Cleanliness Management” section.
-        \item System displays the current cleanliness score and detected messes.
-        \item User selects another user to view their cleanliness score.
-        \item System displays the selected user’s cleanliness score and pending tasks associated with their shared living space usage.
+        \item System displays the current cleanliness tasks and detected messes.
+        \item User selects another user to view their cleanliness tasks.
+        \item System displays the selected user’s current and pending cleanliness tasks associated with their shared living space usage.
     \end{enumerate}
 
     \item \textbf{Secondary Scenarios:}
@@ -977,7 +976,7 @@ Thus, S.3 Interfaces will be available in a future revision of this document.
         \end{enumerate}
     \end{enumerate}
 
-    \item \textbf{Success Postcondition:} User is able to view the current cleanliness score of the shared living space. User is able to view detected messes and cleanliness score of other housemates.
+    \item \textbf{Success Postcondition:} User is able to view the current and pending cleanliness tasks of the shared living space. User is able to view detected messes and cleanliness tasks of other housemates.
 \end{itemize}
 
 \nsubsection{S.4.16 Add ChatBot to Group Chat}
@@ -1026,7 +1025,7 @@ Thus, S.3 Interfaces will be available in a future revision of this document.
 
     FR231 & Cleanliness Evaluation After Usage & Should have & Removes frequent point of friction in living spaces for users. \\ \hline
 
-    FR232 & Cleanliness Score & Could have & Summarizes detected messes into a score. \\ \hline
+    FR232 & Cleanliness Tasks & Could have & Summarizes detected messes into a tasks. \\ \hline
 
     FR233 & Cleanliness Detected Messes & Should have & Very important to assigning responsibilities to users. \\ \hline
 
