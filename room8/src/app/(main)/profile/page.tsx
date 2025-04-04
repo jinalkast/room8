@@ -1,16 +1,15 @@
 'use client';
 
 import useUser from '@/app/auth/hooks/useUser';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import MutateLoadingSpinner from '@/components/mutate-loading';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Phone } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { updateProfilePayload } from './types';
-import useEditProfile from './hooks/useEditProfile';
-import MutateLoadingSpinner from '@/components/mutate-loading';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import useEditProfile from './hooks/useEditProfile';
+import { updateProfilePayload } from './types';
 
 export default function ProfilePage() {
   const { data: user, status: userFetchStatus } = useUser();

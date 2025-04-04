@@ -51,7 +51,6 @@ def main():
     # Allow the camera to warm up
     time.sleep(2.0)
 
-    detected_motion = False
     last_motion_time_detected = None
     ret, beforeFrame = cap.read() # Capture starting frame as first before frame
     triggered = False
@@ -112,65 +111,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-# import cv2
-# import numpy as np
-# import time 
-
-# INACTIVITY_TIME_REQUIRED = 60*1 # 1 minute
-
-# def upload_frames_to_server(beforeFrame, afterFrame):
-#     print("Uploading frames to server...")
-
-# def main():
-#     cap = cv2.VideoCapture(0)
-#     if not cap.isOpened():
-#         print("Error: Could not open video stream.")
-#         return
-    
-    # # Allow the camera to warm up
-    # time.sleep(2.0)
-
-#     last_mean = 0
-#     detected_motion = False
-#     last_motion_time_detected = time.time()
-#     ret, beforeFrame = cap.read()
-#     triggered = False
-
-#     while(cap.isOpened()):
-#         ret, frame = cap.read()
-#         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-#         result = np.abs(np.mean(gray) - last_mean)
-#         last_mean= np.mean(gray)
-#         if result > 0.1:
-        #     print("Motion detected!")
-        #     detected_motion = True
-        #     triggered = False
-        # else:
-        #     detected_motion = False
-        
-        # if detected_motion:
-        #     cv2.putText(frame, "Motion Detected", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-        #     last_motion_time_detected = time.time()
-        # else:
-        #     time_since_last_motion = time.time() - last_motion_time_detected
-        #     cv2.putText(frame, "No Motion Detected", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        #     cv2.putText(frame, f"Time since last motion: {time_since_last_motion:.2f} seconds", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        #     if time_since_last_motion > INACTIVITY_TIME_REQUIRED and not triggered:
-        #         upload_frames_to_server(beforeFrame, frame)
-        #         triggered = True
-                
-#         if (cv2.waitKey(1) & 0xFF == ord('q')):
-#             break
-        
-#         cv2.imshow('frame', frame)
-
-
-#     cap.release()
-#     cv2.destroyAllWindows()
-
-# if __name__ == '__main__':
-#     main()

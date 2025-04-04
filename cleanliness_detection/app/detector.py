@@ -459,45 +459,40 @@ class CleanlinessDetector:
 
         return f
 
-    """Exporting annotated before/after images and csv file to export_results folder"""
-    def export_results(self, before_fig: plt.figure, after_fig: plt.figure, changes_fig: plt.figure, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject]) -> None:
-        FORMATTED_DATETIME = datetime.now().strftime("%Y-%m-%d %Hh-%Mm-%Ss")
+    """Returns the tasklist of changes"""
+    def export_results(self, before_fig: plt.figure, after_fig: plt.figure, changes_fig: plt.figure, added: list[HouseObject], removed: list[HouseObject], moved: list[HouseObject], save_to_file=False) -> None:
+        
+        if (save_to_file):
+            FORMATTED_DATETIME = datetime.now().strftime("%Y-%m-%d %Hh-%Mm-%Ss")
 
-        # Path and making folder
-        FOLDER_PATH = Path(f"{Path(__file__).parent}/exported_results/{FORMATTED_DATETIME}")
-        FOLDER_PATH.mkdir(parents=True, exist_ok=True)
+            # Path and making folder
+            FOLDER_PATH = Path(f"{Path(__file__).parent}/exported_results/{FORMATTED_DATETIME}")
+            FOLDER_PATH.mkdir(parents=True, exist_ok=True)
 
-        before_fig.savefig(FOLDER_PATH / 'before.svg', format='svg', dpi=1200)
-        after_fig.savefig(FOLDER_PATH / 'after.svg', format='svg', dpi=1200)
-        changes_fig.savefig(FOLDER_PATH / 'changes.svg', format='svg', dpi=1200)
+            before_fig.savefig(FOLDER_PATH / 'before.svg', format='svg', dpi=1200)
+            after_fig.savefig(FOLDER_PATH / 'after.svg', format='svg', dpi=1200)
+            changes_fig.savefig(FOLDER_PATH / 'changes.svg', format='svg', dpi=1200)
 
-        # # Writing to the CSV
-        # csv_path = FOLDER_PATH / "results.csv"
+            # Writing to the CSV
+            csv_path = FOLDER_PATH / "results.csv"
 
-        # with open(csv_path, 'w', newline='') as file:
-        #     writer = csv.writer(file)
-        #     # Headers of CSV
-        #     fields = ["Added", "Removed", "Moved"]
+            with open(csv_path, 'w', newline='') as file:
+                writer = csv.writer(file)
+               
+                # Create CSV Headers
+                fields = ["Added", "Removed", "Moved"]
+                max_length = max(len(added), len(removed), len(moved))
+                writer.writerow(fields)
 
-        #     max_length = max(len(added), len(removed), len(moved))
+                for i in range(max_length):
+                    added_obj = added[i] if i < len(added) else ""
+                    removed_obj = removed[i] if i < len(removed) else ""
+                    moved_obj = moved[i] if i < len(moved) else ""
 
-        #     writer.writerow(fields)
-
-        #     for i in range(max_length):
-        #         added_obj = added[i] if i < len(added) else ""
-        #         removed_obj = removed[i] if i < len(removed) else ""
-        #         moved_obj = moved[i] if i < len(moved) else ""
-
-        #         # # Calculate scores for added, removed, and moved objects
-        #         # added_score = SCORE_WEIGHTS.get(added_obj, [0, 0, 0])[0] if added_obj else 0
-        #         # removed_score = SCORE_WEIGHTS.get(removed_obj, [0, 0, 0])[1] if removed_obj else 0
-        #         # moved_score = SCORE_WEIGHTS.get(moved_obj, [0, 0, 0])[2] if moved_obj else 0
-
-        #         # # Calculate total score for the row
-        #         # total_score = added_score + removed_score + moved_score
-
-        #         # Write row
-        #         writer.writerow([added_obj, removed_obj, moved_obj])
+                    # Write row
+                    writer.writerow([added_obj, removed_obj, moved_obj])
+        
+        # Create a tasklist of changes
         tasklist = []
         for added_item in added:
             tasklist.append(f"{added_item} added")
@@ -538,8 +533,10 @@ def main(before, after):
     # Annotate the changes in the after image
     changes_fig = cd.annotate_changes(after_orig, added, moved, removed, True)
 
-    cd.export_results(before_fig, after_fig, changes_fig, added, removed, moved)
+    # Export the results to a file
+    tasklist = cd.export_results(before_fig, after_fig, changes_fig, added, removed, moved, save_to_file=True)
+    print("Tasklist:", tasklist)
 
 if __name__ == "__main__":
-    
     main("./samples/5/before.jpeg", "./samples/5/after.jpeg")
+

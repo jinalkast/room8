@@ -1,6 +1,6 @@
 import { supabaseServer } from '@/lib/supabase/server';
-import { TAmountOwedDB, TApiResponse, TBillDB } from '@/lib/types';
-import { NextResponse, NextRequest } from 'next/server';
+import { TAmountOwedDB, TApiResponse } from '@/lib/types';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest): Promise<NextResponse<TApiResponse<TAmountOwedDB[]>>> {
   try {

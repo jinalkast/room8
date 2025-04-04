@@ -1,19 +1,18 @@
 'use client';
 
-import { useState } from 'react';
-import { FilePen, House, HandCoins, Receipt, Book, Plus } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import CreateBillForm from './components/createBillForm';
-import DebtsTable from './components/debtsTable';
-import LoansTable from './components/loansTable';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/modal';
-import SummaryCard from './components/summaryCard';
-import HistoryTable from './components/historyTable';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import UserGuideModal from '@/components/user-guide-modal';
 import { USER_GUIDE } from '@/lib/constants/user-guide';
+import { Book, HandCoins, Plus, Receipt } from 'lucide-react';
+import { useState } from 'react';
+import CreateBillForm from './components/createBillForm';
+import DebtsTable from './components/debtsTable';
+import HistoryTable from './components/historyTable';
+import LoansTable from './components/loansTable';
+import SummaryCard from './components/summaryCard';
 
 export default function BillSplitterPage() {
   const [isModelOpen, setIsModelOpen] = useState(false);

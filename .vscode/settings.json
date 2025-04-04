@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "supabase"
-    ]
+    ],
+    "editor.codeActionsOnSave": {"source.organizeImports": "explicit"}
 }

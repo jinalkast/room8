@@ -1,6 +1,6 @@
 import { supabaseServer } from '@/lib/supabase/server';
 import { TApiResponse, TOweDB } from '@/lib/types';
-import { NextResponse, NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function PATCH(req: NextRequest): Promise<NextResponse<TApiResponse<TOweDB>>> {
   try {

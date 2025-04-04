@@ -1,6 +1,6 @@
+import { postBillSchema } from '@/app/(main)/bill-splitter/types';
 import { TApiResponse, TBillDB } from '@/lib/types';
 import { useMutation } from '@tanstack/react-query';
-import { postBillSchema } from '@/app/(main)/bill-splitter/types';
 import z from 'zod';
 
 const postBill = async (billInfo: z.infer<typeof postBillSchema>): Promise<TBillDB> => {

@@ -1,7 +1,7 @@
+import { TNoteBody } from '@/app/(main)/house-settings/types';
+import { getUserHouseId } from '@/lib/services';
 import { supabaseServer } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserHouseId } from '@/lib/services';
-import { TNoteBody } from '@/app/(main)/house-settings/types';
 
 export async function GET() {
   try {

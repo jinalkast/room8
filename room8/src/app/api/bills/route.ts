@@ -1,6 +1,6 @@
 import { supabaseServer } from '@/lib/supabase/server';
 import { TApiResponse, TBillDB } from '@/lib/types';
-import { NextResponse, NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {

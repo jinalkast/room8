@@ -1,6 +1,6 @@
+import { toast } from '@/hooks/useToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { THouseBody } from '../types';
-import { toast } from '@/hooks/useToast';
 
 export const fetchCreateHouse = async (house: THouseBody) => {
   const res = await fetch(`/api/house`, {

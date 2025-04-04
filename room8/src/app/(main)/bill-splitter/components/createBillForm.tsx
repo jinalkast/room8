@@ -1,18 +1,25 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { postBillSchema, TBillPreset } from '@/app/(main)/bill-splitter/types';
 import useRoommates from '@/hooks/useRoommates';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { postBillSchema, TBillPreset } from '@/app/(main)/bill-splitter/types';
 
+import BillPresetsButton from '@/app/(main)/bill-splitter/components/billPresetsButton';
+import usePostBill from '@/app/(main)/bill-splitter/hooks/postBill';
+import usePostBillPreset from '@/app/(main)/bill-splitter/hooks/postBillPresets';
+import useBillPresets from '@/app/(main)/bill-splitter/hooks/useBillPresets';
+import useUser from '@/app/auth/hooks/useUser';
+import { DatePicker } from '@/components/datepicker';
+import LoadingSpinner from '@/components/loading';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -20,17 +27,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/useToast';
-import useUser from '@/app/auth/hooks/useUser';
-import usePostBill from '@/app/(main)/bill-splitter/hooks/postBill';
+import { cn } from '@/lib/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { DollarSign } from 'lucide-react';
-import LoadingSpinner from '@/components/loading';
-import { Checkbox } from '@/components/ui/checkbox';
-import { cn } from '@/lib/utils';
-import { DatePicker } from '@/components/datepicker';
-import BillPresetsButton from '@/app/(main)/bill-splitter/components/billPresetsButton';
-import usePostBillPreset from '@/app/(main)/bill-splitter/hooks/postBillPresets';
-import useBillPresets from '@/app/(main)/bill-splitter/hooks/useBillPresets';
 
 export default function CreateBillForm({ closeBillModal }: { closeBillModal: () => void }) {
   const queryClient = useQueryClient();

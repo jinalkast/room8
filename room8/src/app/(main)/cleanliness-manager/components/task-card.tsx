@@ -1,12 +1,12 @@
 import { Badge } from '@/components/ui/badge';
 import { Crosshair } from 'lucide-react';
 
-import useRoommates from '@/hooks/useRoommates';
 import useUser from '@/app/auth/hooks/useUser';
 import LoadingSpinner from '@/components/loading';
-import TaskOptionsDropdown from './task-options';
-import { removeConfidenceInterval } from '../utils';
+import useRoommates from '@/hooks/useRoommates';
 import { TCleanlinessTask } from '../types';
+import { removeConfidenceInterval } from '../utils';
+import TaskOptionsDropdown from './task-options';
 
 type props = {
   task: TCleanlinessTask;

@@ -1,24 +1,22 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import useAllCompletedChores from '@/app/(main)/schedule/hooks/useGetAllCompletedChores';
-import Image from 'next/image';
-import LoadingSpinner from '@/components/loading';
 import useBillsHistory from '@/app/(main)/bill-splitter/hooks/useBillHistory';
-import useRoommates from '@/hooks/useRoommates';
 import useGetCleanlinessTasks from '@/app/(main)/cleanliness-manager/hooks/useGetCleanlinessTasks';
+import useAllCompletedChores from '@/app/(main)/schedule/hooks/useGetAllCompletedChores';
+import LoadingSpinner from '@/components/loading';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { useMemo, useState } from 'react';
-import { USER_GUIDE } from '@/lib/constants/user-guide';
 import UserGuideModal from '@/components/user-guide-modal';
+import useRoommates from '@/hooks/useRoommates';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
+import Image from 'next/image';
+import { useMemo, useState } from 'react';
 
 const ALL_USER_ID = '123';
 
