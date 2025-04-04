@@ -541,4 +541,5 @@ def main(before, after):
     cd.export_results(before_fig, after_fig, changes_fig, added, removed, moved)
 
 if __name__ == "__main__":
-    main("cleanliness_detection/samples/5/before.jpeg", "cleanliness_detection/samples/5/after.jpeg")
+    
+    main("./samples/5/before.jpeg", "./samples/5/after.jpeg")
