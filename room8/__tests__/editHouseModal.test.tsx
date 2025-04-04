@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
 import EditHouseModal from '@/app/(main)/house-settings/components/edit-house-modal';
 import useEditHouse from '@/app/(main)/house-settings/hooks/useEditHouse';
 import { THouse } from '@/app/(main)/house-settings/types';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 jest.mock('@/app/(main)/house-settings/hooks/useEditHouse', () => ({
   __esModule: true,

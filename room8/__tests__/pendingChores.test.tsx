@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import PendingChores from '../src/app/(main)/schedule/components/pending-chores';
-import useAllActivities from '../src/app/(main)/schedule/hooks/useGetAllActivities';
 import useUser from '@/app/auth/hooks/useUser';
 import QueryProvider from '@/components/query-provider';
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import PendingChores from '../src/app/(main)/schedule/components/pending-chores';
+import useAllActivities from '../src/app/(main)/schedule/hooks/useGetAllActivities';
 
 jest.mock('../src/app/(main)/schedule/hooks/useGetAllActivities');
 jest.mock('@/app/auth/hooks/useUser');

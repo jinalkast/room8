@@ -1,10 +1,4 @@
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
-
-
-
 describe('Supabase Login Performance', () => {
-
-
   it('measures the average execution time of signInWithPassword', async () => {
     const NUM_RUNS = 50;
     // const times: number[] = [];
@@ -15,7 +9,7 @@ describe('Supabase Login Performance', () => {
     //   await supabase.auth.signOut();
 
     //   const start = performance.now();
-      
+
     //   const { error } = await supabase.auth.signInWithPassword({email: 'speed@test.com', password: 'speed'
     //   });
 
@@ -34,5 +28,5 @@ describe('Supabase Login Performance', () => {
 
     // expect(averageTime).toBeGreaterThan(0);
     expect(true).toBe(true); // Placeholder since don't want this running on the CI
-  }, 300000 ); // Set timeout to 5 minutes
+  }, 300000); // Set timeout to 5 minutes
 });

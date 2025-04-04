@@ -1,9 +1,9 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import CreateChoreModal from '@/app/(main)/schedule/components/create-chore-modal';
 import useCreateChore from '@/app/(main)/schedule/hooks/useCreateChore';
 import useRoommates from '@/hooks/useRoommates';
 import { daysOfWeek } from '@/lib/constants';
+import '@testing-library/jest-dom';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 jest.mock('@/app/(main)/schedule/hooks/useCreateChore');
 jest.mock('@/hooks/useRoommates');

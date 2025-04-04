@@ -1,8 +1,8 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import useActivateChatbot from '@/app/(main)/chatbot/hooks/useActivateChatbot';
 import ChatBotPage from '@/app/(main)/chatbot/page';
 import useGetHouse from '@/hooks/useGetHouse';
-import useActivateChatbot from '@/app/(main)/chatbot/hooks/useActivateChatbot';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 jest.mock('@/hooks/useGetHouse');
 jest.mock('@/app/(main)/chatbot/hooks/useActivateChatbot');

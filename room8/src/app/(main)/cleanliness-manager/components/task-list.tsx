@@ -16,6 +16,7 @@ function TaskList({ tasks, handleMatchTask, showLog = true, matchExistingTask = 
         <div className="space-y-4">
           {tasks?.map((task) => (
             <div
+              key={task.id}
               className={cn(
                 matchExistingTask && 'cursor-pointer hover:bg-primary/20 transition-all rounded-lg'
               )}

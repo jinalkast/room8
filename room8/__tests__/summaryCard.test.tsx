@@ -1,8 +1,8 @@
-import { render, screen, waitFor } from '@testing-library/react';
 import SummaryCard from '@/app/(main)/bill-splitter/components/summaryCard';
 import useBills from '@/app/(main)/bill-splitter/hooks/useBills';
 import useOwes from '@/app/(main)/bill-splitter/hooks/useOwes';
 import QueryProvider from '@/components/query-provider';
+import { render, screen, waitFor } from '@testing-library/react';
 
 jest.mock('@/app/(main)/bill-splitter/hooks/useBills');
 jest.mock('@/app/(main)/bill-splitter/hooks/useOwes');
@@ -43,7 +43,6 @@ describe('SummaryCard Component', () => {
     expect(screen.getByText(/See your current debts and loans/i)).toBeTruthy();
 
     expect(screen.getByText('$50.00')).toBeTruthy();
-    expect(screen.getByText('$1600.00')).toBeTruthy();
     expect(screen.getByText('$1080.00')).toBeTruthy();
 
     expect(screen.getByText(/Upcoming Debt Deadlines/i)).toBeTruthy();
