@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button';
-import { Trash } from 'lucide-react';
-import React from 'react';
-import { TBillPreset } from '../types';
-import useDeleteBillPreset from '../hooks/deleteBillPreset';
 import { useToast } from '@/hooks/useToast';
 import { useQueryClient } from '@tanstack/react-query';
+import { Trash } from 'lucide-react';
+import React from 'react';
+import useDeleteBillPreset from '../hooks/deleteBillPreset';
+import { TBillPreset } from '../types';
 
 const BillPresetsButton = ({
   billPreset,

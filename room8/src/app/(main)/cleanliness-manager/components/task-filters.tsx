@@ -1,13 +1,13 @@
+import useUser from '@/app/auth/hooks/useUser';
+import LoadingSpinner from '@/components/loading';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import useRoommates from '@/hooks/useRoommates';
 import { ArrowUpDown, Check, Filter, User } from 'lucide-react';
-import { TCleanlinessTask, TQuickFilter, TSortBy, TTaskStatus } from '../types';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import useUser from '@/app/auth/hooks/useUser';
-import useRoommates from '@/hooks/useRoommates';
-import LoadingSpinner from '@/components/loading';
 import useGetCleanlinessTasks from '../hooks/useGetCleanlinessTasks';
+import { TCleanlinessTask, TQuickFilter, TSortBy, TTaskStatus } from '../types';
 import TaskMultiActions from './task-multi-actions';
 
 type props = {

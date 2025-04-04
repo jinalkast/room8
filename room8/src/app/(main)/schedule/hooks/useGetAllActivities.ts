@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { TActivity, TActivityAndResponsibleDB } from '../types';
 import { TApiResponse } from '@/lib/types';
+import { useQuery } from '@tanstack/react-query';
 import { DBtoClientActivities } from '../adapters';
+import { TActivity, TActivityAndResponsibleDB } from '../types';
 
 export const fetchAllActivities = async (): Promise<TActivity[] | null> => {
   const res = await fetch(`/api/schedule`, {

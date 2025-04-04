@@ -1,8 +1,8 @@
+import useGetHouse from '@/hooks/useGetHouse';
+import { TRoommate } from '@/lib/types';
 import { Json } from '@/lib/types/supabase';
 import { useMutation } from '@tanstack/react-query';
 import useRoommates from '../../../../hooks/useRoommates';
-import useGetHouse from '@/hooks/useGetHouse';
-import { TRoommate } from '@/lib/types';
 import { THouse } from '../../house-settings/types';
 
 export const activateChatbot = async (

@@ -1,8 +1,7 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import useCleanlinessStats from '../hooks/useCleanlinessStats';
 import LoadingSpinner from '@/components/loading';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   ChartContainer,
   ChartLegend,
@@ -10,10 +9,11 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from '@/components/ui/chart';
-import { chartConfig } from '../utils/chart-config';
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import UserGuideModal from '@/components/user-guide-modal';
 import { USER_GUIDE } from '@/lib/constants/user-guide';
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import useCleanlinessStats from '../hooks/useCleanlinessStats';
+import { chartConfig } from '../utils/chart-config';
 
 export default function CleanlinessStats() {
   const { data: cleanlinessStats } = useCleanlinessStats();

@@ -1,4 +1,4 @@
-import { TAmountOwedDB, TApiResponse, TBill } from '@/lib/types';
+import { TAmountOwedDB, TApiResponse } from '@/lib/types';
 import { useQuery } from '@tanstack/react-query';
 import { TBillHistory } from '../types';
 

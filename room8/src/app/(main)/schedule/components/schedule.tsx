@@ -1,27 +1,24 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import ScheduleItem from './schedule-item';
-import useAllActivities from '../hooks/useGetAllActivities';
 import useUser from '@/app/auth/hooks/useUser';
-import useRoommates from '@/hooks/useRoommates';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import LoadingSpinner from '@/components/loading';
-import { User, Users } from 'lucide-react';
-import CreateChoreModal from './create-chore-modal';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import UserGuideModal from '@/components/user-guide-modal';
+import useRoommates from '@/hooks/useRoommates';
 import { USER_GUIDE } from '@/lib/constants/user-guide';
+import { User, Users } from 'lucide-react';
+import { useState } from 'react';
+import useAllActivities from '../hooks/useGetAllActivities';
+import CreateChoreModal from './create-chore-modal';
+import ScheduleItem from './schedule-item';
 
 const ALL_USER_ID = '123';
 

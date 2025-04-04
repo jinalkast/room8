@@ -1,14 +1,14 @@
+import useUser from '@/app/auth/hooks/useUser';
+import LoadingSpinner from '@/components/loading';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import useRoommates from '@/hooks/useRoommates';
 import { PopoverClose } from '@radix-ui/react-popover';
 import { ClipboardCheck, PinOff, Send, Trash, X, Zap } from 'lucide-react';
 import Image from 'next/image';
-import useUpdateAllCleanlinessTasks from '../hooks/useUpdateAllCleanlinessTasks';
 import useDeleteAllCleanlinessTasks from '../hooks/useDeleteAllCleanlinessTasks';
+import useUpdateAllCleanlinessTasks from '../hooks/useUpdateAllCleanlinessTasks';
 import { TCleanlinessTask } from '../types';
-import useUser from '@/app/auth/hooks/useUser';
-import useRoommates from '@/hooks/useRoommates';
-import LoadingSpinner from '@/components/loading';
 
 type props = {
   filteredTasks: TCleanlinessTask[];

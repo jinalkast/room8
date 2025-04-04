@@ -1,4 +1,8 @@
-import useRoommates from '@/hooks/useRoommates';
+import usePendingInvites from '@/app/(main)/house-settings/hooks/usePendingInvites';
+import LoadingSpinner from '@/components/loading';
+import { Modal } from '@/components/modal';
+import { Button } from '@/components/ui/button';
+import { DialogClose } from '@/components/ui/dialog';
 import {
   Table,
   TableBody,
@@ -8,16 +12,9 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-import LoadingSpinner from '@/components/loading';
-import useGetHouse from '@/hooks/useGetHouse';
-import { TRoommate } from '@/lib/types';
-import Image from 'next/image';
+import useRoommates from '@/hooks/useRoommates';
 import { DoorOpen } from 'lucide-react';
-import { Modal } from '@/components/modal';
-import { DialogClose } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import usePendingInvites from '@/app/(main)/house-settings/hooks/usePendingInvites';
-import { TPendingInvite } from '../types';
+import Image from 'next/image';
 import useDeleteInvite from '../hooks/useDeleteInvite';
 
 type props = {

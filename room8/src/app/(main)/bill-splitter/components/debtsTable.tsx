@@ -1,5 +1,7 @@
+import usePatchOwe from '@/app/(main)/bill-splitter/hooks/patchOwe';
 import useOwes from '@/app/(main)/bill-splitter/hooks/useOwes';
-import React from 'react';
+import LoadingSpinner from '@/components/loading';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -9,12 +11,9 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/useToast';
-import { useQueryClient } from '@tanstack/react-query';
-import usePatchOwe from '@/app/(main)/bill-splitter/hooks/patchOwe';
-import LoadingSpinner from '@/components/loading';
 import { TOwe } from '@/lib/types';
+import { useQueryClient } from '@tanstack/react-query';
 import { ClipboardCheck } from 'lucide-react';
 
 export default function DebtsTable() {

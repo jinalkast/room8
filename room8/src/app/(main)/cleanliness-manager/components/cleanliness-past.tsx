@@ -9,10 +9,10 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-import { TCleanlinessLog } from '@/lib/types';
-import CleanlinessDetailsModal from './cleanliness-details-modal';
 import UserGuideModal from '@/components/user-guide-modal';
 import { USER_GUIDE } from '@/lib/constants/user-guide';
+import { TCleanlinessLog } from '@/lib/types';
+import CleanlinessDetailsModal from './cleanliness-details-modal';
 
 type props = {
   cleanlinessLogs: TCleanlinessLog[] | null | undefined;

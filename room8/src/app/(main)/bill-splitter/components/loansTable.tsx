@@ -1,5 +1,8 @@
 import useBills from '@/app/(main)/bill-splitter/hooks/useBills';
-import React from 'react';
+import LoadingSpinner from '@/components/loading';
+import { Modal } from '@/components/modal';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import {
   Table,
   TableBody,
@@ -9,14 +12,10 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-import { QueryClient, useQuery, useQueryClient } from '@tanstack/react-query';
 import { TBill, TOwe } from '@/lib/types';
-import { Modal } from '@/components/modal';
-import { Button } from '@/components/ui/button';
-import usePatchOwe from '../hooks/patchOwe';
-import LoadingSpinner from '@/components/loading';
+import { QueryClient, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Info } from 'lucide-react';
-import { Switch } from '@/components/ui/switch';
+import usePatchOwe from '../hooks/patchOwe';
 
 export default function LoansTable() {
   const { data: bills, status: billsStatus, refetch: refetchBills } = useBills();

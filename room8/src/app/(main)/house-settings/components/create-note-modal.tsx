@@ -1,13 +1,12 @@
 import { Modal } from '@/components/modal';
-import { THouse } from '../types';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
-import { DialogClose } from '@radix-ui/react-dialog';
-import useCreateNote from '../hooks/useCreateNote';
-import { useState } from 'react';
-import { Label } from '@radix-ui/react-label';
-import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { DialogClose } from '@radix-ui/react-dialog';
+import { Label } from '@radix-ui/react-label';
+import { Plus } from 'lucide-react';
+import { useState } from 'react';
+import useCreateNote from '../hooks/useCreateNote';
 
 type props = {};
 

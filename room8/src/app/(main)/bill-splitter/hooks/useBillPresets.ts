@@ -1,6 +1,6 @@
+import { TBillPreset } from '@/app/(main)/bill-splitter/types';
 import { Tables } from '@/lib/types/supabase';
 import { useQuery } from '@tanstack/react-query';
-import { TBillPreset } from '@/app/(main)/bill-splitter/types';
 
 export const fetchBillPresets = async (): Promise<TBillPreset[] | null> => {
   const res = await fetch(`/api/bills/presets`, {

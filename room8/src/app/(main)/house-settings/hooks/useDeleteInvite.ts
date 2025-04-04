@@ -1,6 +1,6 @@
 import { TApiResponse } from '@/lib/types';
 import { Tables } from '@/lib/types/supabase';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const deleteInvite = async ({
   inviteID

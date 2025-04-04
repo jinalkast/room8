@@ -1,26 +1,6 @@
 import { Modal } from '@/components/modal';
 import { Button } from '@/components/ui/button';
 import { DialogClose } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useState } from 'react';
-import useCreateChore from '../hooks/useCreateChore';
-import useRoommates from '@/hooks/useRoommates';
-import { daysOfWeek } from '@/lib/constants';
-import {
-  GlassWater,
-  Paintbrush,
-  Plus,
-  Refrigerator,
-  RefrigeratorIcon,
-  Soup,
-  Trash,
-  WashingMachine
-} from 'lucide-react';
-import Image from 'next/image';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -29,6 +9,24 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import useRoommates from '@/hooks/useRoommates';
+import { daysOfWeek } from '@/lib/constants';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  GlassWater,
+  Paintbrush,
+  Plus,
+  Refrigerator,
+  Soup,
+  Trash,
+  WashingMachine
+} from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import useCreateChore from '../hooks/useCreateChore';
 
 const choreSchema = z.object({
   title: z.string().min(1, 'Title is required'),
