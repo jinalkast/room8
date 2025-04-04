@@ -19,7 +19,7 @@ const fetchCleanlinessTasks = async (logId?: string): Promise<TCleanlinessTask[]
 
 export default function useGetCleanlinessTasks(logId?: string) {
   return useQuery({
-    queryKey: ['cleanliness-tasks', logId],
+    queryKey: ['cleanliness-logs', logId],
     queryFn: () => fetchCleanlinessTasks(logId)
   });
 }

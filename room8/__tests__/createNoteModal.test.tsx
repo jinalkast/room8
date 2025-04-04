@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
 import CreateNoteModal from '@/app/(main)/house-settings/components/create-note-modal';
 import useCreateNote from '@/app/(main)/house-settings/hooks/useCreateNote';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 jest.mock('@/app/(main)/house-settings/hooks/useCreateNote', () => ({
   __esModule: true,

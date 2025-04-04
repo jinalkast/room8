@@ -1,9 +1,9 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import ScheduleViewer from '@/app/(main)/schedule/components/schedule';
 import useAllActivities from '@/app/(main)/schedule/hooks/useGetAllActivities';
 import useUser from '@/app/auth/hooks/useUser';
 import QueryProvider from '@/components/query-provider';
+import '@testing-library/jest-dom';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 jest.mock('@/app/(main)/schedule/hooks/useGetAllActivities', () => ({
   __esModule: true,

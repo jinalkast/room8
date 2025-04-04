@@ -123,8 +123,14 @@ export default function ChatBotPage() {
                       </Button>
                     </>
                   ) : (
-                    <Button className="mt-4 w-full" onClick={() => activate.mutate()}>
-                      Activate ChatBot
+                    <Button
+                      className="mt-4 w-full"
+                      onClick={() => {
+                        activate.mutate();
+                        setUnsavedChanges(true);
+                      }}
+                      disabled={unsavedChanges}>
+                      {!unsavedChanges ? 'Activate ChatBot' : 'Chatbot Pending'}
                     </Button>
                   )}
                 </div>
