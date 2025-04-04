@@ -746,27 +746,9 @@ This section covers the ChatBot's compliance to not disclose sensitive data and 
 \end{center}
 
 \subsubsection{Area of Testing: Cleanliness Manager}
-This section covers the Cleanliness Manager's compliance not capture users, encrypt and store pictures of high quality safely and correctly process and detect messes within specified time, as presented in SRS, Section S.2.3.
+This section covers the Cleanliness Manager's compliance, encrypt and store pictures of high quality safely and correctly process and detect messes within specified time, as presented in SRS, Section S.2.3.
 
 \begin{center}
-  \testcase{
-		\textbf{NFCT-CM-1} & \textbf{User Hidden During Recording and Picture}\\\hline
-	
-	    \textbf{Description} & Tests if the system refrains from capturing user. \\ 
-	
-	    \textbf{References} & NFR231, NFR232 \\ 
-	
-	    \textbf{Type} & Compliance Test (Manual) \\ 
-	
-	    \textbf{Initial State} & Cleanliness manager is active and ready for use. \\ 
-	
-	    \textbf{Input} & Simulated interaction of shared space. \\ 
-	
-	    \textbf{Output} & User is not found in recordings or pictures taken stored in logs and database of system.\\ 
-	
-	    \textbf{Procedure} & After shared space is used check logs and database for any recordings or pictures of user during simulated interaction. \\ 
-  }
-
   \testcase{
 	    \textbf{NFST-CM-2} & \textbf{Encryption of Images and Videos}\\\hline
 	
