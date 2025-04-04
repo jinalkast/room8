@@ -538,4 +538,5 @@ def main(before, after):
     print("Tasklist:", tasklist)
 
 if __name__ == "__main__":
-    main(".//samples/5/before.jpeg", "./samples/5/after.jpeg")
+    main("./samples/5/before.jpeg", "./samples/5/after.jpeg")
+
