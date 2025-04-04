@@ -110,6 +110,10 @@
         \hline
         \makecell{Harshil P.} & 2025-04-04 & Removed and modified cleanliness manager FRs and NFRs & 1.0\\
         \hline
+        \makecell{Jane K.} & 2025-04-04 & Removed redundant details for readability & 1.0\\
+        \hline
+        \makecell{Jane K.} & 2025-04-04 & Added lead-ins for figures and tables & 1.0\\ 
+        \hline
     \end{tabular}
 \end{center}
 
@@ -163,7 +167,7 @@ An improvement in response times amongst roommates over household concerns.
 \end{benefit}
 
 \begin{benefit}\label{benefit:first}
-Increased flexibility in task scheduling and management, due to the presence of a centralized application.
+Ease of managing household duties due to the presence of a centralized application.
 \end{benefit}
 
 \begin{benefit}\label{benefit:first}
@@ -182,16 +186,6 @@ Improved household cleanliness and upkeep.
 A reduction in conflicts between roommates over household matters.
 \end{benefit}
 
-\begin{benefit}\label{benefit:first}
-A reduction in stress for roommates due to reduced conflicts amongst each other.\end{benefit}
-
-\begin{benefit}\label{benefit:first}
-Improved mental health for students who experience conflicts with roommates.
-\end{benefit}
-
-\begin{benefit}\label{benefit:first}
-An improvement in academic performance for students experience stress caused by issues with roommates.
-\end{benefit}
 
 \end{flushleft}
 
@@ -212,9 +206,10 @@ An improvement in academic performance for students experience stress caused by 
     
     \item \textbf{Progressive Web App:} The system is hosted as a progressive web app (PWA), so users can use it on their phones and computers.
 \end{flushleft}
-
+\newpage
 \nsection{G.5 High-level usage scenarios}
 %---------------------------------
+The following is a use-case diagram conveying the ways the Room8 app system can be used by a group of roommates.
 \begin{figure}[H]
     \includegraphics[width=\linewidth]{./img/use-case-diagram.png}
     \caption{High level use case diagram}
@@ -478,11 +473,14 @@ Invariants are properties of the environment that the system must maintain throu
   \end{itemize}
 \end{flushleft}
 
+The following figure conveys how technical app components relate to each other.
+
 \begin{figure}[H]
     \includegraphics[width=\linewidth]{./img/component-diagram.png}
     \caption{Component Diagram}
     \label{fig: High level component diagram}
 \end{figure}
+
 
 \nsection{S.2 Functionality}
 
@@ -1007,9 +1005,9 @@ Thus, S.3 Interfaces will be available in a future revision of this document.
 
     \item \textbf{Success Postcondition:} User is able to recieve SMS messages regarding cleanliness, chores, expenses, and events in the shared living space in a group chat outside of the Room8 app.
 \end{itemize}
-
+\newpage
 \nsection{S.5 Prioritization}
-
+The following table classifies requirements as belonging to different modules and levels of importance, and also justifies why they match their classes. 
 \begin{table}[H]
     \flushleft
     \begin{tabularx}{\textwidth}{|>{\raggedright}X|>{\raggedright}X|>{\raggedright}X|X|}
