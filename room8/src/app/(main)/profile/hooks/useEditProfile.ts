@@ -1,5 +1,5 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/useToast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateProfilePayload } from '../types';
 
 export const patchProfile = async ({

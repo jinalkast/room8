@@ -1,4 +1,3 @@
-import { TInviteDB, TPendingInvite } from '@/app/(main)/house-settings/types';
 import { supabaseServer } from '@/lib/supabase/server';
 import { TApiResponse } from '@/lib/types';
 import { Tables } from '@/lib/types/supabase';

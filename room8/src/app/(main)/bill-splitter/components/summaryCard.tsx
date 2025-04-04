@@ -1,13 +1,10 @@
 'use client';
 
-import { Skeleton } from '@/components/ui/skeleton';
 import useBills from '../hooks/useBills';
 import useOwes from '../hooks/useOwes';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import LoadingSpinner from '@/components/loading';
 import SummaryCardStub from './summaryCardStub';
-import UserGuideModal from '@/components/user-guide-modal';
-import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 type props = {};
 

@@ -1,8 +1,7 @@
-import { postBillPresetSchema, TBillPreset } from '@/app/(main)/bill-splitter/types';
 import { supabaseServer } from '@/lib/supabase/server';
-import { TApiResponse, TBillDB } from '@/lib/types';
+import { TApiResponse } from '@/lib/types';
 import { Tables } from '@/lib/types/supabase';
-import { NextResponse, NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 
 export async function DELETE(

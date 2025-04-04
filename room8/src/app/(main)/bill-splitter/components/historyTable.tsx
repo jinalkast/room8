@@ -1,5 +1,4 @@
-import useBillsHistory from '../hooks/useBillHistory';
-import React from 'react';
+import LoadingSpinner from '@/components/loading';
 import {
   Table,
   TableBody,
@@ -9,7 +8,8 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-import LoadingSpinner from '@/components/loading';
+import React from 'react';
+import useBillsHistory from '../hooks/useBillHistory';
 
 export default function HistoryTable() {
   const [pageNumber, setPageNumber] = React.useState(1);

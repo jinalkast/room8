@@ -1,8 +1,6 @@
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus } from 'lucide-react';
-import HouseInvites from './house-invites';
 import CreateHouseModal from './create-house-modal';
+import HouseInvites from './house-invites';
 
 type props = {};
 

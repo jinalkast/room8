@@ -1,9 +1,9 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import useAllCompletedChores from '@/app/(main)/schedule/hooks/useGetAllCompletedChores';
-import Image from 'next/image';
 import LoadingSpinner from '@/components/loading';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import Image from 'next/image';
 
 export default function ChoreHistory() {
   const { data: completedChores, isLoading } = useAllCompletedChores();

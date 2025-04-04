@@ -1,10 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import useGetNotes from '../hooks/useGetNotes';
-import CreateNoteModal from './create-note-modal';
 import LoadingSpinner from '@/components/loading';
-import NoteItem from './note-item';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import UserGuideModal from '@/components/user-guide-modal';
 import { USER_GUIDE } from '@/lib/constants/user-guide';
+import useGetNotes from '../hooks/useGetNotes';
+import CreateNoteModal from './create-note-modal';
+import NoteItem from './note-item';
 
 function HouseNotes() {
   const { data: notes, isLoading: notesLoading } = useGetNotes();

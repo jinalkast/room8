@@ -1,15 +1,14 @@
 import LoadingSpinner from '@/components/loading';
-import useGetHouse from '@/hooks/useGetHouse';
-import { Camera } from 'lucide-react';
 import { Modal } from '@/components/modal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useState } from 'react';
-import { Result } from '@zxing/library';
-import BarcodeScannerComponent from 'react-qr-barcode-scanner';
-import { useToast } from '@/hooks/useToast';
-import useEditCamera from '../hooks/useEditCamera';
 import { Input } from '@/components/ui/input';
+import useGetHouse from '@/hooks/useGetHouse';
+import { Result } from '@zxing/library';
+import { Camera } from 'lucide-react';
+import { useState } from 'react';
+import BarcodeScannerComponent from 'react-qr-barcode-scanner';
+import useEditCamera from '../hooks/useEditCamera';
 
 function ActivateCameraCard() {
   const [isScannerOpen, setIsScannerOpen] = useState(false);

@@ -1,14 +1,13 @@
-import { Modal } from '@/components/modal';
-import { THouse } from '../types';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { useState } from 'react';
-import { Label } from '@/components/ui/label';
-import { DialogClose } from '@/components/ui/dialog';
-import useInviteUser from '../hooks/useInviteUser';
 import useUser from '@/app/auth/hooks/useUser';
 import LoadingSpinner from '@/components/loading';
+import { Modal } from '@/components/modal';
+import { Button } from '@/components/ui/button';
+import { DialogClose } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Plus } from 'lucide-react';
+import { useState } from 'react';
+import useInviteUser from '../hooks/useInviteUser';
+import { THouse } from '../types';
 
 type props = {
   house: THouse;

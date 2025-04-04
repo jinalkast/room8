@@ -1,6 +1,6 @@
+import { toast } from '@/hooks/useToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TNoteBody } from '../types';
-import { toast } from '@/hooks/useToast';
 
 export const fetchCreateNote = async (note: TNoteBody) => {
   const res = await fetch(`/api/house/notes`, {

@@ -1,12 +1,11 @@
 import LoadingSpinner from '@/components/loading';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { TCleanlinessLog } from '@/lib/types';
-import CleanlinessImage from './cleanliness-image';
-import { ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import CleanlinessDetailsModal from './cleanliness-details-modal';
 import UserGuideModal from '@/components/user-guide-modal';
 import { USER_GUIDE } from '@/lib/constants/user-guide';
+import { TCleanlinessLog } from '@/lib/types';
+import { ArrowRight } from 'lucide-react';
+import CleanlinessDetailsModal from './cleanliness-details-modal';
+import CleanlinessImage from './cleanliness-image';
 
 type props = {
   cleanlinessLog?: TCleanlinessLog | null;
