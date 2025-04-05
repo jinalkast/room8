@@ -46,18 +46,20 @@
 \pagenumbering{roman}
 
 \begin{table}[hp]
-\caption{Revision History} \label{TblRevisionHistory}
-\begin{tabularx}{\textwidth}{llX}
-\toprule
-\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
-\midrule
-2024-10-25 & Mohammed Abed, & Document Created\\
- & Maged Armanios, & \\
- & Jinal Kasturiarachchi, & \\
- & Jinal Klavir, & \\
- & Harshil Patel & \\
-\bottomrule
-\end{tabularx}
+    \caption{Revision History} \label{TblRevisionHistory}
+    \begin{tabularx}{\textwidth}{llXl} % 4 columns now
+    \toprule
+    \textbf{Date} & \textbf{Developer(s)} & \textbf{Change} & \textbf{Version}\\
+    \midrule
+    2024-10-25 & Mohammed Abed, & Document Created & \\
+     & Maged Armanios, & & \\
+     & Jinal Kasturiarachchi, & & \\
+     & Jinal Klavir, & & \\
+     & Harshil Patel & & 0\\
+    \midrule
+    2025-04-04 & Jane Klavir & Assumptions more specific & 1.0\\
+    \bottomrule
+    \end{tabularx}
 \end{table}
 
 ~\newpage
@@ -115,11 +117,11 @@ Used to securely store user and house information, calendar events, expense hist
 
 \begin{itemize}
 \item \textbf{CA1}: Homes will have a consistent and uninterrupted supply of electricity available.
-\item \textbf{CA2}: Homes will have internet speeds capable of streaming video.
+\item \textbf{CA2}: Homes will have internet speeds of at least 25 Mbps.
 \item \textbf{CA3}: Every resident of a shared home will have their own personal electronic device.
 \item \textbf{CA4}: Users have used other applications before and are familiar with common signifiers, mappings, and UI metaphores (ex. Heart implies like).
 \item \textbf{CA5}: External services, such as location services, map integrations, and calendar APIs will be available and reliable.
-\item \textbf{CA6}: Users' devices will have additional free storage beyond the what's required for the applications install.
+\item \textbf{CA6}: Users' devices will have at least 5 GB of free storage beyond what is required for the application's install.
 \end{itemize}
 
 \newpage
