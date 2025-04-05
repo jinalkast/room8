@@ -25,7 +25,7 @@
 
 \title{System Verification and Validation Plan for \progname{}} 
 \author{\authname}
-\date{2024-11-04}
+\date{\today}
 	
 \maketitle
 
@@ -36,8 +36,8 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-2024-11-04 & 0.0 & Document Created\\
-2025-04-04 & 1.0 & Changed Multiple FR and NFR test cases to remove mention of score and add tasks instead\\
+Nov. 4, 2024 & 0.0 & Document Created\\
+April 4, 2024 & 1.0 & Revision 1\\
 \bottomrule
 \end{tabularx}
 
@@ -92,7 +92,7 @@ The objective for this document, and the VnV plan that it outlines, is to suppor
 \subsection{Challenge Level and Extras}
 
 
-The challenge level of our project is general. The extras that will be completed as part of this project include additional features related to student housing and user documentation. Since the main functionality of Room8 is the cleanliness detector and image processing is not a novel concept (mess detecting software already exists), the challenge level is not advanced. However, the program still presents a variety of difficulties on the implementation side, preventing it from being classified as basic. The extras include the user-facing software, which provides all of the other student housing features (i.e. bill splitter, scheduler, etc.), and a thorough guide for the application and installation of the hardware will be delivered upon the project's completion.  
+The challenge level of our project is general. The extras that will be completed as part of this project include extensive usability testing and user documentation. The main functionality of Room8 is the cleanliness detector, along with the student housing features. Since housing apps and image processing are not novel concepts (mess detecting software already exists), the challenge level is not advanced. However, the program still presents a variety of difficulties on the implementation side, preventing it from being classified as basic. The extras include usability testing and a thorough guide for the application and installation of the hardware, which will be delivered upon the project's completion.  
 
 \subsection{Relevant Documentation}
 The SRS will be referenced throughout the VnV process, as it contains all of the system requirements, which will be verified and validated through testing. Every requirement in the SRS will be referenced by one or more test(s) in this document to ensure that the system is functioning as expected and that everything required from the system is being completed.
@@ -215,7 +215,9 @@ At the time of writing, the programming languages have not been finalized. Nonet
   \end{itemize}
 
 \subsection{Software Validation Plan}
-In the \hyperref[section:SRSVerificationPlan]{SRS verification plan}, a meeting with the project supervisor, dr. Tharmarasa was mentioned, which had him review the use cases and requirements of the project. This session will also act as part of the software validation plan since Dr. Tharmarasa is independent of the development and project team. Additionally, feedback from primary reviewers and primary stakeholders (people living in shared living spaces) will be taken into consideration and possibly used to revise some requirements.    
+In the \hyperref[section:SRSVerificationPlan]{SRS verification plan}, a meeting with the project supervisor, dr. Tharmarasa was mentioned, which had him review the use cases and requirements of the project. This session will also act as part of the software validation plan since Dr. Tharmarasa is independent of the development and project team. Additionally, feedback from primary reviewers and primary stakeholders (people living in shared living spaces) will be taken into consideration and possibly used to revise some requirements.  
+\subsection{Usability Testing Plan}
+As previously mentioned, extensive usability testing will be an extra of this project. As such, the plan for testing includes exploratory moderated interviews with individual users, guiding them through tasks and gathering feedback through ratings for curated statements related to usability.  
 \section{System Tests}
 \label{section:systemTests}
 This section outlines the tests that will be used to verify and validate that Room8 is meeting its requirements. \hyperref[subsec:testsForFunc]{4.1} and \hyperref[subsec:testsForNonFunc]{4.2} designate tests for functional and nonfunctional requirements respectively, and tests are furthermore split into Room8's various modules for ease of readability and traceability. The output section of each test case describes the pass condition, thus this is the criteria the app developers will use to confirm that the app aligns with requirements. 
