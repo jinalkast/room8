@@ -1,9 +1,9 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import RoommatesTable from '@/components/roommates-table';
-import useRoommates from '@/hooks/useRoommates';
-import useGetHouse from '@/hooks/useGetHouse';
 import useRemoveRoommate from '@/app/(main)/house-settings/hooks/useRemoveRoomate';
 import QueryProvider from '@/components/query-provider';
+import RoommatesTable from '@/components/roommates-table';
+import useGetHouse from '@/hooks/useGetHouse';
+import useRoommates from '@/hooks/useRoommates';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 jest.mock('@/hooks/useRoommates', () => ({
   __esModule: true,

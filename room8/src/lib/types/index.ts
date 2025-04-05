@@ -1,4 +1,4 @@
-import { Database, Json, Tables } from './supabase';
+import { Tables } from './supabase';
 
 // export type THabitDB = Tables<'activities'>;
 export type TBillDB = Tables<'bills'>;

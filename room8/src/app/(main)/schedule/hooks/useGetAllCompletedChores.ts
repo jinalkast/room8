@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
 import { TApiResponse } from '@/lib/types';
+import { useQuery } from '@tanstack/react-query';
 
 type TCompletedChore = {
   id: number;

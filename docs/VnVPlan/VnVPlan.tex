@@ -25,7 +25,7 @@
 
 \title{System Verification and Validation Plan for \progname{}} 
 \author{\authname}
-\date{2024-11-04}
+\date{\today}
 	
 \maketitle
 
@@ -36,7 +36,8 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-2024-11-04 & 0.0 & Document Created\\
+Nov. 4, 2024 & 0.0 & Document Created\\
+April 4, 2024 & 1.0 & Revision 1\\
 \bottomrule
 \end{tabularx}
 
@@ -91,7 +92,7 @@ The objective for this document, and the VnV plan that it outlines, is to suppor
 \subsection{Challenge Level and Extras}
 
 
-The challenge level of our project is general. The extras that will be completed as part of this project include additional features related to student housing and user documentation. Since the main functionality of Room8 is the cleanliness detector and image processing is not a novel concept (mess detecting software already exists), the challenge level is not advanced. However, the program still presents a variety of difficulties on the implementation side, preventing it from being classified as basic. The extras include the user-facing software, which provides all of the other student housing features (i.e. bill splitter, scheduler, etc.), and a thorough guide for the application and installation of the hardware will be delivered upon the project's completion.  
+The challenge level of our project is general. The extras that will be completed as part of this project include extensive usability testing and user documentation. The main functionality of Room8 is the cleanliness detector, along with the student housing features. Since housing apps and image processing are not novel concepts (mess detecting software already exists), the challenge level is not advanced. However, the program still presents a variety of difficulties on the implementation side, preventing it from being classified as basic. The extras include usability testing and a thorough guide for the application and installation of the hardware, which will be delivered upon the project's completion.  
 
 \subsection{Relevant Documentation}
 The SRS will be referenced throughout the VnV process, as it contains all of the system requirements, which will be verified and validated through testing. Every requirement in the SRS will be referenced by one or more test(s) in this document to ensure that the system is functioning as expected and that everything required from the system is being completed.
@@ -214,7 +215,9 @@ At the time of writing, the programming languages have not been finalized. Nonet
   \end{itemize}
 
 \subsection{Software Validation Plan}
-In the \hyperref[section:SRSVerificationPlan]{SRS verification plan}, a meeting with the project supervisor, dr. Tharmarasa was mentioned, which had him review the use cases and requirements of the project. This session will also act as part of the software validation plan since Dr. Tharmarasa is independent of the development and project team. Additionally, feedback from primary reviewers and primary stakeholders (people living in shared living spaces) will be taken into consideration and possibly used to revise some requirements.    
+In the \hyperref[section:SRSVerificationPlan]{SRS verification plan}, a meeting with the project supervisor, dr. Tharmarasa was mentioned, which had him review the use cases and requirements of the project. This session will also act as part of the software validation plan since Dr. Tharmarasa is independent of the development and project team. Additionally, feedback from primary reviewers and primary stakeholders (people living in shared living spaces) will be taken into consideration and possibly used to revise some requirements.  
+\subsection{Usability Testing Plan}
+As previously mentioned, extensive usability testing will be an extra of this project. As such, the plan for testing includes exploratory moderated interviews with individual users, guiding them through tasks and gathering feedback through ratings for curated statements related to usability.  
 \section{System Tests}
 \label{section:systemTests}
 This section outlines the tests that will be used to verify and validate that Room8 is meeting its requirements. \hyperref[subsec:testsForFunc]{4.1} and \hyperref[subsec:testsForNonFunc]{4.2} designate tests for functional and nonfunctional requirements respectively, and tests are furthermore split into Room8's various modules for ease of readability and traceability. The output section of each test case describes the pass condition, thus this is the criteria the app developers will use to confirm that the app aligns with requirements. 
@@ -239,11 +242,11 @@ When a group of students chooses to adopt Room8 to help with their house, the fi
 
     \textbf{Initial State} & Frontend inputs are empty. User profile does not exist in the system \\ 
 
-    \textbf{Input} & Unique testing email, any name, any password \\ 
+    \textbf{Input} & Valid Google account sign in\\ 
 
-    \textbf{Output} & User profile entry is created in the system using the inputted email, name, and password. Frontend redirects user to the dashboard\\ 
+    \textbf{Output} & User profile entry is created in the system using the Google account. Frontend redirects user to the dashboard\\ 
 
-    \textbf{Procedure} & Testing agent navigates to the account creation page of the application. Agent enters a unique testing email address, any name, and any password. Agent submits account creation  \\ 
+    \textbf{Procedure} & Testing agent navigates to the account creation page of the application. Agent uses exisiting Google account. Agent submits account creation  \\ 
   }
 
   \testcase{
@@ -257,11 +260,11 @@ When a group of students chooses to adopt Room8 to help with their house, the fi
 
     \textbf{Initial State} & Testing profile exists in the system. System does not have the profile currently authenticated \\ 
 
-    \textbf{Input} & Valid email and password matching the profile in the system \\ 
+    \textbf{Input} & Valid Google account matching the profile in the system \\ 
 
     \textbf{Output} & User profile is authenticated with a new session entry. Frontend redirects user to the dashboard \\ 
 
-    \textbf{Procedure} & Testing agent navigates to the account login page of the application. Agent enters a valid testing account email address and password. Agent submits account login  \\ 
+    \textbf{Procedure} & Testing agent navigates to the account login page of the application. Agent enters a valid testing Google account. Agent submits account login  \\ 
   }
 
   \testcase{
@@ -389,23 +392,23 @@ The ChatBot is configured to send necessary reminders and notifications to the g
 
     \textbf{Initial State} & Chatbot is added to a group chat with configured message triggers \\ 
 
-    \textbf{Input} & New database entry created for a chore, cleanliness score, and a shared expense \\ 
+    \textbf{Input} & New database entry created for a chore, cleanliness task, and a shared expense \\ 
 
     \textbf{Output} & Chatbot sends the appropriate configured messages to the group chat \\ 
 
-    \textbf{Procedure} & Testing agent creates a new database entry for a chore, cleanliness score, and a shared expense. Agent verifies that the ChatBot sends the appropriate messages to the group chat according to the configured ChatBot settings\\
+    \textbf{Procedure} & Testing agent creates a new database entry for a chore, cleanliness task, and a shared expense. Agent verifies that the ChatBot sends the appropriate messages to the group chat according to the configured ChatBot settings\\
   }
 
 \end{center}
 
 \subsubsection{Cleanliness Manager}
-The cleanliness manager is the unique selling point of the Room8 app. It assesses the cleanliness of spaces by running an algorithm to output an objective cleanliness score. To ensure this functionality is working properly (i.e. FR231-FR235), the following tests are used.
+The cleanliness manager is the unique selling point of the Room8 app. It assesses the cleanliness of spaces by running an algorithm to output a list of cleanliness tasks which consists of added, moved and removed objects. To ensure this functionality is working properly (i.e. FR231-FR235), the following tests are used.
 
 \begin{center}
   \testcase{
     \textbf{FST-CM-1} & \textbf{System Evaluates Cleanliness}\\\hline
 
-    \textbf{Description} & Tests if the system can evaluate and record cleanliness scores based on captured images \\ 
+    \textbf{Description} & Tests if the system can evaluate and record changed objects based on captured images \\ 
 
     \textbf{References} & FR231 \\ 
 
@@ -415,27 +418,27 @@ The cleanliness manager is the unique selling point of the Room8 app. It assesse
 
     \textbf{Input} & N/A \\ 
 
-    \textbf{Output} & Cleanliness scores are updated based on user actions \\ 
+    \textbf{Output} & Cleanliness tasks are updated based on user actions \\ 
 
-    \textbf{Procedure} & Home resident enters camera view and creates a mess. Resident verifies that the cleanliness score is updated to reflect the mess. Resident then cleans the mess and verifies that the cleanliness score is updated to reflect the clean state \\ 
+    \textbf{Procedure} & Home resident enters camera view and creates a mess. Resident verifies that the cleanliness tasks are updated to reflect the mess. Resident then cleans the mess and updates the cleanliness task to reflect the clean state \\ 
   }
 
   \testcase{
-    \textbf{FST-CM-2} & \textbf{Display Cleanliness Scores}\\\hline
+    \textbf{FST-CM-2} & \textbf{Display Cleanliness Tasks}\\\hline
 
-    \textbf{Description} & Tests if the system displays cleanliness scores to users in a group \\ 
+    \textbf{Description} & Tests if the system displays cleanliness tasks to users in a group \\ 
 
     \textbf{References} & FR232, FR233, FR234, FR235 display requirements \\ 
 
     \textbf{Type} & Functional Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & Cleanliness scores are available for the group \\ 
+    \textbf{Initial State} & Cleanliness management system is setup for the group \\ 
 
     \textbf{Input} & N/A \\ 
 
-    \textbf{Output} & Cleanliness scores are displayed accurately to the user \\ 
+    \textbf{Output} & Cleanliness tasks are displayed accurately to the user \\ 
 
-    \textbf{Procedure} & Testing agent navigates to the cleanliness score display page and verifies that the scores are shown accurately \\ 
+    \textbf{Procedure} & Testing agent navigates to the cleanliness management page and verifies that the tasks are shown accurately \\ 
   }
 
 \end{center}
@@ -447,7 +450,7 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
   \testcase{
     \textbf{FST-CM-1} & \textbf{System Evaluates Cleanliness}\\\hline
 
-    \textbf{Description} & Tests if the system can evaluate and record cleanliness scores based on captured images \\ 
+    \textbf{Description} & Tests if the system can evaluate and record cleanliness tasks based on captured images \\ 
 
     \textbf{References} & FR231 \\ 
 
@@ -457,27 +460,27 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
 
     \textbf{Input} & N/A \\ 
 
-    \textbf{Output} & Cleanliness scores are updated based on user actions \\ 
+    \textbf{Output} & Cleanliness tasks are updated based on user actions \\ 
 
-    \textbf{Procedure} & Home resident enters camera view and creates a mess. Resident verifies that the cleanliness score is updated to reflect the mess. Resident then cleans the mess and verifies that the cleanliness score is updated to reflect the clean state \\ 
+    \textbf{Procedure} & Home resident enters camera view and creates a mess. Resident verifies that the cleanliness tasks are updated to reflect the mess. Resident then cleans the mess and verifies that the cleanliness tasks are updated to reflect the clean state \\ 
   }
 
   \testcase{
-    \textbf{FST-CM-2} & \textbf{Display Cleanliness Scores}\\\hline
+    \textbf{FST-CM-2} & \textbf{Display Cleanliness Tasks}\\\hline
 
-    \textbf{Description} & Tests if the system displays cleanliness scores to users in a group \\ 
+    \textbf{Description} & Tests if the system displays cleanliness tasks to users in a group \\ 
 
     \textbf{References} & FR232, FR233, FR234, FR235 \\ 
 
     \textbf{Type} & Functional Test (dynamic, automated) \\ 
 
-    \textbf{Initial State} & Cleanliness scores are available for the group \\ 
+    \textbf{Initial State} & Cleanliness mangement system is initialized and ready for use \\ 
 
     \textbf{Input} & N/A \\ 
 
-    \textbf{Output} & Cleanliness scores are displayed accurately to the user \\ 
+    \textbf{Output} & Cleanliness tasks are displayed accurately to the user \\ 
 
-    \textbf{Procedure} & Testing agent navigates to the cleanliness score display page and verifies that the scores are shown accurately \\ 
+    \textbf{Procedure} & Testing agent navigates to the cleanliness tasks display page and verifies that the tasks are shown accurately \\ 
   }
 
 \end{center}
@@ -745,27 +748,9 @@ This section covers the ChatBot's compliance to not disclose sensitive data and 
 \end{center}
 
 \subsubsection{Area of Testing: Cleanliness Manager}
-This section covers the Cleanliness Manager's compliance not capture users, encrypt and store pictures of high quality safely and correctly process and detect messes within specified time, as presented in SRS, Section S.2.3.
+This section covers the Cleanliness Manager's compliance, encrypt and store pictures of high quality safely and correctly process and detect messes within specified time, as presented in SRS, Section S.2.3.
 
 \begin{center}
-  \testcase{
-		\textbf{NFCT-CM-1} & \textbf{User Hidden During Recording and Picture}\\\hline
-	
-	    \textbf{Description} & Tests if the system refrains from capturing user. \\ 
-	
-	    \textbf{References} & NFR231, NFR232 \\ 
-	
-	    \textbf{Type} & Compliance Test (Manual) \\ 
-	
-	    \textbf{Initial State} & Cleanliness manager is active and ready for use. \\ 
-	
-	    \textbf{Input} & Simulated interaction of shared space. \\ 
-	
-	    \textbf{Output} & User is not found in recordings or pictures taken stored in logs and database of system.\\ 
-	
-	    \textbf{Procedure} & After shared space is used check logs and database for any recordings or pictures of user during simulated interaction. \\ 
-  }
-
   \testcase{
 	    \textbf{NFST-CM-2} & \textbf{Encryption of Images and Videos}\\\hline
 	
@@ -823,7 +808,7 @@ This section covers the Cleanliness Manager's compliance not capture users, encr
   \testcase{
 	    \textbf{NFCT-CM-5} & \textbf{False Event Prevention}\\\hline
 	
-	    \textbf{Description} & Test to check if system avoids false report accusing users and lowering cleanliness score. \\ 
+	    \textbf{Description} & Test to check if system avoids false report. \\ 
 	
 	    \textbf{References} & NFR236 \\ 
 	
@@ -833,9 +818,9 @@ This section covers the Cleanliness Manager's compliance not capture users, encr
 	
 	    \textbf{Input} & User uses shared space but does not make a mess. \\ 
 	
-	    \textbf{Output} & User cleanliness score is not reduced. \\ 
+	    \textbf{Output} & Cleanliness manager does not output change to tasks. \\ 
 	
-	    \textbf{Procedure} & User activities are simulated where no mess is made and the cleanliness manager outputs cleanliness score and verify score is not reduced.  \\ 
+	    \textbf{Procedure} & User activities are simulated where no mess is made and the cleanliness manager outputs cleanliness tasks and verify tasks are not added.  \\ 
 	}
 
   \testcase{

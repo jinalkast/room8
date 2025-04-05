@@ -1,14 +1,14 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import TaskList from './task-list';
-import useGetCleanlinessTasks from '../hooks/useGetCleanlinessTasks';
-import LoadingSpinner from '@/components/loading';
 import useUser from '@/app/auth/hooks/useUser';
-import { useState } from 'react';
+import LoadingSpinner from '@/components/loading';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import UserGuideModal from '@/components/user-guide-modal';
 import useRoommates from '@/hooks/useRoommates';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
+import { useState } from 'react';
+import useGetCleanlinessTasks from '../hooks/useGetCleanlinessTasks';
 import { TCleanlinessTask } from '../types';
 import TaskFilters from './task-filters';
-import UserGuideModal from '@/components/user-guide-modal';
-import { USER_GUIDE } from '@/lib/constants/user-guide';
+import TaskList from './task-list';
 
 export default function CleanlinessLogs() {
   const { data: tasks, isLoading: loadingTasks } = useGetCleanlinessTasks();

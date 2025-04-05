@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
 import HistoryTable from '@/app/(main)/bill-splitter/components/historyTable';
 import useBillsHistory from '@/app/(main)/bill-splitter/hooks/useBillHistory';
 import { TBillHistory } from '@/app/(main)/bill-splitter/types';
 import QueryProvider from '@/components/query-provider';
+import { render, screen } from '@testing-library/react';
 
 jest.mock('@/app/(main)/bill-splitter/hooks/useBillHistory');
 

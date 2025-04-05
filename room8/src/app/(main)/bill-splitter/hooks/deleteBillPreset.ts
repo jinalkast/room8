@@ -1,8 +1,6 @@
-import { TApiResponse, TBillDB } from '@/lib/types';
-import { QueryClient, useMutation } from '@tanstack/react-query';
-import { postBillSchema } from '@/app/(main)/bill-splitter/types';
-import z from 'zod';
+import { TApiResponse } from '@/lib/types';
 import { Tables } from '@/lib/types/supabase';
+import { QueryClient, useMutation } from '@tanstack/react-query';
 
 const deleteBillPreset = async (billID: string): Promise<Tables<'bill_presets'>> => {
   const res = await fetch(`/api/bills/presets/${billID}`, {

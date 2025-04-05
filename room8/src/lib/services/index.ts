@@ -1,5 +1,4 @@
 import { supabaseServer } from '../supabase/server';
-import { TRoommate } from '../types';
 
 export const getUserHouseId = async () => {
   const supabase = await supabaseServer();

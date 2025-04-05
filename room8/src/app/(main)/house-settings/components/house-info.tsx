@@ -1,13 +1,13 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { THouse } from '../types';
-import RoommatesTable from '@/components/roommates-table';
-import InviteUserModal from '@/app/(main)/house-settings/components/invite-user-modal';
+import ActivateCameraCard from '@/app/(main)/house-settings/components/activate-camera-card';
 import EditHouseModal from '@/app/(main)/house-settings/components/edit-house-modal';
 import HouseNotes from '@/app/(main)/house-settings/components/house-notes';
-import ActivateCameraCard from '@/app/(main)/house-settings/components/activate-camera-card';
+import InviteUserModal from '@/app/(main)/house-settings/components/invite-user-modal';
 import PendingInvitesTable from '@/app/(main)/house-settings/components/pending-roommates-table';
+import RoommatesTable from '@/components/roommates-table';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import UserGuideModal from '@/components/user-guide-modal';
 import { USER_GUIDE } from '@/lib/constants/user-guide';
+import { THouse } from '../types';
 
 type props = {
   house: THouse;

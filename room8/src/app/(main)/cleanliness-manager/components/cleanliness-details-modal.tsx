@@ -1,19 +1,18 @@
-import { Modal } from '@/components/modal';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, ClipboardEdit } from 'lucide-react';
-import React, { useState } from 'react';
-import { DialogClose } from '@/components/ui/dialog';
 import useUser from '@/app/auth/hooks/useUser';
 import LoadingSpinner from '@/components/loading';
-import { cn } from '@/lib/utils';
-import CleanlinessImage from './cleanliness-image';
-import useGetCleanlinessTasks from '../hooks/useGetCleanlinessTasks';
-import TaskCard from './task-card';
-import useCleanlinessLogs from '../hooks/useCleanlinessLogs';
+import { Modal } from '@/components/modal';
+import { Button } from '@/components/ui/button';
+import { DialogClose } from '@/components/ui/dialog';
 import useGetHouse from '@/hooks/useGetHouse';
 import useRoommates from '@/hooks/useRoommates';
-import TaskFilters from './task-filters';
+import { cn } from '@/lib/utils';
+import { ArrowRight, ClipboardEdit } from 'lucide-react';
+import { useState } from 'react';
+import useCleanlinessLogs from '../hooks/useCleanlinessLogs';
+import useGetCleanlinessTasks from '../hooks/useGetCleanlinessTasks';
 import { TCleanlinessTask } from '../types';
+import CleanlinessImage from './cleanliness-image';
+import TaskFilters from './task-filters';
 import TaskList from './task-list';
 
 type props = {

@@ -1,6 +1,6 @@
+import { toast } from '@/hooks/useToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TInviteBody } from '../types';
-import { toast } from '@/hooks/useToast';
 
 export const fetchInviteUser = async (invite: TInviteBody) => {
   const res = await fetch(`/api/house/invite`, {

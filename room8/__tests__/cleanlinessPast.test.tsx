@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react';
 import CleanlinessPast from '@/app/(main)/cleanliness-manager/components/cleanliness-past';
 import { TCleanlinessLog } from '@/lib/types';
 import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
 
 jest.mock('@/app/(main)/cleanliness-manager/components/cleanliness-details-modal', () => {
   return function MockCleanlinessDetailsModal({ cleanlinessLogId }: { cleanlinessLogId: string }) {

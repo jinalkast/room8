@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
 import InviteUserModal from '@/app/(main)/house-settings/components/invite-user-modal';
 import useInviteUser from '@/app/(main)/house-settings/hooks/useInviteUser';
-import useUser from '@/app/auth/hooks/useUser';
 import { THouse } from '@/app/(main)/house-settings/types';
+import useUser from '@/app/auth/hooks/useUser';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 jest.mock('@/app/(main)/house-settings/hooks/useInviteUser', () => ({
   __esModule: true,

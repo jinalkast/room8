@@ -1,14 +1,14 @@
 'use client';
 
 import useUser from '@/app/auth/hooks/useUser';
+import UserGuideModal from '@/components/user-guide-modal';
+import useGetHouse from '@/hooks/useGetHouse';
+import { USER_GUIDE } from '@/lib/constants/user-guide';
 import { useState } from 'react';
 import SummaryCard from '../bill-splitter/components/summaryCard';
-import PendingChores from '../schedule/components/pending-chores';
 import HouseNotes from '../house-settings/components/house-notes';
-import useGetHouse from '@/hooks/useGetHouse';
+import PendingChores from '../schedule/components/pending-chores';
 import DashboardCards from './components/dashboard-cards';
-import UserGuideModal from '@/components/user-guide-modal';
-import { USER_GUIDE } from '@/lib/constants/user-guide';
 
 export default function DashboardPage() {
   const [open, setOpen] = useState<boolean>(false);

@@ -1,9 +1,9 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import ScheduleItem from '../src/app/(main)/schedule/components/schedule-item';
 import useRoommates from '@/hooks/useRoommates';
-import useCompletedChores from '../src/app/(main)/schedule/hooks/useGetCompletedChores';
+import '@testing-library/jest-dom';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import ScheduleItem from '../src/app/(main)/schedule/components/schedule-item';
 import useDeleteChore from '../src/app/(main)/schedule/hooks/useDeleteChore';
+import useCompletedChores from '../src/app/(main)/schedule/hooks/useGetCompletedChores';
 import useUpdateCompletedChore from '../src/app/(main)/schedule/hooks/useUpdateCompletedChore';
 import { TActivity } from '../src/app/(main)/schedule/types';
 
