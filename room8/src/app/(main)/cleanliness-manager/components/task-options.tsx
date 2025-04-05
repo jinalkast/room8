@@ -1,15 +1,15 @@
+import useUser from '@/app/auth/hooks/useUser';
+import MutateLoadingSpinner from '@/components/mutate-loading';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { ClipboardCheck, EllipsisVertical, PinOff, Send, Trash, X } from 'lucide-react';
-import CleanlinessDetailsModal from './cleanliness-details-modal';
+import useRoommates from '@/hooks/useRoommates';
 import { PopoverClose } from '@radix-ui/react-popover';
-import MutateLoadingSpinner from '@/components/mutate-loading';
+import { ClipboardCheck, EllipsisVertical, PinOff, Send, Trash, X } from 'lucide-react';
+import Image from 'next/image';
 import useDeleteCleanlinessTask from '../hooks/useDeleteCleanlinessTask';
 import useUpdateCleanlinessTask from '../hooks/useUpdateCleanlinessTask';
-import useRoommates from '@/hooks/useRoommates';
-import Image from 'next/image';
-import useUser from '@/app/auth/hooks/useUser';
 import { TCleanlinessTask } from '../types';
+import CleanlinessDetailsModal from './cleanliness-details-modal';
 import MatchExistingTaskModal from './match-existing-task-modal';
 
 type props = {

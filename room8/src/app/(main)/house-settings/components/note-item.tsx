@@ -1,16 +1,16 @@
-import useRoommates from '@/hooks/useRoommates';
-import { TNote } from '../types';
-import { TRoommate } from '@/lib/types';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { Star, Trash } from 'lucide-react';
-import LoadingSpinner from '@/components/loading';
-import { useState } from 'react';
-import useEditNote from '../hooks/useEditNote';
-import { Modal } from '@/components/modal';
-import { DialogClose } from '@/components/ui/dialog';
-import useDeleteNote from '../hooks/useDeleteNote';
 import useUser from '@/app/auth/hooks/useUser';
+import LoadingSpinner from '@/components/loading';
+import { Modal } from '@/components/modal';
+import { Button } from '@/components/ui/button';
+import { DialogClose } from '@/components/ui/dialog';
+import useRoommates from '@/hooks/useRoommates';
+import { TRoommate } from '@/lib/types';
+import { Star, Trash } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
+import useDeleteNote from '../hooks/useDeleteNote';
+import useEditNote from '../hooks/useEditNote';
+import { TNote } from '../types';
 
 type props = {
   note: TNote;

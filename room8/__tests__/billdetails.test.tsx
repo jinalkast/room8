@@ -1,9 +1,9 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BillDetailsContent } from '@/app/(main)/bill-splitter/components/loansTable';
-import { useQueryClient } from '@tanstack/react-query';
-import { TOwe } from '@/lib/types';
 import usePatchOwe from '@/app/(main)/bill-splitter/hooks/patchOwe';
 import QueryProvider from '@/components/query-provider';
+import { TOwe } from '@/lib/types';
+import { useQueryClient } from '@tanstack/react-query';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 jest.mock('@/app/(main)/bill-splitter/hooks/patchOwe');
 jest.mock('@tanstack/react-query', () => ({

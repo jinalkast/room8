@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
 import { TApiResponse } from '@/lib/types';
+import { useQuery } from '@tanstack/react-query';
 import { TCleanlinessTask } from '../types';
 
 const fetchCleanlinessTasks = async (logId?: string): Promise<TCleanlinessTask[] | null> => {
@@ -19,7 +19,7 @@ const fetchCleanlinessTasks = async (logId?: string): Promise<TCleanlinessTask[]
 
 export default function useGetCleanlinessTasks(logId?: string) {
   return useQuery({
-    queryKey: ['cleanliness-tasks', logId],
+    queryKey: ['cleanliness-logs', logId],
     queryFn: () => fetchCleanlinessTasks(logId)
   });
 }

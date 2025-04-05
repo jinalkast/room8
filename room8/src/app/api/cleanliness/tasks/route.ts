@@ -1,6 +1,5 @@
 import { getUserHouseId } from '@/lib/services';
 import { supabaseServer } from '@/lib/supabase/server';
-import { TApiResponse } from '@/lib/types';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {

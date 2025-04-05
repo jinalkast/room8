@@ -1,13 +1,12 @@
 'use client';
 
-import useCleanlinessLogs from './hooks/useCleanlinessLogs';
-import useGetHouse from '@/hooks/useGetHouse';
-import CleanlinessRecent from './components/cleanliness-recent';
-import CleanlinessPast from './components/cleanliness-past';
-import CleanlinessLogs from './components/cleanliness-logs';
 import LoadingSpinner from '@/components/loading';
+import useGetHouse from '@/hooks/useGetHouse';
+import CleanlinessLogs from './components/cleanliness-logs';
+import CleanlinessPast from './components/cleanliness-past';
+import CleanlinessRecent from './components/cleanliness-recent';
 import CleanlinessStats from './components/cleanliness-stats';
-import UserGuideModal from '@/components/user-guide-modal';
+import useCleanlinessLogs from './hooks/useCleanlinessLogs';
 
 export default function CleanlinessManagerPage() {
   const { data: houseData, isLoading } = useGetHouse();

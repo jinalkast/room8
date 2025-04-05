@@ -1,14 +1,14 @@
+import useUser from '@/app/auth/hooks/useUser';
+import LoadingSpinner from '@/components/loading';
 import { Modal } from '@/components/modal';
 import { Button } from '@/components/ui/button';
 import { DialogClose } from '@/components/ui/dialog';
 import { Link } from 'lucide-react';
-import { TCleanlinessTask } from '../types';
-import useUpdateCleanlinessTask from '../hooks/useUpdateCleanlinessTask';
 import useDeleteCleanlinessTask from '../hooks/useDeleteCleanlinessTask';
 import useGetCleanlinessTasks from '../hooks/useGetCleanlinessTasks';
-import LoadingSpinner from '@/components/loading';
+import useUpdateCleanlinessTask from '../hooks/useUpdateCleanlinessTask';
+import { TCleanlinessTask } from '../types';
 import TaskList from './task-list';
-import useUser from '@/app/auth/hooks/useUser';
 
 type props = {
   task: TCleanlinessTask;

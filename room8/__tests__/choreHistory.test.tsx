@@ -1,5 +1,5 @@
-import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { render, screen, waitFor } from '@testing-library/react';
 import ChoreHistory from '../src/app/(main)/schedule/components/chore-history';
 import useAllCompletedChores from '../src/app/(main)/schedule/hooks/useGetAllCompletedChores';
 

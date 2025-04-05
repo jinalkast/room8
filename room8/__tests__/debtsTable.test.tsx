@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
 import DebtsTable from '@/app/(main)/bill-splitter/components/debtsTable';
 import useOwes from '@/app/(main)/bill-splitter/hooks/useOwes';
-import { TOwe } from '@/lib/types';
 import QueryProvider from '@/components/query-provider';
+import { TOwe } from '@/lib/types';
+import { render, screen } from '@testing-library/react';
 
 jest.mock('@/app/(main)/bill-splitter/hooks/useOwes');
 

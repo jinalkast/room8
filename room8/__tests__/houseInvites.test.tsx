@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
 import HouseInvites from '@/app/(main)/house-settings/components/house-invites';
-import useGetInvites from '@/app/(main)/house-settings/hooks/useGetInvites';
 import useAcceptInvite from '@/app/(main)/house-settings/hooks/useAcceptInvite';
 import useDeclineInvite from '@/app/(main)/house-settings/hooks/useDeclineInvite';
+import useGetInvites from '@/app/(main)/house-settings/hooks/useGetInvites';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 jest.mock('@/app/(main)/house-settings/hooks/useGetInvites', () => ({
   __esModule: true,

@@ -1,4 +1,3 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import useGetHouse from '@/hooks/useGetHouse';
 import { BotMessageSquare, CalendarCheck, Cctv, HousePlus, Receipt, Settings } from 'lucide-react';
 import { useRouter } from 'next/navigation';

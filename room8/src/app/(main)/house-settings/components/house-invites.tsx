@@ -1,12 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import useGetInvites from '../hooks/useGetInvites';
 import LoadingSpinner from '@/components/loading';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import Image from 'next/image';
 import useAcceptInvite from '../hooks/useAcceptInvite';
 import useDeclineInvite from '../hooks/useDeclineInvite';
-import Image from 'next/image';
-import UserGuideModal from '@/components/user-guide-modal';
-import { USER_GUIDE } from '@/lib/constants/user-guide';
+import useGetInvites from '../hooks/useGetInvites';
 
 export default function HouseInvites() {
   const { data: invites, isLoading } = useGetInvites();

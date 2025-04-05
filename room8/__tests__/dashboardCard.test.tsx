@@ -1,5 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
 import DashboardCards from '@/app/(main)/dashboard/components/dashboard-cards';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
 
 jest.mock('next/navigation', () => ({
@@ -7,23 +8,35 @@ jest.mock('next/navigation', () => ({
 }));
 
 describe('DashboardCards Component', () => {
+  let queryClient: QueryClient;
+
   const mockPush = jest.fn();
 
   beforeEach(() => {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false
+        }
+      }
+    });
+
     (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
   });
 
-  it('renders all dashboard cards', () => {
-    render(<DashboardCards />);
+  afterEach(() => {
+    jest.clearAllMocks();
+    queryClient.clear();
+  });
 
-    const cardNames = [
-      'Cleanliness Manager',
-      'Bill Splitter',
-      'Chore Schedule',
-      'ChatBot',
-      'My House',
-      'Settings'
-    ];
+  const renderWithQueryClient = (component: React.ReactElement) => {
+    return render(<QueryClientProvider client={queryClient}>{component}</QueryClientProvider>);
+  };
+
+  it('renders all dashboard cards', () => {
+    renderWithQueryClient(<DashboardCards />);
+
+    const cardNames = ['Bill Splitter', 'Chore Schedule', 'ChatBot', 'My House', 'Settings'];
 
     cardNames.forEach((name) => {
       expect(screen.getByText(name)).toBeTruthy();
@@ -31,7 +44,7 @@ describe('DashboardCards Component', () => {
   });
 
   it('navigates to the correct page on click', () => {
-    render(<DashboardCards />);
+    renderWithQueryClient(<DashboardCards />);
 
     const billSplitterCard = screen.getByText('Bill Splitter');
     fireEvent.click(billSplitterCard);

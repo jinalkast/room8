@@ -1,10 +1,9 @@
 'use client';
 
-import useGetHouse from '@/hooks/useGetHouse';
-import HouseInfo from './components/house-info';
-import CreateHouse from './components/create-house';
 import LoadingSpinner from '@/components/loading';
-import HouseInvites from './components/house-invites';
+import useGetHouse from '@/hooks/useGetHouse';
+import CreateHouse from './components/create-house';
+import HouseInfo from './components/house-info';
 
 export default function HouseSettingsPage() {
   const { data: house, isLoading, isError } = useGetHouse();

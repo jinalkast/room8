@@ -1,12 +1,12 @@
 import { Modal } from '@/components/modal';
-import { THouse } from '../types';
 import { Button } from '@/components/ui/button';
+import { DialogClose } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@radix-ui/react-label';
 import { Edit } from 'lucide-react';
 import { useState } from 'react';
-import { Label } from '@radix-ui/react-label';
-import { Input } from '@/components/ui/input';
-import { DialogClose } from '@/components/ui/dialog';
 import useEditHouse from '../hooks/useEditHouse';
+import { THouse } from '../types';
 
 type props = {
   house: THouse;

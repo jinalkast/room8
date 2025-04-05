@@ -1,7 +1,7 @@
-import { supabaseServer } from '@/lib/supabase/server';
-import { NextRequest, NextResponse } from 'next/server';
 import { updateProfilePayload } from '@/app/(main)/profile/types';
+import { supabaseServer } from '@/lib/supabase/server';
 import { TApiResponse, TRoommateDB } from '@/lib/types';
+import { NextRequest, NextResponse } from 'next/server';
 
 const ALLOWED_MIME_TYPES = ['image/png', 'image/jpeg', 'imae/jpg'];
 

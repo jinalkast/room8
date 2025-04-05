@@ -1,8 +1,8 @@
-import { TApiResponse } from '@/lib/types';
-import { QueryClient, useMutation } from '@tanstack/react-query';
 import { postBillPresetSchema } from '@/app/(main)/bill-splitter/types';
-import z from 'zod';
+import { TApiResponse } from '@/lib/types';
 import { Tables } from '@/lib/types/supabase';
+import { QueryClient, useMutation } from '@tanstack/react-query';
+import z from 'zod';
 
 const postBillPreset = async (preset: z.infer<typeof postBillPresetSchema>): Promise<Tables<'bill_presets'>> => {
   const validatedData = postBillPresetSchema.parse(preset);

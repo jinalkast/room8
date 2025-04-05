@@ -1,8 +1,8 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import useEditProfile from '@/app/(main)/profile/hooks/useEditProfile';
 import ProfilePage from '@/app/(main)/profile/page';
 import useUser from '@/app/auth/hooks/useUser';
-import useEditProfile from '@/app/(main)/profile/hooks/useEditProfile';
 import QueryProvider from '@/components/query-provider';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 jest.mock('@/app/auth/hooks/useUser', () => ({
   __esModule: true,

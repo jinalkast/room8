@@ -1,24 +1,21 @@
 'use client';
 
+import LoadingSpinner from '@/components/loading';
+import RoommatesTable from '@/components/roommates-table';
 import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import useRoommates from '@/hooks/useRoommates';
-import Image from 'next/image';
-import useActivateChatbot from './hooks/useActivateChatbot';
-import RoommatesTable from '@/components/roommates-table';
-import ChatBotSettingsStub from './components/chatbot-setting-stub';
-import { useState } from 'react';
-import useGetHouse from '@/hooks/useGetHouse';
-import LoadingSpinner from '@/components/loading';
 import UserGuideModal from '@/components/user-guide-modal';
+import useGetHouse from '@/hooks/useGetHouse';
 import { USER_GUIDE } from '@/lib/constants/user-guide';
+import { useState } from 'react';
+import ChatBotSettingsStub from './components/chatbot-setting-stub';
+import useActivateChatbot from './hooks/useActivateChatbot';
 
 export type TSettingKeys =
   | 'roommate-updates'
@@ -126,8 +123,14 @@ export default function ChatBotPage() {
                       </Button>
                     </>
                   ) : (
-                    <Button className="mt-4 w-full" onClick={() => activate.mutate()}>
-                      Activate ChatBot
+                    <Button
+                      className="mt-4 w-full"
+                      onClick={() => {
+                        activate.mutate();
+                        setUnsavedChanges(true);
+                      }}
+                      disabled={unsavedChanges}>
+                      {!unsavedChanges ? 'Activate ChatBot' : 'Chatbot Pending'}
                     </Button>
                   )}
                 </div>

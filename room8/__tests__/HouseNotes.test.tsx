@@ -1,10 +1,8 @@
-import { render, screen } from '@testing-library/react';
 import HouseNotes from '@/app/(main)/house-settings/components/house-notes';
 import useGetNotes from '@/app/(main)/house-settings/hooks/useGetNotes';
-import CreateNoteModal from '@/app/(main)/house-settings/components/create-note-modal';
-import NoteItem from '@/app/(main)/house-settings/components/note-item';
 import { TNote } from '@/app/(main)/house-settings/types';
 import QueryProvider from '@/components/query-provider';
+import { render, screen } from '@testing-library/react';
 
 jest.mock('@/app/(main)/house-settings/hooks/useGetNotes', () => ({
   __esModule: true,

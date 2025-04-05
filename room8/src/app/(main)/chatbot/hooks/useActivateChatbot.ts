@@ -1,9 +1,10 @@
+import useGetHouse from '@/hooks/useGetHouse';
+import { TRoommate } from '@/lib/types';
 import { Json } from '@/lib/types/supabase';
 import { useMutation } from '@tanstack/react-query';
 import useRoommates from '../../../../hooks/useRoommates';
-import useGetHouse from '@/hooks/useGetHouse';
-import { TRoommate } from '@/lib/types';
 import { THouse } from '../../house-settings/types';
+import { toast } from '@/hooks/useToast';
 
 export const activateChatbot = async (
   roommates: TRoommate[] | null,
@@ -35,6 +36,11 @@ export default function useActivateChatbot() {
       if (!house) {
         throw new Error('Error getting house');
       }
+      toast({
+        variant: 'success',
+        title: 'Success!',
+        description: 'Chatbot is now active! Please wait for a few minutes to see the changes.'
+      });
       return activateChatbot(roommates, house);
     }
   });
