@@ -1,102 +1,125 @@
-\documentclass{article}
+\documentclass[12pt, titlepage]{article}
 
-\usepackage{tabularx}
 \usepackage{booktabs}
-
-\title{Problem Statement and Goals\\\progname}
-
-\author{\authname}
-
-\date{}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=blue
+}
+\usepackage[round]{natbib}
+\usepackage{longtable}
+\usepackage[shortlabels]{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=blue
+}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage[paper=a4paper]{geometry}
 
 \input{../Comments}
 \input{../Common}
 
+
+
 \begin{document}
 
+\title{Problem Statement and Goals: Room8} 
+\author{\authname}
+\date{\today}
+	
 \maketitle
 
-\begin{table}[hp]
-\caption{Revision History} \label{TblRevisionHistory}
-\begin{tabularx}{\textwidth}{llX}
-\toprule
-\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
+\pagenumbering{roman}
+
+
+\section{Revision History}
+
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
+\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-2024-09-24 & Team & Version 1.0 \\
-2025-01-08 & Maged & Implementing TA feedback and changed extras\\
-... & ... & ...\\
+2024-09-24 & Team & Version 0.0 \\
+2025-01-08 & Maged & Implementing TA feedback and changed extras - Version 0.1\\
+2025-04-10 & Harshil & Revising doc to reflect TA feedback - Version 1.0\\
 \bottomrule
 \end{tabularx}
-\end{table}
+
+~\newpage
+
 
 \section{Problem Statement}
+The overview of problems Room8 will solve and information on the inputs, outputs, stakeholders and the system environment.
 \subsection{Problem}
-A common experience that the vast majority of the human population encounters is a
-shared living arrangement, whether that be with family members or, prevalently in
-post-secondary studies, roommates. This scenario offers a number of challenges, including the
-maintenance of shared spaces such as a kitchen or living room. As the power dynamic between
-roommates are typically equal, it can often feel cumbersome to reach out to a roommate and
-complain about the mess that they leave behind in a common space. This friction can be
-avoided by setting a standard for the cleanliness that is expected of any and all members of the
-same residence. Our project aims to deliver a camera system, paired with an application, which
-assesses the cleanliness of a shared space (before an individual enters, and after they exit).
-Additionally, the application will include features that will benefit users who have roommates by
-addressing other issues that may rise from the living arrangement, such as splitting shared
-expenses, scheduling activities and chores, and encouraging communication between
-members.
+A common experience that the vast majority of the human population encounters is a shared living arrangement, whether that be with family members or, prevalent in post-secondary studies, roommates. This scenario offers a number of challenges, including the maintenance of shared spaces such as a kitchen or living room. As the power dynamic between roommates are typically equal, it can often feel cumbersome to reach out to a roommate and complain about the mess that they leave behind in a common space. This friction can be avoided by setting a standard for the cleanliness that is expected of any and all members of the same residence. Room8 aims to deliver an application, which assesses the cleanliness of a shared space. Additionally, the application will include features that will benefit users who have roommates by addressing other issues that may rise from the living arrangement, such as shared expenses, scheduling activities and chores, and encouraging communication between members.
 
 \subsection{Inputs and Outputs}
+Relevant inputs and outputs of the software used in the application.
 \subsubsection{Inputs}
 \begin{itemize}
-\item Images of the monitored area
-\item Sensor data detecting when to begin capturing images
-\item Data about chores, bills, etc provided by users through the application (expected to be in JSON format)
+\item Images of the monitored area.
+\item Video feed of monitored area.
+\item Numerical data paired with splitting method.
+\item True or false field for payments.
+\item JSON of text with date.
+\item JSON of objects containing object name, person and status.
 \end{itemize}
 \subsubsection{Outputs}
-For the system which monitors the cleanliness of the shared space, the output is still undecided. Some possible options include
 \begin{itemize}
-\item An image with an indicator showing where messes were made / cleaned
-\item A numerical value indicating the net change in the cleanliness of a shared space
-\item Images taken before and after an individual has altered the shared space
-\end{itemize}
-Additionally, the application will provide users with
-\begin{itemize}
-\item A summary of all outstanding bills you owe and are owed to other individuals of the shared house
-\item A list of expected tasks (chores) to do in the house with deadlines for all members of the house
+\item Two images, one before and an after with bounding boxes around changes.
+\item JSON of changes made to shared space.
+\item Numerical data of amount user owes others and how much the user is owed.
+\item JSON calendar data with scheduled events at specified dates.
+\item JSON containing history of tasks assigned and completed.
+\item JSON containing history of expenses.
 \end{itemize}
 \subsection{Stakeholders}
-The stakeholders of this project are members of any shared living situation, but it is
-primarily directed towards students who live in student housing/campus residence.
+The stakeholders of this project are members of any shared living situation, but it is primarily directed towards students who live in student housing/campus residence. Room8’s stakeholders can include students—both off-campus and on-campus. Off-campus students use the app to manage shared living spaces, track cleanliness, and split expenses, while on-campus students benefit from chore scheduling and event coordination for common areas. Other stakeholders include landlords, who want to ensure their properties are well-maintained; resident assistants, who use the scheduling feature to organize events; and university housing committees, which support student living conditions and conflict resolution.
 
 \subsection{Environment}
+Project enviornment of both hardware and software components.
+
 \subsubsection{Hardware Environment}
-The hardware environment mainly consists of the camera and sensor system that will be
-installed in the shared space. The camera will be used to capture images of the area, while the
-sensor(s) will be used to detect when someone enters and/or exists.
+The hardware environment mainly consists of the camera system that will be
+installed in the shared space. The camera will be used to capture images of the area, as well as detect when someone enters and/or exists.
 \subsubsection{Software Environment}
-The software environment is twofold. For the cleanliness detection system, an algorithm
-will need to be produced in order to assess the space. Besides that, there must also be a
-full-stack web and/or mobile application developed, for the assessment to be displayed, along
-with the other additional functionality that was previously mentioned (bill splitter, scheduler,
-group chat, etc.)
+The software environment is twofold. For the cleanliness detection system, an algorithm will need to be produced in order to assess the space as well as detect motion from the camera feed and take pictures according to camera feedback. Besides that, there must also be a full-stack web and/or mobile application developed, for the assessment to be displayed, along with the other additional functionality that was previously mentioned (bill splitter, scheduler, group chat, etc.)
+
+
 \section{Goals}
 All goals listed below stem from the problem statement and aim to achieve the mission of reducing tension and friction common in shared living arrangements:
 \begin{itemize}
-\item Provide users a platform to centralize information about tasks and finances related to their shared home
-\item Create a hardware system which can capture images of a selected area during a desired period of time based on motion activity of the area
-\item Create an algorithm which given images of an area in chronological order, evaluate whether or not that area has been made more "messy" or "clean"
+\item The system must detect and log changes in cleanliness (e.g., clutter, spills) in shared spaces using motion-triggered image analysis.
+\item The app must let roommates assign chores, set deadlines, and mark tasks as complete.
+\item The app must track shared bills, split costs automatically, and log payments.
+\item The system must notify roommates of overdue chores, unpaid bills, or recurring messes via push notifications. 
+\item User data (e.g., payment logs) must be visible only to approved roommates.
+\item System will keep history of all tasks and chores completed available for users to see.
 \end{itemize}
+
 \section{Stretch Goals}
+These goals are extras of the project and are considered the future steps of Room8 after revision one is completed whereas the goals above are the main concern.
 \begin{itemize}
-\item Provide item-level results (i.e Items a person leaves/uses in the area) in the output of the algorithm which detects the changes to the cleanliness of a living space
+\item System should provide item-level results (i.e Items a person leaves/uses in the area) in the output of the algorithm which detects the changes to the cleanliness of a living space.
 \begin{itemize}
-\item The specificity of the output would make the scoring algorithm as objective as possible, and would lay-out the precise steps users can take to improve their cleanliness
+\item The specificity of the output would make the algorithm as objective as possible, and would lay-out the precise steps users can take to improve their cleanliness.
 \end{itemize}
-\item The system allows users to select a cleanliness detection model that adapts to the specific living space and learns its features. It then uses its learnings to curate a specific instance of its general classification algorithm. This curated algorithm is used solely for that user group
+\item The system should allow users to select a cleanliness detection model that adapts to the specific living space and learns its features.
 \begin{itemize}
-\item Beyond the generic algorithm, having this mechanism would make results more individualized and better-suited for specific environments
+\item Beyond the generic algorithm, having this mechanism would make results more individualized and better-suited for specific environments.
 \end{itemize}
 \end{itemize}
+
+
 \section{Challenge Level and Extras}
 
 Challenge Level: General

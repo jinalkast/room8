@@ -1,68 +1,60 @@
-\documentclass{article}
+\documentclass[12pt, titlepage]{article}
 
 \usepackage{booktabs}
+\usepackage{float}
 \usepackage{tabularx}
 \usepackage{hyperref}
-\usepackage{adjustbox}
-\usepackage{longtable}
-\usepackage{float}
-\usepackage{enumerate}
-\usepackage{multirow}
-\usepackage{array}
-\usepackage[margin=35mm,paper=a4paper]{geometry}
-
-
 \hypersetup{
-    colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
-    citecolor=green,        % color of links to bibliography
-    filecolor=magenta,      % color of file links
-    urlcolor=cyan           % color of external links
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=blue
 }
-
-\title{Hazard Analysis\\Room8}
-
-\author{Mohammed Abed \\ 
-        Maged Armanios\\
-        Jinal Kasturiarachchi\\
-        Jane Klavir\\
-        Harshil Patel\\}
-
-\date{2024-10-25}
+\usepackage[round]{natbib}
+\usepackage{longtable}
+\usepackage[shortlabels]{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=blue
+}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage[paper=a4paper]{geometry}
 
 \input{../Comments}
 \input{../Common}
 
-\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
-\let\endchangemargin=\endlist 
-
 \begin{document}
 
+\title{Hazard Analysis: Room8} 
+\author{\authname}
+\date{\today}
+	
 \maketitle
-\thispagestyle{empty}
-
-~\newpage
 
 \pagenumbering{roman}
 
-\begin{table}[hp]
-    \caption{Revision History} \label{TblRevisionHistory}
-    \begin{tabularx}{\textwidth}{llXl} % 4 columns now
-    \toprule
-    \textbf{Date} & \textbf{Developer(s)} & \textbf{Change} & \textbf{Version}\\
+\section{Revision History}
+
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
+\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\midrule
+    2024-10-25 & 0.0 & Mohammed, Maged, Jane, Jinal, Harshil - Document Created \\
     \midrule
-    2024-10-25 & Mohammed Abed, & Document Created & \\
-     & Maged Armanios, & & \\
-     & Jinal Kasturiarachchi, & & \\
-     & Jinal Klavir, & & \\
-     & Harshil Patel & & 0\\
+    2025-04-04 & 1.0 & Jane - Assumptions more specific \\
     \midrule
-    2025-04-04 & Jane Klavir & Assumptions more specific & 1.0\\
-    \bottomrule
-    \end{tabularx}
-\end{table}
+    2025-04-10 & 1.1 & Harshil Patel - Fixing readability and implementing TA feedback in all sections\\
+\bottomrule
+\end{tabularx}
 
 ~\newpage
+
 
 \tableofcontents
 
@@ -89,7 +81,7 @@ Smart phone the user is using with the supported version of Android or iOS.
 Responsible for taking picture for cleanliness detection analysis when sensor sends information of user.
 
 \subsection{Motion Sensor}
-Detects movement in the shared space to determine if user has entered or exited shared space signaling the camera for a picture.
+Detects movement in the shared space to determine if user has entered or exited shared space using the camera video feedback and backend software to detect this motion.
 
 \subsection{User-Facing Application}
 A mobile application installed on smart phones which have versions of Android and iOS that is currently being supported mobile providers. This includes front-end of the system where users can see details and change settings of various back-end components listed below.
@@ -116,9 +108,9 @@ Used to securely store user and house information, calendar events, expense hist
 \section{Critical Assumptions}
 
 \begin{itemize}
-\item \textbf{CA1}: Homes will have a consistent and uninterrupted supply of electricity available.
+\item \textbf{CA1}: Homes will have a consistent and uninterrupted supply of electricity available that can safely supply 120 volts or 15 amps.
 \item \textbf{CA2}: Homes will have internet speeds of at least 25 Mbps.
-\item \textbf{CA3}: Every resident of a shared home will have their own personal electronic device.
+\item \textbf{CA3}: Every resident of a shared home will have their own personal electronic device with operating system of Windows 8, Android 6.0 (Marshmallow) or iOS 16.
 \item \textbf{CA4}: Users have used other applications before and are familiar with common signifiers, mappings, and UI metaphores (ex. Heart implies like).
 \item \textbf{CA5}: External services, such as location services, map integrations, and calendar APIs will be available and reliable.
 \item \textbf{CA6}: Users' devices will have at least 5 GB of free storage beyond what is required for the application's install.
