@@ -239,8 +239,6 @@ When a group of students chooses to adopt Room8 to help with their house, the fi
 
     \textbf{References} & FR211 \\ 
 
-    \textbf{Type} & System Test (dynamic, automated) \\ 
-
     \textbf{Initial State} & Frontend inputs are empty. User profile does not exist in the system \\ 
 
     \textbf{Input} & Valid Google account sign in\\ 
@@ -256,8 +254,6 @@ When a group of students chooses to adopt Room8 to help with their house, the fi
     \textbf{Description} & Tests if the system is able to recognize a user profile and to authenticate them to the system \\ 
 
     \textbf{References} & FR212 \\ 
-
-    \textbf{Type} & System Test (dynamic, automated) \\ 
 
     \textbf{Initial State} & Testing profile exists in the system. System does not have the profile currently authenticated \\ 
 
@@ -275,8 +271,6 @@ When a group of students chooses to adopt Room8 to help with their house, the fi
 
     \textbf{References} & FR213 \\ 
 
-    \textbf{Type} & System Test (dynamic, automated) \\ 
-
     \textbf{Initial State} & Testing profile is logged in with an active session \\ 
 
     \textbf{Input} & User clicks on the logout button \\ 
@@ -292,8 +286,6 @@ When a group of students chooses to adopt Room8 to help with their house, the fi
     \textbf{Description} & Tests if the system allows users to create a new home group with specified details \\ 
 
     \textbf{References} & FR214, FR216 \\ 
-
-    \textbf{Type} & System Test (dynamic, automated) \\ 
 
     \textbf{Initial State} & User is logged in, and no home group exists for their account \\ 
 
@@ -311,8 +303,6 @@ When a group of students chooses to adopt Room8 to help with their house, the fi
 
     \textbf{References} & FR215, FR217, FR218 \\ 
 
-    \textbf{Type} & Integration Test (dynamic, automated) \\ 
-
     \textbf{Initial State} & A home group exists with only the logged-in user as a member \\ 
 
     \textbf{Input} & Valid email address of another user to invite; selection of a user to remove \\ 
@@ -328,8 +318,6 @@ When a group of students chooses to adopt Room8 to help with their house, the fi
     \textbf{Description} & Tests if the system allows users to leave a home group as needed \\ 
 
     \textbf{References} & FR216, FR218 \\ 
-
-    \textbf{Type} & Functional Test (dynamic, automated) \\ 
 
     \textbf{Initial State} & A home group exists with user as a member \\ 
 
@@ -353,8 +341,6 @@ The ChatBot is configured to send necessary reminders and notifications to the g
 
     \textbf{References} & FR221 \\ 
 
-    \textbf{Type} & Functional Test (dynamic, automated) \\ 
-
     \textbf{Initial State} & Chatbot is configured with default settings \\ 
 
     \textbf{Input} & Randomized array of include and exclude inputs \\ 
@@ -371,8 +357,6 @@ The ChatBot is configured to send necessary reminders and notifications to the g
 
     \textbf{References} & FR225 \\ 
 
-    \textbf{Type} & Integration Test (dynamic, manual) \\ 
-
     \textbf{Initial State} & Agent has user profile and is part of a home instance with more than 2 users linked. Chatbot phone number is not present in the group chat. ChatBot has no corresponding groupchat entry \\
 
     \textbf{Input} & User clicks "Create GroupChat" button \\ 
@@ -388,8 +372,6 @@ The ChatBot is configured to send necessary reminders and notifications to the g
     \textbf{Description} & Tests if the ChatBot is able to send messages to a group chat as per configuration \\ 
 
     \textbf{References} & FR222, FR223, FR224\\ 
-
-    \textbf{Type} & System Test (dynamic, automated) \\ 
 
     \textbf{Initial State} & Chatbot is added to a group chat with configured message triggers \\ 
 
@@ -413,8 +395,6 @@ The cleanliness manager is the unique selling point of the Room8 app. It assesse
 
     \textbf{References} & FR231 \\ 
 
-    \textbf{Type} & System Test (dynamic, manual) \\ 
-
     \textbf{Initial State} & Cleanliness management camera is setup and connected to home instance \\ 
 
     \textbf{Input} & N/A \\ 
@@ -430,8 +410,6 @@ The cleanliness manager is the unique selling point of the Room8 app. It assesse
     \textbf{Description} & Tests if the system displays cleanliness tasks to users in a group \\ 
 
     \textbf{References} & FR232, FR233, FR234, FR235 display requirements \\ 
-
-    \textbf{Type} & Functional Test (dynamic, automated) \\ 
 
     \textbf{Initial State} & Cleanliness management system is setup for the group \\ 
 
@@ -455,8 +433,6 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
 
     \textbf{References} & FR231 \\ 
 
-    \textbf{Type} & System Test (dynamic, manual) \\ 
-
     \textbf{Initial State} & Cleanliness management camera is setup and connected to home instance \\ 
 
     \textbf{Input} & N/A \\ 
@@ -472,8 +448,6 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
     \textbf{Description} & Tests if the system displays cleanliness tasks to users in a group \\ 
 
     \textbf{References} & FR232, FR233, FR234, FR235 \\ 
-
-    \textbf{Type} & Functional Test (dynamic, automated) \\ 
 
     \textbf{Initial State} & Cleanliness mangement system is initialized and ready for use \\ 
 
@@ -497,8 +471,6 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
 
     \textbf{References} & FR241, FR242, FR243, FR245 \\ 
 
-    \textbf{Type} & Functional Test (dynamic, automated) \\ 
-
     \textbf{Initial State} & Calendar displaying chores and events pertaining to the house. \\ 
 
     \textbf{Input} & Title, date, time, and duration. \\ 
@@ -514,9 +486,7 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
       \textbf{Description} & Tests that event disappears from calendar after existing event is removed. \\ 
   
       \textbf{References} & FR244 \\ 
-  
-      \textbf{Type} & Functional Test (dynamic, automated) \\ 
-  
+    
       \textbf{Initial State} & Calendar displaying chores and events pertaining to the house. \\ 
   
       \textbf{Input} & Chore/event from calendar represented by name, date, time, and duration. \\ 
@@ -532,9 +502,7 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
         \textbf{Description} & Tests that changes can be made to an already-existing event. \\ 
     
         \textbf{References} & FR244 \\ 
-    
-        \textbf{Type} & Functional Test (dynamic, automated) \\ 
-    
+        
         \textbf{Initial State} & Calendar displaying chores and events pertaining to the house. \\ 
     
         \textbf{Input} & Chore/event from calendar represented by name, date, time, and duration. \\ 
@@ -551,8 +519,6 @@ Room8 provides a convenient calendar to allow users to schedule chores and event
     \textbf{Description} & Tests that all events displayed in calendar view. \\ 
 
     \textbf{References} & FR245 \\ 
-
-    \textbf{Type} & Functional Test (dynamic, automated) \\ 
 
     \textbf{Initial State} & User is logged in and registered in home group \\ 
 
@@ -576,8 +542,6 @@ Various expenses will inevitably accumulate for a group of roommates. The bill s
 
     \textbf{References} & FR251 \\ 
 
-    \textbf{Type} & System Test (dynamic, automated) \\ 
-
     \textbf{Initial State} & No expenses recorded for the current month \\ 
 
     \textbf{Input} & New expense with an amount and shared expense roommates \\ 
@@ -594,8 +558,6 @@ Various expenses will inevitably accumulate for a group of roommates. The bill s
 
     \textbf{References} & FR252, FR253. FR255 \\ 
 
-    \textbf{Type} & Functional Test (dynamic, automated) \\ 
-
     \textbf{Initial State} & Recorded expenses are available in the system \\ 
 
     \textbf{Input} & User navigates to their expenses page \\ 
@@ -611,8 +573,6 @@ Various expenses will inevitably accumulate for a group of roommates. The bill s
     \textbf{Description} & Tests if the system allows users to mark an expense as paid \\ 
 
     \textbf{References} & FR253, FR254 \\ 
-
-    \textbf{Type} & Functional Test (dynamic, automated) \\ 
 
     \textbf{Initial State} & An unpaid expense is available in the system \\ 
 
@@ -640,9 +600,7 @@ This section covers encryption standards for authentication and house management
 	    \textbf{Description} & Tests if system encrypts data in transit and when stored \\ 
 	
 	    \textbf{References} & NFR211 \\ 
-	
-	    \textbf{Type} & System Test (Automated) \\ 
-	
+		
 	    \textbf{Initial State} & Frontend inputs for login are filled with user data. User profile exists in the system. \\ 
 	
 	    \textbf{Input} & User inputted data in login elements. \\ 
@@ -658,9 +616,7 @@ This section covers encryption standards for authentication and house management
 	    \textbf{Description} & Tests if the system does not reveal sensitive user information during login attempts \\ 
 	
 	    \textbf{References} & NFR212 \\ 
-	
-	    \textbf{Type} & Compliance Test (Manual) \\ 
-	
+		
 	    \textbf{Initial State} &  Login elements are filled with user data. User profile exists in system.\\ 
 	
 	    \textbf{Input} & Valid email and incorrect password. \\ 
@@ -676,9 +632,7 @@ This section covers encryption standards for authentication and house management
 	    \textbf{Description} & Tests if system encrypts all data related to houses in transit and at rest. \\ 
 	
 		\textbf{References} & NFR213 \\ 
-	
-		\textbf{Type} & System Test (Automated) \\ 
-	
+		
 		\textbf{Initial State} & House data stored in the database and transmitted over the network. \\ 
 	
 		\textbf{Input} & View or edit house data. \\ 
@@ -694,9 +648,7 @@ This section covers encryption standards for authentication and house management
 	    \textbf{Description} & Tests if system authenticates a user within a median response time of under 1 second. \\ 
 	
 		\textbf{References} & NFR214 \\ 
-	
-		\textbf{Type} & Performance Test (Automated) \\ 
-	
+		
 		\textbf{Initial State} & On login page and user profile exists. \\ 
 	
 		\textbf{Input} & Correct user login credentials filled in login elements. \\ 
@@ -717,9 +669,7 @@ This section covers the ChatBot's compliance to not disclose sensitive data and 
 	    \textbf{Description} & Tests if the chatbot avoids disclosing sensitive user data. \\ 
 	
 	    \textbf{References} & NFR221 \\ 
-	
-	    \textbf{Type} & Compliance Test (Manual) \\ 
-	
+		
 	    \textbf{Initial State} & ChatBot configured and messaging application  chat with ChatBot open. \\ 
 	
 	    \textbf{Input} & Message box with query prompting to reveal sensitive data. \\ 
@@ -735,9 +685,7 @@ This section covers the ChatBot's compliance to not disclose sensitive data and 
 	    \textbf{Description} & Tests ChatBot to ensure it reasonably messages user and not too frequently. \\ 
 	
 	    \textbf{References} & NFR222 \\ 
-	
-	    \textbf{Type} & System Test (Manual) \\ 
-	
+		
 	    \textbf{Initial State} &  ChatBot configured and active for user interaction.\\ 
 	
 	    \textbf{Input} & Trigger multiple notifications. \\ 
@@ -758,9 +706,7 @@ This section covers the Cleanliness Manager's compliance, encrypt and store pict
 	    \textbf{Description} & Tests system to ensure encryption and secure storage of images and videos. \\ 
 	
 	    \textbf{References} & NFR233 \\ 
-	
-	    \textbf{Type} & System Test (Automatic) \\ 
-	
+		
 	    \textbf{Initial State} &  Cleanliness manager is initialized and ready for use.\\ 
 	
 	    \textbf{Input} & Captured image and recording of shared space. \\ 
@@ -776,9 +722,7 @@ This section covers the Cleanliness Manager's compliance, encrypt and store pict
 	    \textbf{Description} & Test to check if captured image have sufficient quality. \\ 
 	
 	    \textbf{References} & NFR234 \\ 
-	
-	    \textbf{Type} & System Test (Manual) \\ 
-	
+		
 	    \textbf{Initial State} &  Cleanliness manager is initialized and ready for use.\\ 
 	
 	    \textbf{Input} & Captured image of shared space. \\ 
@@ -794,9 +738,7 @@ This section covers the Cleanliness Manager's compliance, encrypt and store pict
 	    \textbf{Description} & Test to ensure images are processed within time frame. \\ 
 	
 	    \textbf{References} & NFR235 \\ 
-	
-	    \textbf{Type} & Performance Test (Automatic) \\ 
-	
+		
 	    \textbf{Initial State} &  Image is taken and sent over to server/database ready for processing.\\ 
 	
 	    \textbf{Input} & Uploaded image of shared space. \\ 
@@ -812,9 +754,7 @@ This section covers the Cleanliness Manager's compliance, encrypt and store pict
 	    \textbf{Description} & Test to check if system avoids false report. \\ 
 	
 	    \textbf{References} & NFR236 \\ 
-	
-	    \textbf{Type} & Compliance Test (Manual) \\ 
-	
+		
 	    \textbf{Initial State} &  Cleanliness manager is initialized and ready for use.\\ 
 	
 	    \textbf{Input} & User uses shared space but does not make a mess. \\ 
@@ -830,9 +770,7 @@ This section covers the Cleanliness Manager's compliance, encrypt and store pict
 	    \textbf{Description} & Test to check if system detects that the user is no longer using the space. \\ 
 	
 	    \textbf{References} & NFR237 \\ 
-	
-	    \textbf{Type} & System Test (Manual) \\ 
-	
+		
 	    \textbf{Initial State} &  Cleanliness manager is initialized and ready for use.\\ 
 	
 	    \textbf{Input} & User uses shared space and leaves after use. \\ 
@@ -854,9 +792,7 @@ This section covers the schedule's ability to accurately store, handle and sched
 	    \textbf{Description} & Tests calendar to ensure event time in database is in UTC but on user's application is displayed in user's local time. \\ 
 	
 	    \textbf{References} & NFR241, NFR242 \\ 
-	
-	    \textbf{Type} & Integrational Test (Automatic) \\ 
-	
+		
 	    \textbf{Initial State} & User is on calendar section of application. \\ 
 	
 	    \textbf{Input} & Event scheduled with specific time and date. \\ 
@@ -872,9 +808,7 @@ This section covers the schedule's ability to accurately store, handle and sched
 	    \textbf{Description} & Test calendar event scheduler to ensure events have granularity of five minutes. \\ 
 	
 	    \textbf{References} & NFR243 \\ 
-	
-	    \textbf{Type} & System Test (Automatic) \\ 
-	
+		
 	    \textbf{Initial State} &  User is on calendar section of application.\\ 
 	
 	    \textbf{Input} & Creating event and setting time. \\ 
@@ -890,9 +824,7 @@ This section covers the schedule's ability to accurately store, handle and sched
 	    \textbf{Description} & Tests if system encrypts stored events. \\ 
 	
 	    \textbf{References} & NFR244 \\ 
-	
-	    \textbf{Type} & System Test (Automatic) \\ 
-	
+		
 	    \textbf{Initial State} &  Calendar is active and has events created.\\ 
 	
 	    \textbf{Input} & Creating event. \\ 
@@ -914,9 +846,7 @@ This section covers the bill splitters's ability to accurately and precisely han
 	    \textbf{Description} & Tests if system encrypts bill splitter events. \\ 
 	
 	    \textbf{References} & NFR251 \\ 
-	
-	    \textbf{Type} & System Test (Automatic) \\ 
-	
+		
 	    \textbf{Initial State} &  Bill splitter is active and has history of events.\\ 
 	
 	    \textbf{Input} & Bill splitting is used. \\ 
@@ -932,9 +862,7 @@ This section covers the bill splitters's ability to accurately and precisely han
 	    \textbf{Description} & Tests bill splitter's ability to calculate and display numerical values with preicion of two decimal places. \\ 
 	
 	    \textbf{References} & NFR252 \\ 
-	
-	    \textbf{Type} & Compliance Test (Automatic) \\ 
-	
+		
 	    \textbf{Initial State} & Bill splitter is active . \\ 
 	
 	    \textbf{Input} & Prices entered to split between two users. \\ 
@@ -964,7 +892,7 @@ Here are the traceability matrices for the functional and non-functional require
  
 
 \section{Unit Test Description}
-To be included in future revisions.
+Unit tests have not been planned for this project in favor of functional tests, which also serve as regression tests to ensure that core features are working correctly. While unit tests are valuable for verifying the smallest testable components of the code, the team has decided to prioritize functional testing due to time constraints.
 
 \bibliographystyle{plainnat}
 
